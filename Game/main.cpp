@@ -47,7 +47,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	//GetEngine().SetUseFpsLimiter(false);
 
 	CPlayer plyer;
-	CStage stage;
+	//CStage stage;
 	tester tester;
 	//AddGO(&plyer);
 	//AddGO(&stage);
