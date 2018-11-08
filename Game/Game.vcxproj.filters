@@ -2,24 +2,55 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
-    <ClInclude Include="TpsCamera.h" />
-    <ClInclude Include="CStage.h" />
-    <ClInclude Include="CPlayerCamera.h" />
-    <ClInclude Include="CPlayer.h" />
+    <ClInclude Include="Title.h" />
+    <ClInclude Include="GameCamera.h" />
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="Ground.h" />
+    <ClInclude Include="Town.h" />
+    <ClInclude Include="Stone.h" />
+    <ClInclude Include="Stage1.h" />
+    <ClInclude Include="Stage1_Teleport.h" />
+    <ClInclude Include="PlayerStatus.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="TpsCamera.cpp" />
-    <ClCompile Include="CStage.cpp" />
-    <ClCompile Include="CPlayerCamera.cpp" />
-    <ClCompile Include="CPlayer.cpp" />
     <ClCompile Include="stdafx.cpp" />
+    <ClCompile Include="Title.cpp" />
+    <ClCompile Include="GameCamera.cpp" />
+    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Ground.cpp" />
+    <ClCompile Include="Town.cpp" />
+    <ClCompile Include="Stone.cpp" />
+    <ClCompile Include="Stage1.cpp" />
+    <ClCompile Include="Stage1_Teleport.cpp" />
+    <ClCompile Include="PlayerStatus.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <MeshContentTask Include="Asset\modelData\teapot.FBX" />
-    <MeshContentTask Include="Asset\modelData\testback.FBX" />
-    <MeshContentTask Include="Asset\modelData\testback2.FBX" />
-    <MeshContentTask Include="Asset\modelData\skydome.FBX" />
-    <MeshContentTask Include="Asset\modelData\unityChan.fbx" />
+    <MeshContentTask Include="Asset\modelData\unityChan.fbx">
+      <Filter>Assets\modelDate</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Asset\modelData\skydome.FBX">
+      <Filter>Assets\modelDate</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Asset\modelData\ground.FBX">
+      <Filter>Assets\modelDate</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Asset\modelData\stone.FBX">
+      <Filter>Assets\modelDate</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Asset\modelData\stage1_ground.FBX">
+      <Filter>Assets\modelDate</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Asset\modelData\stage1_teleport.FBX">
+      <Filter>Assets\modelDate</Filter>
+    </MeshContentTask>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Assets">
+      <UniqueIdentifier>{9a4fbc82-6b68-44ce-9594-3bb9a07f0628}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\modelDate">
+      <UniqueIdentifier>{12ecc4ca-5ce5-4666-a665-bde24e02169f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

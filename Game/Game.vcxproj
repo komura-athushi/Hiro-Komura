@@ -130,29 +130,38 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="CPlayer.cpp" />
-    <ClCompile Include="CPlayerCamera.cpp" />
-    <ClCompile Include="CStage.cpp" />
+    <ClCompile Include="PlayerStatus.cpp" />
+    <ClCompile Include="Stage1.cpp" />
+    <ClCompile Include="Stage1_Teleport.cpp" />
+    <ClCompile Include="Stone.cpp" />
+    <ClCompile Include="Town.cpp" />
+    <ClCompile Include="GameCamera.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="TpsCamera.cpp" />
+    <ClCompile Include="Title.cpp" />
+    <ClCompile Include="Ground.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CPlayer.h" />
-    <ClInclude Include="CPlayerCamera.h" />
-    <ClInclude Include="CStage.h" />
+    <ClInclude Include="PlayerStatus.h" />
+    <ClInclude Include="Stage1.h" />
+    <ClInclude Include="Stage1_Teleport.h" />
+    <ClInclude Include="Stone.h" />
+    <ClInclude Include="Town.h" />
+    <ClInclude Include="GameCamera.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="stdafx.h" />
-    <ClInclude Include="TpsCamera.h" />
+    <ClInclude Include="Title.h" />
+    <ClInclude Include="Ground.h" />
   </ItemGroup>
   <ItemGroup>
+    <MeshContentTask Include="Asset\modelData\ground.FBX" />
     <MeshContentTask Include="Asset\modelData\skydome.FBX" />
-    <MeshContentTask Include="Asset\modelData\teapot.FBX">
-      <FileType>Document</FileType>
-    </MeshContentTask>
-    <MeshContentTask Include="Asset\modelData\testback.FBX" />
-    <MeshContentTask Include="Asset\modelData\testback2.FBX" />
+    <MeshContentTask Include="Asset\modelData\stage1_ground.FBX" />
+    <MeshContentTask Include="Asset\modelData\stage1_teleport.FBX" />
+    <MeshContentTask Include="Asset\modelData\stone.FBX" />
     <MeshContentTask Include="Asset\modelData\unityChan.fbx" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
