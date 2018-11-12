@@ -1,5 +1,7 @@
 #pragma once
 #include "DemolisherWeapon/physics/character/CCharacterController.h"
+class Sword;
+class GameCamera;
 //プレイヤーです
 class Player:public IGameObject
 {
@@ -10,8 +12,10 @@ public:
 	void Update();
 	//キャラクターの向きを計算
 	void Turn();
-	//キャラクターのアニメーションを設定
+	//キャラクターのアニメーションを再生
 	void AnimationController();
+	//特殊なキャラクターのアニメーションを決める
+	void Animation();
 	//キャラクターの移動を計算
 	void Move();
 	//プレイヤーの座標をセット
@@ -29,8 +33,18 @@ public:
 	{
 		return m_HP;
 	}
+	//カメラのポインタをセット
+	void SetCamera(GameCamera* camera)
+	{
+		m_gamecamera = camera;
+	}
 private:
 	GameObj::CSkinModelRender* m_skinModelRender = nullptr;		//スキンモデルレンダラー。
+	Bone* m_bone;                                               //骨
+	int m_bonehand;                                             //右手のboneの番号
+	CVector3 m_savemovespeed;                                   //m_movespeedを記憶しておく
+	Sword* m_sword;                                             //Swordクラスのポインタ
+	GameCamera* m_gamecamera;                                   //カメラのポインタ
 	CVector3 m_movespeed;                                       //移動速度
 	CVector3 m_position = {0.0f,100.0f,00.0f};                  //ユニティちゃんの座標
 	CVector3 m_scale = { 1.0f,1.0f,1.0f };                      //大きさ
@@ -41,6 +55,7 @@ private:
 	const float m_multiply = 400.0f;                            //ユニティちゃんの移動速度を調整する
 	CQuaternion m_rotation;                                     //クオンテーション
 	CCharacterController m_charaCon;                            //キャラクターの当たり判定とか移動とか
+	int m_timer = 0;                                            //弾発射のクールタイム                                     
 	//アニメーション関係
 	enum EnAnimationClip {
 		enAnimationClip_idle,
@@ -50,6 +65,7 @@ private:
 		enAnimationClip_damage,
 		enAnimationClip_KneelDown,
 		enAnimationClip_Clear,
+		enAnimationClip_Test,
 		enAnimationClip_num,
 	};
 	//アニメーション分岐
@@ -61,6 +77,7 @@ private:
 		enState_GameOver,
 		enState_WaitStartGameClear,
 		enState_GameClear,
+		enState_Test,
 	};
 	AnimationClip m_animClip[enAnimationClip_num];
 	EnState m_state = enState_Idle;

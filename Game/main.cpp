@@ -14,3 +14,4 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	//ゲームループ。
 	GetEngine().RunGameLoop();
 }
+

@@ -15,6 +15,16 @@ public:
 	{
 		m_player = player;
 	}
+	//カメラの座標を取得
+	CVector3 GetPosition() const
+	{
+		return m_position;
+	}
+	//カメラの注視点を取得
+	CVector3 GetTarget() const
+	{
+		return m_target;
+	}
 private:
 	GameObj::PerspectiveCamera* m_camera;                  //3Dカメラのインスタンス
 	CVector3 m_position = { 0.0f,200.0f,400.0f};           //カメラの座標

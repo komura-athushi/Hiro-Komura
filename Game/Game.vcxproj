@@ -134,6 +134,7 @@
     <ClCompile Include="Stage1.cpp" />
     <ClCompile Include="Stage1_Teleport.cpp" />
     <ClCompile Include="Stone.cpp" />
+    <ClCompile Include="Sword.cpp" />
     <ClCompile Include="Town.cpp" />
     <ClCompile Include="GameCamera.cpp" />
     <ClCompile Include="main.cpp" />
@@ -149,6 +150,7 @@
     <ClInclude Include="Stage1.h" />
     <ClInclude Include="Stage1_Teleport.h" />
     <ClInclude Include="Stone.h" />
+    <ClInclude Include="Sword.h" />
     <ClInclude Include="Town.h" />
     <ClInclude Include="GameCamera.h" />
     <ClInclude Include="Player.h" />
@@ -162,6 +164,7 @@
     <MeshContentTask Include="Asset\modelData\stage1_ground.FBX" />
     <MeshContentTask Include="Asset\modelData\stage1_teleport.FBX" />
     <MeshContentTask Include="Asset\modelData\stone.FBX" />
+    <MeshContentTask Include="Asset\modelData\Sword.FBX" />
     <MeshContentTask Include="Asset\modelData\unityChan.fbx" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

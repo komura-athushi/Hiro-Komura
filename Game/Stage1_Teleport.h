@@ -19,7 +19,6 @@ public:
 		return m_position;
 	}
 private:
-
 	GameObj::CSkinModelRender* m_skinModelRender = nullptr;		//スキンモデルレンダラー。
 	CVector3 m_position;                                        //座標
 	CVector3 m_scale = { 1.0f,1.0f,1.0f };                      //大きさ

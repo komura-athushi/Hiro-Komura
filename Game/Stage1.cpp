@@ -8,7 +8,6 @@ Stage1::Stage1()
 {
 }
 
-
 Stage1::~Stage1()
 {
 	delete m_player;
@@ -40,11 +39,11 @@ bool Stage1::Start()
 			//フックした場合はtrueを返す。
 			return true;
 		}
-
 		return false;
 	});
 	m_gamecamera = new GameCamera;
 	m_gamecamera->SetPlayer(m_player);
+	m_player->SetCamera(m_gamecamera);
 	return true;
 }
 

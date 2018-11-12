@@ -5,7 +5,6 @@ Title::Title()
 {
 }
 
-
 Title::~Title()
 {
 }

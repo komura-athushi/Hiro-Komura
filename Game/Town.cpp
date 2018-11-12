@@ -68,6 +68,7 @@ bool Town::Start()
 	});
 	m_gamecamera = new GameCamera;
 	m_gamecamera->SetPlayer(m_player);
+	m_player->SetCamera(m_gamecamera);
 	//GetEngine().GetGraphicsEngine().GetLightManager().SetAmbientLight({ 0.0f, 0.50f, 0.0f });
 	
 	/*m_lig = new GameObj::CDirectionLight;
