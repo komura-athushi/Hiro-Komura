@@ -139,6 +139,8 @@
     </MeshContentTask>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="IEnemy.cpp" />
+    <ClCompile Include="Oni.cpp" />
     <ClCompile Include="PlayerStatus.cpp" />
     <ClCompile Include="Stage1.cpp" />
     <ClCompile Include="Stage1_Teleport.cpp" />
@@ -156,6 +158,8 @@
     <ClCompile Include="Ground.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="IEnemy.h" />
+    <ClInclude Include="Oni.h" />
     <ClInclude Include="PlayerStatus.h" />
     <ClInclude Include="Stage1.h" />
     <ClInclude Include="Stage1_Teleport.h" />
@@ -169,6 +173,7 @@
     <ClInclude Include="Ground.h" />
   </ItemGroup>
   <ItemGroup>
+    <MeshContentTask Include="Asset\modelData\enemy\enemy.FBX" />
     <MeshContentTask Include="Asset\modelData\ground.FBX" />
     <MeshContentTask Include="Asset\modelData\skydome.FBX" />
     <MeshContentTask Include="Asset\modelData\stage1_ground.FBX" />

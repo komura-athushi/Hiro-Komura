@@ -5,6 +5,7 @@
 #include "Ground.h"
 #include "Town.h"
 #include "PlayerStatus.h"
+#include "Oni.h"
 Stage1::Stage1()
 {
 }
@@ -15,6 +16,7 @@ Stage1::~Stage1()
 	delete m_gamecamera;
 	delete m_ground;
 	delete m_lig;
+	delete m_oni;
 }
 
 bool Stage1::Start()
@@ -46,6 +48,8 @@ bool Stage1::Start()
 	m_gamecamera = new GameCamera;
 	m_gamecamera->SetPlayer(m_player);
 	m_player->SetCamera(m_gamecamera);
+	m_oni = new Oni;
+	m_oni->SetPlayer(m_player);
 	return true;
 }
 

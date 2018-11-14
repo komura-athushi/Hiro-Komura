@@ -3,6 +3,7 @@ class Player;
 class Ground;
 class GameCamera;
 class PlayerStatus;
+class Oni;
 //ステージ1に関係するものを生成したり、管理したりするクラスです
 class Stage1:public IGameObject
 {
@@ -24,5 +25,6 @@ private:
 	Player* m_player;                                  //プレイヤークラスのポインタ
 	Level m_level;                                     //レベルデザインのためのクラス
 	PlayerStatus* m_playerstatus;                      //プレイヤーステータスクラスのポインタ
+	Oni* m_oni;										   //鬼クラスのポインタ
 };
 

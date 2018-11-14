@@ -12,6 +12,8 @@
     <ClInclude Include="Stage1_Teleport.h" />
     <ClInclude Include="PlayerStatus.h" />
     <ClInclude Include="Sword.h" />
+    <ClInclude Include="IEnemy.h" />
+    <ClInclude Include="Oni.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -26,6 +28,8 @@
     <ClCompile Include="Stage1_Teleport.cpp" />
     <ClCompile Include="PlayerStatus.cpp" />
     <ClCompile Include="Sword.cpp" />
+    <ClCompile Include="IEnemy.cpp" />
+    <ClCompile Include="Oni.cpp" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Asset\modelData\unityChan.fbx">
@@ -47,6 +51,9 @@
       <Filter>Assets\modelDate</Filter>
     </MeshContentTask>
     <MeshContentTask Include="Asset\modelData\Sword.FBX">
+      <Filter>Assets\modelDate</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Asset\modelData\enemy\enemy.FBX">
       <Filter>Assets\modelDate</Filter>
     </MeshContentTask>
   </ItemGroup>
