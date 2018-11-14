@@ -2,6 +2,7 @@
 #include "DemolisherWeapon/physics/character/CCharacterController.h"
 class Sword;
 class GameCamera;
+class PlayerStatus;
 //プレイヤーです
 class Player:public IGameObject
 {
@@ -10,6 +11,10 @@ public:
 	~Player();
 	bool Start();
 	void Update();
+	//文字表示
+	void PostRender()override;
+	//プレイヤーステータスのクラスのメンバ変数をプレイヤーのステータスに反映
+	void Status();
 	//キャラクターの向きを計算
 	void Turn();
 	//キャラクターのアニメーションを再生
@@ -18,6 +23,13 @@ public:
 	void Animation();
 	//キャラクターの移動を計算
 	void Move();
+	//攻撃関係
+	void Kougeki();
+	//プレイヤーステータスクラスのポインタを設定
+	void SetPlayerStatus(PlayerStatus* ps)
+	{
+		m_playerstatus = ps;
+	}
 	//プレイヤーの座標をセット
 	void SetPosition(const CVector3& pos)
 	{
@@ -33,6 +45,11 @@ public:
 	{
 		return m_HP;
 	}
+	//ゲームオーバーかどうかを取得
+	bool GetGameOver() const
+	{
+		return m_gameover;
+	}
 	//カメラのポインタをセット
 	void SetCamera(GameCamera* camera)
 	{
@@ -40,7 +57,9 @@ public:
 	}
 private:
 	GameObj::CSkinModelRender* m_skinModelRender = nullptr;		//スキンモデルレンダラー。
+	CFont m_font;                                               //文字表示クラス
 	Bone* m_bone;                                               //骨
+	PlayerStatus* m_playerstatus;                               //プレイヤーステータスのポインタ
 	int m_bonehand;                                             //右手のboneの番号
 	CVector3 m_savemovespeed;                                   //m_movespeedを記憶しておく
 	Sword* m_sword;                                             //Swordクラスのポインタ
@@ -48,6 +67,7 @@ private:
 	CVector3 m_movespeed;                                       //移動速度
 	CVector3 m_position = {0.0f,100.0f,00.0f};                  //ユニティちゃんの座標
 	CVector3 m_scale = { 1.0f,1.0f,1.0f };                      //大きさ
+	bool m_gameover = false;
 	//自機の角度　初期は180度
 	float m_degree = 180.0f;                                    //ユニティちゃんの向いてる角度
 	float m_radian = 0;                                         //上記をラジアン単位に直したもの

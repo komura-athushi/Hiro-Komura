@@ -6,6 +6,7 @@
 #include "Stone.h"
 #include "Stage1_Teleport.h"
 #include "Stage1.h"
+#include "PlayerStatus.h"
 Town::Town()
 {
 	
@@ -60,6 +61,7 @@ bool Town::Start()
 			//プレイヤーのインスタンスを生成する。
 			m_player = new Player;
 			m_player->SetPosition(objData.position);
+			m_player->SetPlayerStatus(m_playerstatus);
 			//フックした場合はtrueを返す。
 			return true;
 		}
@@ -91,6 +93,7 @@ void Town::Update()
 	CVector3 pos= m_player->GetPosition() - m_stage1_teleport->GetPosition();
 	if (pos.Length() <= 100.0f) {
 		Stage1* stage1 = new Stage1;
+		stage1->SetPlayerStatus(m_playerstatus);
 		delete this;
 	}
 }

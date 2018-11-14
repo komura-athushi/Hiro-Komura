@@ -4,6 +4,7 @@
 #include "GameCamera.h"
 #include "Ground.h"
 #include "Town.h"
+#include "PlayerStatus.h"
 Stage1::Stage1()
 {
 }
@@ -36,6 +37,7 @@ bool Stage1::Start()
 			//プレイヤーのインスタンスを生成する。
 			m_player = new Player;
 			m_player->SetPosition(objData.position);
+			m_player->SetPlayerStatus(m_playerstatus);
 			//フックした場合はtrueを返す。
 			return true;
 		}
@@ -49,8 +51,9 @@ bool Stage1::Start()
 
 void Stage1::Update()
 {
-	if (Pad(0).GetButton(enButtonSelect)) {
+	if (m_player->GetGameOver()) {
 		Town* town = new Town;
+		town->SetPlayerStatus(m_playerstatus);
 		delete this;
 	}
 }

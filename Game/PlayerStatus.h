@@ -43,11 +43,11 @@ public:
 		m_exp += exp;
 	}
 private:
-	int m_level;                                        //レベル
-	int m_exp;                                          //経験値
-	float m_MaxHP;                                      //最大HP
-	float m_MaxPP;                                      //最大PP(魔法撃つのに必要)
-	float m_Attack;                                     //攻撃力
-	float m_Defense;                                    //防御力
-};
+	int m_level;                                               //レベル
+	int m_exp;                                                 //経験値
+	float m_MaxHP=100.0f;                                      //最大HP
+	float m_MaxPP=100.0f;                                      //最大PP(魔法撃つのに必要)
+	float m_Attack=50.0f;                                      //攻撃力
+	float m_Defense=50.0f;                                     //防御力
+}; 
 

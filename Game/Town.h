@@ -4,6 +4,7 @@ class GameCamera;
 class Player;
 class Stone;
 class Stage1_Teleport;
+class PlayerStatus;
 //拠点となる町です
 class Town:public IGameObject
 {
@@ -12,6 +13,11 @@ public:
 	~Town();
 	bool Start();
 	void Update();
+	//プレイヤーステータスクラスのポインタを受け取る
+	void SetPlayerStatus(PlayerStatus* ps)
+	{
+		m_playerstatus = ps;
+	}
 private:
 	Ground* m_ground;                                  //Groundクラスのポインタ
 	GameCamera* m_gamecamera;                          //GameCameraクラスのポインタ
@@ -20,6 +26,7 @@ private:
 	Player* m_player;                                  //プレイヤークラスのポインタ
 	Stage1_Teleport* m_stage1_teleport;                //ステージ1に遷移するためのクラスのポインタ
 	Level m_level;                                     //レベルデザインのためのクラス
+	PlayerStatus* m_playerstatus;                      //プレイヤーステータスクラスのポインタ
 	//各オブジェクトの可変長配列
 	std::vector<Stone*> m_stoneList;                   //Stoneクラスのポインタを格納するための可変長配列
 };

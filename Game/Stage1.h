@@ -2,6 +2,7 @@
 class Player;
 class Ground;
 class GameCamera;
+class PlayerStatus;
 //ステージ1に関係するものを生成したり、管理したりするクラスです
 class Stage1:public IGameObject
 {
@@ -10,6 +11,11 @@ public:
 	~Stage1();
 	bool Start();
 	void Update();
+	//プレイヤーステータスクラスのポインタを受け取る
+	void SetPlayerStatus(PlayerStatus* ps)
+	{
+		m_playerstatus = ps;
+	}
 private:
 	Ground* m_ground;                                  //Groundクラスのポインタ
 	GameCamera* m_gamecamera;                          //GameCameraクラスのポインタ
@@ -17,5 +23,6 @@ private:
 	CVector3 m_color;                                  //ディレクションライトの色を決める
 	Player* m_player;                                  //プレイヤークラスのポインタ
 	Level m_level;                                     //レベルデザインのためのクラス
+	PlayerStatus* m_playerstatus;                      //プレイヤーステータスクラスのポインタ
 };
 

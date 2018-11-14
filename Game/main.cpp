@@ -9,8 +9,9 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	InitEngineParameter initparam; 
 	GetEngine().InitGame(hInstance, hPrevInstance, lpCmdLine, nCmdShow, "Game", initparam);	
 	GameObj::PerspectiveCamera cam; SetMainCamera(&cam);
-	Town* game = new Town;
+	Town* town = new Town;
 	PlayerStatus* playerstatus = new PlayerStatus;
+	town->SetPlayerStatus(playerstatus);
 	//ゲームループ。
 	GetEngine().RunGameLoop();
 }

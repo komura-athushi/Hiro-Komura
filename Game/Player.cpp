@@ -4,6 +4,7 @@
 #include <math.h> 
 #include "Sword.h"
 #include "GameCamera.h"
+#include "PlayerStatus.h"
 Player::Player()
 {
 }
@@ -22,6 +23,7 @@ bool Player::Start()
 		30.0f,			//高さ。
 		m_position		//初期位置。
 	);
+	//アニメーションファイルをロード
 	m_animClip[enAnimationClip_idle].Load(L"Asset/animData/unityChan/idle.tka");
 	m_animClip[enAnimationClip_walk].Load(L"Asset/animData/unityChan/walk.tka");
 	m_animClip[enAnimationClip_run].Load(L"Asset/animData/unityChan/run.tka");
@@ -30,23 +32,28 @@ bool Player::Start()
 	m_animClip[enAnimationClip_KneelDown].Load(L"Asset/animData/unityChan/KneelDown.tka");
 	m_animClip[enAnimationClip_Clear].Load(L"Asset/animData/unityChan/Clear.tka");
 	m_animClip[enAnimationClip_Test].Load(L"Asset/animData/unityChan/Zangeki1.tka",false,enZtoY);
+	//アニメーションのループフラグをtrueにする
 	for (auto& animClip : m_animClip) {
 		animClip.SetLoopFlag(true);
 	}
+	//一部アニメーションのループフラグをfalseにする
 	m_animClip[enAnimationClip_jump].SetLoopFlag(false);
 	m_animClip[enAnimationClip_KneelDown].SetLoopFlag(false);
 	m_animClip[enAnimationClip_Clear].SetLoopFlag(false);
 	m_animClip[enAnimationClip_damage].SetLoopFlag(false);
 	m_animClip[enAnimationClip_Test].SetLoopFlag(false);
+	//unityChanを表示
 	m_skinModelRender = new GameObj::CSkinModelRender;
     m_skinModelRender->Init(L"Resource/modelData/unityChan.cmo", m_animClip, enAnimationClip_num, enFbxUpAxisY);
 	m_skinModelRender->SetPos(m_position);
 	m_sword = new Sword;
+	//unityChanのボーンを検索
 	m_bonehand=m_skinModelRender->FindBoneID(L"Character1_RightHand");
 	CVector3 pos=m_skinModelRender->GetBonePos(m_bonehand);
 	CQuaternion qRot= m_skinModelRender->GetBoneRot(m_bonehand);
 	m_sword->SetRot(qRot);
 	m_sword->SetPosition(pos);
+	Status();
 	return true;
 }
 void Player::Update()
@@ -59,23 +66,28 @@ void Player::Update()
 	}
 	m_charaCon.SetPosition(m_position);
 	m_skinModelRender->SetPos(m_position);
-	if (m_state == enState_Test) {
-		CVector3 pos = m_skinModelRender->GetBonePos(m_bonehand);
-		CQuaternion qRot = m_skinModelRender->GetBoneRot(m_bonehand);
-		m_sword->SetRot(qRot);
-		m_sword->SetPosition(pos);
-		m_sword->SetScale({ 1.0f, 1.0f, 1.0f });
-	}
-	else {
-		m_sword->SetScale({ 0.001f, 0.001f, 0.001f });
-	}
+	Kougeki();
+	
 }
 
 void Player::Move()
 {
 	//左スティックの入力量を取得
 	CVector2 stickL;
-	stickL = Pad(0).GetStick(L);	//アナログスティックの入力量を取得。
+	
+	if (m_state == enState_Damage) {
+		stickL = { 0.0f,0.0f };
+	}
+	else {
+		stickL = Pad(0).GetStick(L);	//アナログスティックの入力量を取得。
+		if (Pad(0).GetButton(enButtonA) //Aボタンが押されたら
+			&& m_charaCon.IsOnGround()  //かつ、地面に居たら
+			) {
+			//ジャンプする。
+			m_movespeed.y = 500.0f;	//上方向に速度を設定して、
+			m_state = enState_Jump;
+		}
+	}
 	stickL.x = -stickL.x;
 	//左スティック
 	//スティックの左右入力の処理
@@ -86,17 +98,11 @@ void Player::Move()
 	//スティックの上下入力の処理
 	m_movespeed.z += cos(m_radian)*stickL.y * m_multiply;
 	m_movespeed.x += sin(m_radian)*stickL.y * m_multiply;
-	if (Pad(0).GetButton(enButtonA) //Aボタンが押されたら
-		&& m_charaCon.IsOnGround()  //かつ、地面に居たら
-		) {
-		//ジャンプする。
-		m_movespeed.y = 500.0f;	//上方向に速度を設定して、
-		m_state = enState_Jump;
-	}
 	//重力
 	m_movespeed.y -= 800.0f *GetDeltaTimeSec();
 	//キャラクターコントローラーを使用して、座標を更新。
 	m_position = m_charaCon.Execute(m_movespeed, GetDeltaTimeSec());
+	
 }
 
 void Player::Turn()
@@ -134,6 +140,9 @@ void Player::Animation()
 	}
 	else if (Pad(0).GetButton(enButtonX)) {
 		m_state = enState_Test;
+	}
+	if (Pad(0).GetButton(enButtonY)) {
+		m_state = enState_GameOver;
 	}
 }
 
@@ -179,6 +188,7 @@ void Player::AnimationController()
 				m_state = enState_Idle;
 			}
 		}
+		Move();
 		//キャラクターの向き関係
 		Turn();
 		break;
@@ -186,7 +196,14 @@ void Player::AnimationController()
 		m_skinModelRender->GetAnimCon().Play(enAnimationClip_Clear, 0.2f);
 		break;
 	case enState_GameOver:
-		m_skinModelRender->GetAnimCon().Play(enAnimationClip_KneelDown, 0.2f);
+		if (m_skinModelRender->GetAnimCon().IsPlaying()) {
+			m_skinModelRender->GetAnimCon().Play(enAnimationClip_KneelDown, 0.2f);
+		}
+		else {
+			if (Pad(0).GetButton(enButtonSelect)) {
+				m_gameover = true;
+			}
+		}
 		break;
 		//ジャンプだけは他のとこでやる
 	case enState_Jump:
@@ -225,3 +242,34 @@ void Player::AnimationController()
 	}
 }
 
+void Player::Status()
+{
+	m_level = m_playerstatus->GetLevel();
+	m_MaxHP = m_playerstatus->GetMaxHP();
+	m_MaxPP = m_playerstatus->GetMaxPP();
+	m_Attack = m_playerstatus->GetAttack();
+	m_Defense = m_playerstatus->GetDefense();
+	m_HP = m_MaxHP;
+	m_PP = m_MaxPP;
+}  
+
+void Player::PostRender()
+{
+	wchar_t output[256];
+	swprintf_s(output, L" %f\n %f\n %f\n %f\n", m_HP, m_PP, m_Attack, m_Defense);
+	m_font.DrawScreenPos(output, { 800.0f,100.0f });
+}
+
+void Player::Kougeki()
+{
+	if (m_state == enState_Test) {
+		CVector3 pos = m_skinModelRender->GetBonePos(m_bonehand);
+		CQuaternion qRot = m_skinModelRender->GetBoneRot(m_bonehand);
+		m_sword->SetRot(qRot);
+		m_sword->SetPosition(pos);
+		m_sword->SetScale({ 1.0f, 1.0f, 1.0f });
+	}
+	else {
+		m_sword->SetScale({ 0.001f, 0.001f, 0.001f });
+	}
+}
