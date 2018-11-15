@@ -75,7 +75,7 @@ void Player::Move()
 	//左スティックの入力量を取得
 	CVector2 stickL;
 	
-	if (m_state == enState_Damage) {
+	if (m_state == enState_Damage || m_state==enState_GameOver) {
 		stickL = { 0.0f,0.0f };
 	}
 	else {
@@ -196,14 +196,18 @@ void Player::AnimationController()
 		m_skinModelRender->GetAnimCon().Play(enAnimationClip_Clear, 0.2f);
 		break;
 	case enState_GameOver:
+		m_skinModelRender->GetAnimCon().Play(enAnimationClip_KneelDown, 0.2f);
 		if (m_skinModelRender->GetAnimCon().IsPlaying()) {
-			m_skinModelRender->GetAnimCon().Play(enAnimationClip_KneelDown, 0.2f);
+			
 		}
 		else {
 			if (Pad(0).GetButton(enButtonSelect)) {
 				m_gameover = true;
 			}
 		}
+		Move();
+		//キャラクターの向き関係
+		Turn();
 		break;
 		//ジャンプだけは他のとこでやる
 	case enState_Jump:
