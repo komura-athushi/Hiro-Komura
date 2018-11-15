@@ -34,9 +34,9 @@ private:
 	//アニメーション関係
 	enum EnAnimationClip {
 		enAnimationClip_idle,
-		enAnimationClip_run,
 		enAnimationClip_attack,
 		enAnimationClip_damage,
+		enAnimationClip_death,
 		enAnimationClip_num,
 	};
 	//アニメーション分岐
@@ -57,7 +57,11 @@ private:
 	float m_degree = 180.0f;                                    //ユニティちゃんの向いてる角度
 	float m_radian = 0;                                         //上記をラジアン単位に直したもの
 	CQuaternion m_rotation;
+
 	Stage1* m_stage1;
+
+	int m_timer;												//攻撃のクールタイムのためにフレーム数を数える
+
 	//プレイヤーの色々なステータス
 	int m_level;                                                //レベル
 	float m_MaxHP;                                              //最大HP
