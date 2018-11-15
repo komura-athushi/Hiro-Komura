@@ -1,7 +1,7 @@
 #pragma once
 #include "Player.h"
 #include "IEnemy.h"
-
+#include "DemolisherWeapon/physics/PhysicsStaticObject.h"
 class Oni : public IEnemy
 {
 public:
@@ -20,6 +20,7 @@ public:
 
 private:
 	GameObj::CSkinModelRender* m_skinModelRender = nullptr;		//スキンモデルレンダラー。
+	PhysicsStaticObject m_staticobject;                         //静的オブジェクト
 	//アニメーション関係
 	enum EnAnimationClip {
 		enAnimationClip_idle,
@@ -35,8 +36,8 @@ private:
 	};
 	AnimationClip m_animClip[enAnimationClip_num];				//アニメーションクリップ
 	EnState m_state = enState_Idle;
-	CVector3 m_oldpos = { 30.0f,0.0f,1500.0f };                 //鬼の初期位置
-	CVector3 m_position = { 30.0f,0.0f,1500.0f };               //鬼の座標
+	CVector3 m_oldpos = { 30.0f,100.0f,1500.0f };                 //鬼の初期位置
+	CVector3 m_position = { 30.0f,100.0f,1500.0f };               //鬼の座標
 	CVector3 m_scale = { 10.0f,10.0f,10.0f };					//鬼のスケール
 	CVector3 m_moveSpeed = { 0.0f,  0.0f,  0.0f };				//移動速度
 	Player* m_player;											//プレイヤークラスのポインタ

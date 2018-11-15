@@ -23,9 +23,10 @@ bool Oni::Start()
 	m_animClip[enAnimationClip_damage].SetLoopFlag(false);
 	//鬼のスキンモデルレンダーを表示
 	m_skinModelRender = new GameObj::CSkinModelRender;
-	m_skinModelRender->Init(L"Resource/modelData/enemy.cmo", m_animClip, enAnimationClip_num, enFbxUpAxisY);
+	m_skinModelRender->Init(L"Resource/modelData/enemy.cmo", m_animClip, enAnimationClip_num, enFbxUpAxisZ);
 	m_skinModelRender->SetScale(m_scale);
 	m_skinModelRender->SetPos(m_position);
+	m_staticobject.CreateMesh(*m_skinModelRender);
 	return true;
 }
 
