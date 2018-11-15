@@ -14,6 +14,7 @@ public:
 	void AnimationController();									//アニメーションの再生
 	void Damage();												//ダメージを受けた時のアクション
 	void Turn();												//キャラクターの向きを計算
+	void Dead();												//エネミーが死んだときの処理
 	void SetPlayer(Player* player)								//プレイヤーのポイントをセット
 	{
 		m_player = player;
@@ -25,20 +26,22 @@ private:
 	//アニメーション関係
 	enum EnAnimationClip {
 		enAnimationClip_idle,
+		enAnimationClip_run,
 		enAnimationClip_attack,
 		enAnimationClip_damage,
 		enAnimationClip_num,
 	};
 	//アニメーション分岐
 	enum EnState {
-		enState_Idle,
+		enState_Idle_Run,
 		enState_Attack,
 		enState_Damage,
+		enState_Dead,
 	};
-	AnimationClip m_animClip[enAnimationClip_num];				//アニメーションクリップ
-	EnState m_state = enState_Idle;
-	CVector3 m_oldpos = { 30.0f,100.0f,1500.0f };                 //鬼の初期位置
-	CVector3 m_position = { 30.0f,100.0f,1500.0f };               //鬼の座標
+	AnimationClip m_animClip[enAnimationClip_num];				
+	EnState m_state = enState_Idle_Run;
+	CVector3 m_oldpos = { 30.0f,100.0f,1500.0f };               //鬼の初期位置
+	CVector3 m_position = { 30.0f,100.0f,1500.0f };				//鬼の座標
 	CVector3 m_scale = { 10.0f,10.0f,10.0f };					//鬼のスケール
 	CVector3 m_movespeed = { 0.0f,  0.0f,  0.0f };				//移動速度
 	Player* m_player;											//プレイヤークラスのポインタ

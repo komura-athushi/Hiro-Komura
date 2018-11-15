@@ -17,9 +17,11 @@ bool Oni::Start()
 {
 	//アニメーション
 	m_animClip[enAnimationClip_idle].Load(L"Asset/animData/enemy/idle.tka");
+	m_animClip[enAnimationClip_run].Load(L"Asset/animData/enemy/death.tka");
 	m_animClip[enAnimationClip_attack].Load(L"Asset/animData/enemy/attack.tka");
 	m_animClip[enAnimationClip_damage].Load(L"Asset/animData/enemy/damage.tka");
 	m_animClip[enAnimationClip_idle].SetLoopFlag(true);
+	m_animClip[enAnimationClip_run].SetLoopFlag(true);
 	m_animClip[enAnimationClip_attack].SetLoopFlag(false);
 	m_animClip[enAnimationClip_damage].SetLoopFlag(false);
 	//鬼のスキンモデルレンダーを表示
@@ -37,9 +39,6 @@ bool Oni::Start()
 void Oni::Attack()
 {
 }
-//なぜかエネミーが床に埋まったままになっている
-//pushのやり方の確認
-//プレイヤーの周りをくるくる回ってしまう
 void Oni::Chase()
 {
 	m_movespeed = { 0.0f,0.0f,0.0f };
@@ -47,33 +46,28 @@ void Oni::Chase()
 	CVector3 m_playerposition = m_player->GetPosition();
 	//プレイヤーと敵の距離
 	CVector3 pos = m_player->GetPosition()-m_position;
-	//近すぎたら止まる
+	//接触したら攻撃
 	if (pos.Length() < 50.0f) {
 	m_state = enState_Attack;
 	}
 	//もしプレイヤーと鬼の距離が近くなったら
-	else if (pos.Length() < 1000.0f) {
+	else if (pos.Length() <= 1000.0f) {
 		//近づいてくる
 		CVector3 EnemyPos = m_playerposition - m_position;
 		EnemyPos.Normalize();
 		m_movespeed = EnemyPos * 5.0f;
 		m_position += m_movespeed;
 	}
-	else {
-		m_state = enState_Idle;
-	}
-	m_skinModelRender->SetPos(m_position);
-	/*
-	else if(oldpos == m_position){
-		//初期位置に帰る
-		CVector3 EnemyPos = oldpos - m_position;
-		EnemyPos.Normalize();
-		m_moveSpeed += EnemyPos * 5.0f;
-		m_position += m_moveSpeed;
-		m_skinModelRender->SetPos(m_position);
-	}
-	*/
 	
+	else if(pos.Length() > 1000.0f){
+		//初期位置に帰る
+		CVector3 EnemyOldPos = m_oldpos - m_position;
+		EnemyOldPos.Normalize();
+		m_movespeed = EnemyOldPos * 5.0f;
+		m_position += m_movespeed;
+	}
+	
+	m_skinModelRender->SetPos(m_position);
 }
 
 void Oni::AnimationController()
@@ -81,17 +75,50 @@ void Oni::AnimationController()
 	m_skinModelRender->GetAnimCon().SetSpeed(1.0f);
 	//ステート分岐によってアニメーションを再生させる
 	switch (m_state) {
-	case enState_Idle:
-		//待機モーション
-		m_skinModelRender->GetAnimCon().Play(enAnimationClip_idle, 0.2f);
+	case enState_Idle_Run:
+		if (m_movespeed.LengthSq() > 300.0f * 300.0f) {
+			//走りモーション。
+			m_skinModelRender->GetAnimCon().Play(enAnimationClip_run, 0.2f);
+		}
+		else {
+			//待機モーション
+			m_skinModelRender->GetAnimCon().Play(enAnimationClip_idle, 0.2f);
+		}
+		m_state = enState_Idle_Run;
+		Chase();
+		Turn();
 		break;
+	//攻撃と攻撃の間にクールタイムを設ける
 	case enState_Attack:
-		//攻撃モーション
-		m_skinModelRender->GetAnimCon().Play(enAnimationClip_attack, 0.2f);
+		if (m_skinModelRender->GetAnimCon().IsPlaying()) {
+			m_skinModelRender->GetAnimCon().Play(enAnimationClip_attack, 0.2f);
+			m_skinModelRender->GetAnimCon().SetSpeed(2.0f);
+			Animation();
+		}
+		else {
+			m_state = enState_Idle_Run;
+		}
+		//キャラクターの向き関係
+		Turn();
 		break;
 	case enState_Damage:
-		//ダメージモーション
-		m_skinModelRender->GetAnimCon().Play(enAnimationClip_damage, 0.2f);
+		if (m_skinModelRender->GetAnimCon().IsPlaying()) {
+			m_skinModelRender->GetAnimCon().Play(enAnimationClip_damage, 0.2f);
+		}
+		else {
+			m_state = enState_Idle_Run;
+		}
+		Chase();
+		Turn();
+		break;
+	case enState_Dead:
+		if (m_skinModelRender->GetAnimCon().IsPlaying()) {
+			m_skinModelRender->GetAnimCon().Play(enAnimationClip_damage, 0.2f);
+		}
+		else {
+			m_state = enState_Idle_Run;
+		}
+		delete this;
 		break;
 	}
 }
@@ -125,12 +152,19 @@ void Oni::Turn()
 
 }
 
+void Oni::Dead()
+{
+	if (Pad(0).GetButton(enButtonRT)) //RTボタンが押されたら
+	{
+		m_state = enState_Dead;
+	}
+}
+
 void Oni::Update()
 {
-	Chase();
-	//エネミーが映らなくなった
 	AnimationController();
 	Damage();
+	Dead();
 	CQuaternion rot;
 	CVector3 pos = m_position;
 	pos.y += 55.0f;
