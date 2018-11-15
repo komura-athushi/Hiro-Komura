@@ -17,13 +17,13 @@ bool Oni::Start()
 {
 	//アニメーション
 	m_animClip[enAnimationClip_idle].Load(L"Asset/animData/enemy/idle.tka");
-	m_animClip[enAnimationClip_run].Load(L"Asset/animData/enemy/death.tka");
 	m_animClip[enAnimationClip_attack].Load(L"Asset/animData/enemy/attack.tka");
 	m_animClip[enAnimationClip_damage].Load(L"Asset/animData/enemy/damage.tka");
+	m_animClip[enAnimationClip_death].Load(L"Asset/animData/enemy/death.tka");
 	m_animClip[enAnimationClip_idle].SetLoopFlag(true);
-	m_animClip[enAnimationClip_run].SetLoopFlag(true);
 	m_animClip[enAnimationClip_attack].SetLoopFlag(false);
 	m_animClip[enAnimationClip_damage].SetLoopFlag(false);
+	m_animClip[enAnimationClip_death].SetLoopFlag(false);
 	//鬼のスキンモデルレンダーを表示
 	m_skinModelRender = new GameObj::CSkinModelRender;
 	m_skinModelRender->Init(L"Resource/modelData/enemy.cmo", m_animClip, enAnimationClip_num, enFbxUpAxisZ);
@@ -45,17 +45,20 @@ void Oni::Chase()
 	//プレイヤーの座標を取得
 	CVector3 m_playerposition = m_player->GetPosition();
 	//プレイヤーと敵の距離
-	CVector3 pos = m_player->GetPosition()-m_position;
+	CVector3 pos = m_player->GetPosition() - m_position;
+	//敵の初期位置と現在位置の距離
+	CVector3 oldpos = m_oldpos - m_position;
 	//接触したら攻撃
-	if (pos.Length() < 50.0f) {
+	if (pos.Length() < 100.0f) {
 	m_state = enState_Attack;
 	}
 	//もしプレイヤーと鬼の距離が近くなったら
-	else if (pos.Length() <= 1000.0f) {
+	else if (pos.Length() < 1000.0f) {
 		//近づいてくる
 		CVector3 EnemyPos = m_playerposition - m_position;
 		EnemyPos.Normalize();
 		m_movespeed = EnemyPos * 5.0f;
+		m_movespeed.y = 0.0f;
 		m_position += m_movespeed;
 	}
 	
@@ -64,9 +67,13 @@ void Oni::Chase()
 		CVector3 EnemyOldPos = m_oldpos - m_position;
 		EnemyOldPos.Normalize();
 		m_movespeed = EnemyOldPos * 5.0f;
+		m_movespeed.y = 0.0f;
+		//敵の初期位置と現在位置の距離がほぼ0だったら止まる
+		if (oldpos.Length() < 50.0f) {
+			m_movespeed = { 0.0f,0.0f,0.0f };
+		}
 		m_position += m_movespeed;
 	}
-	
 	m_skinModelRender->SetPos(m_position);
 }
 
@@ -78,7 +85,7 @@ void Oni::AnimationController()
 	case enState_Idle_Run:
 		if (m_movespeed.LengthSq() > 300.0f * 300.0f) {
 			//走りモーション。
-			m_skinModelRender->GetAnimCon().Play(enAnimationClip_run, 0.2f);
+			//m_skinModelRender->GetAnimCon().Play(enAnimationClip_run, 0.2f);
 		}
 		else {
 			//待機モーション
@@ -88,46 +95,32 @@ void Oni::AnimationController()
 		Chase();
 		Turn();
 		break;
-	//攻撃と攻撃の間にクールタイムを設ける
 	case enState_Attack:
-		if (m_skinModelRender->GetAnimCon().IsPlaying()) {
-			m_skinModelRender->GetAnimCon().Play(enAnimationClip_attack, 0.2f);
-			m_skinModelRender->GetAnimCon().SetSpeed(2.0f);
-			Animation();
+		//攻撃と攻撃の間にクールタイムを設ける
+		if (m_timer > 60) {
+			if (m_skinModelRender->GetAnimCon().IsPlaying()) {
+				m_skinModelRender->GetAnimCon().Play(enAnimationClip_attack, 0.2f);
+				m_timer = 0;
+			}
+			else {
+				m_state = enState_Idle_Run;
+			}
 		}
-		else {
-			m_state = enState_Idle_Run;
-		}
-		//キャラクターの向き関係
 		Turn();
 		break;
 	case enState_Damage:
-		if (m_skinModelRender->GetAnimCon().IsPlaying()) {
-			m_skinModelRender->GetAnimCon().Play(enAnimationClip_damage, 0.2f);
+		m_skinModelRender->GetAnimCon().Play(enAnimationClip_damage, 0.2f);
+		if (!m_skinModelRender->GetAnimCon().IsPlaying()){
+				m_state = enState_Idle_Run;
 		}
-		else {
-			m_state = enState_Idle_Run;
-		}
-		Chase();
 		Turn();
 		break;
 	case enState_Dead:
-		if (m_skinModelRender->GetAnimCon().IsPlaying()) {
-			m_skinModelRender->GetAnimCon().Play(enAnimationClip_damage, 0.2f);
+		m_skinModelRender->GetAnimCon().Play(enAnimationClip_death, 0.2f);
+		if (!m_skinModelRender->GetAnimCon().IsPlaying()){
+			delete this;
 		}
-		else {
-			m_state = enState_Idle_Run;
-		}
-		delete this;
 		break;
-	}
-}
-
-void Oni::Damage() 
-{
-	if (Pad(0).GetButton(enButtonRB1)) //RB1ボタンが押されたら
-	{
-		m_state = enState_Damage;
 	}
 }
 
@@ -152,16 +145,23 @@ void Oni::Turn()
 
 }
 
+void Oni::Damage() 
+{
+	if (Pad(0).GetButton(enButtonRB1)){ //RB1ボタンが押されたら
+		m_state = enState_Damage;
+	}
+}
+
 void Oni::Dead()
 {
-	if (Pad(0).GetButton(enButtonRT)) //RTボタンが押されたら
-	{
+	if (Pad(0).GetButton(enButtonRT)){ //RTボタンが押されたら
 		m_state = enState_Dead;
 	}
 }
 
 void Oni::Update()
 {
+	m_timer++;
 	AnimationController();
 	Damage();
 	Dead();
