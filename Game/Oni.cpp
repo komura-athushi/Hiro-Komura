@@ -26,7 +26,8 @@ bool Oni::Start()
 	m_skinModelRender->Init(L"Resource/modelData/enemy.cmo", m_animClip, enAnimationClip_num, enFbxUpAxisZ);
 	m_skinModelRender->SetScale(m_scale);
 	m_skinModelRender->SetPos(m_position);
-	m_staticobject.CreateMesh(*m_skinModelRender);
+	CQuaternion rot;
+	m_staticobject.CreateCapsule(m_position, rot, 40.0f, 50.0f);
 	return true;
 }
 
@@ -38,27 +39,27 @@ void Oni::Attack()
 //プレイヤーの周りをくるくる回ってしまう
 void Oni::Chase()
 {
+	m_moveSpeed = { 0.0f,0.0f,0.0f };
 	//プレイヤーの座標を取得
 	CVector3 m_playerposition = m_player->GetPosition();
 	//プレイヤーと敵の距離
 	CVector3 pos = m_player->GetPosition()-m_position;
+	//近すぎたら止まる
+	if (pos.Length() < 50.0f) {
+	m_state = enState_Attack;
+	}
 	//もしプレイヤーと鬼の距離が近くなったら
-	if (pos.Length() < 1000.0f) {
-
-		//近すぎたら止まる
-		if (pos.Length() < 300.0f) {
-			m_moveSpeed = { 0.0f, 0.0f, 0.0f };
-			m_state = enState_Attack;
-		}
-
+	else if (pos.Length() < 1000.0f) {
 		//近づいてくる
 		CVector3 EnemyPos = m_playerposition - m_position;
 		EnemyPos.Normalize();
-		m_moveSpeed += EnemyPos * 0.1f;
+		m_moveSpeed = EnemyPos * 5.0f;
 		m_position += m_moveSpeed;
-		m_position.y = 0.0f;
-		m_skinModelRender->SetPos(m_position);
 	}
+	else {
+		m_state = enState_Idle;
+	}
+	m_skinModelRender->SetPos(m_position);
 	/*
 	else if(oldpos == m_position){
 		//初期位置に帰る
@@ -69,9 +70,7 @@ void Oni::Chase()
 		m_skinModelRender->SetPos(m_position);
 	}
 	*/
-	else {
-		m_state = enState_Idle;
-	}
+	
 }
 
 void Oni::AnimationController()
@@ -108,4 +107,7 @@ void Oni::Update()
 	//エネミーが映らなくなった
 	AnimationController();
 	Damage();
+	CQuaternion rot;
+	m_staticobject.SetPositionAndRotation(m_position, rot);
+
 }
