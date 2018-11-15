@@ -12,6 +12,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	Town* town = new Town;
 	PlayerStatus* playerstatus = new PlayerStatus;
 	town->SetPlayerStatus(playerstatus);
+	SetPhysicsDebugDrawMode(btIDebugDraw::DBG_DrawWireframe);
 	//ゲームループ。
 	GetEngine().RunGameLoop();
 }

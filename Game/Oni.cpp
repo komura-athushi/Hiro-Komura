@@ -6,7 +6,6 @@ Oni::Oni()
 {
 }
 
-
 Oni::~Oni()
 {
 	delete m_skinModelRender;
@@ -27,7 +26,9 @@ bool Oni::Start()
 	m_skinModelRender->SetScale(m_scale);
 	m_skinModelRender->SetPos(m_position);
 	CQuaternion rot;
-	m_staticobject.CreateCapsule(m_position, rot, 40.0f, 50.0f);
+	CVector3 pos = m_position;
+	pos.y += 55.0f;
+	m_staticobject.CreateCapsule(pos, rot, 40.0f, 50.0f);
 	return true;
 }
 
@@ -108,6 +109,8 @@ void Oni::Update()
 	AnimationController();
 	Damage();
 	CQuaternion rot;
-	m_staticobject.SetPositionAndRotation(m_position, rot);
+	CVector3 pos = m_position;
+	pos.y += 55.0f;
+	m_staticobject.SetPositionAndRotation(pos, rot);
 
 }
