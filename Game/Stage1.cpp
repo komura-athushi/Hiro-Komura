@@ -16,7 +16,9 @@ Stage1::~Stage1()
 	delete m_gamecamera;
 	delete m_ground;
 	delete m_lig;
-	delete m_oni;
+	if (!m_enemygekiha) {
+		delete m_oni;
+	}
 }
 
 bool Stage1::Start()

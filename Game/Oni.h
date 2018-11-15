@@ -70,5 +70,6 @@ private:
 	float m_PP;                                                 //PP
 	float m_Attack;                                             //UŒ‚—Í
 	float m_Defense;                                            //–hŒä—Í
+	bool m_gekiha = false;
 };
 

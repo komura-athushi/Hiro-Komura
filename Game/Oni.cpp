@@ -2,7 +2,7 @@
 #include "Oni.h"
 #define _USE_MATH_DEFINES //M_PI 円周率呼び出し
 #include <math.h> 
-
+#include "Stage1.h"
 //鬼（見た目はスケルトン）です
 Oni::Oni()
 {
@@ -118,7 +118,7 @@ void Oni::AnimationController()
 	case enState_Dead:
 		m_skinModelRender->GetAnimCon().Play(enAnimationClip_death, 0.2f);
 		if (!m_skinModelRender->GetAnimCon().IsPlaying()){
-			delete this;
+			m_gekiha = true;
 		}
 		break;
 	}
@@ -161,6 +161,7 @@ void Oni::Dead()
 
 void Oni::Update()
 {
+	
 	m_timer++;
 	AnimationController();
 	Damage();
@@ -169,5 +170,8 @@ void Oni::Update()
 	CVector3 pos = m_position;
 	pos.y += 55.0f;
 	m_staticobject.SetPositionAndRotation(pos, rot);
-
+	if (m_gekiha) {
+		m_stage1->SetEnemyGekiha();
+		delete this;
+	}
 }
