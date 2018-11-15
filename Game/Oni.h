@@ -13,6 +13,7 @@ public:
 	void Chase();												//追跡
 	void AnimationController();									//アニメーションの再生
 	void Damage();												//ダメージを受けた時のアクション
+	void Turn();												//キャラクターの向きを計算
 	void SetPlayer(Player* player)								//プレイヤーのポイントをセット
 	{
 		m_player = player;
@@ -39,8 +40,12 @@ private:
 	CVector3 m_oldpos = { 30.0f,100.0f,1500.0f };                 //鬼の初期位置
 	CVector3 m_position = { 30.0f,100.0f,1500.0f };               //鬼の座標
 	CVector3 m_scale = { 10.0f,10.0f,10.0f };					//鬼のスケール
-	CVector3 m_moveSpeed = { 0.0f,  0.0f,  0.0f };				//移動速度
+	CVector3 m_movespeed = { 0.0f,  0.0f,  0.0f };				//移動速度
 	Player* m_player;											//プレイヤークラスのポインタ
+	//自機の角度　初期は180度
+	float m_degree = 180.0f;                                    //ユニティちゃんの向いてる角度
+	float m_radian = 0;                                         //上記をラジアン単位に直したもの
+	CQuaternion m_rotation;
 	//プレイヤーの色々なステータス
 	int m_level;                                                //レベル
 	float m_MaxHP;                                              //最大HP

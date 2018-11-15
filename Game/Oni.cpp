@@ -1,5 +1,7 @@
 #include "stdafx.h"
 #include "Oni.h"
+#define _USE_MATH_DEFINES //M_PI 円周率呼び出し
+#include <math.h> 
 
 //鬼（見た目はスケルトン）です
 Oni::Oni()
@@ -40,7 +42,7 @@ void Oni::Attack()
 //プレイヤーの周りをくるくる回ってしまう
 void Oni::Chase()
 {
-	m_moveSpeed = { 0.0f,0.0f,0.0f };
+	m_movespeed = { 0.0f,0.0f,0.0f };
 	//プレイヤーの座標を取得
 	CVector3 m_playerposition = m_player->GetPosition();
 	//プレイヤーと敵の距離
@@ -54,8 +56,8 @@ void Oni::Chase()
 		//近づいてくる
 		CVector3 EnemyPos = m_playerposition - m_position;
 		EnemyPos.Normalize();
-		m_moveSpeed = EnemyPos * 5.0f;
-		m_position += m_moveSpeed;
+		m_movespeed = EnemyPos * 5.0f;
+		m_position += m_movespeed;
 	}
 	else {
 		m_state = enState_Idle;
@@ -100,6 +102,27 @@ void Oni::Damage()
 	{
 		m_state = enState_Damage;
 	}
+}
+
+void Oni::Turn()
+{
+	CVector3 rotation = { 0.0f,0.0f,0.0f };
+	//自機の角度の差分
+	float sdegree = 0.0f;
+	m_radian = M_PI / 180 * m_degree;
+	//回転処理
+	m_degree += sdegree;
+	//m_movespeedからキャラクターを回転させる
+	auto moveSpeedXZ = m_movespeed;
+	moveSpeedXZ.y = 0.0f;
+	moveSpeedXZ.Normalize();
+	moveSpeedXZ.y = 0;
+	if (moveSpeedXZ.LengthSq() < 0.5f) {
+		return;
+	}
+	m_rotation.SetRotation({ 0.0f,1.0f,0.0f }, atan2f(moveSpeedXZ.x, moveSpeedXZ.z));
+	m_skinModelRender->SetRot(m_rotation);
+
 }
 
 void Oni::Update()
