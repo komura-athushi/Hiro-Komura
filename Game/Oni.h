@@ -2,6 +2,7 @@
 #include "Player.h"
 #include "IEnemy.h"
 #include "DemolisherWeapon/physics/PhysicsStaticObject.h"
+class Stage1;
 class Oni : public IEnemy
 {
 public:
@@ -19,7 +20,14 @@ public:
 	{
 		m_player = player;
 	}
-
+	void SetPosition(const CVector3& pos)
+	{
+		m_position = pos;
+	}
+	void SetStage1(Stage1* stage1)
+	{
+		m_stage1 = stage1;
+	}
 private:
 	GameObj::CSkinModelRender* m_skinModelRender = nullptr;		//スキンモデルレンダラー。
 	PhysicsStaticObject m_staticobject;                         //静的オブジェクト
@@ -49,6 +57,7 @@ private:
 	float m_degree = 180.0f;                                    //ユニティちゃんの向いてる角度
 	float m_radian = 0;                                         //上記をラジアン単位に直したもの
 	CQuaternion m_rotation;
+	Stage1* m_stage1;
 	//プレイヤーの色々なステータス
 	int m_level;                                                //レベル
 	float m_MaxHP;                                              //最大HP

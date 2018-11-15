@@ -63,6 +63,7 @@ void Player::Update()
 	if (m_charaCon.IsOnGround()) {
 		//地面についた。
 		m_movespeed.y = 0.0f;
+		m_isjump = false;
 	}
 	m_charaCon.SetPosition(m_position);
 	m_skinModelRender->SetPos(m_position);
@@ -86,6 +87,7 @@ void Player::Move()
 			//ジャンプする。
 			m_movespeed.y = 500.0f;	//上方向に速度を設定して、
 			m_state = enState_Jump;
+			m_isjump = true;
 		}
 	}
 	stickL.x = -stickL.x;
@@ -139,11 +141,15 @@ void Player::Animation()
 		m_state = enState_Damage;
 	}
 	else if (Pad(0).GetButton(enButtonX)) {
-		m_state = enState_Test;
+		if (m_state != enState_Test && m_timer>=40) {
+			m_state = enState_Test;
+			m_timer = 0;
+		}
 	}
 	if (Pad(0).GetButton(enButtonY)) {
 		m_state = enState_GameOver;
 	}
+	m_timer++;
 }
 
 void Player::AnimationController()
@@ -227,10 +233,11 @@ void Player::AnimationController()
 		Animation();
 		break;
 	case enState_Test:
-		if (m_skinModelRender->GetAnimCon().IsPlaying()) {
+		if (m_skinModelRender->GetAnimCon().IsPlaying() || m_isjump==true) {
 			m_skinModelRender->GetAnimCon().Play(enAnimationClip_Test, 0.2f);
-			m_skinModelRender->GetAnimCon().SetSpeed(2.0f);
+			m_skinModelRender->GetAnimCon().SetSpeed(5.0f);
 			Animation();
+			m_isjump = false;
 		}
 		else {
 			if (m_movespeed.LengthSq() > 40.0f * 40.0f) {

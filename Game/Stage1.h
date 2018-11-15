@@ -17,6 +17,10 @@ public:
 	{
 		m_playerstatus = ps;
 	}
+	void SetEnemyGekiha()
+	{
+		m_enemygekiha = true;
+	}
 private:
 	Ground* m_ground;                                  //Groundクラスのポインタ
 	GameCamera* m_gamecamera;                          //GameCameraクラスのポインタ
@@ -26,5 +30,6 @@ private:
 	Level m_level;                                     //レベルデザインのためのクラス
 	PlayerStatus* m_playerstatus;                      //プレイヤーステータスクラスのポインタ
 	Oni* m_oni;										   //鬼クラスのポインタ
+	bool m_enemygekiha = false;
 };
 

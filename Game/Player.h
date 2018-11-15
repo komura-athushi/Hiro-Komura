@@ -67,7 +67,9 @@ private:
 	CVector3 m_movespeed;                                       //移動速度
 	CVector3 m_position = {0.0f,100.0f,00.0f};                  //ユニティちゃんの座標
 	CVector3 m_scale = { 1.0f,1.0f,1.0f };                      //大きさ
-	bool m_gameover = false;
+	int m_timer = 0;                                            //攻撃のクールタイム
+	bool m_gameover = false;                                    //ゲームオーバーかどうか
+	bool m_isjump = false;                                      //ジャンプしているかどうか
 	//自機の角度　初期は180度
 	float m_degree = 180.0f;                                    //ユニティちゃんの向いてる角度
 	float m_radian = 0;                                         //上記をラジアン単位に直したもの
@@ -75,7 +77,7 @@ private:
 	const float m_multiply = 400.0f;                            //ユニティちゃんの移動速度を調整する
 	CQuaternion m_rotation;                                     //クオンテーション
 	CCharacterController m_charaCon;                            //キャラクターの当たり判定とか移動とか
-	int m_timer = 0;                                            //弾発射のクールタイム                                     
+	                               
 	//アニメーション関係
 	enum EnAnimationClip {
 		enAnimationClip_idle,

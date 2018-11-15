@@ -1,5 +1,4 @@
 #pragma once
-#include "DemolisherWeapon/physics/PhysicsGhostObject.h"
 class Sword:public IGameObject
 {
 public:
@@ -33,6 +32,5 @@ private:
 	CVector3 m_scale = { 1.0f,1.0f,1.0f };                      //大きさ
 	CVector3 m_movespeed = { 0.0f,0.0f,0.0f };                  //移動速度
 	CQuaternion m_qRot;                                         //クオンテーション
-	PhysicsGhostObject m_ghostobject;                           //静的オブジェクト
 };
 

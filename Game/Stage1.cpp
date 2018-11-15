@@ -43,13 +43,21 @@ bool Stage1::Start()
 			//フックした場合はtrueを返す。
 			return true;
 		}
+		else if (objData.EqualObjectName(L"enemy") == true) {
+			//スケルトン
+			//プレイヤーのインスタンスを生成する。
+			m_oni = new Oni;
+			m_oni->SetPosition(objData.position);
+			m_oni->SetPlayer(m_player);
+			m_oni->SetStage1(this);
+			//フックした場合はtrueを返す。
+			return true;
+		}
 		return false;
 	});
 	m_gamecamera = new GameCamera;
 	m_gamecamera->SetPlayer(m_player);
 	m_player->SetCamera(m_gamecamera);
-	m_oni = new Oni;
-	m_oni->SetPlayer(m_player);
 	return true;
 }
 
