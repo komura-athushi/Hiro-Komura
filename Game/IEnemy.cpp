@@ -45,7 +45,7 @@ void IEnemy::Damage(int attack)
 void IEnemy::PostRender()
 {
 	wchar_t output[256];
-	swprintf_s(output, L"HP   %d\nPP   %d\n", m_HP,m_Attack);
+	swprintf_s(output, L"HP   %d\natk  %d\n", m_HP,m_Attack);
 	m_font.DrawScreenPos(output, { 00.0f,100.0f });
 }
 

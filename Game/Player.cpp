@@ -307,7 +307,7 @@ void Player::OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventName)
 		GameObj::CCollisionObj* attackCol = NewGO<GameObj::CCollisionObj>();
 		//Œ`ó‚Ìì¬
 		CVector3 pos = m_position + CVector3::AxisY()*60.0f;
-		pos += m_playerheikou * 80.0f;
+		pos += m_playerheikou * 90.0f;
 		attackCol->CreateSphere(pos, CQuaternion::Identity(), 70.0f);
 		//õ–½‚ğİ’è
 		attackCol->SetTimer(10);//15ƒtƒŒ[ƒ€Œãíœ‚³‚ê‚é

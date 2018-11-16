@@ -30,6 +30,10 @@ public:
 	{
 		m_stage1 = stage1;
 	}
+	void SetOldPosition(const CVector3 pos)
+	{
+		m_oldpos = pos;
+	}
 private:
 	GameObj::CSkinModelRender* m_skinModelRender = nullptr;		//スキンモデルレンダラー。
 	PhysicsStaticObject m_staticobject;                         //静的オブジェクト
@@ -62,7 +66,7 @@ private:
 	CQuaternion m_rotation;
 	Stage1* m_stage1;
 	int m_timer=0;												//攻撃のクールタイムのためにフレーム数を数える
-	float m_r = 50.0f;                                          //コリジョンの半径
+	float m_r = 80.0f;                                          //コリジョンの半径
 	float m_collisionheight = 50.0f;                            //コリジョンをm_positionからどれだけ上にあげるか
 	//Oniの色々なステータス
 	static const int m_MaxHP = 50;

@@ -191,9 +191,9 @@ void Oni::OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventName)
 		//UŒ‚”»’è‚Ì”­¶
 		GameObj::CCollisionObj* attackCol = NewGO<GameObj::CCollisionObj>();
 		//Œ`ó‚Ìì¬
-		CVector3 pos = m_position + CVector3::AxisY()*50.0f;
+		CVector3 pos = m_position + CVector3::AxisY()*m_collisionheight;
 		pos += m_heikou * 30.0f;
-		attackCol->CreateSphere(pos, CQuaternion::Identity(), 100.0f);
+		attackCol->CreateSphere(pos, CQuaternion::Identity(), m_r);
 		//õ–½‚ğİ’è
 		attackCol->SetTimer(4);//15ƒtƒŒ[ƒ€Œãíœ‚³‚ê‚é
 		attackCol->SetCallback([&](GameObj::CCollisionObj::SCallbackParam& param) {

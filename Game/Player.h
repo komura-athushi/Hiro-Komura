@@ -113,11 +113,11 @@ private:
 	EnState m_state = enState_Idle;
 	//プレイヤーの色々なステータス
 	int m_level;                                                //レベル
-	int m_MaxHP;                                              //最大HP
-	int m_HP;                                                 //HP
-	int m_MaxPP;                                              //最大PP
-	int m_PP;                                                 //PP
-    int m_Attack;                                             //攻撃力
-	bool m_damage = false;                                    //ダメージを受けた！
+	int m_MaxHP;                                                //最大HP
+	int m_HP;                                                   //HP
+	int m_MaxPP;                                                //最大PP
+	int m_PP;                                                   //PP
+    int m_Attack;                                               //攻撃力
+	bool m_damage = false;                                      //ダメージを受けた！
 };
 
