@@ -27,11 +27,6 @@ public:
 	{
 		return m_Attack;
 	}
-	//–hŒä—Í‚ğæ“¾
-	float GetDefense() const
-	{
-		return m_Defense;
-	}
 	//ƒŒƒxƒ‹‚ğİ’è
 	void SetLevel(const int& level) 
 	{
@@ -47,7 +42,6 @@ private:
 	int m_exp;                                            //ŒoŒ±’l
 	int m_MaxHP=100;                                      //Å‘åHP
 	int m_MaxPP=100;                                      //Å‘åPP(–‚–@Œ‚‚Â‚Ì‚É•K—v)
-	int m_Attack=50;                                      //UŒ‚—Í
-	int m_Defense=50;                                     //–hŒä—Í
+	int m_Attack=10;                                      //UŒ‚—Í
 }; 
 

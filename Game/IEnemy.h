@@ -25,7 +25,8 @@ public:
 	virtual void Update()=0;
 	virtual void Attack()=0;
 	void Damege(int attack);
-	//void SetStatus(int h, int a);
+	//文字表示
+	void PostRender()override;
 protected:
 	std::unique_ptr<GameObj::CCollisionObj> m_collision;      //丸いコリジョン
 	//プレイヤーの色々なステータス
@@ -34,7 +35,9 @@ protected:
 	int m_MaxPP;                                              //最大PP
 	int m_PP;                                                 //PP
 	int m_Attack;                                             //攻撃力
-	int m_timer = 0;
+	int m_timer = 0;                                          //当たり判定にクールタイム
+	bool m_damege = false;                                    //ダメージを受けたかどうか
 	bool m_death = false;                                     //HPが0以下になったかどうか  
+	CFont m_font;                                               //文字表示クラス
 };
 

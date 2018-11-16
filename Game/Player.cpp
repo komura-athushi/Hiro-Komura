@@ -264,7 +264,6 @@ void Player::Status()
 	m_MaxHP = m_playerstatus->GetMaxHP();
 	m_MaxPP = m_playerstatus->GetMaxPP();
 	m_Attack = m_playerstatus->GetAttack();
-	m_Defense = m_playerstatus->GetDefense();
 	m_HP = m_MaxHP;
 	m_PP = m_MaxPP;
 }  
@@ -272,7 +271,7 @@ void Player::Status()
 void Player::PostRender()
 {
 	wchar_t output[256];
-	swprintf_s(output, L" %d\n %d\n %d\n %d\n", m_HP, m_PP, m_Attack, m_Defense);
+	swprintf_s(output, L"HP   %d\nPP   %d\natk  %d\n", m_HP, m_PP, m_Attack);
 	m_font.DrawScreenPos(output, { 800.0f,100.0f });
 }
 
@@ -301,7 +300,7 @@ void Player::OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventName)
 		pos += m_playerheikou * 60.0f;
 		attackCol->CreateSphere(pos, CQuaternion::Identity(), 70.0f);
 		//寿命を設定
-		attackCol->SetTimer(15);//15フレーム後削除される
+		attackCol->SetTimer(10);//15フレーム後削除される
 		attackCol->SetCallback([&](GameObj::CCollisionObj::SCallbackParam& param) {
 			//衝突した判定の名前が"IEnemy"ならm_Attack分だけダメージ与える
 			if (param.EqualName(L"IEnemy")) {

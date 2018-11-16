@@ -30,17 +30,23 @@ void IEnemy::SetCCollision(CVector3 pos,float l)
 	m_collision->SetPosition(pos + CVector3::AxisY()*l);
 }
 
-
-
-
 void IEnemy::Damege(int attack)
 {
 	if (m_timer >= 30) {
 		m_HP -= attack;
 		m_timer = 0;
+		m_damege = true;
 	}
-	if (m_HP < 0) {
+	if (m_HP <= 0) {
 		m_death = true;
 	}
 }
+
+void IEnemy::PostRender()
+{
+	wchar_t output[256];
+	swprintf_s(output, L"HP   %d\nPP   %d\n", m_HP,m_Attack);
+	m_font.DrawScreenPos(output, { 00.0f,100.0f });
+}
+
 

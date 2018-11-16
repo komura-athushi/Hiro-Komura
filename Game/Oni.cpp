@@ -4,7 +4,7 @@
 #include <math.h> 
 #include "Stage1.h"
 //鬼（見た目はスケルトン）です
-Oni::Oni():IEnemy(m_Attack,m_HP)
+Oni::Oni():IEnemy(m_MaxHP,m_Attack)
 {
 	
 }
@@ -111,6 +111,7 @@ void Oni::AnimationController()
 		Turn();
 		break;
 	case enState_Damage:
+		m_skinModelRender->GetAnimCon().SetSpeed(2.0f);
 		m_skinModelRender->GetAnimCon().Play(enAnimationClip_damage, 0.2f);
 		if (!m_skinModelRender->GetAnimCon().IsPlaying()){
 				m_state = enState_Idle_Run;
@@ -149,8 +150,9 @@ void Oni::Turn()
 
 void Oni::Damage() 
 {
-	if (Pad(0).GetButton(enButtonRB1)){ //RB1ボタンが押されたら
+	if (IEnemy::m_damege) {
 		m_state = enState_Damage;
+		IEnemy::m_damege = false;
 	}
 }
 

@@ -61,9 +61,9 @@ private:
 	int m_timer;												//攻撃のクールタイムのためにフレーム数を数える
 	float m_r = 50.0f;                                          //コリジョンの半径
 	float m_collisionheight = 50.0f;                            //コリジョンをm_positionからどれだけ上にあげるか
-	//プレイヤーの色々なステータス
-	int m_HP = 30;
-	int m_Attack=20;
+	//Oniの色々なステータス
+	static const int m_MaxHP = 50;
+	static const int m_Attack=20;
 	bool m_gekiha = false;
 };
 

@@ -113,6 +113,5 @@ private:
 	int m_MaxPP;                                              //Å‘åPP
 	int m_PP;                                                 //PP
     int m_Attack;                                             //UŒ‚—Í
-	int m_Defense;                                            //–hŒä—Í
 };
 
