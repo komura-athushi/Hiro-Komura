@@ -25,6 +25,8 @@ public:
 	void Move();
 	//攻撃関係
 	void Kougeki();
+	//アニメーションイベント
+	void OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventName);
 	//プレイヤーステータスクラスのポインタを設定
 	void SetPlayerStatus(PlayerStatus* ps)
 	{
@@ -66,6 +68,7 @@ private:
 	GameCamera* m_gamecamera;                                   //カメラのポインタ
 	CVector3 m_movespeed;                                       //移動速度
 	CVector3 m_position = {0.0f,100.0f,00.0f};                  //ユニティちゃんの座標
+	CVector3 m_playerheikou = { 0.0f,0.0f,0.0f };
 	CVector3 m_scale = { 1.0f,1.0f,1.0f };                      //大きさ
 	int m_timer = 0;                                            //攻撃のクールタイム
 	bool m_gameover = false;                                    //ゲームオーバーかどうか
@@ -87,7 +90,7 @@ private:
 		enAnimationClip_damage,
 		enAnimationClip_KneelDown,
 		enAnimationClip_Clear,
-		enAnimationClip_Test,
+		enAnimationClip_attack,
 		enAnimationClip_num,
 	};
 	//アニメーション分岐
@@ -99,17 +102,17 @@ private:
 		enState_GameOver,
 		enState_WaitStartGameClear,
 		enState_GameClear,
-		enState_Test,
+		enState_Attack,
 	};
 	AnimationClip m_animClip[enAnimationClip_num];
 	EnState m_state = enState_Idle;
 	//プレイヤーの色々なステータス
 	int m_level;                                                //レベル
-	float m_MaxHP;                                              //最大HP
-	float m_HP;                                                 //HP
-	float m_MaxPP;                                              //最大PP
-	float m_PP;                                                 //PP
-	float m_Attack;                                             //攻撃力
-	float m_Defense;                                            //防御力
+	int m_MaxHP;                                              //最大HP
+	int m_HP;                                                 //HP
+	int m_MaxPP;                                              //最大PP
+	int m_PP;                                                 //PP
+    int m_Attack;                                             //攻撃力
+	int m_Defense;                                            //防御力
 };
 

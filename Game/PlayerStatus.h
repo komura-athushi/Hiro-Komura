@@ -33,21 +33,21 @@ public:
 		return m_Defense;
 	}
 	//レベルを設定
-	void SetLevel(const float& level) 
+	void SetLevel(const int& level) 
 	{
 		m_level = level;
 	}
 	//経験値を加算
-	void PlusExp(const float& exp)
+	void PlusExp(const int& exp)
 	{
 		m_exp += exp;
 	}
-private:
-	int m_level;                                               //レベル
-	int m_exp;                                                 //経験値
-	float m_MaxHP=100.0f;                                      //最大HP
-	float m_MaxPP=100.0f;                                      //最大PP(魔法撃つのに必要)
-	float m_Attack=50.0f;                                      //攻撃力
-	float m_Defense=50.0f;                                     //防御力
+private:  
+	int m_level;                                          //レベル
+	int m_exp;                                            //経験値
+	int m_MaxHP=100;                                      //最大HP
+	int m_MaxPP=100;                                      //最大PP(魔法撃つのに必要)
+	int m_Attack=50;                                      //攻撃力
+	int m_Defense=50;                                     //防御力
 }; 
 

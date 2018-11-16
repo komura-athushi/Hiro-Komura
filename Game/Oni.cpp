@@ -4,8 +4,9 @@
 #include <math.h> 
 #include "Stage1.h"
 //鬼（見た目はスケルトン）です
-Oni::Oni()
+Oni::Oni():IEnemy(m_Attack,m_HP)
 {
+	
 }
 
 Oni::~Oni()
@@ -15,6 +16,7 @@ Oni::~Oni()
 
 bool Oni::Start()
 {
+	IEnemy::CCollision({ m_position }, m_collisionheight, m_r);
 	//アニメーション
 	m_animClip[enAnimationClip_idle].Load(L"Asset/animData/enemy/idle.tka");
 	m_animClip[enAnimationClip_attack].Load(L"Asset/animData/enemy/attack.tka");
@@ -154,14 +156,13 @@ void Oni::Damage()
 
 void Oni::Dead()
 {
-	if (Pad(0).GetButton(enButtonRT)){ //RTボタンが押されたら
+	if (IEnemy::m_death) {
 		m_state = enState_Dead;
 	}
 }
 
 void Oni::Update()
 {
-	
 	m_timer++;
 	AnimationController();
 	Damage();
@@ -170,6 +171,8 @@ void Oni::Update()
 	CVector3 pos = m_position;
 	pos.y += 55.0f;
 	m_staticobject.SetPositionAndRotation(pos, rot);
+	IEnemy::SetCCollision(m_position,m_collisionheight);
+	IEnemy::m_timer++;
 	if (m_gekiha) {
 		m_stage1->SetEnemyGekiha();
 		delete this;

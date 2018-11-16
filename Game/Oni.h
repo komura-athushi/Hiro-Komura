@@ -57,19 +57,13 @@ private:
 	float m_degree = 180.0f;                                    //ユニティちゃんの向いてる角度
 	float m_radian = 0;                                         //上記をラジアン単位に直したもの
 	CQuaternion m_rotation;
-
 	Stage1* m_stage1;
-
 	int m_timer;												//攻撃のクールタイムのためにフレーム数を数える
-
+	float m_r = 50.0f;                                          //コリジョンの半径
+	float m_collisionheight = 50.0f;                            //コリジョンをm_positionからどれだけ上にあげるか
 	//プレイヤーの色々なステータス
-	int m_level;                                                //レベル
-	float m_MaxHP;                                              //最大HP
-	float m_HP;                                                 //HP
-	float m_MaxPP;                                              //最大PP
-	float m_PP;                                                 //PP
-	float m_Attack;                                             //攻撃力
-	float m_Defense;                                            //防御力
+	int m_HP = 30;
+	int m_Attack=20;
 	bool m_gekiha = false;
 };
 

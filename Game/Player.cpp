@@ -5,6 +5,7 @@
 #include "Sword.h"
 #include "GameCamera.h"
 #include "PlayerStatus.h"
+#include "IEnemy.h"
 Player::Player()
 {
 }
@@ -31,7 +32,7 @@ bool Player::Start()
 	m_animClip[enAnimationClip_damage].Load(L"Asset/animData/unityChan/damage.tka");
 	m_animClip[enAnimationClip_KneelDown].Load(L"Asset/animData/unityChan/KneelDown.tka");
 	m_animClip[enAnimationClip_Clear].Load(L"Asset/animData/unityChan/Clear.tka");
-	m_animClip[enAnimationClip_Test].Load(L"Asset/animData/unityChan/Zangeki1.tka",false,enZtoY);
+	m_animClip[enAnimationClip_attack].Load(L"Asset/animData/unityChan/attack.tka",false,enZtoY);
 	//アニメーションのループフラグをtrueにする
 	for (auto& animClip : m_animClip) {
 		animClip.SetLoopFlag(true);
@@ -41,7 +42,7 @@ bool Player::Start()
 	m_animClip[enAnimationClip_KneelDown].SetLoopFlag(false);
 	m_animClip[enAnimationClip_Clear].SetLoopFlag(false);
 	m_animClip[enAnimationClip_damage].SetLoopFlag(false);
-	m_animClip[enAnimationClip_Test].SetLoopFlag(false);
+	m_animClip[enAnimationClip_attack].SetLoopFlag(false);
 	//unityChanを表示
 	m_skinModelRender = new GameObj::CSkinModelRender;
     m_skinModelRender->Init(L"Resource/modelData/unityChan.cmo", m_animClip, enAnimationClip_num, enFbxUpAxisY);
@@ -51,6 +52,9 @@ bool Player::Start()
 	m_bonehand=m_skinModelRender->FindBoneID(L"Character1_RightHand");
 	CVector3 pos=m_skinModelRender->GetBonePos(m_bonehand);
 	CQuaternion qRot= m_skinModelRender->GetBoneRot(m_bonehand);
+	m_skinModelRender->GetAnimCon().AddAnimationEventListener([&](const wchar_t* clipName, const wchar_t* eventName) {
+		OnAnimationEvent(clipName, eventName);
+	});
 	m_sword->SetRot(qRot);
 	m_sword->SetPosition(pos);
 	Status();
@@ -130,6 +134,7 @@ void Player::Turn()
 	if (moveSpeedXZ.LengthSq() < 0.5f) {
 		return;
 	}
+	m_playerheikou = moveSpeedXZ;
 	m_rotation.SetRotation({0.0f,1.0f,0.0f}, atan2f(moveSpeedXZ.x, moveSpeedXZ.z));
 	m_skinModelRender->SetRot(m_rotation);
 	
@@ -141,8 +146,8 @@ void Player::Animation()
 		m_state = enState_Damage;
 	}
 	else if (Pad(0).GetButton(enButtonX)) {
-		if (m_state != enState_Test && m_timer>=40) {
-			m_state = enState_Test;
+		if (m_state != enState_Attack && m_timer>=40) {
+			m_state = enState_Attack;
 			m_timer = 0;
 		}
 	}
@@ -232,9 +237,9 @@ void Player::AnimationController()
 		Turn();
 		Animation();
 		break;
-	case enState_Test:
+	case enState_Attack:
 		if (m_skinModelRender->GetAnimCon().IsPlaying() || m_isjump==true) {
-			m_skinModelRender->GetAnimCon().Play(enAnimationClip_Test, 0.2f);
+			m_skinModelRender->GetAnimCon().Play(enAnimationClip_attack, 0.2f);
 			m_skinModelRender->GetAnimCon().SetSpeed(5.0f);
 			Animation();
 			m_isjump = false;
@@ -267,13 +272,13 @@ void Player::Status()
 void Player::PostRender()
 {
 	wchar_t output[256];
-	swprintf_s(output, L" %f\n %f\n %f\n %f\n", m_HP, m_PP, m_Attack, m_Defense);
+	swprintf_s(output, L" %d\n %d\n %d\n %d\n", m_HP, m_PP, m_Attack, m_Defense);
 	m_font.DrawScreenPos(output, { 800.0f,100.0f });
 }
 
 void Player::Kougeki()
 {
-	if (m_state == enState_Test) {
+	if (m_state == enState_Attack) {
 		CVector3 pos = m_skinModelRender->GetBonePos(m_bonehand);
 		CQuaternion qRot = m_skinModelRender->GetBoneRot(m_bonehand);
 		m_sword->SetRot(qRot);
@@ -283,4 +288,27 @@ void Player::Kougeki()
 	else {
 		m_sword->SetScale({ 0.001f, 0.001f, 0.001f });
 	}
+}
+
+void Player::OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventName)
+{
+	(void)clipName;
+	//if (eventName==L"attack") {
+		//攻撃判定の発生
+		GameObj::CCollisionObj* attackCol = NewGO<GameObj::CCollisionObj>();
+		//形状の作成
+		CVector3 pos = m_position + CVector3::AxisY()*60.0f;
+		pos += m_playerheikou * 60.0f;
+		attackCol->CreateSphere(pos, CQuaternion::Identity(), 70.0f);
+		//寿命を設定
+		attackCol->SetTimer(15);//15フレーム後削除される
+		attackCol->SetCallback([&](GameObj::CCollisionObj::SCallbackParam& param) {
+			//衝突した判定の名前が"IEnemy"ならm_Attack分だけダメージ与える
+			if (param.EqualName(L"IEnemy")) {
+				IEnemy* enemy = param.GetClass<IEnemy>();//相手の判定に設定されているCEnemyのポインタを取得
+				enemy->Damege(m_Attack);
+			}
+		}
+		);
+	//}
 }
