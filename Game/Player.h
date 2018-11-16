@@ -58,14 +58,7 @@ public:
 		m_gamecamera = camera;
 	}
 	//プレイヤーがダメージを受けた時の処理
-	void Damege(int attack)
-	{
-		if (m_timer2 >= 50) {
-			m_HP -= attack;
-			m_damage = true;
-			m_timer2 = 0;
-		}
-	}
+	void Damage(int attack);
 private:
 	GameObj::CSkinModelRender* m_skinModelRender = nullptr;		//スキンモデルレンダラー。
 	std::unique_ptr<GameObj::CCollisionObj> m_collision;      //丸いコリジョン

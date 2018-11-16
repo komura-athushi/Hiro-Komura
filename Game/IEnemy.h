@@ -24,7 +24,7 @@ public:
 	void SetCCollision(CVector3 pos,float l);
 	virtual void Update()=0;
 	virtual void Attack()=0;
-	void Damege(int attack);
+	void Damage(int attack);
 	//文字表示
 	void PostRender()override;
 protected:
@@ -36,7 +36,7 @@ protected:
 	int m_PP;                                                 //PP
 	int m_Attack;                                             //攻撃力
 	int m_timer = 0;                                          //当たり判定にクールタイム
-	bool m_damege = false;                                    //ダメージを受けたかどうか
+	bool m_damage = false;                                    //ダメージを受けたかどうか
 	bool m_death = false;                                     //HPが0以下になったかどうか  
 	CFont m_font;                                               //文字表示クラス
 };

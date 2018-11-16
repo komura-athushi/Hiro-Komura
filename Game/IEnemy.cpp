@@ -30,12 +30,12 @@ void IEnemy::SetCCollision(CVector3 pos,float l)
 	m_collision->SetPosition(pos + CVector3::AxisY()*l);
 }
 
-void IEnemy::Damege(int attack)
+void IEnemy::Damage(int attack)
 {
 	if (m_timer >= 30) {
 		m_HP -= attack;
 		m_timer = 0;
-		m_damege = true;
+		m_damage = true;
 	}
 	if (m_HP <= 0) {
 		m_death = true;

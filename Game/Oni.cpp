@@ -104,7 +104,7 @@ void Oni::AnimationController()
 		//攻撃と攻撃の間にクールタイムを設ける
 		if (m_timer > 60) {
 			if (m_skinModelRender->GetAnimCon().IsPlaying()) {
-				m_skinModelRender->GetAnimCon().Play(enAnimationClip_attack, 0.2f);
+				m_skinModelRender->GetAnimCon().Play(enAnimationClip_attack, 0.0f);
 				m_timer = 0;
 			}
 			else {
@@ -149,14 +149,13 @@ void Oni::Turn()
 	m_heikou = moveSpeedXZ;
 	m_rotation.SetRotation({ 0.0f,1.0f,0.0f }, atan2f(moveSpeedXZ.x, moveSpeedXZ.z));
 	m_skinModelRender->SetRot(m_rotation);
-
 }
 
 void Oni::Damage() 
 {
-	if (IEnemy::m_damege) {
+	if (IEnemy::m_damage) {
 		m_state = enState_Damage;
-		IEnemy::m_damege = false;
+		IEnemy::m_damage = false;
 	}
 }
 
@@ -194,14 +193,14 @@ void Oni::OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventName)
 		//形状の作成
 		CVector3 pos = m_position + CVector3::AxisY()*50.0f;
 		pos += m_heikou * 30.0f;
-		attackCol->CreateSphere(pos, CQuaternion::Identity(), 40.0f);
+		attackCol->CreateSphere(pos, CQuaternion::Identity(), 100.0f);
 		//寿命を設定
 		attackCol->SetTimer(4);//15フレーム後削除される
 		attackCol->SetCallback([&](GameObj::CCollisionObj::SCallbackParam& param) {
 			//衝突した判定の名前が"IEnemy"ならm_Attack分だけダメージ与える
 			if (param.EqualName(L"Player")) {
 				Player* player = param.GetClass<Player>();//相手の判定に設定されているCEnemyのポインタを取得
-				player->Damege(m_Attack);
+				player->Damage(m_Attack);
 			}
 		}
 		);

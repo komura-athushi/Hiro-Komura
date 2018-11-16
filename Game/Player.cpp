@@ -220,7 +220,6 @@ void Player::AnimationController()
 	case enState_GameOver:
 		m_skinModelRender->GetAnimCon().Play(enAnimationClip_KneelDown, 0.2f);
 		if (m_skinModelRender->GetAnimCon().IsPlaying()) {
-			
 		}
 		else {
 			if (Pad(0).GetButton(enButtonSelect)) {
@@ -308,7 +307,7 @@ void Player::OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventName)
 		GameObj::CCollisionObj* attackCol = NewGO<GameObj::CCollisionObj>();
 		//形状の作成
 		CVector3 pos = m_position + CVector3::AxisY()*60.0f;
-		pos += m_playerheikou * 60.0f;
+		pos += m_playerheikou * 80.0f;
 		attackCol->CreateSphere(pos, CQuaternion::Identity(), 70.0f);
 		//寿命を設定
 		attackCol->SetTimer(10);//15フレーム後削除される
@@ -316,9 +315,18 @@ void Player::OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventName)
 			//衝突した判定の名前が"IEnemy"ならm_Attack分だけダメージ与える
 			if (param.EqualName(L"IEnemy")) {
 				IEnemy* enemy = param.GetClass<IEnemy>();//相手の判定に設定されているCEnemyのポインタを取得
-				enemy->Damege(m_Attack);
+				enemy->Damage(m_Attack);
 			}
 		}
 		);
+	}
+}
+
+void Player::Damage(int attack)
+{
+	if (m_timer2 >= 30) {
+		m_HP -= attack;
+		m_damage = true;
+		m_timer2 = 0;
 	}
 }
