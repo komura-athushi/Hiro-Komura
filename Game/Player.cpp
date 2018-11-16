@@ -24,6 +24,16 @@ bool Player::Start()
 		40.0f,			//高さ。
 		m_position		//初期位置。
 	);
+	//くらい判定の作成
+	m_collision = std::make_unique<GameObj::CCollisionObj>();
+	//形状の作成
+	m_collision->CreateSphere(m_position + CVector3::AxisY()*m_collisionUp, CQuaternion::Identity(), m_r);
+	//寿命を設定
+	m_collision->SetTimer(enNoTimer);//enNoTimerで寿命なし
+	//名前を設定
+	m_collision->SetName(L"Player");
+	//クラスのポインタを設定
+	m_collision->SetClass(this);
 	//アニメーションファイルをロード
 	m_animClip[enAnimationClip_idle].Load(L"Asset/animData/unityChan/idle.tka");
 	m_animClip[enAnimationClip_walk].Load(L"Asset/animData/unityChan/walk.tka");
@@ -71,8 +81,9 @@ void Player::Update()
 	}
 	m_charaCon.SetPosition(m_position);
 	m_skinModelRender->SetPos(m_position);
+	m_collision->SetPosition(m_position + CVector3::AxisY()*m_collisionUp);
 	Kougeki();
-	
+	m_timer2++;
 }
 
 void Player::Move()
@@ -108,7 +119,6 @@ void Player::Move()
 	m_movespeed.y -= 800.0f *GetDeltaTimeSec();
 	//キャラクターコントローラーを使用して、座標を更新。
 	m_position = m_charaCon.Execute(m_movespeed, GetDeltaTimeSec());
-	
 }
 
 void Player::Turn()
@@ -137,13 +147,14 @@ void Player::Turn()
 	m_playerheikou = moveSpeedXZ;
 	m_rotation.SetRotation({0.0f,1.0f,0.0f}, atan2f(moveSpeedXZ.x, moveSpeedXZ.z));
 	m_skinModelRender->SetRot(m_rotation);
-	
 }
 
 void Player::Animation()
 {
-	if (Pad(0).GetButton(enButtonB)) {
+	if (m_damage) {
 		m_state = enState_Damage;
+		m_damage = false;
+		
 	}
 	else if (Pad(0).GetButton(enButtonX)) {
 		if (m_state != enState_Attack && m_timer>=40) {
@@ -151,7 +162,7 @@ void Player::Animation()
 			m_timer = 0;
 		}
 	}
-	if (Pad(0).GetButton(enButtonY)) {
+	if (m_HP<=0) {
 		m_state = enState_GameOver;
 	}
 	m_timer++;
@@ -292,7 +303,7 @@ void Player::Kougeki()
 void Player::OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventName)
 {
 	(void)clipName;
-	//if (eventName==L"attack") {
+	if (wcscmp(eventName,L"attack")==0) {
 		//攻撃判定の発生
 		GameObj::CCollisionObj* attackCol = NewGO<GameObj::CCollisionObj>();
 		//形状の作成
@@ -309,5 +320,5 @@ void Player::OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventName)
 			}
 		}
 		);
-	//}
+	}
 }

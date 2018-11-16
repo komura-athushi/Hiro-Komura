@@ -57,8 +57,18 @@ public:
 	{
 		m_gamecamera = camera;
 	}
+	//プレイヤーがダメージを受けた時の処理
+	void Damege(int attack)
+	{
+		if (m_timer2 >= 50) {
+			m_HP -= attack;
+			m_damage = true;
+			m_timer2 = 0;
+		}
+	}
 private:
 	GameObj::CSkinModelRender* m_skinModelRender = nullptr;		//スキンモデルレンダラー。
+	std::unique_ptr<GameObj::CCollisionObj> m_collision;      //丸いコリジョン
 	CFont m_font;                                               //文字表示クラス
 	Bone* m_bone;                                               //骨
 	PlayerStatus* m_playerstatus;                               //プレイヤーステータスのポインタ
@@ -68,9 +78,10 @@ private:
 	GameCamera* m_gamecamera;                                   //カメラのポインタ
 	CVector3 m_movespeed;                                       //移動速度
 	CVector3 m_position = {0.0f,100.0f,00.0f};                  //ユニティちゃんの座標
-	CVector3 m_playerheikou = { 0.0f,0.0f,0.0f };
+	CVector3 m_playerheikou = { 0.0f,0.0f,0.0f };               //プレイヤーと平行なベクトル
 	CVector3 m_scale = { 1.0f,1.0f,1.0f };                      //大きさ
 	int m_timer = 0;                                            //攻撃のクールタイム
+	int m_timer2 = 0;                                           //ダメージのクールタイム
 	bool m_gameover = false;                                    //ゲームオーバーかどうか
 	bool m_isjump = false;                                      //ジャンプしているかどうか
 	//自機の角度　初期は180度
@@ -80,7 +91,8 @@ private:
 	const float m_multiply = 400.0f;                            //ユニティちゃんの移動速度を調整する
 	CQuaternion m_rotation;                                     //クオンテーション
 	CCharacterController m_charaCon;                            //キャラクターの当たり判定とか移動とか
-	                               
+	float m_r = 40.0f;                                          //コリジョンの半径
+	float m_collisionUp = 50.0f;                                //コリジョンの座標のyを加算
 	//アニメーション関係
 	enum EnAnimationClip {
 		enAnimationClip_idle,
@@ -113,5 +125,6 @@ private:
 	int m_MaxPP;                                              //最大PP
 	int m_PP;                                                 //PP
     int m_Attack;                                             //攻撃力
+	bool m_damage = false;                                    //ダメージを受けた！
 };
 

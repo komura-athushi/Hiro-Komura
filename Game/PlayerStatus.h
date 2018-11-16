@@ -42,6 +42,6 @@ private:
 	int m_exp;                                            //経験値
 	int m_MaxHP=100;                                      //最大HP
 	int m_MaxPP=100;                                      //最大PP(魔法撃つのに必要)
-	int m_Attack=10;                                      //攻撃力
+	int m_Attack=15;                                      //攻撃力
 }; 
 

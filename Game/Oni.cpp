@@ -29,6 +29,9 @@ bool Oni::Start()
 	//鬼のスキンモデルレンダーを表示
 	m_skinModelRender = new GameObj::CSkinModelRender;
 	m_skinModelRender->Init(L"Resource/modelData/enemy.cmo", m_animClip, enAnimationClip_num, enFbxUpAxisZ);
+	m_skinModelRender->GetAnimCon().AddAnimationEventListener([&](const wchar_t* clipName, const wchar_t* eventName) {
+		OnAnimationEvent(clipName, eventName);
+	});
 	m_skinModelRender->SetScale(m_scale);
 	m_skinModelRender->SetPos(m_position);
 	CQuaternion rot;
@@ -143,6 +146,7 @@ void Oni::Turn()
 	if (moveSpeedXZ.LengthSq() < 0.5f) {
 		return;
 	}
+	m_heikou = moveSpeedXZ;
 	m_rotation.SetRotation({ 0.0f,1.0f,0.0f }, atan2f(moveSpeedXZ.x, moveSpeedXZ.z));
 	m_skinModelRender->SetRot(m_rotation);
 
@@ -178,5 +182,28 @@ void Oni::Update()
 	if (m_gekiha) {
 		m_stage1->SetEnemyGekiha();
 		delete this;
+	}
+}
+
+void Oni::OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventName)
+{
+	(void)clipName;
+	if (wcscmp(eventName, L"attack") == 0) {
+		//攻撃判定の発生
+		GameObj::CCollisionObj* attackCol = NewGO<GameObj::CCollisionObj>();
+		//形状の作成
+		CVector3 pos = m_position + CVector3::AxisY()*50.0f;
+		pos += m_heikou * 30.0f;
+		attackCol->CreateSphere(pos, CQuaternion::Identity(), 40.0f);
+		//寿命を設定
+		attackCol->SetTimer(4);//15フレーム後削除される
+		attackCol->SetCallback([&](GameObj::CCollisionObj::SCallbackParam& param) {
+			//衝突した判定の名前が"IEnemy"ならm_Attack分だけダメージ与える
+			if (param.EqualName(L"Player")) {
+				Player* player = param.GetClass<Player>();//相手の判定に設定されているCEnemyのポインタを取得
+				player->Damege(m_Attack);
+			}
+		}
+		);
 	}
 }
