@@ -162,7 +162,7 @@ void Player::Animation()
 			m_timer = 0;
 		}
 	}
-	if (m_HP<=0) {
+	if (m_HP<=0 || Pad(0).GetButton(enButtonLT)) {
 		m_state = enState_GameOver;
 	}
 	m_timer++;
