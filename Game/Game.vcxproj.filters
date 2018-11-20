@@ -50,10 +50,28 @@
     <MeshContentTask Include="Asset\modelData\stage1_teleport.FBX">
       <Filter>Assets\modelDate</Filter>
     </MeshContentTask>
-    <MeshContentTask Include="Asset\modelData\Sword.FBX">
+    <MeshContentTask Include="Asset\modelData\enemy\enemy.FBX">
       <Filter>Assets\modelDate</Filter>
     </MeshContentTask>
-    <MeshContentTask Include="Asset\modelData\enemy\enemy.FBX">
+    <MeshContentTask Include="Asset\modelData\Sword\FireSword.FBX">
+      <Filter>Assets\modelDate\Sword</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Asset\modelData\Sword\Sword.FBX">
+      <Filter>Assets\modelDate\Sword</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Asset\modelData\Sword\WindSword.FBX">
+      <Filter>Assets\modelDate\Sword</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Asset\modelData\Sword\IceSword.FBX">
+      <Filter>Assets\modelDate\Sword</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Asset\modelData\Sword\GreatSword.fbx">
+      <Filter>Assets\modelDate\Sword</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Asset\modelData\Sword\BlueLightSword.FBX">
+      <Filter>Assets\modelDate\Sword</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Asset\modelData\sky.FBX">
       <Filter>Assets\modelDate</Filter>
     </MeshContentTask>
   </ItemGroup>
@@ -63,6 +81,9 @@
     </Filter>
     <Filter Include="Assets\modelDate">
       <UniqueIdentifier>{12ecc4ca-5ce5-4666-a665-bde24e02169f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\modelDate\Sword">
+      <UniqueIdentifier>{2b335737-352b-4ed6-a4ed-0d0aa194c1a5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -29,7 +29,7 @@ private:
 	Player* m_player;                                  //プレイヤークラスのポインタ
 	Level m_level;                                     //レベルデザインのためのクラス
 	PlayerStatus* m_playerstatus;                      //プレイヤーステータスクラスのポインタ
-	Oni* m_oni;										   //鬼クラスのポインタ
+	std::vector<Oni*> m_oniList;                       //鬼クラスのポインタの可変長配列
 	bool m_enemygekiha = false;
 };
 

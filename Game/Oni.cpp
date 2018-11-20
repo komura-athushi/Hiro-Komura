@@ -4,7 +4,7 @@
 #include <math.h> 
 #include "Stage1.h"
 //鬼（見た目はスケルトン）です
-Oni::Oni():IEnemy(m_MaxHP,m_Attack)
+Oni::Oni():IEnemy(m_MaxHP,m_Attack,m_EXP)
 {
 	
 }

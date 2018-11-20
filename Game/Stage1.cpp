@@ -16,8 +16,8 @@ Stage1::~Stage1()
 	delete m_gamecamera;
 	delete m_ground;
 	delete m_lig;
-	if (!m_enemygekiha) {
-		delete m_oni;
+	for (auto& oni : m_oniList) {
+		delete oni;
 	}
 }
 
@@ -48,11 +48,14 @@ bool Stage1::Start()
 		else if (objData.EqualObjectName(L"enemy") == true) {
 			//スケルトン
 			//プレイヤーのインスタンスを生成する。
-			m_oni = new Oni;
-			m_oni->SetPosition(objData.position);
-			m_oni->SetOldPosition(objData.position);
-			m_oni->SetPlayer(m_player);
-			m_oni->SetStage1(this);
+			//Starオブジェクト。
+			Oni* oni = new Oni;
+			oni->SetPosition(objData.position);
+			oni->SetOldPosition(objData.position);
+			//後で削除するのでリストに積んで記憶しておく。
+			m_oniList.push_back(oni);
+			oni->SetPlayer(m_player);
+			oni->SetStage1(this);
 			//フックした場合はtrueを返す。
 			return true;
 		}

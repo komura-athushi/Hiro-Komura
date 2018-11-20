@@ -10,7 +10,7 @@ public:
 	~Oni();
 	bool Start() override;
 	void Update() override;
-	void Attack() override;										//攻撃
+	void Attack();       										//攻撃
 	void Chase();												//追跡
 	void AnimationController();									//アニメーションの再生
 	void Damage();												//ダメージを受けた時のアクション
@@ -69,8 +69,9 @@ private:
 	float m_r = 80.0f;                                          //コリジョンの半径
 	float m_collisionheight = 50.0f;                            //コリジョンをm_positionからどれだけ上にあげるか
 	//Oniの色々なステータス
-	static const int m_MaxHP = 50;
-	static const int m_Attack=20;
+	static const int m_MaxHP = 50;                              //最大HP
+	static const int m_Attack=20;                               //攻撃力
+	static const int m_EXP = 20;                                //経験値
 	bool m_gekiha = false;
 };
 

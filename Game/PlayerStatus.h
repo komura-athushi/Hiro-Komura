@@ -10,7 +10,7 @@ public:
 	//レベルを取得
 	int GetLevel() const
 	{
-		return m_level;
+		return m_Level;
 	}
 	//最大HPを取得
 	float GetMaxHP() const
@@ -30,16 +30,16 @@ public:
 	//レベルを設定
 	void SetLevel(const int& level) 
 	{
-		m_level = level;
+		m_Level = level;
 	}
 	//経験値を加算
 	void PlusExp(const int& exp)
 	{
-		m_exp += exp;
+		m_Exp += exp;
 	}
 private:  
-	int m_level;                                          //レベル
-	int m_exp;                                            //経験値
+	int m_Level=1;                                        //レベル
+	int m_Exp=0;                                          //経験値
 	int m_MaxHP=100;                                      //最大HP
 	int m_MaxPP=100;                                      //最大PP(魔法撃つのに必要)
 	int m_Attack=15;                                      //攻撃力

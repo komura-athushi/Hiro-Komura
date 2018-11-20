@@ -176,11 +176,17 @@
   <ItemGroup>
     <MeshContentTask Include="Asset\modelData\enemy\enemy.FBX" />
     <MeshContentTask Include="Asset\modelData\ground.FBX" />
+    <MeshContentTask Include="Asset\modelData\sky.FBX" />
     <MeshContentTask Include="Asset\modelData\skydome.FBX" />
     <MeshContentTask Include="Asset\modelData\stage1_ground.FBX" />
     <MeshContentTask Include="Asset\modelData\stage1_teleport.FBX" />
     <MeshContentTask Include="Asset\modelData\stone.FBX" />
-    <MeshContentTask Include="Asset\modelData\Sword.FBX" />
+    <MeshContentTask Include="Asset\modelData\Sword\BlueLightSword.FBX" />
+    <MeshContentTask Include="Asset\modelData\Sword\FireSword.FBX" />
+    <MeshContentTask Include="Asset\modelData\Sword\GreatSword.fbx" />
+    <MeshContentTask Include="Asset\modelData\Sword\IceSword.FBX" />
+    <MeshContentTask Include="Asset\modelData\Sword\Sword.FBX" />
+    <MeshContentTask Include="Asset\modelData\Sword\WindSword.FBX" />
     <MeshContentTask Include="Asset\modelData\unityChan.fbx" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -2,7 +2,7 @@
 #include "IEnemy.h"
 
 
-IEnemy::IEnemy(int h,int a):m_HP(h),m_Attack(a)
+IEnemy::IEnemy(int h,int a,int e):m_HP(h),m_Attack(a),m_Exp(e)
 {
 	
 }
@@ -32,13 +32,19 @@ void IEnemy::SetCCollision(CVector3 pos,float l)
 
 void IEnemy::Damage(int attack)
 {
-	if (m_timer >= 30) {
-		m_HP -= attack;
-		m_timer = 0;
-		m_damage = true;
+	if (m_death) {
+		return;
 	}
-	if (m_HP <= 0) {
-		m_death = true;
+	else {
+		if (m_timer >= 30) {
+			m_HP -= attack;
+			m_timer = 0;
+			m_damage = true;
+		}
+		if (m_HP <= 0) {
+			m_death = true;
+			m_collision.release();
+		}
 	}
 }
 

@@ -17,7 +17,7 @@ bool GameCamera::Start()
 	m_camera = new GameObj::PerspectiveCamera;
 	m_camera->SetPos(m_position);
 	m_camera->SetNear(1.0f);
-	m_camera->SetFar(20000.0f);
+	m_camera->SetFar(100000.0f);
 	SetMainCamera(m_camera);
 	return true;
 }

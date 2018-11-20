@@ -31,6 +31,6 @@ private:
 	CVector3 m_position = { 0.0f,0.0f,0.0f };                   //座標
 	CVector3 m_scale = { 1.0f,1.0f,1.0f };                      //大きさ
 	CVector3 m_movespeed = { 0.0f,0.0f,0.0f };                  //移動速度
-	CQuaternion m_qRot;                                         //クオンテーション
+	CQuaternion m_qRot;                                         //クォータニオン
 };
 

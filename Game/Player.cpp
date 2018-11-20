@@ -56,16 +56,18 @@ bool Player::Start()
 	//unityChanを表示
 	m_skinModelRender = new GameObj::CSkinModelRender;
     m_skinModelRender->Init(L"Resource/modelData/unityChan.cmo", m_animClip, enAnimationClip_num, enFbxUpAxisY);
-	m_skinModelRender->SetPos(m_position);
+	//m_skinModelRender = new GameObj::CSkinModelRender;
+	//m_skinModelRender->Init(L"Resource/modelData/unityChan.cmo");
+    m_skinModelRender->SetPos(m_position);
 	m_sword = new Sword;
 	//unityChanのボーンを検索
 	m_bonehand=m_skinModelRender->FindBoneID(L"Character1_RightHand");
 	CVector3 pos=m_skinModelRender->GetBonePos(m_bonehand);
-	CQuaternion qRot= m_skinModelRender->GetBoneRot(m_bonehand);
+	m_swordqRot= m_skinModelRender->GetBoneRot(m_bonehand);
 	m_skinModelRender->GetAnimCon().AddAnimationEventListener([&](const wchar_t* clipName, const wchar_t* eventName) {
 		OnAnimationEvent(clipName, eventName);
 	});
-	m_sword->SetRot(qRot);
+	//m_sword->SetRot(m_swordqRot);
 	m_sword->SetPosition(pos);
 	Status();
 	return true;
@@ -74,6 +76,8 @@ void Player::Update()
 {
 	//キャラクターのアニメーションの処理、移動や回転も入ってる
 	AnimationController();
+	//Move();
+	//Turn();
 	if (m_charaCon.IsOnGround()) {
 		//地面についた。
 		m_movespeed.y = 0.0f;
@@ -81,8 +85,8 @@ void Player::Update()
 	}
 	m_charaCon.SetPosition(m_position);
 	m_skinModelRender->SetPos(m_position);
-	m_collision->SetPosition(m_position + CVector3::AxisY()*m_collisionUp);
 	Kougeki();
+	m_collision->SetPosition(m_position + CVector3::AxisY()*m_collisionUp);
 	m_timer2++;
 }
 
@@ -157,15 +161,13 @@ void Player::Animation()
 		
 	}
 	else if (Pad(0).GetButton(enButtonX)) {
-		if (m_state != enState_Attack && m_timer>=40) {
+		if (m_state != enState_Attack) {
 			m_state = enState_Attack;
-			m_timer = 0;
 		}
 	}
 	if (m_HP<=0 || Pad(0).GetButton(enButtonLT)) {
 		m_state = enState_GameOver;
 	}
-	m_timer++;
 }
 
 void Player::AnimationController()
@@ -250,17 +252,22 @@ void Player::AnimationController()
 	case enState_Attack:
 		if (m_skinModelRender->GetAnimCon().IsPlaying() || m_isjump==true) {
 			m_skinModelRender->GetAnimCon().Play(enAnimationClip_attack, 0.2f);
-			m_skinModelRender->GetAnimCon().SetSpeed(5.0f);
+			m_skinModelRender->GetAnimCon().SetSpeed(7.0f);
 			Animation();
 			m_isjump = false;
 		}
 		else {
-			if (m_movespeed.LengthSq() > 40.0f * 40.0f) {
-				m_state = enState_Run;
+			m_timer++;
+			if (m_timer >= 20) {
+				if (m_movespeed.LengthSq() > 40.0f * 40.0f) {
+					m_state = enState_Run;
+				}
+				else if (m_movespeed.LengthSq() < 40.0f * 40.0f) {
+					m_state = enState_Idle;
+				}
+				m_timer = 0;
 			}
-			else if (m_movespeed.LengthSq() < 40.0f * 40.0f) {
-				m_state = enState_Idle;
-			}
+			
 		}
 		//キャラクターの向き関係
 		Turn();
@@ -281,22 +288,52 @@ void Player::Status()
 void Player::PostRender()
 {
 	wchar_t output[256];
-	swprintf_s(output, L"HP   %d\nPP   %d\natk  %d\n", m_HP, m_PP, m_Attack);
+	//swprintf_s(output, L"HP   %d\nPP   %d\natk  %d\n", m_HP, m_PP, m_Attack);
+	swprintf_s(output, L"x   %f\ny   %f\nz  %f\nw   %f\n", m_swordqRot.x, m_swordqRot.y, m_swordqRot.z, m_swordqRot.w);
 	m_font.DrawScreenPos(output, { 800.0f,100.0f });
 }
 
 void Player::Kougeki()
 {
-	if (m_state == enState_Attack) {
+	//if (m_state == enState_Attack) {
 		CVector3 pos = m_skinModelRender->GetBonePos(m_bonehand);
-		CQuaternion qRot = m_skinModelRender->GetBoneRot(m_bonehand);
-		m_sword->SetRot(qRot);
+		m_swordqRot = m_skinModelRender->GetBoneRot(m_bonehand);
+		m_sword->SetRot(m_swordqRot);
+		//CQuaternion qRot = m_skinModelRender->GetBoneRot(m_bonehand);
+		//m_sword->SetRot(qRot);
 		m_sword->SetPosition(pos);
 		m_sword->SetScale({ 1.0f, 1.0f, 1.0f });
-	}
+		
+	/*}
 	else {
-		m_sword->SetScale({ 0.001f, 0.001f, 0.001f });
-	}
+		//m_sword->SetScale({ 0.001f, 0.001f, 0.001f });
+		CVector3 pos = m_playerheikou;
+		CQuaternion qRot;
+		qRot.SetRotation({0.0f,1.0f,0.0f}, -90.0f);
+		pos.Normalize();
+		pos *= 50.0f;
+		pos = m_position - pos;
+		pos.y += 100.0f;
+		CQuaternion qRot2;
+		qRot2.SetRotation({ 0.0f,1.0f,0.0f }, -90.0f);
+		CVector3 pos2 = m_playerheikou;
+		pos2.Normalize();
+		qRot2.Multiply(pos2);
+		pos2 *= 50.0f;
+		pos += pos2;
+		CQuaternion qRot3=m_swordqRot;
+		CQuaternion qRot4;
+		qRot4.SetRotation({ 1.0f,0.0f,0.0f }, atan2f(m_playerheikou.x, m_playerheikou.z));
+		qRot3.Multiply(qRot4);
+		m_sword->SetPosition(pos);
+		CQuaternion qRot5;
+		qRot5.SetRotation({ 1.0f,0.0f,0.0f }, 90.0f);
+		CQuaternion qRot6;
+		qRot6.SetRotation({ 0.0f,0.0f,1.0f }, -atan2f(m_playerheikou.x, m_playerheikou.z));
+		qRot5.Multiply(qRot6);
+		m_sword->SetRot(qRot5);
+		
+	}*/
 }
 
 void Player::OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventName)
@@ -316,6 +353,9 @@ void Player::OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventName)
 			if (param.EqualName(L"IEnemy")) {
 				IEnemy* enemy = param.GetClass<IEnemy>();//相手の判定に設定されているCEnemyのポインタを取得
 				enemy->Damage(m_Attack);
+				if (enemy->GetDeath()) {
+					m_playerstatus->PlusExp(enemy->GetExp());
+				}
 			}
 		}
 		);

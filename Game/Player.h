@@ -61,7 +61,7 @@ public:
 	void Damage(int attack);
 private:
 	GameObj::CSkinModelRender* m_skinModelRender = nullptr;		//スキンモデルレンダラー。
-	std::unique_ptr<GameObj::CCollisionObj> m_collision;      //丸いコリジョン
+	std::unique_ptr<GameObj::CCollisionObj> m_collision;        //丸いコリジョン
 	CFont m_font;                                               //文字表示クラス
 	Bone* m_bone;                                               //骨
 	PlayerStatus* m_playerstatus;                               //プレイヤーステータスのポインタ
@@ -77,12 +77,13 @@ private:
 	int m_timer2 = 0;                                           //ダメージのクールタイム
 	bool m_gameover = false;                                    //ゲームオーバーかどうか
 	bool m_isjump = false;                                      //ジャンプしているかどうか
+	CQuaternion m_swordqRot;                                    //剣の回転
 	//自機の角度　初期は180度
 	float m_degree = 180.0f;                                    //ユニティちゃんの向いてる角度
 	float m_radian = 0;                                         //上記をラジアン単位に直したもの
 	//移動速度乗算
 	const float m_multiply = 400.0f;                            //ユニティちゃんの移動速度を調整する
-	CQuaternion m_rotation;                                     //クオンテーション
+	CQuaternion m_rotation;                                     //クォータニオン
 	CCharacterController m_charaCon;                            //キャラクターの当たり判定とか移動とか
 	float m_r = 40.0f;                                          //コリジョンの半径
 	float m_collisionUp = 50.0f;                                //コリジョンの座標のyを加算
