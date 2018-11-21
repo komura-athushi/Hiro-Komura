@@ -61,7 +61,7 @@ public:
 	void Damage(int attack);
 private:
 	GameObj::CSkinModelRender* m_skinModelRender = nullptr;		//スキンモデルレンダラー。
-	std::unique_ptr<GameObj::CCollisionObj> m_collision;        //丸いコリジョン
+    GameObj::CCollisionObj* m_collision;                        //丸いコリジョン
 	CFont m_font;                                               //文字表示クラス
 	Bone* m_bone;                                               //骨
 	PlayerStatus* m_playerstatus;                               //プレイヤーステータスのポインタ
@@ -114,6 +114,8 @@ private:
 	EnState m_state = enState_Idle;
 	//プレイヤーの色々なステータス
 	int m_Level;                                                //レベル
+	int m_Exp;                                                  //累計経験値
+	int m_NextExp;                                              //次のレベルアップに必要な経験値
 	int m_MaxHP;                                                //最大HP
 	int m_HP;                                                   //HP
 	int m_MaxPP;                                                //最大PP

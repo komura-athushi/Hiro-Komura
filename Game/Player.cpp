@@ -25,7 +25,7 @@ bool Player::Start()
 		m_position		//èâä˙à íuÅB
 	);
 	//Ç≠ÇÁÇ¢îªíËÇÃçÏê¨
-	m_collision = std::make_unique<GameObj::CCollisionObj>();
+	m_collision = new GameObj::CCollisionObj;
 	//å`èÛÇÃçÏê¨
 	m_collision->CreateSphere(m_position + CVector3::AxisY()*m_collisionUp, CQuaternion::Identity(), m_r);
 	//éıñΩÇê›íË
@@ -166,6 +166,7 @@ void Player::Animation()
 		}
 	}
 	if (m_HP<=0 || Pad(0).GetButton(enButtonLT)) {
+		m_collision->Delete();
 		m_state = enState_GameOver;
 	}
 }
@@ -277,7 +278,12 @@ void Player::AnimationController()
 
 void Player::Status()
 {
-	if (m_Level != m_playerstatus->GetLevel()) {
+	m_Exp = m_playerstatus->GetExp();
+	m_NextExp = m_playerstatus->GetNextExp();
+	if (m_Level == m_playerstatus->GetLevel()) {
+		return;
+	}
+	else {
 		m_Level = m_playerstatus->GetLevel();
 		m_MaxHP = m_playerstatus->GetMaxHP();
 		m_MaxPP = m_playerstatus->GetMaxPP();
@@ -290,7 +296,7 @@ void Player::Status()
 void Player::PostRender()
 {
 	wchar_t output[256];
-	swprintf_s(output, L"Lv   %d\nHP   %d\nPP   %d\nAtk  %d\n",m_Level, m_HP, m_PP, m_Attack);
+	swprintf_s(output, L"Lv   %d\nExp  %d\nNexp %d\nHP   %d\nPP   %d\nAtk  %d\n",m_Level, m_Exp,m_NextExp,m_HP, m_PP, m_Attack);
 	//swprintf_s(output, L"x   %f\ny   %f\nz  %f\nw   %f\n", m_swordqRot.x, m_swordqRot.y, m_swordqRot.z, m_swordqRot.w);
 	m_font.DrawScreenPos(output, { 800.0f,100.0f });
 }

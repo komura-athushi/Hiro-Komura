@@ -27,6 +27,16 @@ public:
 	{
 		return m_Attack;
 	}
+	//累計経験値を取得
+	int GetExp() const
+	{
+		return m_Exp;
+	}
+	//レベルアップに必要な経験値を取得
+	int GetNextExp() const
+	{
+		return m_NextExp;
+	}
 	//レベルを設定
 	void SetLevel(const int& level) 
 	{
@@ -37,11 +47,11 @@ public:
 private:  
 	int m_Level=1;                                        //レベル
 	int m_Exp=0;                                          //経験値
-	int m_NextExp = 30;                                   //次のレベルアップに必要な経験値
+	int m_NextExp = 40;                                   //次のレベルアップに必要な経験値
 	int m_MaxHP=100;                                      //最大HP
 	int m_MaxPP=100;                                      //最大PP(魔法撃つのに必要)
 	int m_Attack = 20;                                    //攻撃力(力＋武器の攻撃力)
 	int m_Power=10;                                       //力
-	int m_AwordAttack = 10;                               //武器の攻撃力
+	int m_SwordAttack = 10;                               //武器の攻撃力
 }; 
 
