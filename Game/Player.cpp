@@ -62,13 +62,17 @@ bool Player::Start()
 	m_sword = new Sword;
 	//unityChanのボーンを検索
 	m_bonehand=m_skinModelRender->FindBoneID(L"Character1_RightHand");
-	CVector3 pos=m_skinModelRender->GetBonePos(m_bonehand);
-	m_swordqRot= m_skinModelRender->GetBoneRot(m_bonehand);
+	m_bonecenter= m_skinModelRender->FindBoneID(L"center");
+	CQuaternion qRot = m_skinModelRender->GetBoneRot(m_bonecenter);
+	m_sword->SetRot(qRot);
+	CVector3 pos = m_position;
+	pos.y += 170.0f;
+	pos.x -= 70.0f;
+	pos.z += 10.0f;
+	m_sword->SetPosition(pos);
 	m_skinModelRender->GetAnimCon().AddAnimationEventListener([&](const wchar_t* clipName, const wchar_t* eventName) {
 		OnAnimationEvent(clipName, eventName);
 	});
-	//m_sword->SetRot(m_swordqRot);
-	m_sword->SetPosition(pos);
 	Status();
 	return true;
 }
@@ -158,17 +162,18 @@ void Player::Animation()
 	if (m_damage) {
 		m_state = enState_Damage;
 		m_damage = false;
-		
 	}
-	else if (Pad(0).GetButton(enButtonX)) {
+	else if (Pad(0).GetButton(enButtonX) && m_timer>=15) {
 		if (m_state != enState_Attack) {
 			m_state = enState_Attack;
+			m_timer = 0;
 		}
 	}
 	if (m_HP<=0 || Pad(0).GetButton(enButtonLT)) {
 		m_collision->Delete();
 		m_state = enState_GameOver;
 	}
+	m_timer++;
 }
 
 void Player::AnimationController()
@@ -256,6 +261,7 @@ void Player::AnimationController()
 			m_skinModelRender->GetAnimCon().SetSpeed(7.0f);
 			Animation();
 			m_isjump = false;
+			m_timer = 0;
 		}
 		else {
 			m_timer++;
@@ -303,45 +309,31 @@ void Player::PostRender()
 
 void Player::Kougeki()
 {
-	//if (m_state == enState_Attack) {
+	if (m_state == enState_Attack) {
 		CVector3 pos = m_skinModelRender->GetBonePos(m_bonehand);
-		m_swordqRot = m_skinModelRender->GetBoneRot(m_bonehand);
-		m_sword->SetRot(m_swordqRot);
-		//CQuaternion qRot = m_skinModelRender->GetBoneRot(m_bonehand);
-		//m_sword->SetRot(qRot);
+		CQuaternion qRot = m_skinModelRender->GetBoneRot(m_bonehand);
+		m_sword->SetRot(qRot);
 		m_sword->SetPosition(pos);
-		m_sword->SetScale({ 1.0f, 1.0f, 1.0f });
-		
-	/*}
+	}
 	else {
-		//m_sword->SetScale({ 0.001f, 0.001f, 0.001f });
 		CVector3 pos = m_playerheikou;
 		CQuaternion qRot;
 		qRot.SetRotation({0.0f,1.0f,0.0f}, -90.0f);
 		pos.Normalize();
-		pos *= 50.0f;
+		pos *= 10.0f;
 		pos = m_position - pos;
-		pos.y += 100.0f;
+		pos.y += 70.0f;
 		CQuaternion qRot2;
 		qRot2.SetRotation({ 0.0f,1.0f,0.0f }, -90.0f);
 		CVector3 pos2 = m_playerheikou;
 		pos2.Normalize();
 		qRot2.Multiply(pos2);
-		pos2 *= 50.0f;
+		pos2 *= 70.0f;
 		pos += pos2;
-		CQuaternion qRot3=m_swordqRot;
-		CQuaternion qRot4;
-		qRot4.SetRotation({ 1.0f,0.0f,0.0f }, atan2f(m_playerheikou.x, m_playerheikou.z));
-		qRot3.Multiply(qRot4);
 		m_sword->SetPosition(pos);
-		CQuaternion qRot5;
-		qRot5.SetRotation({ 1.0f,0.0f,0.0f }, 90.0f);
-		CQuaternion qRot6;
-		qRot6.SetRotation({ 0.0f,0.0f,1.0f }, -atan2f(m_playerheikou.x, m_playerheikou.z));
-		qRot5.Multiply(qRot6);
-		m_sword->SetRot(qRot5);
-		
-	}*/
+		CQuaternion qRot3 = m_skinModelRender->GetBoneRot(m_bonecenter);
+		m_sword->SetRot(qRot3);
+	}
 }
 
 void Player::OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventName)
@@ -355,7 +347,7 @@ void Player::OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventName)
 		pos += m_playerheikou * 90.0f;
 		attackCol->CreateSphere(pos, CQuaternion::Identity(), 70.0f);
 		//寿命を設定
-		attackCol->SetTimer(10);//15フレーム後削除される
+		attackCol->SetTimer(5);//15フレーム後削除される
 		attackCol->SetCallback([&](GameObj::CCollisionObj::SCallbackParam& param) {
 			//衝突した判定の名前が"IEnemy"ならm_Attack分だけダメージ与える
 			if (param.EqualName(L"IEnemy")) {
