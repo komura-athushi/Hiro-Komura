@@ -114,6 +114,8 @@ private:
 	EnState m_state = enState_Idle;
 	//プレイヤーの色々なステータス
 	int m_Level;                                                //レベル
+	int m_Exp;                                                  //累計経験値
+	int m_NextExp;                                              //次のレベルアップに必要な経験値
 	int m_MaxHP;                                                //最大HP
 	int m_HP;                                                   //HP
 	int m_MaxPP;                                                //最大PP
