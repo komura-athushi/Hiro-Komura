@@ -1,20 +1,20 @@
 #include "stdafx.h"
-#include "Oni.h"
+#include "Boss.h"
 #define _USE_MATH_DEFINES //M_PI 円周率呼び出し
 #include <math.h> 
 #include "Stage1.h"
-//鬼（見た目はスケルトン）です
-Oni::Oni():IEnemy(m_MaxHP,m_Attack,m_EXP)
+//ボス（見た目はスケルトン）です
+Boss::Boss() : IEnemy(m_MaxHP, m_Attack, m_EXP)
 {
 
 }
 
-Oni::~Oni()
+Boss::~Boss()
 {
 	delete m_skinModelRender;
 }
 
-bool Oni::Start()
+bool Boss::Start()
 {
 	IEnemy::CCollision({ m_position }, m_collisionheight, m_r);
 	//アニメーション
@@ -41,10 +41,10 @@ bool Oni::Start()
 	return true;
 }
 
-void Oni::Attack()
+void Boss::Attack()
 {
 }
-void Oni::Chase()
+void Boss::Chase()
 {
 	m_movespeed = { 0.0f,0.0f,0.0f };
 	//プレイヤーの座標を取得
@@ -55,7 +55,7 @@ void Oni::Chase()
 	CVector3 oldpos = m_oldpos - m_position;
 	//接触したら攻撃
 	if (pos.Length() < 100.0f) {
-	m_state = enState_Attack;
+		m_state = enState_Attack;
 	}
 	//もしプレイヤーと鬼の距離が近くなったら
 	else if (pos.Length() < 1000.0f) {
@@ -66,8 +66,8 @@ void Oni::Chase()
 		m_movespeed.y = 0.0f;
 		m_position += m_movespeed;
 	}
-	
-	else if(pos.Length() > 1000.0f){
+
+	else if (pos.Length() > 1000.0f) {
 		//初期位置に帰る
 		CVector3 EnemyOldPos = m_oldpos - m_position;
 		EnemyOldPos.Normalize();
@@ -82,7 +82,7 @@ void Oni::Chase()
 	m_skinModelRender->SetPos(m_position);
 }
 
-void Oni::AnimationController()
+void Boss::AnimationController()
 {
 	m_skinModelRender->GetAnimCon().SetSpeed(1.0f);
 	//ステート分岐によってアニメーションを再生させる
@@ -116,21 +116,21 @@ void Oni::AnimationController()
 	case enState_Damage:
 		m_skinModelRender->GetAnimCon().SetSpeed(2.0f);
 		m_skinModelRender->GetAnimCon().Play(enAnimationClip_damage, 0.2f);
-		if (!m_skinModelRender->GetAnimCon().IsPlaying()){
-				m_state = enState_Idle_Run;
+		if (!m_skinModelRender->GetAnimCon().IsPlaying()) {
+			m_state = enState_Idle_Run;
 		}
 		Turn();
 		break;
 	case enState_Dead:
 		m_skinModelRender->GetAnimCon().Play(enAnimationClip_death, 0.2f);
-		if (!m_skinModelRender->GetAnimCon().IsPlaying()){
+		if (!m_skinModelRender->GetAnimCon().IsPlaying()) {
 			m_gekiha = true;
 		}
 		break;
 	}
 }
-
-void Oni::Turn()
+//IEnemyにいれる
+void Boss::Turn()
 {
 	CVector3 rotation = { 0.0f,0.0f,0.0f };
 	//自機の角度の差分
@@ -146,12 +146,12 @@ void Oni::Turn()
 	if (moveSpeedXZ.LengthSq() < 0.5f) {
 		return;
 	}
-	m_heikou = moveSpeedXZ;
+	m_parallel = moveSpeedXZ;
 	m_rotation.SetRotation({ 0.0f,1.0f,0.0f }, atan2f(moveSpeedXZ.x, moveSpeedXZ.z));
 	m_skinModelRender->SetRot(m_rotation);
 }
 
-void Oni::Damage() 
+void Boss::Damage()
 {
 	if (IEnemy::m_damage) {
 		m_state = enState_Damage;
@@ -159,14 +159,14 @@ void Oni::Damage()
 	}
 }
 
-void Oni::Dead()
+void Boss::Dead()
 {
 	if (IEnemy::m_death) {
 		m_state = enState_Dead;
 	}
 }
 
-void Oni::Update()
+void Boss::Update()
 {
 	m_timer++;
 	AnimationController();
@@ -186,7 +186,7 @@ void Oni::Update()
 	}
 }
 
-void Oni::OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventName)
+void Boss::OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventName)
 {
 	(void)clipName;
 	if (wcscmp(eventName, L"attack") == 0) {
@@ -194,7 +194,7 @@ void Oni::OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventName)
 		GameObj::CCollisionObj* attackCol = NewGO<GameObj::CCollisionObj>();
 		//形状の作成
 		CVector3 pos = m_position + CVector3::AxisY()*m_collisionheight;
-		pos += m_heikou * 30.0f;
+		pos += m_parallel * 30.0f;
 		attackCol->CreateSphere(pos, CQuaternion::Identity(), m_r);
 		//寿命を設定
 		attackCol->SetTimer(4);//15フレーム後削除される
@@ -208,3 +208,4 @@ void Oni::OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventName)
 		);
 	}
 }
+
