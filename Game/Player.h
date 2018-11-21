@@ -43,7 +43,7 @@ public:
 		return m_position;
 	}
 	//プレイヤーのHPを取得
-	float GetHP() const
+	int GetHP() const
 	{
 		return m_HP;
 	}
@@ -113,7 +113,7 @@ private:
 	AnimationClip m_animClip[enAnimationClip_num];
 	EnState m_state = enState_Idle;
 	//プレイヤーの色々なステータス
-	int m_level;                                                //レベル
+	int m_Level;                                                //レベル
 	int m_MaxHP;                                                //最大HP
 	int m_HP;                                                   //HP
 	int m_MaxPP;                                                //最大PP

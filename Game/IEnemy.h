@@ -38,7 +38,8 @@ public:
 	//文字表示
 	void PostRender()override;
 protected:
-	std::unique_ptr<GameObj::CCollisionObj> m_collision;      //丸いコリジョン
+	//std::unique_ptr<GameObj::CCollisionObj> m_collision;      //丸いコリジョン
+	GameObj::CCollisionObj* m_collision;
 	//プレイヤーの色々なステータス
 	int m_MaxHP;                                              //最大HP
 	int m_HP;                                                 //HP

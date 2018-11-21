@@ -14,7 +14,8 @@ IEnemy::~IEnemy()
 void IEnemy::CCollision(CVector3 pos,float l, float r)
 {
 	//Ç≠ÇÁÇ¢îªíËÇÃçÏê¨
-	m_collision = std::make_unique<GameObj::CCollisionObj>();
+	//m_collision = std::make_unique<GameObj::CCollisionObj>();
+	m_collision = new GameObj::CCollisionObj;
 	//å`èÛÇÃçÏê¨
 	m_collision->CreateSphere(pos + CVector3::AxisY()*l, CQuaternion::Identity(),r);
 	//éıñΩÇê›íË
@@ -32,10 +33,7 @@ void IEnemy::SetCCollision(CVector3 pos,float l)
 
 void IEnemy::Damage(int attack)
 {
-	if (m_death) {
-		return;
-	}
-	else {
+	
 		if (m_timer >= 30) {
 			m_HP -= attack;
 			m_timer = 0;
@@ -43,9 +41,8 @@ void IEnemy::Damage(int attack)
 		}
 		if (m_HP <= 0) {
 			m_death = true;
-			m_collision.release();
+			m_collision->Delete();
 		}
-	}
 }
 
 void IEnemy::PostRender()

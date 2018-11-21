@@ -172,11 +172,13 @@ void Oni::Update()
 	AnimationController();
 	Damage();
 	Dead();
-	CQuaternion rot;
-	CVector3 pos = m_position;
-	pos.y += 55.0f;
-	m_staticobject.SetPositionAndRotation(pos, rot);
-	IEnemy::SetCCollision(m_position,m_collisionheight);
+	if (!IEnemy::m_death) {
+		CQuaternion rot;
+		CVector3 pos = m_position;
+		pos.y += 55.0f;
+		m_staticobject.SetPositionAndRotation(pos, rot);
+		IEnemy::SetCCollision(m_position, m_collisionheight);
+	}
 	IEnemy::m_timer++;
 	if (m_gekiha) {
 		m_stage1->SetEnemyGekiha();

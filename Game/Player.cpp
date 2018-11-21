@@ -277,19 +277,21 @@ void Player::AnimationController()
 
 void Player::Status()
 {
-	m_level = m_playerstatus->GetLevel();
-	m_MaxHP = m_playerstatus->GetMaxHP();
-	m_MaxPP = m_playerstatus->GetMaxPP();
-	m_Attack = m_playerstatus->GetAttack();
-	m_HP = m_MaxHP;
-	m_PP = m_MaxPP;
+	if (m_Level != m_playerstatus->GetLevel()) {
+		m_Level = m_playerstatus->GetLevel();
+		m_MaxHP = m_playerstatus->GetMaxHP();
+		m_MaxPP = m_playerstatus->GetMaxPP();
+		m_Attack = m_playerstatus->GetAttack();
+		m_HP = m_MaxHP;
+		m_PP = m_MaxPP;
+	}
 }  
 
 void Player::PostRender()
 {
 	wchar_t output[256];
-	//swprintf_s(output, L"HP   %d\nPP   %d\natk  %d\n", m_HP, m_PP, m_Attack);
-	swprintf_s(output, L"x   %f\ny   %f\nz  %f\nw   %f\n", m_swordqRot.x, m_swordqRot.y, m_swordqRot.z, m_swordqRot.w);
+	swprintf_s(output, L"Lv   %d\nHP   %d\nPP   %d\nAtk  %d\n",m_Level, m_HP, m_PP, m_Attack);
+	//swprintf_s(output, L"x   %f\ny   %f\nz  %f\nw   %f\n", m_swordqRot.x, m_swordqRot.y, m_swordqRot.z, m_swordqRot.w);
 	m_font.DrawScreenPos(output, { 800.0f,100.0f });
 }
 
@@ -355,6 +357,7 @@ void Player::OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventName)
 				enemy->Damage(m_Attack);
 				if (enemy->GetDeath()) {
 					m_playerstatus->PlusExp(enemy->GetExp());
+					Status();
 				}
 			}
 		}
