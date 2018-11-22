@@ -54,9 +54,9 @@ private:
 	};
 	AnimationClip m_animClip[enAnimationClip_num];
 	EnState m_state = enState_Idle_Run;
-	CVector3 m_oldpos = { 30.0f,100.0f,1500.0f };               //鬼の初期位置
-	CVector3 m_position = { 30.0f,100.0f,1500.0f };				//鬼の座標
-	CVector3 m_scale = { 10.0f,10.0f,10.0f };					//鬼のスケール
+	CVector3 m_oldpos = { 30.0f,100.0f,1500.0f };               //ボスの初期位置
+	CVector3 m_position = { 30.0f,100.0f,1500.0f };				//ボスの座標
+	CVector3 m_scale = { 60.0f,60.0f,60.0f };					//ボスのスケール
 	CVector3 m_movespeed = { 0.0f,  0.0f,  0.0f };				//移動速度
 	CVector3 m_parallel = { 0.0f,0.0f,0.0f };					//ユニティちゃんの向きと平行なベクトル
 	Player* m_player;											//プレイヤークラスのポインタ
@@ -68,7 +68,7 @@ private:
 	int m_timer = 0;											//攻撃のクールタイムのためにフレーム数を数える
 	float m_r = 80.0f;                                          //コリジョンの半径
 	float m_collisionheight = 50.0f;                            //コリジョンをm_positionからどれだけ上にあげるか
-	//Oniの色々なステータス
+	//Bossの色々なステータス
 	static const int m_MaxHP = 50;                              //最大HP
 	static const int m_Attack = 20;                             //攻撃力
 	static const int m_EXP = 20;                                //経験値

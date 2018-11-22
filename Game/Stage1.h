@@ -4,6 +4,7 @@ class Ground;
 class GameCamera;
 class PlayerStatus;
 class Oni;
+class Boss;
 //ステージ1に関係するものを生成したり、管理したりするクラスです
 class Stage1:public IGameObject
 {
@@ -30,6 +31,7 @@ private:
 	Level m_level;                                     //レベルデザインのためのクラス
 	PlayerStatus* m_playerstatus;                      //プレイヤーステータスクラスのポインタ
 	std::vector<Oni*> m_oniList;                       //鬼クラスのポインタの可変長配列
+	Boss* boss;										   //ボスクラスのポインタ
 	bool m_enemygekiha = false;
 };
 

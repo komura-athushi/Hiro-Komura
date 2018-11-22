@@ -6,6 +6,7 @@
 #include "Town.h"
 #include "PlayerStatus.h"
 #include "Oni.h"
+#include "Boss.h"
 Stage1::Stage1()
 {
 }
@@ -19,6 +20,7 @@ Stage1::~Stage1()
 	for (auto& oni : m_oniList) {
 		delete oni;
 	}
+	delete boss;
 }
 
 bool Stage1::Start()
@@ -56,6 +58,18 @@ bool Stage1::Start()
 			m_oniList.push_back(oni);
 			oni->SetPlayer(m_player);
 			oni->SetStage1(this);
+			//フックした場合はtrueを返す。
+			return true;
+		}
+		else if (objData.EqualObjectName(L"boss") == true) {
+			//ボス
+			//プレイヤーのインスタンスを生成する。
+			//Bossオブジェクト。
+			boss = new Boss;
+			boss->SetPosition(objData.position);
+			boss->SetOldPosition(objData.position);
+			boss->SetPlayer(m_player);
+			boss->SetStage1(this);
 			//フックした場合はtrueを返す。
 			return true;
 		}
