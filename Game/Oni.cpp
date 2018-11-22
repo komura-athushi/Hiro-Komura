@@ -157,7 +157,7 @@ void Oni::Damage()
 		m_state = enState_Damage;
 		IEnemy::m_damage = false;
 	}
-}m_sta cszzzzzzzzz0ge1
+}
 
 void Oni::Dead()
 {
