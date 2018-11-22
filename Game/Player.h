@@ -66,6 +66,7 @@ private:
 	Bone* m_bone;                                               //骨
 	PlayerStatus* m_playerstatus;                               //プレイヤーステータスのポインタ
 	int m_bonehand;                                             //右手のboneの番号
+	int m_bonecenter;                                           //centerの番号
 	CVector3 m_savemovespeed;                                   //m_movespeedを記憶しておく
 	Sword* m_sword;                                             //Swordクラスのポインタ
 	GameCamera* m_gamecamera;                                   //カメラのポインタ
@@ -77,7 +78,6 @@ private:
 	int m_timer2 = 0;                                           //ダメージのクールタイム
 	bool m_gameover = false;                                    //ゲームオーバーかどうか
 	bool m_isjump = false;                                      //ジャンプしているかどうか
-	CQuaternion m_swordqRot;                                    //剣の回転
 	//自機の角度　初期は180度
 	float m_degree = 180.0f;                                    //ユニティちゃんの向いてる角度
 	float m_radian = 0;                                         //上記をラジアン単位に直したもの
