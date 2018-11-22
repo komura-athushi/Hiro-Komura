@@ -85,8 +85,8 @@ private:
 	const float m_multiply = 400.0f;                            //ユニティちゃんの移動速度を調整する
 	CQuaternion m_rotation;                                     //クォータニオン
 	CCharacterController m_charaCon;                            //キャラクターの当たり判定とか移動とか
-	float m_r = 40.0f;                                          //コリジョンの半径
-	float m_collisionUp = 50.0f;                                //コリジョンの座標のyを加算
+	const float m_r = 40.0f;                                    //コリジョンの半径
+	const float m_collisionUp = 50.0f;                          //コリジョンの座標のyを加算
 	//アニメーション関係
 	enum EnAnimationClip {
 		enAnimationClip_idle,

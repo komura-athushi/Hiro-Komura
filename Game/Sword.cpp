@@ -24,7 +24,6 @@ bool Sword::Start()
 
 void Sword::Update()
 {
-	m_position += m_movespeed;
 	m_skinModelRender->SetPos(m_position);
 	m_skinModelRender->SetRot(m_qRot);
 	m_skinModelRender->SetScale(m_scale);

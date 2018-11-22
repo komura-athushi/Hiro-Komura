@@ -66,8 +66,8 @@ private:
 	CQuaternion m_rotation;
 	Stage1* m_stage1;
 	int m_timer=0;												//攻撃のクールタイムのためにフレーム数を数える
-	float m_r = 80.0f;                                          //コリジョンの半径
-	float m_collisionheight = 50.0f;                            //コリジョンをm_positionからどれだけ上にあげるか
+	const float m_r = 80.0f;                                    //コリジョンの半径
+	const float m_collisionheight = 50.0f;                      //コリジョンをm_positionからどれだけ上にあげるか
 	//Oniの色々なステータス
 	static const int m_MaxHP = 50;                              //最大HP
 	static const int m_Attack=20;                               //攻撃力
