@@ -227,7 +227,7 @@ void Player::AnimationController()
 		break;
 	case enState_GameOver:
 		m_skinModelRender->GetAnimCon().Play(enAnimationClip_KneelDown, 0.2f);
-		m_sword->SetPosition({ 0.001f,0.001f,0.001f });
+		m_sword->SetScale({ 0.001f,0.001f,0.001f });
 		if (m_skinModelRender->GetAnimCon().IsPlaying()) {
 		}
 		else {
