@@ -15,6 +15,7 @@
     <ClInclude Include="IEnemy.h" />
     <ClInclude Include="Oni.h" />
     <ClInclude Include="Boss.h" />
+    <ClInclude Include="DropItem.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -32,6 +33,7 @@
     <ClCompile Include="IEnemy.cpp" />
     <ClCompile Include="Oni.cpp" />
     <ClCompile Include="Boss.cpp" />
+    <ClCompile Include="DropItem.cpp" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Asset\modelData\unityChan.fbx">

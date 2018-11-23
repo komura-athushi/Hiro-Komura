@@ -27,8 +27,8 @@ void PlayerStatus::PlusExp(const int& exp)
 	m_Exp += ep;
 	while (m_LevelExp <= m_Exp) {
 		ep -= m_NextExp;
-		m_Level++;
-		m_NextExp = (int)(1 + (float)(m_Level*m_Level * 0.1f)) * 80;
+		m_Level+=1;
+		m_NextExp = (int)((1 + (float)(m_Level*m_Level * 0.1f)) * 80);
 		m_LevelExp += m_NextExp;
 		m_Power += 5 + rand() % 3;
 		m_Attack = m_Power + m_SwordAttack;
