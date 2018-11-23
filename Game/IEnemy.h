@@ -1,4 +1,5 @@
 #pragma once
+class DropItem;
 class IEnemy : public IGameObject
 {
 public:
@@ -8,8 +9,10 @@ public:
 	* int h     HPを設定
 	* int a     Attackを設定
 	* int e     撃破時の経験値を設定
+	* int mi    ドロップするアイテムの最低レア度
+	* int mx    ドロップするアイテムの最高レア度
 	*/
-	IEnemy(int h,int a,int e);
+	IEnemy(int h,int a,int e,int mi,int mx);
 	virtual ~IEnemy();
 
 	/*!
@@ -52,6 +55,9 @@ protected:
 	int m_timer = 0;                                          //当たり判定にクールタイム
 	bool m_damage = false;                                    //ダメージを受けたかどうか
 	bool m_death = false;                                     //HPが0以下になったかどうか
+	int m_dropmin;                                            //ドロップするアイテムの最低レア度
+	int m_dropmax;                                            //ドロップするアイテムの最高レア度
 	CFont m_font;                                             //文字表示クラス
+	DropItem* m_dropitem;
 };
 

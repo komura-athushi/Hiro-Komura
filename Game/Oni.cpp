@@ -4,7 +4,7 @@
 #include <math.h> 
 #include "Stage1.h"
 //鬼（見た目はスケルトン）です
-Oni::Oni():IEnemy(m_MaxHP,m_Attack,m_EXP)
+Oni::Oni():IEnemy(m_MaxHP,m_Attack,m_EXP,m_dropitemmin,m_dropitemmax)
 {
 
 }
@@ -181,7 +181,6 @@ void Oni::Update()
 	}
 	IEnemy::m_timer++;
 	if (m_gekiha) {
-		m_stage1->SetEnemyGekiha();
 		delete this;
 	}
 }

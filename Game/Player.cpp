@@ -227,6 +227,7 @@ void Player::AnimationController()
 		break;
 	case enState_GameOver:
 		m_skinModelRender->GetAnimCon().Play(enAnimationClip_KneelDown, 0.2f);
+		m_sword->SetPosition({ 0.001f,0.001f,0.001f });
 		if (m_skinModelRender->GetAnimCon().IsPlaying()) {
 		}
 		else {
@@ -352,9 +353,13 @@ void Player::OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventName)
 			//衝突した判定の名前が"IEnemy"ならm_Attack分だけダメージ与える
 			if (param.EqualName(L"IEnemy")) {
 				IEnemy* enemy = param.GetClass<IEnemy>();//相手の判定に設定されているCEnemyのポインタを取得
+				//エネミーにダメージ
 				enemy->Damage(m_Attack);
+				//もしエネミーのHPが0以下になったら
 				if (enemy->GetDeath()) {
+					//エネミーの経験値をプレイヤーの経験値に加算
 					m_playerstatus->PlusExp(enemy->GetExp());
+					//PlayerStatusクラスのメンバ変数をプレイヤーのメンバ変数に反映
 					Status();
 				}
 			}

@@ -2,7 +2,7 @@
 #include "IEnemy.h"
 
 
-IEnemy::IEnemy(int h,int a,int e):m_HP(h),m_Attack(a),m_Exp(e)
+IEnemy::IEnemy(int h,int a,int e,int mi,int mx):m_HP(h),m_Attack(a),m_Exp(e),m_dropmin(mi),m_dropmax(mx)
 {
 	
 }

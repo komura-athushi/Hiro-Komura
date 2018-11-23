@@ -8,23 +8,26 @@ DropItem::DropItem()
 
 DropItem::~DropItem()
 {
+	delete m_skinModelRender;
 }
 
 bool DropItem::Start()
 {
-
-	switch (m_number) {
-	case 0:
-		break;
+	m_skinModelRender = new GameObj::CSkinModelRender;
+	switch (m_state) {
 	case 1:
+		m_skinModelRender->Init(L"Resource/modelData/WindSword.cmo");
+		m_skinModelRender->Init(L"Resource/modelData/IceSword.cmo");
+		m_skinModelRender->Init(L"Resource/modelData/FireSword.cmo");
 		break;
 	case 2:
+		m_skinModelRender->Init(L"Resource/modelData/GreatSword.cmo");
 		break;
 	case 3:
-		break;
-	case 4:
+		m_skinModelRender->Init(L"Resource/modelData/BlueLightSword.cmo");
 		break;
 	}
+	m_skinModelRender->SetPos(m_position);
 	return true;
 }
 
