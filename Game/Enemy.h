@@ -2,7 +2,16 @@
 class Enemy:public IGameObject
 {
 public:
-	Enemy();
+	/*!
+	@brief	Enemyのコンストラクタ
+	*int id;							//エネミーの番号
+	*std::string name;					//エネミーの名前
+	*int hp;						//エネミーのHP
+	*int atk;							//エネミーの攻撃力
+	*int exp;							//エネミー撃破時の経験値
+	*int dropchances[4];						//エネミーのドロップするアイテム
+	*/
+	Enemy(const int& id,const std::string& name,const int& hp,const int& atk,const int& exp,const float dropchances[4]);
 	~Enemy();
 	bool Start();
 	void Update();
@@ -12,6 +21,6 @@ private:
 	int m_hp;								//エネミーのHP
 	int m_atk;								//エネミーの攻撃力
 	int m_exp;								//エネミー撃破時の経験値
-	float m_dropChances[3];					//エネミーのドロップするアイテム
+	float m_dropChances[4];					//エネミーのドロップするアイテム
 };
 

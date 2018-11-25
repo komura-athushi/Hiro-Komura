@@ -72,7 +72,7 @@ public:
 		m_gamecamera = camera;
 	}
 	//プレイヤーがダメージを受けた時の処理
-	void Damage(int attack);
+	void Damage(const int& attack);
 private:
 	bool m_cagliostro = false;
 	GameObj::CSkinModelRender* m_skinModelRender = nullptr;		//スキンモデルレンダラー。

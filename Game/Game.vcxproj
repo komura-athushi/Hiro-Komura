@@ -144,6 +144,7 @@
     <ClCompile Include="Cagliostro_view.cpp" />
     <ClCompile Include="DropItem.cpp" />
     <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="GameData.cpp" />
     <ClCompile Include="IEnemy.cpp" />
     <ClCompile Include="Magic.cpp" />
     <ClCompile Include="Oni.cpp" />
@@ -169,6 +170,7 @@
     <ClInclude Include="Cagliostro_view.h" />
     <ClInclude Include="DropItem.h" />
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="GameData.h" />
     <ClInclude Include="IEnemy.h" />
     <ClInclude Include="Magic.h" />
     <ClInclude Include="Oni.h" />

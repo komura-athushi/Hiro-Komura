@@ -20,6 +20,7 @@
     <ClInclude Include="Weapon.h" />
     <ClInclude Include="Magic.h" />
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="GameData.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -42,6 +43,7 @@
     <ClCompile Include="Weapon.cpp" />
     <ClCompile Include="Magic.cpp" />
     <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="GameData.cpp" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Asset\modelData\unityChan.fbx">

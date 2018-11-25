@@ -72,7 +72,7 @@ private:
 	//Oniの色々なステータス
 	static const int m_MaxHP = 50;                              //最大HP
 	static const int m_Attack=20;                               //攻撃力
-	static const int m_EXP = 30;                               //経験値
+	static const int m_EXP = 20;                               //経験値
 	bool m_gekiha = false;                                      //deleteするかどうか
 };
 

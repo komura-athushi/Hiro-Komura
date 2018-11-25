@@ -386,7 +386,7 @@ void Player::OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventName)
 	}
 }
 
-void Player::Damage(int attack)
+void Player::Damage(const int& attack)
 {
 	if (m_timer2 >= 30) {
 		m_HP -= attack;
