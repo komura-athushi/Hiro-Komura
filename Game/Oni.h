@@ -74,7 +74,5 @@ private:
 	static const int m_Attack=20;                               //攻撃力
 	static const int m_EXP = 30;                               //経験値
 	bool m_gekiha = false;                                      //deleteするかどうか
-	static const int m_dropitemmin = 1;                         //ドロップするアイテムの最低レア度
-	static const int m_dropitemmax = 3;                         //ドロップするアイテムの最高レア度
 };
 

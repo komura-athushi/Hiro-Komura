@@ -13,7 +13,7 @@ Enemy::~Enemy()
 
 bool Enemy::Start()
 {
-
+	return true;
 }
 
 void Enemy::Update()
