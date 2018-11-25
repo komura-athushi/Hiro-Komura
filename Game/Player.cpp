@@ -16,6 +16,55 @@ Player::~Player()
 	delete m_sword;
 }
 
+void Player::unityChan()
+{
+	//アニメーションファイルをロード
+	m_animClip[enAnimationClip_idle].Load(L"Asset/animData/unityChan/idle.tka");
+	m_animClip[enAnimationClip_walk].Load(L"Asset/animData/unityChan/walk.tka");
+	m_animClip[enAnimationClip_run].Load(L"Asset/animData/unityChan/run.tka");
+	m_animClip[enAnimationClip_jump].Load(L"Asset/animData/unityChan/jump.tka");
+	m_animClip[enAnimationClip_damage].Load(L"Asset/animData/unityChan/damage.tka");
+	m_animClip[enAnimationClip_KneelDown].Load(L"Asset/animData/unityChan/KneelDown.tka");
+	m_animClip[enAnimationClip_Clear].Load(L"Asset/animData/unityChan/Clear.tka");
+	m_animClip[enAnimationClip_attack].Load(L"Asset/animData/unityChan/attack.tka", false, enZtoY);
+	//アニメーションのループフラグをtrueにする
+	for (auto& animClip : m_animClip) {
+		animClip.SetLoopFlag(true);
+	}
+	//一部アニメーションのループフラグをfalseにする
+	m_animClip[enAnimationClip_jump].SetLoopFlag(false);
+	m_animClip[enAnimationClip_KneelDown].SetLoopFlag(false);
+	m_animClip[enAnimationClip_Clear].SetLoopFlag(false);
+	m_animClip[enAnimationClip_damage].SetLoopFlag(false);
+	m_animClip[enAnimationClip_attack].SetLoopFlag(false);
+	//unityChanを表示
+	m_skinModelRender = new GameObj::CSkinModelRender;
+	m_skinModelRender->Init(L"Resource/modelData/unityChan.cmo", m_animClip, enAnimationClip_num, enFbxUpAxisY);
+	m_skinModelRender->SetPos(m_position);
+	m_sword = new Sword;
+	//unityChanのボーンを検索
+	m_bonehand = m_skinModelRender->FindBoneID(L"Character1_RightHand");
+	m_bonecenter = m_skinModelRender->FindBoneID(L"center");
+	CQuaternion qRot = m_skinModelRender->GetBoneRot(m_bonecenter);
+	m_sword->SetRot(qRot);
+	CVector3 pos = m_position;
+	pos.y += 170.0f;
+	pos.x -= 70.0f;
+	pos.z += 10.0f;
+	m_sword->SetPosition(pos);
+	m_skinModelRender->GetAnimCon().AddAnimationEventListener([&](const wchar_t* clipName, const wchar_t* eventName) {
+		OnAnimationEvent(clipName, eventName);
+	});
+}
+
+void Player::cagliostro()
+{
+	m_skinModelRender = new GameObj::CSkinModelRender;
+	m_skinModelRender->Init(L"Resource/modelData/cagliostro.cmo");
+	m_scale = {1.0f, 1.0f, 1.0f};
+	m_skinModelRender->SetScale(m_scale);
+}
+
 bool Player::Start()
 {
 	//キャラクターコントローラーを初期化。
@@ -34,54 +83,24 @@ bool Player::Start()
 	m_collision->SetName(L"Player");
 	//クラスのポインタを設定
 	m_collision->SetClass(this);
-	//アニメーションファイルをロード
-	m_animClip[enAnimationClip_idle].Load(L"Asset/animData/unityChan/idle.tka");
-	m_animClip[enAnimationClip_walk].Load(L"Asset/animData/unityChan/walk.tka");
-	m_animClip[enAnimationClip_run].Load(L"Asset/animData/unityChan/run.tka");
-	m_animClip[enAnimationClip_jump].Load(L"Asset/animData/unityChan/jump.tka");
-	m_animClip[enAnimationClip_damage].Load(L"Asset/animData/unityChan/damage.tka");
-	m_animClip[enAnimationClip_KneelDown].Load(L"Asset/animData/unityChan/KneelDown.tka");
-	m_animClip[enAnimationClip_Clear].Load(L"Asset/animData/unityChan/Clear.tka");
-	m_animClip[enAnimationClip_attack].Load(L"Asset/animData/unityChan/attack.tka",false,enZtoY);
-	//アニメーションのループフラグをtrueにする
-	for (auto& animClip : m_animClip) {
-		animClip.SetLoopFlag(true);
+	if (m_cagliostro) {
+		cagliostro();
 	}
-	//一部アニメーションのループフラグをfalseにする
-	m_animClip[enAnimationClip_jump].SetLoopFlag(false);
-	m_animClip[enAnimationClip_KneelDown].SetLoopFlag(false);
-	m_animClip[enAnimationClip_Clear].SetLoopFlag(false);
-	m_animClip[enAnimationClip_damage].SetLoopFlag(false);
-	m_animClip[enAnimationClip_attack].SetLoopFlag(false);
-	//unityChanを表示
-	m_skinModelRender = new GameObj::CSkinModelRender;
-    m_skinModelRender->Init(L"Resource/modelData/unityChan.cmo", m_animClip, enAnimationClip_num, enFbxUpAxisY);
-	//m_skinModelRender = new GameObj::CSkinModelRender;
-	//m_skinModelRender->Init(L"Resource/modelData/unityChan.cmo");
-    m_skinModelRender->SetPos(m_position);
-	m_sword = new Sword;
-	//unityChanのボーンを検索
-	m_bonehand=m_skinModelRender->FindBoneID(L"Character1_RightHand");
-	m_bonecenter= m_skinModelRender->FindBoneID(L"center");
-	CQuaternion qRot = m_skinModelRender->GetBoneRot(m_bonecenter);
-	m_sword->SetRot(qRot);
-	CVector3 pos = m_position;
-	pos.y += 170.0f;
-	pos.x -= 70.0f;
-	pos.z += 10.0f;
-	m_sword->SetPosition(pos);
-	m_skinModelRender->GetAnimCon().AddAnimationEventListener([&](const wchar_t* clipName, const wchar_t* eventName) {
-		OnAnimationEvent(clipName, eventName);
-	});
+	else {
+		unityChan();
+	}
 	Status();
 	return true;
 }
 void Player::Update()
 {
-	//キャラクターのアニメーションの処理、移動や回転も入ってる
-	AnimationController();
-	//Move();
-	//Turn();
+	if (m_cagliostro) {
+	}
+	else {
+		//キャラクターのアニメーションの処理、移動や回転も入ってる
+		AnimationController();
+		Kougeki();
+	}
 	if (m_charaCon.IsOnGround()) {
 		//地面についた。
 		m_movespeed.y = 0.0f;
@@ -89,7 +108,6 @@ void Player::Update()
 	}
 	m_charaCon.SetPosition(m_position);
 	m_skinModelRender->SetPos(m_position);
-	Kougeki();
 	m_collision->SetPosition(m_position + CVector3::AxisY()*m_collisionUp);
 	m_timer2++;
 }

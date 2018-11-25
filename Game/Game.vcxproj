@@ -141,8 +141,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Boss.cpp" />
+    <ClCompile Include="Cagliostro_view.cpp" />
     <ClCompile Include="DropItem.cpp" />
+    <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="IEnemy.cpp" />
+    <ClCompile Include="Magic.cpp" />
     <ClCompile Include="Oni.cpp" />
     <ClCompile Include="PlayerStatus.cpp" />
     <ClCompile Include="Stage1.cpp" />
@@ -159,11 +162,15 @@
     </ClCompile>
     <ClCompile Include="Title.cpp" />
     <ClCompile Include="Ground.cpp" />
+    <ClCompile Include="Weapon.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Boss.h" />
+    <ClInclude Include="Cagliostro_view.h" />
     <ClInclude Include="DropItem.h" />
+    <ClInclude Include="Enemy.h" />
     <ClInclude Include="IEnemy.h" />
+    <ClInclude Include="Magic.h" />
     <ClInclude Include="Oni.h" />
     <ClInclude Include="PlayerStatus.h" />
     <ClInclude Include="Stage1.h" />
@@ -176,8 +183,10 @@
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Title.h" />
     <ClInclude Include="Ground.h" />
+    <ClInclude Include="Weapon.h" />
   </ItemGroup>
   <ItemGroup>
+    <MeshContentTask Include="Asset\modelData\cagliostro\cagliostro.fbx" />
     <MeshContentTask Include="Asset\modelData\enemy\enemy.FBX" />
     <MeshContentTask Include="Asset\modelData\ground.FBX" />
     <MeshContentTask Include="Asset\modelData\sky.FBX" />

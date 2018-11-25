@@ -16,9 +16,9 @@ Stage1::~Stage1()
 	delete m_gamecamera;
 	delete m_ground;
 	delete m_lig;
-	for (auto& oni : m_oniList) {
+	/*for (auto& oni : m_oniList) {
 		delete oni;
-	}
+	}*/
 }
 
 bool Stage1::Start()

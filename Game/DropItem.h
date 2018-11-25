@@ -18,7 +18,7 @@ public:
 	{
 		m_position = pos;
 	}
-	//アイテムのレア度を設定
+	//アイテムのナンバーを設定
 	void SetState(const int& state)
 	{
 		m_state = state;
@@ -28,7 +28,7 @@ private:
 	CVector3 m_position;                                        //座標
 	CVector3 m_scale = { 0.5f,0.5f,0.5f };                      //大きさ
 	CQuaternion m_rotation;                                     //クオンテーション
-	int m_state;                                               //ドロップ品の番号
+	int m_state;                                                //ドロップ品の番号
 	Player* m_player;                                           //プレイヤークラスのポインタ
 };
 
