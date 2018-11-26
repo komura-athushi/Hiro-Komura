@@ -1,7 +1,9 @@
 #pragma once
+class DropItem;
 class IEnemy : public IGameObject
 {
 public:
+
 	/*!
 	* @brief	IEnemyのコンストラクタ
 	* int h     HPを設定
@@ -10,6 +12,7 @@ public:
 	*/
 	IEnemy(int h,int a,int e);
 	virtual ~IEnemy();
+
 	/*!
 	* @brief	コリジョンの生成。
 	* CVector3 pos   コリジョンの座標
@@ -17,6 +20,7 @@ public:
 	* float r        コリジョンの半径
 	*/
     void CCollision(CVector3 pos,float l, float r);
+
 	/*!
 	* @brief	コリジョンの移動。
 	* CVector3 pos    コリジョンの座標
@@ -38,9 +42,12 @@ public:
 	//文字表示
 	void PostRender()override;
 protected:
-	//std::unique_ptr<GameObj::CCollisionObj> m_collision;      //丸いコリジョン
-	GameObj::CCollisionObj* m_collision;
-	//プレイヤーの色々なステータス
+	struct Item {
+		int m_rare;
+		float m_chance;
+	};
+	GameObj::CCollisionObj* m_collision;                      //丸いコリジョン
+	//エネミーの色々なステータス
 	int m_MaxHP;                                              //最大HP
 	int m_HP;                                                 //HP
 	int m_MaxPP;                                              //最大PP
@@ -51,5 +58,6 @@ protected:
 	bool m_damage = false;                                    //ダメージを受けたかどうか
 	bool m_death = false;                                     //HPが0以下になったかどうか
 	CFont m_font;                                             //文字表示クラス
+	DropItem* m_dropitem;
 };
 

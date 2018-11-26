@@ -21,6 +21,7 @@ Stage1::~Stage1()
 		delete oni;
 	}*/
 	delete boss;
+
 }
 
 bool Stage1::Start()

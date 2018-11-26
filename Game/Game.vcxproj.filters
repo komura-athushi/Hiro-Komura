@@ -15,6 +15,12 @@
     <ClInclude Include="IEnemy.h" />
     <ClInclude Include="Oni.h" />
     <ClInclude Include="Boss.h" />
+    <ClInclude Include="DropItem.h" />
+    <ClInclude Include="Cagliostro_view.h" />
+    <ClInclude Include="Weapon.h" />
+    <ClInclude Include="Magic.h" />
+    <ClInclude Include="Enemy.h" />
+    <ClInclude Include="GameData.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -32,6 +38,12 @@
     <ClCompile Include="IEnemy.cpp" />
     <ClCompile Include="Oni.cpp" />
     <ClCompile Include="Boss.cpp" />
+    <ClCompile Include="DropItem.cpp" />
+    <ClCompile Include="Cagliostro_view.cpp" />
+    <ClCompile Include="Weapon.cpp" />
+    <ClCompile Include="Magic.cpp" />
+    <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="GameData.cpp" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Asset\modelData\unityChan.fbx">
@@ -76,7 +88,11 @@
     <MeshContentTask Include="Asset\modelData\sky.FBX">
       <Filter>Assets\modelDate</Filter>
     </MeshContentTask>
+<<<<<<< HEAD
     <MeshContentTask Include="Asset\modelData\boss\boss.FBX">
+=======
+    <MeshContentTask Include="Asset\modelData\cagliostro\cagliostro.fbx">
+>>>>>>> 15cc965a3c482128ede30786523d5ff7eba56075
       <Filter>Assets\modelDate</Filter>
     </MeshContentTask>
   </ItemGroup>

@@ -7,12 +7,26 @@ class PlayerStatus;
 class Player:public IGameObject
 {
 public:
+	//カリオストロちゃんモードを設定
+	void Cagliostro()
+	{
+		m_cagliostro = true;
+	}
+	//カリオストロちゃんモードかどうかを取得
+	bool isCagliostro()
+	{
+		return m_cagliostro;
+	}
 	Player();
 	~Player();
 	bool Start();
 	void Update();
 	//文字表示
 	void PostRender()override;
+	//ユニティちゃんを表示する時の処理
+	void unityChan();
+	//はぁーい☆美少女錬金術師のカリオストロだよ☆よろしくね☆
+	void cagliostro();
 	//プレイヤーステータスのクラスのメンバ変数をプレイヤーのステータスに反映
 	void Status();
 	//キャラクターの向きを計算
@@ -58,8 +72,9 @@ public:
 		m_gamecamera = camera;
 	}
 	//プレイヤーがダメージを受けた時の処理
-	void Damage(int attack);
+	void Damage(const int& attack);
 private:
+	bool m_cagliostro = false;
 	GameObj::CSkinModelRender* m_skinModelRender = nullptr;		//スキンモデルレンダラー。
     GameObj::CCollisionObj* m_collision;                        //丸いコリジョン
 	CFont m_font;                                               //文字表示クラス
@@ -85,8 +100,8 @@ private:
 	const float m_multiply = 400.0f;                            //ユニティちゃんの移動速度を調整する
 	CQuaternion m_rotation;                                     //クォータニオン
 	CCharacterController m_charaCon;                            //キャラクターの当たり判定とか移動とか
-	float m_r = 40.0f;                                          //コリジョンの半径
-	float m_collisionUp = 50.0f;                                //コリジョンの座標のyを加算
+	const float m_r = 40.0f;                                    //コリジョンの半径
+	const float m_collisionUp = 50.0f;                          //コリジョンの座標のyを加算
 	//アニメーション関係
 	enum EnAnimationClip {
 		enAnimationClip_idle,

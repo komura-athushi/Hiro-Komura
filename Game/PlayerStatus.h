@@ -48,6 +48,7 @@ private:
 	int m_Level=1;                                        //レベル
 	int m_Exp=0;                                          //経験値
 	int m_NextExp = 40;                                   //次のレベルアップに必要な経験値
+	int m_LevelExp=40;                                    //レベルごとに必要な累計経験値
 	int m_MaxHP=100;                                      //最大HP
 	int m_MaxPP=100;                                      //最大PP(魔法撃つのに必要)
 	int m_Attack = 20;                                    //攻撃力(力＋武器の攻撃力)

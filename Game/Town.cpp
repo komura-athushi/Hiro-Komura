@@ -7,6 +7,7 @@
 #include "Stage1_Teleport.h"
 #include "Stage1.h"
 #include "PlayerStatus.h"
+#include "Cagliostro_view.h"
 Town::Town()
 {
 	
@@ -94,6 +95,11 @@ void Town::Update()
 	if (pos.Length() <= 100.0f) {
 		Stage1* stage1 = new Stage1;
 		stage1->SetPlayerStatus(m_playerstatus);
+		delete this;
+	}
+	if (Pad(0).GetButton(enButtonStart)) {
+		Cagliostro_view* cag = new Cagliostro_view;
+		cag->SetPlayerStatus(m_playerstatus);
 		delete this;
 	}
 }
