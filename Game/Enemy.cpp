@@ -10,6 +10,11 @@ Enemy::Enemy(const int& id, const std::string& name, const int& hp, const int& a
 	m_dropChances[3] = dropchances[3];
 }
 
+Enemy::Enemy(const Enemy& enemy):m_id(enemy.m_id), m_name(enemy.m_name), m_hp(enemy.m_hp), m_atk(enemy.m_atk), m_exp(enemy.m_exp)
+{
+
+}
+
 Enemy::~Enemy()
 {
 }

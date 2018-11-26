@@ -9,10 +9,9 @@ public:
 	~GameData();
 	bool Start();
 	void Update();
-	
 private:
-	static Weapon* m_weapons;
-	static Enemy* m_enemies;
-	static Magic* m_magics;
+	Weapon* m_weapons;
+    Enemy* m_enemies;
+	Magic* m_magics;
 };
 

@@ -7,6 +7,11 @@ Magic::Magic(const int& id, const std::string& name, const float& damageRate, co
 {
 }
 
+Magic::Magic(const Magic& magic) : m_id(magic.m_id), m_name(magic.m_name), m_damageRate(magic.m_damageRate), m_ppCost(magic.m_ppCost)
+{
+
+}
+
 Magic::~Magic()
 {
 }

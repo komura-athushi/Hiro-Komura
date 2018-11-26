@@ -13,6 +13,8 @@ public:
 	*int mnumber;						//武器の魔法の番号
 	*/
 	Weapon(const int& id,const std::string& name,const int& rarity,const int& atk,const int& matk,const int& mnumber);
+	//コピーコンストラクタ
+	Weapon(const Weapon& wpn);
 	~Weapon();
 	bool Start();
 	void Update();

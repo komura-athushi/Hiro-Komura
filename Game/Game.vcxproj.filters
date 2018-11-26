@@ -91,6 +91,15 @@
     <MeshContentTask Include="Asset\modelData\cagliostro\cagliostro.fbx">
       <Filter>Assets\modelDate</Filter>
     </MeshContentTask>
+    <MeshContentTask Include="Asset\modelData\Sword\AncientWarriorBlade.FBX">
+      <Filter>Assets\modelDate\Sword</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Asset\modelData\Sword\BattleReadyBlade.FBX">
+      <Filter>Assets\modelDate\Sword</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Asset\modelData\Sword\LegendSword.FBX">
+      <Filter>Assets\modelDate\Sword</Filter>
+    </MeshContentTask>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Assets">

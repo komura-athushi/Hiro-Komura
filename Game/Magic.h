@@ -11,6 +11,8 @@ public:
 	*int ppCost;							//魔法を放つのに必要なPP
 	*/
 	Magic(const int& id,const std::string& name,const float& damageRate,const int& ppCost);
+	//コピーコンストラクタ
+	Magic(const Magic& magic);
 	~Magic();
 	bool Start();
 	void Update();

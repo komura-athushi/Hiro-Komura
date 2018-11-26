@@ -12,6 +12,8 @@ public:
 	*int dropchances[4];						//エネミーのドロップするアイテム
 	*/
 	Enemy(const int& id,const std::string& name,const int& hp,const int& atk,const int& exp,const float dropchances[4]);
+	//コピーコンストラクタ
+	Enemy(const Enemy& enemy);
 	~Enemy();
 	bool Start();
 	void Update();

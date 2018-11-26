@@ -15,7 +15,9 @@ bool Sword::Start()
 {
 	m_skinModelRender = new GameObj::CSkinModelRender;
 	//m_skinModelRender->Init(L"Resource/modelData/Sword.cmo");
-	m_skinModelRender->Init(L"Resource/modelData/Sword.cmo");
+	//m_skinModelRender->Init(L"Resource/modelData/AncientWarriorBlade.cmo");
+	m_skinModelRender->Init(L"Resource/modelData/BattleReadyBlade.cmo");
+	//m_skinModelRender->Init(L"Resource/modelData/LegendSword.cmo");
 	m_skinModelRender->SetPos(m_position);
 	m_skinModelRender->SetScale(m_scale);
 	m_skinModelRender->SetRot(m_qRot);
