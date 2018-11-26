@@ -13,6 +13,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	GetEngine().InitGame(hInstance, hPrevInstance, lpCmdLine, nCmdShow, "Game", initparam);	
 	GameObj::PerspectiveCamera cam; SetMainCamera(&cam);
 	Town* town = new Town;
+	//Title* titel = new Title;
 	PlayerStatus* playerstatus = new PlayerStatus;
 	town->SetPlayerStatus(playerstatus);
 	GameData* gamedata = new GameData;

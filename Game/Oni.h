@@ -31,7 +31,7 @@ public:
 	{
 		m_stage1 = stage1;
 	}
-	void SetOldPosition(const CVector3 pos)
+	void SetOldPosition(const CVector3& pos)
 	{
 		m_oldpos = pos;
 	}
@@ -67,12 +67,12 @@ private:
 	CQuaternion m_rotation;                                     //クォータニオン
 	Stage1* m_stage1;
 	int m_timer=0;												//攻撃のクールタイムのためにフレーム数を数える
-	const float m_r = 80.0f;                                    //コリジョンの半径
+	const float m_r = 70.0f;                                    //コリジョンの半径
 	const float m_collisionheight = 50.0f;                      //コリジョンをm_positionからどれだけ上にあげるか
 	//Oniの色々なステータス
 	static const int m_MaxHP = 50;                              //最大HP
 	static const int m_Attack=20;                               //攻撃力
-	static const int m_EXP = 20;                               //経験値
+	static const int m_EXP = 20;                                //経験値
 	bool m_gekiha = false;                                      //deleteするかどうか
 };
 

@@ -10,7 +10,7 @@ public:
 	* int a     Attackを設定
 	* int e     撃破時の経験値を設定
 	*/
-	IEnemy(int h,int a,int e);
+	IEnemy(const int& h,const int& a,const int& e);
 	virtual ~IEnemy();
 
 	/*!
@@ -19,16 +19,16 @@ public:
 	* float l        コリジョンの座標のyをlだけ加算する
 	* float r        コリジョンの半径
 	*/
-    void CCollision(CVector3 pos,float l, float r);
+    void CCollision(const CVector3& pos,const float& l,const float& r);
 
 	/*!
 	* @brief	コリジョンの移動。
 	* CVector3 pos    コリジョンの座標
 	* float l        コリジョンのy座標をlだけ加算      
 	*/
-	void SetCCollision(CVector3 pos,float l);
+	void SetCCollision(const CVector3& pos,const float& l);
 	//プレイヤーがエネミーにダメージを与える時の処理
-	void Damage(int attack);
+	void Damage(const int& attack);
 	//エネミーのHPが0を切ったかどうか
 	bool GetDeath()
 	{

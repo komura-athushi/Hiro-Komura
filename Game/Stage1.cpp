@@ -19,6 +19,11 @@ Stage1::~Stage1()
 	/*for (auto& oni : m_oniList) {
 		delete oni;
 	}*/
+	/*QueryGOs<Oni>("Skelton", [&](Oni* oni)
+	{
+
+	});*/
+	//m_player = FindGO<Player>(L"Player");
 }
 
 bool Stage1::Start()
@@ -52,6 +57,7 @@ bool Stage1::Start()
 			Oni* oni = new Oni;
 			oni->SetPosition(objData.position);
 			oni->SetOldPosition(objData.position);
+			oni->SetName(L"Skelton");
 			//後で削除するのでリストに積んで記憶しておく。
 			m_oniList.push_back(oni);
 			oni->SetPlayer(m_player);
