@@ -57,27 +57,29 @@ bool Stage1::Start()
 			//後で削除するのでリストに積んで記憶しておく。
 			m_oniList.push_back(oni);
 			oni->SetPlayer(m_player);
-			oni->SetStage1(this);
 			//フックした場合はtrueを返す。
 			return true;
 		}
-		else if (objData.EqualObjectName(L"boss") == true) {
-			//ボス
-			//プレイヤーのインスタンスを生成する。
-			//Bossオブジェクト。
-			boss = new Boss;
-			boss->SetPosition(objData.position);
-			boss->SetOldPosition(objData.position);
-			boss->SetPlayer(m_player);
-			boss->SetStage1(this);
-			//フックした場合はtrueを返す。
-			return true;
-		}
+		//else if (objData.EqualObjectName(L"boss") == true) {
+		//	//ボス
+		//	//プレイヤーのインスタンスを生成する。
+		//	//Bossオブジェクト。
+		//	boss = new Boss;
+		//	boss->SetPosition(objData.position);
+		//	boss->SetOldPosition(objData.position);
+		//	boss->SetPlayer(m_player);
+		//	boss->SetStage1(this);
+		//	//フックした場合はtrueを返す。
+		//	return true;
+		//}
 		return false;
 	});
 	m_gamecamera = new GameCamera;
 	m_gamecamera->SetPlayer(m_player);
 	m_player->SetCamera(m_gamecamera);
+	//仮に生成しております
+	boss = new Boss;
+	boss->SetPlayer(m_player);
 	return true;
 }
 

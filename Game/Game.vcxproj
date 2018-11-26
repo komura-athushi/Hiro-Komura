@@ -176,6 +176,7 @@
     <ClInclude Include="Ground.h" />
   </ItemGroup>
   <ItemGroup>
+    <MeshContentTask Include="Asset\modelData\boss\boss.FBX" />
     <MeshContentTask Include="Asset\modelData\enemy\enemy.FBX" />
     <MeshContentTask Include="Asset\modelData\ground.FBX" />
     <MeshContentTask Include="Asset\modelData\sky.FBX" />

@@ -181,7 +181,7 @@ void Oni::Update()
 	}
 	IEnemy::m_timer++;
 	if (m_gekiha) {
-		m_stage1->SetEnemyGekiha();
+		//m_stage1->SetEnemyGekiha();
 		delete this;
 	}
 }

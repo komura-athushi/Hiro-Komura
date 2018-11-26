@@ -18,17 +18,17 @@ bool Boss::Start()
 {
 	IEnemy::CCollision({ m_position }, m_collisionheight, m_r);
 	//アニメーション
-	m_animClip[enAnimationClip_idle].Load(L"Asset/animData/enemy/idle.tka");
-	m_animClip[enAnimationClip_attack].Load(L"Asset/animData/enemy/attack.tka");
-	m_animClip[enAnimationClip_damage].Load(L"Asset/animData/enemy/damage.tka");
-	m_animClip[enAnimationClip_death].Load(L"Asset/animData/enemy/death.tka");
+	m_animClip[enAnimationClip_idle].Load(L"Asset/animData/boss/boss_idle.tka");
+	m_animClip[enAnimationClip_attack].Load(L"Asset/animData/boss/boss_attack1.tka");
+	m_animClip[enAnimationClip_damage].Load(L"Asset/animData/boss/boss_hit.tka");
+	m_animClip[enAnimationClip_death].Load(L"Asset/animData/boss/boss_dead.tka");
 	m_animClip[enAnimationClip_idle].SetLoopFlag(true);
 	m_animClip[enAnimationClip_attack].SetLoopFlag(false);
 	m_animClip[enAnimationClip_damage].SetLoopFlag(false);
 	m_animClip[enAnimationClip_death].SetLoopFlag(false);
 	//鬼のスキンモデルレンダーを表示
 	m_skinModelRender = new GameObj::CSkinModelRender;
-	m_skinModelRender->Init(L"Resource/modelData/enemy.cmo", m_animClip, enAnimationClip_num, enFbxUpAxisZ);
+	m_skinModelRender->Init(L"Resource/modelData/boss.cmo", m_animClip, enAnimationClip_num, enFbxUpAxisZ);
 	m_skinModelRender->GetAnimCon().AddAnimationEventListener([&](const wchar_t* clipName, const wchar_t* eventName) {
 		OnAnimationEvent(clipName, eventName);
 	});
@@ -181,7 +181,7 @@ void Boss::Update()
 	}
 	IEnemy::m_timer++;
 	if (m_gekiha) {
-		m_stage1->SetEnemyGekiha();
+		//m_stage1->SetEnemyGekiha();
 		delete this;
 	}
 }

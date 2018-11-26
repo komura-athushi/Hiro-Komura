@@ -76,6 +76,9 @@
     <MeshContentTask Include="Asset\modelData\sky.FBX">
       <Filter>Assets\modelDate</Filter>
     </MeshContentTask>
+    <MeshContentTask Include="Asset\modelData\boss\boss.FBX">
+      <Filter>Assets\modelDate</Filter>
+    </MeshContentTask>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Assets">
