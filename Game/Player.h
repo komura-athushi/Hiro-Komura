@@ -76,7 +76,7 @@ public:
 private:
 	bool m_cagliostro = false;
 	GameObj::CSkinModelRender* m_skinModelRender = nullptr;		//スキンモデルレンダラー。
-    GameObj::CCollisionObj* m_collision;                        //丸いコリジョン
+    SuicideObj::CCollisionObj* m_collision;                        //丸いコリジョン
 	CFont m_font;                                               //文字表示クラス
 	Bone* m_bone;                                               //骨
 	PlayerStatus* m_playerstatus;                               //プレイヤーステータスのポインタ

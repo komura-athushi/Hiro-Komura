@@ -191,14 +191,14 @@ void Boss::OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventName)
 	(void)clipName;
 	if (wcscmp(eventName, L"attack") == 0) {
 		//攻撃判定の発生
-		GameObj::CCollisionObj* attackCol = NewGO<GameObj::CCollisionObj>();
+		SuicideObj::CCollisionObj* attackCol = NewGO<SuicideObj::CCollisionObj>();
 		//形状の作成
 		CVector3 pos = m_position + CVector3::AxisY()*m_collisionheight;
 		pos += m_parallel * 30.0f;
 		attackCol->CreateSphere(pos, CQuaternion::Identity(), m_r);
 		//寿命を設定
 		attackCol->SetTimer(4);//15フレーム後削除される
-		attackCol->SetCallback([&](GameObj::CCollisionObj::SCallbackParam& param) {
+		attackCol->SetCallback([&](SuicideObj::CCollisionObj::SCallbackParam& param) {
 			//衝突した判定の名前が"IEnemy"ならm_Attack分だけダメージ与える
 			if (param.EqualName(L"Player")) {
 				Player* player = param.GetClass<Player>();//相手の判定に設定されているCEnemyのポインタを取得
