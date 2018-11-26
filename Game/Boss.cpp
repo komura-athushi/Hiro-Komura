@@ -4,6 +4,7 @@
 #include <math.h> 
 #include "Stage1.h"
 //ボス（見た目はスケルトン）です
+//試し
 Boss::Boss() : IEnemy(m_MaxHP, m_Attack, m_EXP)
 {
 
