@@ -46,7 +46,7 @@ protected:
 		int m_rare;
 		float m_chance;
 	};
-	GameObj::CCollisionObj* m_collision;                      //丸いコリジョン
+	SuicideObj::CCollisionObj* m_collision;                      //丸いコリジョン
 	//エネミーの色々なステータス
 	int m_MaxHP;                                              //最大HP
 	int m_HP;                                                 //HP

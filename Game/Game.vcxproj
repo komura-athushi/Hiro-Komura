@@ -73,11 +73,11 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(ProjectDir)/../../DemolisherWeapon/DemolisherWeapon/bulletPhysics/src;$(ProjectDir)/../../DemolisherWeapon/;$(ProjectDir)/../../DemolisherWeapon/DemolisherWeapon/;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)/../../DemolisherWeapon/DemolisherWeapon/bulletPhysics/src;$(ProjectDir)/../../DemolisherWeapon/;$(ProjectDir)/../../DemolisherWeapon/DemolisherWeapon/;$(ProjectDir)/../../DemolisherWeapon/DemolisherWeapon/EffekseerRuntime140/Compiled/include;$(IncludePath)</IncludePath>
     <LibraryPath>$(ProjectDir)/../../DemolisherWeapon/DemolisherWeapon/lib/$(Platform)\$(Configuration)\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>$(ProjectDir)/../../DemolisherWeapon/DemolisherWeapon/bulletPhysics/src;$(ProjectDir)/../../DemolisherWeapon/;$(ProjectDir)/../../DemolisherWeapon/DemolisherWeapon/;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)/../../DemolisherWeapon/DemolisherWeapon/bulletPhysics/src;$(ProjectDir)/../../DemolisherWeapon/;$(ProjectDir)/../../DemolisherWeapon/DemolisherWeapon/;$(ProjectDir)/../../DemolisherWeapon/DemolisherWeapon/EffekseerRuntime140/Compiled/include;$(IncludePath)</IncludePath>
     <LibraryPath>$(ProjectDir)/../../DemolisherWeapon/DemolisherWeapon/lib/$(Platform)\$(Configuration)\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -103,6 +103,12 @@
     <MeshContentTask>
       <ContentOutput>$(ProjectDir)\Resource\modelData\%(Filename).cmo</ContentOutput>
     </MeshContentTask>
+    <ImageContentTask>
+      <GeneratePremultipliedAlpha>true</GeneratePremultipliedAlpha>
+    </ImageContentTask>
+    <ImageContentTask>
+      <ContentOutput>$(ProjectDir)\Resource\sprite\%(Filename).dds</ContentOutput>
+    </ImageContentTask>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -138,6 +144,12 @@
     <MeshContentTask>
       <ContentOutput>$(ProjectDir)\Resource\modelData\%(Filename).cmo</ContentOutput>
     </MeshContentTask>
+    <ImageContentTask>
+      <GeneratePremultipliedAlpha>true</GeneratePremultipliedAlpha>
+    </ImageContentTask>
+    <ImageContentTask>
+      <ContentOutput>$(ProjectDir)\Resource\sprite\%(Filename).dds</ContentOutput>
+    </ImageContentTask>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Boss.cpp" />
