@@ -17,9 +17,9 @@ Stage1::~Stage1()
 	delete m_gamecamera;
 	delete m_ground;
 	delete m_lig;
-	for (auto& oni : m_oniList) {
+	/*for (auto& oni : m_oniList) {
 		delete oni;
-	}
+	}*/
 	delete boss;
 }
 
@@ -57,6 +57,7 @@ bool Stage1::Start()
 			//後で削除するのでリストに積んで記憶しておく。
 			m_oniList.push_back(oni);
 			oni->SetPlayer(m_player);
+			oni->SetStage1(this);
 			//フックした場合はtrueを返す。
 			return true;
 		}
