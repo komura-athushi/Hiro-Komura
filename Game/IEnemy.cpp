@@ -2,9 +2,12 @@
 #include "IEnemy.h"
 
 
-IEnemy::IEnemy(const int& h,const int& a,const int& e):m_HP(h),m_Attack(a),m_Exp(e)
+IEnemy::IEnemy(const int& h,const int& a,const int& e, const int dropchances[Weapon::m_HighestRarity]):m_HP(h),m_Attack(a),m_Exp(e)
 {
-	
+	/*for (int i = 0; i < Weapon::m_HighestRarity; i++) {
+		m_dropChances[i] = dropchances[i];
+	}*/
+	memcpy(m_dropChances, dropchances, sizeof(dropchances));
 }
 
 IEnemy::~IEnemy()
@@ -52,4 +55,13 @@ void IEnemy::PostRender()
 	m_font.DrawScreenPos(output, { 00.0f,100.0f });
 }
 
+void IEnemy::Drop()
+{
+	for (int i = 0; i < Weapon::m_HighestRarity; i++) {
+		int rad = rand() % 100;
+		if (int(m_dropChances[i]) <= rad) {
+
+		}
+	}
+}
 

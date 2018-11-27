@@ -1,7 +1,8 @@
 #pragma once
-#include "Player.h"
+#include "Weapon.h"
 #include "IEnemy.h"
 #include "DemolisherWeapon/physics/PhysicsStaticObject.h"
+class Player;
 class Stage1;
 class Oni : public IEnemy
 {
@@ -73,6 +74,7 @@ private:
 	static const int m_MaxHP = 50;                              //最大HP
 	static const int m_Attack=20;                               //攻撃力
 	static const int m_EXP = 20;                                //経験値
+	int m_dropChances[Weapon::m_HighestRarity] = { 10,5,0,0 };            //エネミーのドロップするアイテム、[1]が0.4fならレア度1が40%でドロップするみたいな
 	bool m_gekiha = false;                                      //deleteするかどうか
 };
 

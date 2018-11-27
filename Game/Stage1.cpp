@@ -19,10 +19,6 @@ Stage1::~Stage1()
 	/*for (auto& oni : m_oniList) {
 		delete oni;
 	}*/
-	/*QueryGOs<Oni>("Skelton", [&](Oni* oni)
-	{
-
-	});*/
 	//m_player = FindGO<Player>(L"Player");
 }
 

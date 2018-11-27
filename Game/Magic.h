@@ -16,6 +16,26 @@ public:
 	~Magic();
 	bool Start();
 	void Update();
+	//魔法の番号を取得
+	int GetId() const
+	{
+		return m_id;
+	}
+	//魔法の名前を取得
+	std::string GetName() const
+	{
+		return m_name;
+	}
+	//魔法のダメージ倍率を取得
+	float GetDamageRate() const
+	{
+		return m_damageRate;
+	}
+	//魔法のPPコストを取得
+	int GetPPCost() const
+	{
+		return m_ppCost;
+	}
 private:
 	int m_id;							//魔法の番号
 	std::string m_name;					//魔法の名前
