@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "IEnemy.h"
-
+#include "DropItem.h"
 
 IEnemy::IEnemy(const int& h,const int& a,const int& e, const int dropchances[Weapon::m_HighestRarity]):m_HP(h),m_Attack(a),m_Exp(e)
 {
@@ -12,6 +12,7 @@ IEnemy::IEnemy(const int& h,const int& a,const int& e, const int dropchances[Wea
 
 IEnemy::~IEnemy()
 {
+	Drop();
 }
 
 void IEnemy::CCollision(const CVector3& pos,const float& l,const float& r)
@@ -59,8 +60,8 @@ void IEnemy::Drop()
 {
 	for (int i = 0; i < Weapon::m_HighestRarity; i++) {
 		int rad = rand() % 100;
-		if (int(m_dropChances[i]) <= rad) {
-
+		if (int(m_dropChances[i]) >= rad) {
+			DropItem* dropitem = new DropItem;
 		}
 	}
 }

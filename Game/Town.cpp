@@ -63,6 +63,7 @@ bool Town::Start()
 			m_player = new Player;
 			m_player->SetPosition(objData.position);
 			m_player->SetPlayerStatus(m_playerstatus);
+			m_player->SetName(L"Player");
 			//フックした場合はtrueを返す。
 			return true;
 		}

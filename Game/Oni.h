@@ -74,7 +74,7 @@ private:
 	static const int m_MaxHP = 50;                              //最大HP
 	static const int m_Attack=20;                               //攻撃力
 	static const int m_EXP = 20;                                //経験値
-	int m_dropChances[Weapon::m_HighestRarity] = { 10,5,0,0 };            //エネミーのドロップするアイテム、[1]が0.4fならレア度1が40%でドロップするみたいな
+	int m_dropChances[Weapon::m_HighestRarity] = { 0,10,0,0 };            //エネミーのドロップするアイテム、[1]が10ならレア度1が10%でドロップするみたいな
 	bool m_gekiha = false;                                      //deleteするかどうか
 };
 

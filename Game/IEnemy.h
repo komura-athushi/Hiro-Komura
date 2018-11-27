@@ -1,6 +1,5 @@
 #pragma once
 #include "Weapon.h"
-class DropItem;
 class IEnemy : public IGameObject
 {
 public:
@@ -14,7 +13,6 @@ public:
 	*/
 	IEnemy(const int& h,const int& a,const int& e, const int dropchances[Weapon::m_HighestRarity]);
 	virtual ~IEnemy();
-
 	/*!
 	* @brief	コリジョンの生成。
 	* CVector3 pos   コリジョンの座標
@@ -59,6 +57,5 @@ protected:
 	bool m_death = false;                                     //HPが0以下になったかどうか
 	CFont m_font;                                             //文字表示クラス
 	int m_dropChances[Weapon::m_HighestRarity];			      //エネミーのドロップするアイテム、[1]が0.4fならレア度1が40%でドロップするみたいな
-	DropItem* m_dropitem;
 };
 

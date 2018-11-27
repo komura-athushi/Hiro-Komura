@@ -52,6 +52,7 @@ void Player::unityChan()
 	pos.x -= 70.0f;
 	pos.z += 10.0f;
 	m_sword->SetPosition(pos);
+	m_sword->SetSwordId(m_SwordId);
 	m_skinModelRender->GetAnimCon().AddAnimationEventListener([&](const wchar_t* clipName, const wchar_t* eventName) {
 		OnAnimationEvent(clipName, eventName);
 	});
@@ -83,13 +84,15 @@ bool Player::Start()
 	m_collision->SetName(L"Player");
 	//クラスのポインタを設定
 	m_collision->SetClass(this);
+	Status();
+	WeaponStatus();
 	if (m_cagliostro) {
 		cagliostro();
 	}
 	else {
 		unityChan();
 	}
-	Status();
+
 	return true;
 }
 void Player::Update()
@@ -100,6 +103,7 @@ void Player::Update()
 		//キャラクターのアニメーションの処理、移動や回転も入ってる
 		AnimationController();
 		Kougeki();
+		SwitchWeapon();
 	}
 	if (m_charaCon.IsOnGround()) {
 		//地面についた。
@@ -312,9 +316,9 @@ void Player::Status()
 		m_Level = m_playerstatus->GetLevel();
 		m_MaxHP = m_playerstatus->GetMaxHP();
 		m_MaxPP = m_playerstatus->GetMaxPP();
-		m_Attack = m_playerstatus->GetAttack();
 		m_HP = m_MaxHP;
 		m_PP = m_MaxPP;
+		m_SwordId = m_playerstatus->GetSwordId();
 	}
 }  
 
@@ -393,4 +397,42 @@ void Player::Damage(const int& attack)
 		m_damage = true;
 		m_timer2 = 0;
 	}
+}
+
+void Player::WeaponStatus()
+{
+	m_Mattack = m_playerstatus->GetMattack();
+	m_Attack = m_playerstatus->GetAttack();
+	m_SwordId = m_playerstatus->GetSwordId();
+	m_MagicId = m_playerstatus->GetMagicId();
+}
+
+void Player::SwitchWeapon()
+{
+	if (!Pad(0).GetButton(enButtonLeft) && !Pad(0).GetButton(enButtonRight)) {
+		m_isbutton=true;
+	}
+	if (m_isbutton) {
+		//左ボタン
+		if (Pad(0).GetButton(enButtonLeft)) {
+			m_isbutton = false;
+			if (m_playerstatus->GetWeapon(m_SwordId - 1)) {
+				WeaponStatus();
+			}
+			else {
+				return;
+			}
+		}
+		//右ボタン
+		if (Pad(0).GetButton(enButtonRight)) {
+			m_isbutton = false;
+			if (m_playerstatus->GetWeapon(m_SwordId + 1)) {
+				WeaponStatus();
+			}
+			else {
+				return;
+			}
+		}
+	}
+	m_sword->SetSwordId(m_SwordId);
 }

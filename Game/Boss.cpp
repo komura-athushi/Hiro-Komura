@@ -3,8 +3,9 @@
 #define _USE_MATH_DEFINES //M_PI 円周率呼び出し
 #include <math.h> 
 #include "Stage1.h"
+#include "Player.h"
 //ボス（見た目はスケルトン）です
-Boss::Boss() : IEnemy(m_MaxHP, m_Attack, m_EXP)
+Boss::Boss() : IEnemy(m_MaxHP, m_Attack, m_EXP,m_dropChances)
 {
 
 }

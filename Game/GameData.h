@@ -1,5 +1,5 @@
 #pragma once
-class Weapon;
+#include "Weapon.h"
 class Enemy;
 class Magic;
 class GameData:public IGameObject
@@ -9,8 +9,29 @@ public:
 	~GameData();
 	bool Start();
 	void Update();
+	Weapon* GetWeapoin(int number) {
+		return &m_weaponlist[number];
+	}
+	enum EnWeapon {
+		enWeapon_Sword,									//ソード
+		enWeapon_FireSword,								//ファイアソード
+		enWeapon_IceSword,								//アイスソード
+		enWeapon_WindSword,								//ウィンドソード
+		enWeapon_GreatSword,							//グレイトソード
+		enWeapon_BlueLightSword,						//ブルーライトソード
+		enWeapon_num									//ウェポンの種類
+	};
+	enum EnMagic {
+		enMagic_Zangeki,
+		enMagic_Fire,
+		enMagic_Ice,
+		enMagic_Wind,
+		enMagic_SuperZangeki,
+		enMagic_TwincleStar,
+		enMagic_num
+	};
 private:
-	Weapon* m_weapons;
+	std::vector<Weapon> m_weaponlist;
     Enemy* m_enemies;
 	Magic* m_magics;
 };

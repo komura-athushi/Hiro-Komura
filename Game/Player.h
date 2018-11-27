@@ -1,5 +1,6 @@
 #pragma once
 #include "DemolisherWeapon/physics/character/CCharacterController.h"
+
 class Sword;
 class GameCamera;
 class PlayerStatus;
@@ -41,6 +42,10 @@ public:
 	void Kougeki();
 	//アニメーションイベント
 	void OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventName);
+	//攻撃の切り替え
+	void SwitchWeapon();
+	//武器の切り替えの際にステータスを反映させる
+	void WeaponStatus();
 	//プレイヤーステータスクラスのポインタを設定
 	void SetPlayerStatus(PlayerStatus* ps)
 	{
@@ -58,7 +63,7 @@ public:
 	}
 	//プレイヤーのHPを取得
 	int GetHP() const
-	{
+	{ 
 		return m_HP;
 	}
 	//ゲームオーバーかどうかを取得
@@ -136,6 +141,10 @@ private:
 	int m_MaxPP;                                                //最大PP
 	int m_PP;                                                   //PP
     int m_Attack;                                               //攻撃力
-	bool m_damage = false;           //ダメージを受けた！
+	int m_Mattack;                                              //魔法攻撃力
+	int m_SwordId;                                              //装備中の武器の番号
+	int m_MagicId;                                              //使える魔法の番号
+	bool m_damage = false;                                      //ダメージを受けた！
+	bool m_isbutton = false;                                    //武器切り替えの時に使うやつ
 };
 

@@ -12,11 +12,14 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	InitEngineParameter initparam; 
 	GetEngine().InitGame(hInstance, hPrevInstance, lpCmdLine, nCmdShow, "Game", initparam);	
 	GameObj::PerspectiveCamera cam; SetMainCamera(&cam);
+	GameData* gamedata = new GameData;
+	gamedata->SetName(L"GameData");
+	PlayerStatus* playerstatus = new PlayerStatus;
+	playerstatus->SetName(L"PlayerStatus");
+	playerstatus->SetGameData(gamedata);
 	Town* town = new Town;
 	//Title* titel = new Title;
-	PlayerStatus* playerstatus = new PlayerStatus;
 	town->SetPlayerStatus(playerstatus);
-	GameData* gamedata = new GameData;
 	SetPhysicsDebugDrawMode(btIDebugDraw::DBG_DrawWireframe);
 	//ゲームループ。
 	GetEngine().RunGameLoop();

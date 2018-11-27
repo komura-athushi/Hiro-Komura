@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "PlayerStatus.h"
+#include "Weapon.h"
 PlayerStatus::PlayerStatus()
 {
 }
@@ -11,7 +12,7 @@ PlayerStatus::~PlayerStatus()
 
 bool PlayerStatus::Start()
 {
-
+	GetWeaponStatus();
 	return true;
 }
 
@@ -34,6 +35,46 @@ void PlayerStatus::PlusExp(const int& exp)
 		m_Attack = m_Power + m_SwordAttack;
 		m_MaxHP += 10;
 		m_MaxPP += 10;
+		m_Clever += 10;
 	}
 		m_NextExp -= ep;
+}
+
+void PlayerStatus::GetWeaponStatus()
+{
+	m_weapon = m_gamedata->GetWeapoin(m_SwordId);
+	m_SwordMattack = m_weapon->GetMatk();
+	m_SwordAttack = m_weapon->GetAtk();
+	m_MagicId = m_weapon->GetMagicId();
+	m_Rarity = m_weapon->GetRarity();
+	m_SwordName = m_weapon->GetName();
+	m_Mattack = m_Clever + m_SwordMattack;
+	m_Attack = m_Power + m_SwordAttack;
+}
+
+bool PlayerStatus::GetWeapon(int number)
+{
+	if (number<0 || number>GameData::enWeapon_num-1) {
+		return false;
+	}
+	//¶ƒ{ƒ^ƒ“‰Ÿ‚µ‚½Žž‚Ìˆ—
+	if (m_SwordId > number) {
+		for (int i = number; i >= 0; i--) {
+			if (m_haveweaponlist[i]) {
+				m_SwordId = i;
+				GetWeaponStatus();
+				return true;
+			}
+		}
+	}
+	else if (m_SwordId < number) {
+		for (int i = number; i < GameData::enWeapon_num; i++) {
+			if (m_haveweaponlist[i]) {
+				m_SwordId = i;
+				GetWeaponStatus();
+				return true;
+			}
+		}
+	}
+	return false;
 }
