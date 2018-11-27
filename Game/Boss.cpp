@@ -4,7 +4,6 @@
 #include <math.h> 
 #include "Stage1.h"
 //ボス（見た目はスケルトン）です
-//試し
 Boss::Boss() : IEnemy(m_MaxHP, m_Attack, m_EXP)
 {
 
@@ -20,11 +19,15 @@ bool Boss::Start()
 	IEnemy::CCollision({ m_position }, m_collisionheight, m_r);
 	//アニメーション
 	m_animClip[enAnimationClip_idle].Load(L"Asset/animData/boss/boss_idle.tka");
-	m_animClip[enAnimationClip_attack].Load(L"Asset/animData/boss/boss_attack1.tka");
+	m_animClip[enAnimationClip_attack1].Load(L"Asset/animData/boss/boss_attack1.tka");
+	m_animClip[enAnimationClip_attack2].Load(L"Asset/animData/boss/boss_attack2.tka");
+	m_animClip[enAnimationClip_attack3].Load(L"Asset/animData/boss/boss_attack3.tka");
 	m_animClip[enAnimationClip_damage].Load(L"Asset/animData/boss/boss_hit.tka");
 	m_animClip[enAnimationClip_death].Load(L"Asset/animData/boss/boss_dead.tka");
 	m_animClip[enAnimationClip_idle].SetLoopFlag(true);
-	m_animClip[enAnimationClip_attack].SetLoopFlag(false);
+	m_animClip[enAnimationClip_attack1].SetLoopFlag(false);
+	m_animClip[enAnimationClip_attack2].SetLoopFlag(false);
+	m_animClip[enAnimationClip_attack3].SetLoopFlag(false);
 	m_animClip[enAnimationClip_damage].SetLoopFlag(false);
 	m_animClip[enAnimationClip_death].SetLoopFlag(false);
 	//鬼のスキンモデルレンダーを表示
@@ -44,6 +47,16 @@ bool Boss::Start()
 
 void Boss::Attack()
 {
+	if(m_HP >= 600) {
+		m_state = enState_Attack1;
+	}
+	else if(m_HP >= 300) {
+		m_Attack=
+		m_state = enState_Attack2;
+	}
+	else if(m_HP > 0) {
+		m_state = enState_Attack3;
+	}
 }
 void Boss::Chase()
 {
@@ -56,7 +69,7 @@ void Boss::Chase()
 	CVector3 oldpos = m_oldpos - m_position;
 	//接触したら攻撃
 	if (pos.Length() < 100.0f) {
-		m_state = enState_Attack;
+		Attack();
 	}
 	//もしプレイヤーと鬼の距離が近くなったら
 	else if (pos.Length() < 1000.0f) {
@@ -101,11 +114,37 @@ void Boss::AnimationController()
 		Chase();
 		Turn();
 		break;
-	case enState_Attack:
+	case enState_Attack1:
 		//攻撃と攻撃の間にクールタイムを設ける
 		if (m_timer > 60) {
 			if (m_skinModelRender->GetAnimCon().IsPlaying()) {
-				m_skinModelRender->GetAnimCon().Play(enAnimationClip_attack, 0.0f);
+				m_skinModelRender->GetAnimCon().Play(enAnimationClip_attack1, 0.0f);
+				m_timer = 0;
+			}
+			else {
+				m_state = enState_Idle_Run;
+			}
+		}
+		Turn();
+		break;
+	case enState_Attack2:
+		//攻撃と攻撃の間にクールタイムを設ける
+		if (m_timer > 60) {
+			if (m_skinModelRender->GetAnimCon().IsPlaying()) {
+				m_skinModelRender->GetAnimCon().Play(enAnimationClip_attack2, 0.0f);
+				m_timer = 0;
+			}
+			else {
+				m_state = enState_Idle_Run;
+			}
+		}
+		Turn();
+		break;
+	case enState_Attack3:
+		//攻撃と攻撃の間にクールタイムを設ける
+		if (m_timer > 60) {
+			if (m_skinModelRender->GetAnimCon().IsPlaying()) {
+				m_skinModelRender->GetAnimCon().Play(enAnimationClip_attack3, 0.0f);
 				m_timer = 0;
 			}
 			else {
@@ -190,7 +229,7 @@ void Boss::Update()
 void Boss::OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventName)
 {
 	(void)clipName;
-	if (wcscmp(eventName, L"attack") == 0) {
+	if (wcscmp(eventName, L"attack1") == 0) {
 		//攻撃判定の発生
 		SuicideObj::CCollisionObj* attackCol = NewGO<SuicideObj::CCollisionObj>();
 		//形状の作成
@@ -203,7 +242,43 @@ void Boss::OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventName)
 			//衝突した判定の名前が"IEnemy"ならm_Attack分だけダメージ与える
 			if (param.EqualName(L"Player")) {
 				Player* player = param.GetClass<Player>();//相手の判定に設定されているCEnemyのポインタを取得
-				player->Damage(m_Attack);
+				player->Damage(m_Attack1);
+			}
+		}
+		);
+	}
+	else if (wcscmp(eventName, L"attack2") == 0) {
+		//攻撃判定の発生
+		SuicideObj::CCollisionObj* attackCol = NewGO<SuicideObj::CCollisionObj>();
+		//形状の作成
+		CVector3 pos = m_position + CVector3::AxisY()*m_collisionheight;
+		pos += m_parallel * 30.0f;
+		attackCol->CreateSphere(pos, CQuaternion::Identity(), m_r);
+		//寿命を設定
+		attackCol->SetTimer(4);//15フレーム後削除される
+		attackCol->SetCallback([&](SuicideObj::CCollisionObj::SCallbackParam& param) {
+			//衝突した判定の名前が"IEnemy"ならm_Attack分だけダメージ与える
+			if (param.EqualName(L"Player")) {
+				Player* player = param.GetClass<Player>();//相手の判定に設定されているCEnemyのポインタを取得
+				player->Damage(m_Attack2);
+			}
+		}
+		);
+	}
+	else if (wcscmp(eventName, L"attack3") == 0) {
+		//攻撃判定の発生
+		SuicideObj::CCollisionObj* attackCol = NewGO<SuicideObj::CCollisionObj>();
+		//形状の作成
+		CVector3 pos = m_position + CVector3::AxisY()*m_collisionheight;
+		pos += m_parallel * 30.0f;
+		attackCol->CreateSphere(pos, CQuaternion::Identity(), m_r);
+		//寿命を設定
+		attackCol->SetTimer(4);//15フレーム後削除される
+		attackCol->SetCallback([&](SuicideObj::CCollisionObj::SCallbackParam& param) {
+			//衝突した判定の名前が"IEnemy"ならm_Attack分だけダメージ与える
+			if (param.EqualName(L"Player")) {
+				Player* player = param.GetClass<Player>();//相手の判定に設定されているCEnemyのポインタを取得
+				player->Damage(m_Attack3);
 			}
 		}
 		);

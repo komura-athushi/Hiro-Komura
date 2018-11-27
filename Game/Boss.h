@@ -40,7 +40,9 @@ private:
 	//アニメーション関係
 	enum EnAnimationClip {
 		enAnimationClip_idle,
-		enAnimationClip_attack,
+		enAnimationClip_attack1,
+		enAnimationClip_attack2,
+		enAnimationClip_attack3,
 		enAnimationClip_damage,
 		enAnimationClip_death,
 		enAnimationClip_num,
@@ -48,7 +50,9 @@ private:
 	//アニメーション分岐
 	enum EnState {
 		enState_Idle_Run,
-		enState_Attack,
+		enState_Attack1,
+		enState_Attack2,
+		enState_Attack3,
 		enState_Damage,
 		enState_Dead,
 	};
@@ -69,9 +73,9 @@ private:
 	float m_r = 80.0f;                                          //コリジョンの半径
 	float m_collisionheight = 50.0f;                            //コリジョンをm_positionからどれだけ上にあげるか
 	//Bossの色々なステータス
-	static const int m_MaxHP = 50;                              //最大HP
-	static const int m_Attack = 20;                             //攻撃力
-	static const int m_EXP = 20;                                //経験値
+	static const int m_MaxHP = 900;                             //最大HP
+	static const int m_Attack = 40;                             //攻撃力
+	static const int m_EXP = 500;                               //経験値
 	bool m_gekiha = false;
 };
 
