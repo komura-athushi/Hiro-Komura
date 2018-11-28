@@ -327,9 +327,11 @@ void Player::Status()
 void Player::PostRender()
 {
 	wchar_t output[256];
-	swprintf_s(output, L"Lv   %d\nExp  %d\nNexp %d\nHP   %d\nPP   %d\nAtk  %d\n",m_Level, m_Exp,m_NextExp,m_HP, m_PP, m_Attack);
+	/*std::wstring widestr = std::wstring(m_SwordName.begin(), m_SwordName.end());
+	const wchar_t* widecstr = widestr.c_str();*/
+	swprintf_s(output, L"Lv   %d\nExp  %d\nNexp %d\nHP   %d\nPP   %d\nAtk  %d\nWpn  %s\n",m_Level, m_Exp,m_NextExp,m_HP, m_PP, m_Attack, m_SwordName);
 	//swprintf_s(output, L"x   %f\ny   %f\nz  %f\nw   %f\n", m_swordqRot.x, m_swordqRot.y, m_swordqRot.z, m_swordqRot.w);
-	m_font.DrawScreenPos(output, { 800.0f,100.0f });
+	m_font.DrawScreenPos(output, { 700.0f,100.0f });
 }
 
 void Player::Kougeki()

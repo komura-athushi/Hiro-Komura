@@ -6,6 +6,8 @@
 #include "Town.h"
 #include "PlayerStatus.h"
 #include "Oni.h"
+#include "DropItem.h"
+#include "IEnemy.h"
 Stage1::Stage1()
 {
 }
@@ -16,10 +18,16 @@ Stage1::~Stage1()
 	delete m_gamecamera;
 	delete m_ground;
 	delete m_lig;
-	/*for (auto& oni : m_oniList) {
+	QueryGOs<Oni>(L"Oni", [&](Oni* oni)
+	{
 		delete oni;
-	}*/
-	//m_player = FindGO<Player>(L"Player");
+		return true;
+	});
+	QueryGOs<DropItem>(L"DropItem", [&](DropItem* dropitem)
+	{
+		delete dropitem;
+		return true;
+	});
 }
 
 bool Stage1::Start()
@@ -54,7 +62,7 @@ bool Stage1::Start()
 			Oni* oni = new Oni;
 			oni->SetPosition(objData.position);
 			oni->SetOldPosition(objData.position);
-			oni->SetName(L"Skelton");
+			oni->SetName(L"Oni");
 			//後で削除するのでリストに積んで記憶しておく。
 			m_oniList.push_back(oni);
 			oni->SetPlayer(m_player);

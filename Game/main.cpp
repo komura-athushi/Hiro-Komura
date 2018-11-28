@@ -12,9 +12,13 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	InitEngineParameter initparam; 
 	GetEngine().InitGame(hInstance, hPrevInstance, lpCmdLine, nCmdShow, "Game", initparam);	
 	GameObj::PerspectiveCamera cam; SetMainCamera(&cam);
+	//GameDataクラスのインスタンスを生成
 	GameData* gamedata = new GameData;
+	//インスタンスに名前を設定
 	gamedata->SetName(L"GameData");
+	//PlayerStatusクラスのインスタンスを生成
 	PlayerStatus* playerstatus = new PlayerStatus;
+	//インスタンスに名前を設定
 	playerstatus->SetName(L"PlayerStatus");
 	playerstatus->SetGameData(gamedata);
 	Town* town = new Town;

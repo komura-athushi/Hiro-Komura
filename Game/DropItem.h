@@ -19,7 +19,7 @@ public:
 	{
 		m_position = pos;
 	}
-	//アイテムのナンバーを設定
+	//武器のレアリティの中の番号を設定
 	void SetState(const int& state)
 	{
 		m_state = state;

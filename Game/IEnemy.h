@@ -44,7 +44,7 @@ public:
 	//文字表示
 	void PostRender()override;
 protected:
-	SuicideObj::CCollisionObj* m_collision;                      //丸いコリジョン
+	SuicideObj::CCollisionObj* m_collision;                   //丸いコリジョン
 	CVector3 m_position;									  //座標
 	//エネミーの色々なステータス
 	int m_MaxHP;                                              //最大HP
