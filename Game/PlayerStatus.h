@@ -59,6 +59,10 @@ public:
 	{
 		return m_SwordId;
 	}
+	std::string GetSwordName() const
+	{
+		return m_SwordName;
+	}
 	//レベルを設定
 	void SetLevel(const int& level) 
 	{
@@ -87,10 +91,10 @@ private:
 	int m_Power=10;                                       //力
 	int m_SwordAttack = 10;                               //武器の攻撃力
 	int m_MagicId = 0;                                    //使える魔法の番号
-	int m_SwordId = 1;                                    //装備中の武器の番号
+	int m_SwordId = 0;                                    //装備中の武器の番号
 	int m_Rarity = 0;                                     //装備中の武器のレアリティ
 	std::string m_SwordName;                              //装備中の武器の名前
-	bool m_haveweaponlist[GameData::enWeapon_num] = { true,true,true,true,true,true };
+	bool m_haveweaponlist[GameData::enWeapon_num] = { true,false,false,false,true,true };
 	GameData* m_gamedata;
 	Weapon* m_weapon;
 }; 

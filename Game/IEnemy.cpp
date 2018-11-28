@@ -2,12 +2,13 @@
 #include "IEnemy.h"
 #include "DropItem.h"
 
-IEnemy::IEnemy(const int& h,const int& a,const int& e, const int dropchances[Weapon::m_HighestRarity]):m_HP(h),m_Attack(a),m_Exp(e)
+IEnemy::IEnemy(const int& h,const int& a,const int& e,const int dropchances[Weapon::m_HighestRarity]):m_HP(h),m_Attack(a),m_Exp(e)
 {
-	/*for (int i = 0; i < Weapon::m_HighestRarity; i++) {
-		m_dropChances[i] = dropchances[i];
-	}*/
-	memcpy(m_dropChances, dropchances, sizeof(dropchances));
+	for (int i = 0; i < Weapon::m_HighestRarity; i++) {
+		m_dropChances[i] = *dropchances;
+		dropchances++;
+	}
+	//memcpy(m_dropChances, dropchances, sizeof(dropchances));
 }
 
 IEnemy::~IEnemy()
@@ -33,6 +34,7 @@ void IEnemy::CCollision(const CVector3& pos,const float& l,const float& r)
 void IEnemy::SetCCollision(const CVector3& pos,const float& l)
 {
 	m_collision->SetPosition(pos + CVector3::AxisY()*l);
+	m_position = pos;
 }
 
 void IEnemy::Damage(const int& attack)
@@ -52,16 +54,19 @@ void IEnemy::Damage(const int& attack)
 void IEnemy::PostRender()
 {
 	wchar_t output[256];
-	swprintf_s(output, L"HP   %d\natk  %d\n", m_HP,m_Attack);
+	swprintf_s(output, L"HP   %d\natk  %d\nÉhÉçÉbÉv  %d\n", m_HP,m_Attack,m_dropChances[2]);
 	m_font.DrawScreenPos(output, { 00.0f,100.0f });
 }
 
 void IEnemy::Drop()
 {
+	int rad = rand() % 100 + 1;
 	for (int i = 0; i < Weapon::m_HighestRarity; i++) {
-		int rad = rand() % 100;
-		if (int(m_dropChances[i]) >= rad) {
+		if (m_dropChances[i] >= rad) {
 			DropItem* dropitem = new DropItem;
+			dropitem->SetRarity(i);
+			dropitem->SetPosition(m_position);
+			return;
 		}
 	}
 }

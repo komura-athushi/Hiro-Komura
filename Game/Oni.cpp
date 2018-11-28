@@ -4,6 +4,7 @@
 #include <math.h> 
 #include "Stage1.h"
 #include "Player.h"
+const int Oni::m_dropChances[Weapon::m_HighestRarity] = { 0,100,0,0 };
 //鬼（見た目はスケルトン）です
 Oni::Oni():IEnemy(m_MaxHP,m_Attack,m_EXP,m_dropChances)
 {
@@ -97,7 +98,7 @@ void Oni::AnimationController()
 			//待機モーション
 			m_skinModelRender->GetAnimCon().Play(enAnimationClip_idle, 0.2f);
 		}
-		m_state = enState_Idle_Run;
+		//m_state = enState_Idle_Run;
 		Chase();
 		Turn();
 		break;
@@ -194,10 +195,10 @@ void Oni::OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventName)
 		SuicideObj::CCollisionObj* attackCol = NewGO<SuicideObj::CCollisionObj>();
 		//形状の作成
 		CVector3 pos = m_position + CVector3::AxisY()*m_collisionheight;
-		pos += m_heikou * 50.0f;
-		attackCol->CreateSphere(pos, CQuaternion::Identity(), m_r);
+		pos += m_heikou * 130.0f;
+		attackCol->CreateSphere(pos, CQuaternion::Identity(), m_attackr);
 		//寿命を設定
-		attackCol->SetTimer(4);//15フレーム後削除される
+		attackCol->SetTimer(3);//15フレーム後削除される
 		attackCol->SetCallback([&](SuicideObj::CCollisionObj::SCallbackParam& param) {
 			//衝突した判定の名前が"IEnemy"ならm_Attack分だけダメージ与える
 			if (param.EqualName(L"Player")) {

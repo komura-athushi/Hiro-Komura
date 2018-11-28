@@ -81,7 +81,7 @@ public:
 private:
 	bool m_cagliostro = false;
 	GameObj::CSkinModelRender* m_skinModelRender = nullptr;		//スキンモデルレンダラー。
-    SuicideObj::CCollisionObj* m_collision;                        //丸いコリジョン
+    SuicideObj::CCollisionObj* m_collision;                     //丸いコリジョン
 	CFont m_font;                                               //文字表示クラス
 	Bone* m_bone;                                               //骨
 	PlayerStatus* m_playerstatus;                               //プレイヤーステータスのポインタ
@@ -143,6 +143,7 @@ private:
     int m_Attack;                                               //攻撃力
 	int m_Mattack;                                              //魔法攻撃力
 	int m_SwordId;                                              //装備中の武器の番号
+	std::string m_SwordName;                                    //装備中の武器の名前
 	int m_MagicId;                                              //使える魔法の番号
 	bool m_damage = false;                                      //ダメージを受けた！
 	bool m_isbutton = false;                                    //武器切り替えの時に使うやつ

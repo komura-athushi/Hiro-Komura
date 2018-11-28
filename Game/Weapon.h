@@ -49,7 +49,7 @@ public:
 		return m_magicid;
 	}
 	static const int m_HighestRarity = 4;     //武器の最高レアリティ
-	//static const int m_raritynumber[];
+	static const int m_raritynumber[];
 private:
 	int m_id;								//武器の番号
 	std::string m_name;						//武器の名前

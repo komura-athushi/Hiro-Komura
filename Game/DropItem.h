@@ -24,12 +24,19 @@ public:
 	{
 		m_state = state;
 	}
+	//武器のレアリティを設定
+	void SetRarity(int rare)
+	{
+		m_rarity = rare;
+	}
 private:
 	GameObj::CSkinModelRender* m_skinModelRender = nullptr;		//スキンモデルレンダラー。
 	CVector3 m_position;                                        //座標
-	CVector3 m_scale = { 0.5f,0.5f,0.5f };                      //大きさ
+	CVector3 m_scale = { 1.0f,1.0f,1.0f };                      //大きさ
 	CQuaternion m_rotation;                                     //クオンテーション
 	int m_state;                                                //ドロップ品の番号
 	Player* m_player;                                           //プレイヤークラスのポインタ
+	int m_rarity;												//武器のレアリティ
+	int m_number;												//武器のレアリティの中の番号
 };
 

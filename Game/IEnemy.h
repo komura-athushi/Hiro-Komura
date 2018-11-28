@@ -11,7 +11,7 @@ public:
 	* int e     撃破時の経験値を設定
 	* int dropchances[]  ドロップするアイテムのレア度と確率、今んとこレア度0～3
 	*/
-	IEnemy(const int& h,const int& a,const int& e, const int dropchances[Weapon::m_HighestRarity]);
+	IEnemy(const int& h,const int& a,const int& e,const int dropchances[Weapon::m_HighestRarity]);
 	virtual ~IEnemy();
 	/*!
 	* @brief	コリジョンの生成。
@@ -45,6 +45,7 @@ public:
 	void PostRender()override;
 protected:
 	SuicideObj::CCollisionObj* m_collision;                      //丸いコリジョン
+	CVector3 m_position;									  //座標
 	//エネミーの色々なステータス
 	int m_MaxHP;                                              //最大HP
 	int m_HP;                                                 //HP

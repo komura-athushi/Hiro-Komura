@@ -17,7 +17,6 @@ public:
 	void Damage();												//ダメージを受けた時のアクション
 	void Turn();												//キャラクターの向きを計算
 	void Dead();												//エネミーが死んだときの処理
-	void Drop();                                                //アイテムをドロップ
 	//アニメーションイベント
 	void OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventName);
 	void SetPlayer(Player* player)								//プレイヤーのポイントをセット
@@ -69,12 +68,13 @@ private:
 	Stage1* m_stage1;
 	int m_timer=0;												//攻撃のクールタイムのためにフレーム数を数える
 	const float m_r = 70.0f;                                    //コリジョンの半径
+	const float m_attackr = 90.0f;                              //攻撃したときに発生させるコリジョンの半径
 	const float m_collisionheight = 50.0f;                      //コリジョンをm_positionからどれだけ上にあげるか
 	//Oniの色々なステータス
 	static const int m_MaxHP = 50;                              //最大HP
 	static const int m_Attack=20;                               //攻撃力
 	static const int m_EXP = 20;                                //経験値
-	int m_dropChances[Weapon::m_HighestRarity] = { 0,10,0,0 };            //エネミーのドロップするアイテム、[1]が10ならレア度1が10%でドロップするみたいな
+	static const int m_dropChances[];                                        //エネミーのドロップするアイテム、[1]が10ならレア度1が10%でドロップするみたいな
 	bool m_gekiha = false;                                      //deleteするかどうか
 };
 

@@ -14,6 +14,7 @@ Player::~Player()
 {
 	delete m_skinModelRender;
 	delete m_sword;
+	m_collision->Delete();
 }
 
 void Player::unityChan()
@@ -192,7 +193,6 @@ void Player::Animation()
 		}
 	}
 	if (m_HP<=0 || Pad(0).GetButton(enButtonLT)) {
-		m_collision->Delete();
 		m_state = enState_GameOver;
 	}
 	m_timer++;
@@ -370,7 +370,7 @@ void Player::OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventName)
 		pos += m_playerheikou * 90.0f;
 		attackCol->CreateSphere(pos, CQuaternion::Identity(), 70.0f);
 		//寿命を設定
-		attackCol->SetTimer(5);//15フレーム後削除される
+		attackCol->SetTimer(3);//15フレーム後削除される
 		attackCol->SetCallback([&](SuicideObj::CCollisionObj::SCallbackParam& param) {
 			//衝突した判定の名前が"IEnemy"ならm_Attack分だけダメージ与える
 			if (param.EqualName(L"IEnemy")) {
@@ -392,8 +392,14 @@ void Player::OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventName)
 
 void Player::Damage(const int& attack)
 {
-	if (m_timer2 >= 30) {
+	if (m_state == enState_GameOver || m_state==enState_GameClear) {
+		return;
+	}
+	else if (m_timer2 >= 30) {
 		m_HP -= attack;
+		if (m_HP < 0) {
+			m_HP = 0;
+		}
 		m_damage = true;
 		m_timer2 = 0;
 	}
@@ -404,6 +410,7 @@ void Player::WeaponStatus()
 	m_Mattack = m_playerstatus->GetMattack();
 	m_Attack = m_playerstatus->GetAttack();
 	m_SwordId = m_playerstatus->GetSwordId();
+	m_SwordName = m_playerstatus->GetSwordName();
 	m_MagicId = m_playerstatus->GetMagicId();
 }
 
