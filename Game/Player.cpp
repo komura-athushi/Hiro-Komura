@@ -316,6 +316,8 @@ void Player::Status()
 		m_Level = m_playerstatus->GetLevel();
 		m_MaxHP = m_playerstatus->GetMaxHP();
 		m_MaxPP = m_playerstatus->GetMaxPP();
+		m_Attack = m_playerstatus->GetAttack();
+		m_Mattack = m_playerstatus->GetMattack();
 		m_HP = m_MaxHP;
 		m_PP = m_MaxPP;
 		m_SwordId = m_playerstatus->GetSwordId();

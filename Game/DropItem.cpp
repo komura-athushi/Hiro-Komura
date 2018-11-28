@@ -49,16 +49,16 @@ bool DropItem::Start()
 	}
 	m_skinModelRender->SetPos(m_position);
 	m_skinModelRender->SetScale(m_scale);
-	//m_player = FindGO<Player>(L"Player");
+	m_player = FindGO<Player>(L"Player");
 	return true;
 }
 
 void DropItem::Update()
 {
-	/*CVector3 pos = m_player->GetPosition() - m_position;
-	if (pos.Length() <= 50.0f) {
+	CVector3 pos = m_player->GetPosition() - m_position;
+	if (pos.Length() <= 80.0f) {
 		PlayerStatus* playerstatus = FindGO<PlayerStatus>(L"PlayerStatus");
 		playerstatus->SetWeapon(m_state);
 		delete this;
-	}*/
+	}
 }
