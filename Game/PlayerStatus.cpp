@@ -5,7 +5,6 @@ PlayerStatus::PlayerStatus()
 {
 }
 
-
 PlayerStatus::~PlayerStatus()
 {
 }
@@ -36,13 +35,15 @@ void PlayerStatus::PlusExp(const int& exp)
 		m_MaxHP += 10;
 		m_MaxPP += 10;
 		m_Clever += 10;
+		m_Attack = m_Power + m_SwordAttack;
+		m_Mattack = m_Mattack + m_SwordMattack;
 	}
 		m_NextExp -= ep;
 }
 
 void PlayerStatus::GetWeaponStatus()
 {
-	m_weapon = m_gamedata->GetWeapoin(m_SwordId);
+	m_weapon = m_gamedata->GetWeapon(m_SwordId);
 	m_SwordMattack = m_weapon->GetMatk();
 	m_SwordAttack = m_weapon->GetAtk();
 	m_MagicId = m_weapon->GetMagicId();

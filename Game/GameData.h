@@ -9,7 +9,9 @@ public:
 	~GameData();
 	bool Start();
 	void Update();
-	Weapon* GetWeapoin(int number) {
+	//引数の番号の武器のポインタを取得
+	Weapon* GetWeapon(int number) 
+	{
 		return &m_weaponlist[number];
 	}
 	enum EnWeapon {
@@ -31,7 +33,7 @@ public:
 		enMagic_num
 	};
 private:
-	std::vector<Weapon> m_weaponlist;
+	std::vector<Weapon> m_weaponlist;                   //Weaponクラスの可変長配列
     Enemy* m_enemies;
 	Magic* m_magics;
 };

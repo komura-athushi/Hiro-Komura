@@ -23,6 +23,7 @@ public:
 	{
 		m_player = player;
 	}
+	//À•W‚ğİ’è
 	void SetPosition(const CVector3& pos)
 	{
 		m_position = pos;

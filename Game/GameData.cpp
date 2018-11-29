@@ -13,12 +13,12 @@ GameData::~GameData()
 
 bool GameData::Start()
 {
-	m_weaponlist.push_back(Weapon(0 , "ソード"					, 0, 10, 20, 0));
-	m_weaponlist.push_back(Weapon(1 , "ファイアソード"			, 1, 30, 40, 1));
-	m_weaponlist.push_back(Weapon(2 , "アイスソード"			, 1, 30, 40, 2));
-	m_weaponlist.push_back(Weapon(3 , "ウィンドソード"			, 1, 30, 40, 3));
-	m_weaponlist.push_back(Weapon(4 , "グレイトソード"			, 2, 50, 50, 4));
-	m_weaponlist.push_back(Weapon(5 , "ブルーライトソード"		, 3, 60, 70, 5));
+	m_weaponlist.push_back(Weapon(0 , L"ソード"					, 0, 10, 20, 0));
+	m_weaponlist.push_back(Weapon(1 , L"ファイアソード"			, 1, 30, 40, 1));
+	m_weaponlist.push_back(Weapon(2 , L"アイスソード"			, 1, 30, 40, 2));
+	m_weaponlist.push_back(Weapon(3 , L"ウィンドソード"			, 1, 30, 40, 3));
+	m_weaponlist.push_back(Weapon(4 , L"グレイトソード"			, 2, 50, 50, 4));
+	m_weaponlist.push_back(Weapon(5 , L"ブルーライトソード"		, 3, 60, 70, 5));
 	
 	m_magics = new Magic[6]{
 		Magic(0 ,"斬撃"                  ,1.5f ,30),
