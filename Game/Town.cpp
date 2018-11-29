@@ -28,6 +28,7 @@ Town::~Town()
 
 bool Town::Start()
 {
+	//ディレクションライトを設定
 	m_lig = new GameObj::CDirectionLight;
 	m_color = { 1.0f,1.0f,1.0f };
 	m_color.Normalize();
@@ -73,20 +74,6 @@ bool Town::Start()
 	m_gamecamera = new GameCamera;
 	m_gamecamera->SetPlayer(m_player);
 	m_player->SetCamera(m_gamecamera);
-	//GetEngine().GetGraphicsEngine().GetLightManager().SetAmbientLight({ 0.0f, 0.50f, 0.0f });
-	
-	/*m_lig = new GameObj::CDirectionLight;
-	m_lig->SetDirection({ 0.707f, 0.707f, 0.0f });
-	m_lig->SetColor({ 5.0f, 5.0f, 5.0f });
-	
-	m_lig = new GameObj::CDirectionLight;
-	m_lig->SetDirection({ -0.707f, -0.707f, 0.0f });
-	m_lig->SetColor({ 5.0f, 5.0f, 5.0f });
-	
-	m_lig = new GameObj::CDirectionLight;
-	m_lig->SetDirection({ 0.0f, 1.0f, 0.0f });
-	m_lig->SetColor({ 5.0f, 5.0f, 5.0f});*/
-	
 	return true;
 }
 

@@ -80,7 +80,7 @@ bool Stage1::Start()
 
 void Stage1::Update()
 {
-	if (m_player->GetGameOver()) {
+	if (m_player->GetGameOver() || m_player->GetGameClear()) {
 		Town* town = new Town;
 		town->SetPlayerStatus(m_playerstatus);
 		delete this;

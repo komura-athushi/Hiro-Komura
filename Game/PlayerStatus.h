@@ -59,6 +59,7 @@ public:
 	{
 		return m_SwordId;
 	}
+	//装備している武器の番号を取得
 	const wchar_t* GetSwordName() const
 	{
 		return m_SwordName;
@@ -93,7 +94,7 @@ private:
 	int m_MagicId = 0;                                    //使える魔法の番号
 	int m_SwordId = 0;                                    //装備中の武器の番号
 	int m_Rarity = 0;                                     //装備中の武器のレアリティ
-	const wchar_t* m_SwordName;                              //装備中の武器の名前
+	const wchar_t* m_SwordName;                           //装備中の武器の名前
 	bool m_haveweaponlist[GameData::enWeapon_num] = { true,false,false,false,true,true };     //プレイヤーの各武器の所持状況
 	GameData* m_gamedata;                                 //GameDataクラスのポインタ
 	Weapon* m_weapon;									  //Weaponクラスのポインタ

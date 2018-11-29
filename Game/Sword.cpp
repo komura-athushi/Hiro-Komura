@@ -38,6 +38,7 @@ void Sword::Update()
 	}
 	else if(m_switch){
 		m_skinModelRender = new GameObj::CSkinModelRender;
+		//計算した番号によって読み込むcmoファイルを変える
 		switch (m_SwordId) {
 		case 0:
 			m_skinModelRender->Init(L"Resource/modelData/Sword.cmo");

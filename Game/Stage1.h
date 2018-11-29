@@ -17,10 +17,6 @@ public:
 	{
 		m_playerstatus = ps;
 	}
-	void SetEnemyGekiha()
-	{
-		m_enemygekiha = true;
-	}
 private:
 	Ground* m_ground;                                  //Groundクラスのポインタ
 	GameCamera* m_gamecamera;                          //GameCameraクラスのポインタ
@@ -30,6 +26,6 @@ private:
 	Level m_level;                                     //レベルデザインのためのクラス
 	PlayerStatus* m_playerstatus;                      //プレイヤーステータスクラスのポインタ
 	std::vector<Oni*> m_oniList;                       //鬼クラスのポインタの可変長配列
-	bool m_enemygekiha = false;
+	
 };
 

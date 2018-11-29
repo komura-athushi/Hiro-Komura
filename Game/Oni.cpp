@@ -4,6 +4,7 @@
 #include <math.h> 
 #include "Stage1.h"
 #include "Player.h"
+//cppでエネミーのレア度ごとのドロップ率を設定
 const int Oni::m_dropChances[Weapon::m_HighestRarity] = { 0,40,0,0 };
 //鬼（見た目はスケルトン）です
 Oni::Oni():IEnemy(m_MaxHP,m_Attack,m_EXP,m_dropChances)

@@ -75,7 +75,8 @@ private:
 	static const int m_MaxHP = 50;                              //最大HP
 	static const int m_Attack=20;                               //攻撃力
 	static const int m_EXP = 20;                                //経験値
-	static const int m_dropChances[];                                        //エネミーのドロップするアイテム、[1]が10ならレア度1が10%でドロップするみたいな
+	//ヘッダーファイルでは宣言だけ、定義はcppファイルに書いてください
+	static const int m_dropChances[];                           //エネミーのドロップするアイテム、[1]が10ならレア度1が10%でドロップするみたいな
 	bool m_gekiha = false;                                      //deleteするかどうか
 };
 

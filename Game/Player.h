@@ -71,6 +71,11 @@ public:
 	{
 		return m_gameover;
 	}
+	//ゲームクリアかどうかを取得
+	bool GetGameClear() const
+	{
+		return m_gameclear;
+	}
 	//カメラのポインタをセット
 	void SetCamera(GameCamera* camera)
 	{
@@ -97,6 +102,7 @@ private:
 	int m_timer = 0;                                            //攻撃のクールタイム
 	int m_timer2 = 0;                                           //ダメージのクールタイム
 	bool m_gameover = false;                                    //ゲームオーバーかどうか
+	bool m_gameclear = false;									//ゲームクリアかどうか
 	bool m_isjump = false;                                      //ジャンプしているかどうか
 	//自機の角度　初期は180度
 	float m_degree = 180.0f;                                    //ユニティちゃんの向いてる角度

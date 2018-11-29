@@ -9,12 +9,12 @@ GameCamera::GameCamera()
 
 GameCamera::~GameCamera()
 {
-	delete m_camera;
 }
+
 bool GameCamera::Start()
 {
 	//PerspectiveCameraクラス(奥行のあるカメラ)を生成し、メインカメラに設定
-	m_camera = new GameObj::PerspectiveCamera;
+	m_camera = FindGO<GameObj::PerspectiveCamera>(L"Camera");
 	m_camera->SetPos(m_position);
 	m_camera->SetNear(1.0f);
 	m_camera->SetFar(100000.0f);

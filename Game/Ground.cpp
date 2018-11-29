@@ -28,6 +28,7 @@ bool Ground::Start()
 	case 1:
 		m_skinModelRender->Init(L"Resource/modelData/stage1_ground.cmo");
 		break;
+		//カリオストロちゃんモードなら背景だけ読み込みます
 	default:
 		return true;
 		break;

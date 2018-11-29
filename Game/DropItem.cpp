@@ -28,7 +28,6 @@ bool DropItem::Start()
 		m_state += Weapon::m_raritynumber[i];
 	}
 	m_state += m_number;
-	//m_state-=1;
 	m_skinModelRender = new GameObj::CSkinModelRender;
 	switch (m_state) {
 	case 1:

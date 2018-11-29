@@ -11,7 +11,9 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	//ゲームの初期化。
 	InitEngineParameter initparam; 
 	GetEngine().InitGame(hInstance, hPrevInstance, lpCmdLine, nCmdShow, "Game", initparam);	
-	GameObj::PerspectiveCamera cam; SetMainCamera(&cam);
+	GameObj::PerspectiveCamera* cam = new GameObj::PerspectiveCamera;
+	SetMainCamera(cam);
+	cam->SetName(L"Camera");
 	//GameDataクラスのインスタンスを生成
 	GameData* gamedata = new GameData;
 	//インスタンスに名前を設定

@@ -121,8 +121,8 @@ void Player::Move()
 {
 	//左スティックの入力量を取得
 	CVector2 stickL;
-	
-	if (m_state == enState_Damage || m_state==enState_GameOver) {
+	//ダメージを受けているとき、ゲームオーバーの時、ゲームクリアの時は右スティックの入力を無効にする
+	if (m_state == enState_Damage || m_state==enState_GameOver || m_state==enState_GameClear) {
 		stickL = { 0.0f,0.0f };
 	}
 	else {
@@ -182,10 +182,12 @@ void Player::Turn()
 
 void Player::Animation()
 {
+	//ダメージを受けたら
 	if (m_damage) {
 		m_state = enState_Damage;
 		m_damage = false;
 	}
+	//Xボタンを押したら
 	else if (Pad(0).GetButton(enButtonX) && m_timer>=15) {
 		if (m_state != enState_Attack) {
 			m_state = enState_Attack;
@@ -194,6 +196,9 @@ void Player::Animation()
 	}
 	if (m_HP<=0 || Pad(0).GetButton(enButtonLT)) {
 		m_state = enState_GameOver;
+	}
+	else if (Pad(0).GetButton(enButtonLB1)) {
+		m_state = enState_GameClear;
 	}
 	m_timer++;
 }
@@ -233,6 +238,7 @@ void Player::AnimationController()
 			m_skinModelRender->GetAnimCon().Play(enAnimationClip_damage, 0.2f);
 		}
 		else {
+			//アニメーションの再生が終わったら、再びアニメーション分岐
 			if (m_movespeed.LengthSq() > 40.0f * 40.0f) {
 				m_state = enState_Run;
 			}
@@ -246,6 +252,18 @@ void Player::AnimationController()
 		break;
 	case enState_GameClear:
 		m_skinModelRender->GetAnimCon().Play(enAnimationClip_Clear, 0.2f);
+		m_sword->SetScale({ 0.001f,0.001f,0.001f });
+		if (m_skinModelRender->GetAnimCon().IsPlaying()) {
+
+		}
+		else {
+			//アニメーションの再生が終わったら、クリアフラグをONにする
+			if (Pad(0).GetButton(enButtonSelect)) {
+				m_gameclear = true;
+			}
+		}
+		Move();
+		Turn();
 		break;
 	case enState_GameOver:
 		m_skinModelRender->GetAnimCon().Play(enAnimationClip_KneelDown, 0.2f);
@@ -253,6 +271,7 @@ void Player::AnimationController()
 		if (m_skinModelRender->GetAnimCon().IsPlaying()) {
 		}
 		else {
+			//アニメーションの再生が終わったら、ゲームオーバーフラグをONにする
 			if (Pad(0).GetButton(enButtonSelect)) {
 				m_gameover = true;
 			}
@@ -287,6 +306,7 @@ void Player::AnimationController()
 			m_timer = 0;
 		}
 		else {
+			//アニメーションの再生が終わったら、アニメーション分岐
 			m_timer++;
 			if (m_timer >= 20) {
 				if (m_movespeed.LengthSq() > 40.0f * 40.0f) {
@@ -307,12 +327,15 @@ void Player::AnimationController()
 
 void Player::Status()
 {
+	//プレイヤーステータスクラスの経験値をプレイヤークラスに加算
 	m_Exp = m_playerstatus->GetExp();
 	m_NextExp = m_playerstatus->GetNextExp();
+	//レベルアップしてなかったら処理を終了する
 	if (m_Level == m_playerstatus->GetLevel()) {
 		return;
 	}
 	else {
+		//レベルアップしてたら、プレイヤーステータスクラスのステータスを反映、ついでにHP回復
 		m_Level = m_playerstatus->GetLevel();
 		m_MaxHP = m_playerstatus->GetMaxHP();
 		m_MaxPP = m_playerstatus->GetMaxPP();
@@ -327,8 +350,6 @@ void Player::Status()
 void Player::PostRender()
 {
 	wchar_t output[256];
-	/*std::wstring widestr = std::wstring(m_SwordName.begin(), m_SwordName.end());
-	const wchar_t* widecstr = widestr.c_str();*/
 	swprintf_s(output, L"Lv   %d\nExp  %d\nNexp %d\nHP   %d\nPP   %d\nAtk  %d\nWpn  %s\n",m_Level, m_Exp,m_NextExp,m_HP, m_PP, m_Attack, m_SwordName);
 	//swprintf_s(output, L"x   %f\ny   %f\nz  %f\nw   %f\n", m_swordqRot.x, m_swordqRot.y, m_swordqRot.z, m_swordqRot.w);
 	m_font.DrawScreenPos(output, { 700.0f,100.0f });
@@ -336,12 +357,14 @@ void Player::PostRender()
 
 void Player::Kougeki()
 {
+	//攻撃しているときは武器の位置をunityChanの手に移動させる
 	if (m_state == enState_Attack) {
 		CVector3 pos = m_skinModelRender->GetBonePos(m_bonehand);
 		CQuaternion qRot = m_skinModelRender->GetBoneRot(m_bonehand);
 		m_sword->SetRot(qRot);
 		m_sword->SetPosition(pos);
 	}
+	//攻撃していないときは、武器をunityChanの背中に移動させる
 	else {
 		CVector3 pos = m_playerheikou;
 		CQuaternion qRot;
@@ -396,11 +419,13 @@ void Player::OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventName)
 
 void Player::Damage(const int& attack)
 {
+	//ゲームオーバーかゲームクリアの場合、ダメージの処理をしない
 	if (m_state == enState_GameOver || m_state==enState_GameClear) {
 		return;
 	}
 	else if (m_timer2 >= 30) {
 		m_HP -= attack;
+		//HPが0より小さくなったら0にする
 		if (m_HP < 0) {
 			m_HP = 0;
 		}
@@ -423,10 +448,12 @@ void Player::SwitchWeapon()
 	if (!Pad(0).GetButton(enButtonLeft) && !Pad(0).GetButton(enButtonRight)) {
 		m_isbutton=true;
 	}
+	//直前にボタンを押していないときにだけ、入力を有効にする
 	if (m_isbutton) {
 		//左ボタン
 		if (Pad(0).GetButton(enButtonLeft)) {
 			m_isbutton = false;
+			//武器の切り替えが有効であったならば武器のステータスを反映させる
 			if (m_playerstatus->GetWeapon(m_SwordId - 1)) {
 				WeaponStatus();
 			}
@@ -437,6 +464,7 @@ void Player::SwitchWeapon()
 		//右ボタン
 		if (Pad(0).GetButton(enButtonRight)) {
 			m_isbutton = false;
+			//武器の切り替えが有効であったならば武器のステータスを反映させる
 			if (m_playerstatus->GetWeapon(m_SwordId + 1)) {
 				WeaponStatus();
 			}

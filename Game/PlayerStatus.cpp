@@ -25,6 +25,7 @@ void PlayerStatus::PlusExp(const int& exp)
 	int ep = exp;
 	//経験値を加算
 	m_Exp += ep;
+	//レベルごとに必要な累計経験値がプレイヤーの累計経験値より大きくなるまでループ
 	while (m_LevelExp <= m_Exp) {
 		ep -= m_NextExp;
 		m_Level+=1;
@@ -55,6 +56,7 @@ void PlayerStatus::GetWeaponStatus()
 
 bool PlayerStatus::GetWeapon(int number)
 {
+	//引数が武器の番号の範囲を超えていたら関数の処理を終了させる
 	if (number<0 || number>GameData::enWeapon_num-1) {
 		return false;
 	}
@@ -68,6 +70,7 @@ bool PlayerStatus::GetWeapon(int number)
 			}
 		}
 	}
+	//右ボタンを押したときの処理
 	else if (m_SwordId < number) {
 		for (int i = number; i < GameData::enWeapon_num; i++) {
 			if (m_haveweaponlist[i]) {
