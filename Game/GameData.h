@@ -1,7 +1,7 @@
 #pragma once
 #include "Weapon.h"
+#include "Magic.h"
 class Enemy;
-class Magic;
 class GameData:public IGameObject
 {
 public:
@@ -13,6 +13,11 @@ public:
 	Weapon* GetWeapon(int number) 
 	{
 		return &m_weaponlist[number];
+	}
+	//引数の番号の魔法のポインタを取得
+	Magic* GetMagic(int number)
+	{
+		return &m_magiclist[number];
 	}
 	enum EnWeapon {
 		enWeapon_Sword,									//ソード
@@ -34,7 +39,7 @@ public:
 	};
 private:
 	std::vector<Weapon> m_weaponlist;                   //Weaponクラスの可変長配列
+	std::vector<Magic> m_magiclist;						//Magicクラスの可変長配列
     Enemy* m_enemies;
-	Magic* m_magics;
 };
 

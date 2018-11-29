@@ -7,7 +7,7 @@ public:
 	/*!
 	@brief	Weaponのコンストラクタ
 	*int id;							//武器の番号
-	*std::string name;					//武器の名前
+	*const wchar_t* name;				//武器の名前
 	*int rarity;						//武器のレアリティ
 	*int atk;							//武器の物理攻撃力
 	*int matk;							//武器の魔法攻撃力
@@ -52,7 +52,7 @@ public:
 	static const int m_raritynumber[];        //レアリティごとの武器の種類
 private:
 	int m_id;								//武器の番号
-	const wchar_t* m_name;						//武器の名前
+	const wchar_t* m_name;					//武器の名前
 	int m_rarity;							//武器のレアリティ
 	int m_atk;								//武器の物理攻撃力
 	int m_matk;								//武器の魔法攻撃力

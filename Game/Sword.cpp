@@ -5,7 +5,6 @@ Sword::Sword()
 {
 }
 
-
 Sword::~Sword()
 {
 	delete m_skinModelRender; m_skinModelRender = nullptr;
