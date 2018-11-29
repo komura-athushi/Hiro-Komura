@@ -8,7 +8,7 @@ Sword::Sword()
 
 Sword::~Sword()
 {
-	delete m_skinModelRender;
+	delete m_skinModelRender; m_skinModelRender = nullptr;
 }
 
 bool Sword::Start()
@@ -27,11 +27,13 @@ void Sword::Update()
 		m_SwordId = m_SwordId2;
 		m_delete = false;
 	}
-	m_skinModelRender->SetPos(m_position);
-	m_skinModelRender->SetRot(m_qRot);
-	m_skinModelRender->SetScale(m_scale);
+	if (m_skinModelRender) {
+		m_skinModelRender->SetPos(m_position);
+		m_skinModelRender->SetRot(m_qRot);
+		m_skinModelRender->SetScale(m_scale);
+	}
 	if (!m_delete) {
-		delete m_skinModelRender;
+		delete m_skinModelRender; m_skinModelRender = nullptr;
 		m_delete = true;
 		m_switch = true;
 	}
