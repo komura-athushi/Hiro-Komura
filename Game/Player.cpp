@@ -210,8 +210,11 @@ void Player::Animation()
 	//Yボタンを押したら
 	else if (Pad(0).GetButton(enButtonY) && m_timer >= 15) {
 		if (m_state != enState_Aria) {
-			m_state = enState_Aria;
-			m_timer = 0;
+			if (m_PP >= m_PPCost) {
+				m_state = enState_Aria;
+				m_timer = 0;
+				m_PP -= m_PPCost;
+			}
 		}
 	}
 	if (m_HP<=0 || Pad(0).GetButton(enButtonLT)) {
@@ -378,7 +381,7 @@ void Player::Status()
 		return;
 	}
 	else {
-		//レベルアップしてたら、プレイヤーステータスクラスのステータスを反映、ついでにHP回復
+		//レベルアップしてたら、プレイヤーステータスクラスのステータスを反映、ついでにHPとPP回復
 		m_Level = m_playerstatus->GetLevel();
 		m_MaxHP = m_playerstatus->GetMaxHP();
 		m_MaxPP = m_playerstatus->GetMaxPP();
@@ -393,7 +396,7 @@ void Player::Status()
 void Player::PostRender()
 {
 	wchar_t output[256];
-	swprintf_s(output, L"Lv   %d\nExp  %d\nNexp %d\nHP   %d\nPP   %d\nAtk  %d\nMatk %d\nWpn  %s\nMgc  %s\n",m_Level, m_Exp,m_NextExp,m_HP, m_PP, m_Attack,m_Mattack, m_SwordName,m_MagicName);
+	swprintf_s(output, L"Lv   %d\nExp  %d\nNexp %d\nHP   %d\nPP   %d\nAtk  %d\nMatk %d\nWpn  %s\nMgc  %s\nMgg  %d\n",m_Level, m_Exp,m_NextExp,m_HP, m_PP, m_Attack,m_Mattack, m_SwordName,m_MagicName,int(m_Mattack*m_DamageRate));
 	//swprintf_s(output, L"x   %f\ny   %f\nz  %f\nw   %f\n", m_swordqRot.x, m_swordqRot.y, m_swordqRot.z, m_swordqRot.w);
 	m_font.DrawScreenPos(output, { 700.0f,100.0f });
 }
@@ -444,6 +447,10 @@ void Player::OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventName)
 		attackCol->SetCallback([&](SuicideObj::CCollisionObj::SCallbackParam& param) {
 			//衝突した判定の名前が"IEnemy"ならm_Attack分だけダメージ与える
 			if (param.EqualName(L"IEnemy")) {
+				m_PP += m_PPAttackRecovery;
+				if (m_PP > m_MaxPP) {
+					m_PP = m_MaxPP;
+				}
 				IEnemy* enemy = param.GetClass<IEnemy>();//相手の判定に設定されているCEnemyのポインタを取得
 				//エネミーにダメージ
 				enemy->Damage(m_Attack);

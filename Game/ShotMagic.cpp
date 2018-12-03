@@ -64,6 +64,9 @@ bool ShotMagic::Start()
 				 delete mgml.s_collision;
 				 mgml.s_collision = nullptr;
 				 mgml.s_delete = true;
+				 if (i == m_modelnumber) {
+					 delete this;
+				 }
 			 }
 			 else {
 				 CVector3 pos = mgml.s_skinModelReder->GetPos() + m_movespeed;
@@ -73,11 +76,9 @@ bool ShotMagic::Start()
 			 }
 		 }
 	 }
-	 if (i == m_modelnumber) {
-		 delete this;
-	 }
+	
 }
- void ShotMagic::SetCollisionModel(const CVector3& pos, const float& scale)
+ void ShotMagic::SetCollisionModel(const CVector3& pos, const float& scale,const int& id)
  {
 	 GameObj::CSkinModelRender* skinModelRender = new GameObj::CSkinModelRender;
 	 skinModelRender->Init(L"Resource/modelData/Magic_Sample.cmo");
@@ -110,7 +111,7 @@ bool ShotMagic::Start()
  {
 	 m_scale = { 2.0f,2.0f,2.0f };
 	 m_position = m_position + CVector3::AxisY()*60.0f;
-	 SetCollisionModel(m_position,90.0f);
+	 SetCollisionModel(m_position,90.0f,m_id);
 	 m_movespeed = m_directionplayer * 15.0f;
 	 m_deletetime = 30.0f;
 	 m_modelnumber = 1;
@@ -124,7 +125,7 @@ bool ShotMagic::Start()
  {
 	 m_scale = { 1.0f,1.0f,1.0f };
 	 m_position = m_position + CVector3::AxisY()*60.0f;
-	 m_movespeed = m_directionplayer * 25.0f;
+	 m_movespeed = m_directionplayer * 30.0f;
 	 m_deletetime = 50;
 	 m_modelnumber = 3;
 	 m_damage /= m_modelnumber;
@@ -133,8 +134,8 @@ bool ShotMagic::Start()
  void ShotMagic::IrugraUpdate()
  {
 	 if (m_modelcount != m_modelnumber) {
-		 if (m_timer >= 10) {
-			 SetCollisionModel(m_position, 50);
+		 if (m_timer >= 12) {
+			 SetCollisionModel(m_position, 50,m_id);
 			 m_modelcount++;
 			 m_timer = 0;
 		 }
@@ -147,13 +148,31 @@ bool ShotMagic::Start()
 	 m_scale = { 4.0f,4.0f,4.0f };
 	 m_position = m_position; //+ CVector3::AxisY()*60.0f;
 	 m_movespeed = { CVector3::Zero() };
-	 SetCollisionModel(m_position, 180.0f);
+	 SetCollisionModel(m_position, 180.0f,m_id);
 	 m_deletetime = 10;
 	 m_modelnumber = 1;
 	 m_damage /= m_modelnumber;
  }
 
  void ShotMagic::ZanbasUpdate()
+ {
+
+ }
+ 
+ void ShotMagic::Shihuta()
+ {
+	 m_scale = { 3.0f,3.0f,3.0f };
+	 m_position = m_position; //+ CVector3::AxisY()*60.0f;
+	 m_movespeed = { CVector3::Zero() };
+	 SetCollisionModel(m_position, 0,m_id);
+	 m_deletetime = 10;
+	 m_modelnumber = 1;
+	 m_damage /= m_modelnumber;
+	 Player* player = FindGO<Player>(L"Player");
+	 player->SetShihuta();
+ }
+	
+ void ShotMagic::ShihutaUpdate()
  {
 
  }

@@ -1,4 +1,5 @@
 #pragma once
+class IEnemy;
 class ShotMagic:public IGameObject
 {
 public:
@@ -17,7 +18,7 @@ public:
 	bool Start();
 	void Update();
 	//コリジョンとモデルを設定、座標とコリジョンの大きさ
-	void SetCollisionModel(const CVector3& pos, const float& scale);
+	void SetCollisionModel(const CVector3& pos, const float& scale,const int& id);
 	//フォイエ
 	void Foie();
 	void FoieUpdate();
@@ -29,6 +30,7 @@ public:
 	void ZanbasUpdate();
 	//シフタ
 	void Shihuta();
+	void ShihutaUpdate();
 	//マジックスフィア
 	void MagicSphere();
 	//魔法の番号を取得
@@ -102,6 +104,7 @@ private:
 		SuicideObj::CCollisionObj* s_collision;
 		float s_timer=0.0f;
 		bool s_delete = false;
+		std::vector<IEnemy*> s_ignoreList;
 	};
 	std::vector<MagicModel> m_magicmocelList;
 };

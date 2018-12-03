@@ -68,6 +68,11 @@ public:
 	{ 
 		return m_HP;
 	}
+	//シフタがかかった！
+	void SetShihuta()
+	{
+		m_Shihuta = true;
+	}
 	//ゲームオーバーかどうかを取得
 	bool GetGameOver() const
 	{
@@ -160,6 +165,10 @@ private:
 	int m_PPCost;										        //魔法を放つのに必要なPP
 	bool m_damage = false;                                      //ダメージを受けた！
 	bool m_isbutton = false;                                    //武器切り替えの時に使うやつ
-	int m_PPtimer = 0;
+	int m_PPtimer = 0;											//PP自動回復のクールタイム
+	int m_PPAttackRecovery=5;									//エネミーに攻撃したときに回復するPPの回復量
+	bool m_Shihuta = false;										//シフタがかかったらtrue
+	int m_Shihutatimer = 0;										//シフタのかかっている時間
+	int m_Shihutatime = 360;									//シフタのかかる時間を制限
 };
 

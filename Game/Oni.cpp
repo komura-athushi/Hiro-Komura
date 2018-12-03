@@ -182,7 +182,6 @@ void Oni::Update()
 		m_staticobject.SetPositionAndRotation(pos, rot);
 		IEnemy::SetCCollision(m_position, m_collisionheight);
 	}
-	IEnemy::m_timer++;
 	if (m_gekiha) {
 		delete this;
 	}

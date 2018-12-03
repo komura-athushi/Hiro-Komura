@@ -38,15 +38,44 @@ void IEnemy::SetCCollision(const CVector3& pos,const float& l)
 	}
 	m_collision->SetPosition(pos + CVector3::AxisY()*l);
 	m_position = pos;
+	m_timer++;
+	m_timer1++;
+	m_timer2++;
+	m_timer3++;
 }
 
-void IEnemy::Damage(const int& attack)
+void IEnemy::Damage(const int& attack,int number)
 {
-		if (m_timer >= 7) {
+	switch (number) {
+	case 0:
+		if (m_timer >= 15) {
 			m_HP -= attack;
 			m_timer = 0;
 			m_damage = true;
 		}
+		break;
+	case 1:
+		if (m_timer1 >= 30) {
+			m_HP -= attack;
+			m_timer1 = 0;
+			m_damage = true;
+		}
+		break;
+	case 2:
+		if (m_timer2 >= 10) {
+			m_HP -= attack;
+			m_timer2 = 0;
+			m_damage = true;
+		}
+		break;
+	case 3:
+		if (m_timer3 >= 15) {
+			m_HP -= attack;
+			m_timer3 = 0;
+			m_damage = true;
+		}
+		break;
+	}
 		if (m_HP <= 0) {
 			m_death = true;
 			m_collision->Delete();
@@ -68,7 +97,7 @@ void IEnemy::Drop()
 			DropItem* dropitem = new DropItem;
 			dropitem->SetRarity(i);
 			dropitem->SetPosition(m_position);
-			dropitem->SetName(L"DropItem");
+			dropitem->SetName-(L"DropItem");
 			return;
 		}
 	}
