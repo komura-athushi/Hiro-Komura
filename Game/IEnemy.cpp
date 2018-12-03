@@ -42,8 +42,7 @@ void IEnemy::SetCCollision(const CVector3& pos,const float& l)
 
 void IEnemy::Damage(const int& attack)
 {
-	
-		if (m_timer >= 30) {
+		if (m_timer >= 7) {
 			m_HP -= attack;
 			m_timer = 0;
 			m_damage = true;

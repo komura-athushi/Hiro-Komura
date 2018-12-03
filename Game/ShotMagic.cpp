@@ -29,40 +29,52 @@ bool ShotMagic::Start()
 	case 1:
 		Foie();
 		break;
+	case 2:
+		Irugra();
+		break;
+	case 3:
+		Zanbas();
+		break;
 	}
 	return true;
 }
 
  void ShotMagic::Update()
 {
-
 	 switch (m_id) {
 	 case 1:
 		 FoieUpdate();
 		 break;
+	 case 2:
+		 IrugraUpdate();
+		 break;
+	 case 3:
+		 ZanbasUpdate();
+		 break;
 	 }
 	 int i = 0;
-	 for (auto mgml : m_magicmocelList) {
-		 i++;
+	 for (auto& mgml : m_magicmocelList) {
 		 if (mgml.s_delete) {
-			 return;
-		 }
-		 if (mgml.s_timer >= m_deletetime) {
-			 delete mgml.s_skinModelReder;
-			 mgml.s_skinModelReder = nullptr;
-			 delete mgml.s_collision;
-			 mgml.s_collision = nullptr;
-			 mgml.s_delete = true;
-			 if (i == m_modelnumber) {
-				 delete this;
-			 }
+			 i++;
 		 }
 		 else {
-			 CVector3 pos = mgml.s_skinModelReder->GetPos() + m_movespeed;
-			 mgml.s_skinModelReder->SetPos(pos);
-			 mgml.s_collision->SetPosition(pos);
-			 mgml.s_timer = mgml.s_timer+1.0f;
+			 if (mgml.s_timer >= m_deletetime) {
+				 delete mgml.s_skinModelReder;
+				 mgml.s_skinModelReder = nullptr;
+				 delete mgml.s_collision;
+				 mgml.s_collision = nullptr;
+				 mgml.s_delete = true;
+			 }
+			 else {
+				 CVector3 pos = mgml.s_skinModelReder->GetPos() + m_movespeed;
+				 mgml.s_skinModelReder->SetPos(pos);
+				 mgml.s_collision->SetPosition(pos);
+				 mgml.s_timer += 1.0f;
+			 }
 		 }
+	 }
+	 if (i == m_modelnumber) {
+		 delete this;
 	 }
 }
  void ShotMagic::SetCollisionModel(const CVector3& pos, const float& scale)
@@ -98,7 +110,7 @@ bool ShotMagic::Start()
  {
 	 m_scale = { 2.0f,2.0f,2.0f };
 	 m_position = m_position + CVector3::AxisY()*60.0f;
-	 SetCollisionModel(m_position,100.0f);
+	 SetCollisionModel(m_position,90.0f);
 	 m_movespeed = m_directionplayer * 15.0f;
 	 m_deletetime = 30.0f;
 	 m_modelnumber = 1;
@@ -112,14 +124,36 @@ bool ShotMagic::Start()
  {
 	 m_scale = { 1.0f,1.0f,1.0f };
 	 m_position = m_position + CVector3::AxisY()*60.0f;
-	 SetCollisionModel(m_position,50);
-	 m_movespeed = m_directionplayer * 15.0f;
-	 m_deletetime = 40;
+	 m_movespeed = m_directionplayer * 25.0f;
+	 m_deletetime = 50;
 	 m_modelnumber = 3;
+	 m_damage /= m_modelnumber;
  }
 
  void ShotMagic::IrugraUpdate()
  {
-	 
+	 if (m_modelcount != m_modelnumber) {
+		 if (m_timer >= 10) {
+			 SetCollisionModel(m_position, 50);
+			 m_modelcount++;
+			 m_timer = 0;
+		 }
+	 }
+	 m_timer++;
  }
 
+ void ShotMagic::Zanbas()
+ {
+	 m_scale = { 4.0f,4.0f,4.0f };
+	 m_position = m_position; //+ CVector3::AxisY()*60.0f;
+	 m_movespeed = { CVector3::Zero() };
+	 SetCollisionModel(m_position, 180.0f);
+	 m_deletetime = 10;
+	 m_modelnumber = 1;
+	 m_damage /= m_modelnumber;
+ }
+
+ void ShotMagic::ZanbasUpdate()
+ {
+
+ }

@@ -26,6 +26,7 @@ public:
 	void IrugraUpdate();
 	//ザンバース
 	void Zanbas();
+	void ZanbasUpdate();
 	//シフタ
 	void Shihuta();
 	//マジックスフィア
@@ -93,6 +94,8 @@ private:
 	float m_deletetime = 0;								//魔法を消すまでの時間
 	SuicideObj::CCollisionObj* m_collision;		        //丸いコリジョン
 	int m_modelnumber = 0;								//モデルの数
+	int m_modelcount = 0;								//生成したモデルの数
+	int m_timer = 0;									//複数のモデルとコリジョンを時間差ありで生成する場合のクールタイム
 	//スキンモデル、コリジョン、タイマー、削除したかどうか
 	struct MagicModel {
 		GameObj::CSkinModelRender* s_skinModelReder;
