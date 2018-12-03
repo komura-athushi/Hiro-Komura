@@ -14,7 +14,6 @@ IEnemy::IEnemy(const int& h,const int& a,const int& e,const int dropchances[Weap
 IEnemy::~IEnemy()
 {
 	Drop();
-	m_collision->Delete();
 }
 
 void IEnemy::CCollision(const CVector3& pos,const float& l,const float& r)
@@ -34,6 +33,9 @@ void IEnemy::CCollision(const CVector3& pos,const float& l,const float& r)
 
 void IEnemy::SetCCollision(const CVector3& pos,const float& l)
 {
+	if (m_death) {
+		return;
+	}
 	m_collision->SetPosition(pos + CVector3::AxisY()*l);
 	m_position = pos;
 }
@@ -48,6 +50,7 @@ void IEnemy::Damage(const int& attack)
 		}
 		if (m_HP <= 0) {
 			m_death = true;
+			m_collision->Delete();
 		}
 }
 

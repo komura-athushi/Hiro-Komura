@@ -15,6 +15,7 @@ DropItem::~DropItem()
 
 bool DropItem::Start()
 {
+	//ドロップさせる武器の番号を決めます
 	m_state = 0;
 	int type = Weapon::m_raritynumber[m_rarity];
 	int rn = int(float(100 / type));
@@ -29,6 +30,7 @@ bool DropItem::Start()
 	}
 	m_state += m_number;
 	m_skinModelRender = new GameObj::CSkinModelRender;
+	//武器の番号によって読み込むfbxファイルを決めます
 	switch (m_state) {
 	case 1:
 		m_skinModelRender->Init(L"Resource/modelData/FireSword.cmo");

@@ -15,11 +15,11 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	SetMainCamera(cam);
 	cam->SetName(L"Camera");
 	//GameDataクラスのインスタンスを生成
-	GameData* gamedata = new GameData;
+	GameData* gamedata = &GameData::GetInstance();
 	//インスタンスに名前を設定
 	gamedata->SetName(L"GameData");
 	//PlayerStatusクラスのインスタンスを生成
-	PlayerStatus* playerstatus = new PlayerStatus;
+	PlayerStatus* playerstatus = &PlayerStatus::GetInstance();
 	//インスタンスに名前を設定
 	playerstatus->SetName(L"PlayerStatus");
 	playerstatus->SetGameData(gamedata);

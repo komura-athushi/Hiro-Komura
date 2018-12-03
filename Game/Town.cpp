@@ -4,6 +4,7 @@
 #include "GameCamera.h"
 #include "Player.h"
 #include "Stone.h"
+#include "House.h"
 #include "Stage1_Teleport.h"
 #include "Stage1.h"
 #include "PlayerStatus.h"
@@ -23,6 +24,9 @@ Town::~Town()
 	delete m_stage1_teleport;
 	for (auto& stone : m_stoneList) {
 		delete stone;
+	}
+	for (auto& house : m_houseList) {
+		delete house;
 	}
 }
 
@@ -48,6 +52,15 @@ bool Town::Start()
 			stone->SetPosition(objData.position);
 			//後で削除するのでリストに積んで記憶しておく。
 			m_stoneList.push_back(stone);
+			//フックしたのでtrueを返す。
+			return true;
+		}
+		else if (objData.EqualObjectName(L"house") == true) {
+			//Starオブジェクト。
+			House* house = new House;
+			house->SetPosition(objData.position);
+			//後で削除するのでリストに積んで記憶しておく。
+			m_houseList.push_back(house);
 			//フックしたのでtrueを返す。
 			return true;
 		}

@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "PlayerStatus.h"
 #include "Weapon.h"
+#include "Magic.h"
 PlayerStatus::PlayerStatus()
 {
 }
@@ -12,6 +13,7 @@ PlayerStatus::~PlayerStatus()
 bool PlayerStatus::Start()
 {
 	GetWeaponStatus();
+	GetMagicStatus();
 	return true;
 }
 
@@ -54,6 +56,14 @@ void PlayerStatus::GetWeaponStatus()
 	m_Attack = m_Power + m_SwordAttack;
 }
 
+void PlayerStatus::GetMagicStatus()
+{
+	m_magic = m_gamedata->GetMagic(m_MagicId);
+	m_MagicName = m_magic->GetName();
+	m_DamageRate = m_magic->GetDamageRate();
+	m_PPCost = m_magic->GetPPCost();
+}
+
 bool PlayerStatus::GetWeapon(int number)
 {
 	//ˆø”‚ª•Ší‚Ì”Ô†‚Ì”ÍˆÍ‚ğ’´‚¦‚Ä‚¢‚½‚çŠÖ”‚Ìˆ—‚ğI—¹‚³‚¹‚é
@@ -66,6 +76,7 @@ bool PlayerStatus::GetWeapon(int number)
 			if (m_haveweaponlist[i]) {
 				m_SwordId = i;
 				GetWeaponStatus();
+				GetMagicStatus();
 				return true;
 			}
 		}
@@ -76,6 +87,7 @@ bool PlayerStatus::GetWeapon(int number)
 			if (m_haveweaponlist[i]) {
 				m_SwordId = i;
 				GetWeaponStatus();
+				GetMagicStatus();
 				return true;
 			}
 		}

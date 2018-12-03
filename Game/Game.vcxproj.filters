@@ -21,6 +21,10 @@
     <ClInclude Include="Magic.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="GameData.h" />
+    <ClInclude Include="Material.h" />
+    <ClInclude Include="ShotMagic.h" />
+    <ClInclude Include="TownData.h" />
+    <ClInclude Include="House.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -44,6 +48,10 @@
     <ClCompile Include="Magic.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="GameData.cpp" />
+    <ClCompile Include="Material.cpp" />
+    <ClCompile Include="ShotMagic.cpp" />
+    <ClCompile Include="TownData.cpp" />
+    <ClCompile Include="House.cpp" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Asset\modelData\unityChan.fbx">
@@ -99,6 +107,12 @@
     </MeshContentTask>
     <MeshContentTask Include="Asset\modelData\Sword\LegendSword.FBX">
       <Filter>Assets\modelDate\Sword</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Asset\modelData\house.FBX">
+      <Filter>Assets\modelDate</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Asset\modelData\Magic_Sample.FBX">
+      <Filter>Assets\modelDate</Filter>
     </MeshContentTask>
   </ItemGroup>
   <ItemGroup>

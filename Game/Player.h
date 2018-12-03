@@ -46,6 +46,8 @@ public:
 	void SwitchWeapon();
 	//武器の切り替えの際にステータスを反映させる
 	void WeaponStatus();
+	//魔法のステータスを反映させる
+	void MagicStatus();
 	//プレイヤーステータスクラスのポインタを設定
 	void SetPlayerStatus(PlayerStatus* ps)
 	{
@@ -123,6 +125,7 @@ private:
 		enAnimationClip_KneelDown,
 		enAnimationClip_Clear,
 		enAnimationClip_attack,
+		enAnimationClip_aria,
 		enAnimationClip_num,
 	};
 	//アニメーション分岐
@@ -135,6 +138,7 @@ private:
 		enState_WaitStartGameClear,
 		enState_GameClear,
 		enState_Attack,
+		enState_Aria,
 	};
 	AnimationClip m_animClip[enAnimationClip_num];
 	EnState m_state = enState_Idle;
@@ -151,7 +155,11 @@ private:
 	int m_SwordId;                                              //装備中の武器の番号
 	const wchar_t* m_SwordName;                                 //装備中の武器の名前
 	int m_MagicId;                                              //使える魔法の番号
+	const wchar_t* m_MagicName;						            //魔法の名前
+	float m_DamageRate;								       	    //魔法のダメージ倍率
+	int m_PPCost;										        //魔法を放つのに必要なPP
 	bool m_damage = false;                                      //ダメージを受けた！
 	bool m_isbutton = false;                                    //武器切り替えの時に使うやつ
+	int m_PPtimer = 0;
 };
 

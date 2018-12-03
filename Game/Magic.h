@@ -41,5 +41,6 @@ private:
 	const wchar_t* m_name;				//魔法の名前
 	float m_damageRate;					//魔法のダメージ倍率
 	int m_ppCost;						//魔法を放つのに必要なPP
+
 };
 

@@ -155,3 +155,4 @@ void GameCamera::Hutu()
 	/*m_target.y = m_playerposition.y;
 	m_target.y += 140.0f;*/
 }
+

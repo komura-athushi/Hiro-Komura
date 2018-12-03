@@ -22,7 +22,8 @@ public:
 		m_scale = scale;
 	}
 	//•Ší‚Ì”Ô†‚ğİ’è
-	void SetSwordId(const int& id) {
+	void SetSwordId(const int& id) 
+	{
 		m_SwordId2 = id;
 	}
 private:

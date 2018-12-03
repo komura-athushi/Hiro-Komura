@@ -3,6 +3,7 @@ class Ground;
 class GameCamera;
 class Player;
 class Stone;
+class House;
 class Stage1_Teleport;
 class PlayerStatus;
 //拠点となる町です
@@ -29,5 +30,6 @@ private:
 	PlayerStatus* m_playerstatus;                      //プレイヤーステータスクラスのポインタ
 	//各オブジェクトの可変長配列
 	std::vector<Stone*> m_stoneList;                   //Stoneクラスのポインタを格納するための可変長配列
+	std::vector<House*> m_houseList;                   //Stoneクラスのポインタを格納するための可変長配列
 };
 

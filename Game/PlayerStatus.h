@@ -3,9 +3,17 @@
 //プレイヤーのステータスを管理するクラスです
 class PlayerStatus:public IGameObject
 {
-public:
+	//シングルトン
+	private:
 	PlayerStatus();
 	~PlayerStatus();
+public:
+	static PlayerStatus& GetInstance()
+	{
+		static PlayerStatus inst;
+		return inst;
+	}
+public:
 	bool Start();
 	void Update();
 	void SetGameData(GameData* gamedata)
@@ -14,6 +22,8 @@ public:
 	}
 	//武器のステータスを取得
 	void GetWeaponStatus();
+	//魔法のステータスを取得
+	void GetMagicStatus();
 	//レベルを取得
 	int GetLevel() const
 	{
@@ -76,6 +86,21 @@ public:
 	{
 		m_haveweaponlist[number] = true;
 	}
+	//魔法の番号を取得
+	const wchar_t* GetMagicName() const
+	{
+		return m_MagicName;
+	}
+	//魔法のダメージ倍率を取得
+	float GetDamageRate() const
+	{
+		return m_DamageRate;
+	}
+	//魔法のPP消費量を取得
+	int GetPPCost() const
+	{
+		return m_PPCost;
+	}
 	//武器切り替えの際に武器の切り替えが出来ればtrue、出来なければfalseを返す
 	bool GetWeapon(int number);
 private:  
@@ -95,8 +120,12 @@ private:
 	int m_SwordId = 0;                                    //装備中の武器の番号
 	int m_Rarity = 0;                                     //装備中の武器のレアリティ
 	const wchar_t* m_SwordName;                           //装備中の武器の名前
-	bool m_haveweaponlist[GameData::enWeapon_num] = { true,false,false,false,true,true };     //プレイヤーの各武器の所持状況
+	const wchar_t* m_MagicName;						      //魔法の名前
+	float m_DamageRate;									  //魔法のダメージ倍率
+	int m_PPCost;										  //魔法を放つのに必要なPP
+	bool m_haveweaponlist[GameData::enWeapon_num] = { true,true,true,true,true,true };     //プレイヤーの各武器の所持状況
 	GameData* m_gamedata;                                 //GameDataクラスのポインタ
 	Weapon* m_weapon;									  //Weaponクラスのポインタ
+	Magic* m_magic;										  //Magicクラスのポインタ
 }; 
 
