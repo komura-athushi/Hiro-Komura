@@ -96,6 +96,7 @@
       <ConformanceMode>true</ConformanceMode>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <PrecompiledHeader>Use</PrecompiledHeader>
+      <AdditionalIncludeDirectories>$(ProjectDir)/../../DemolisherWeapon/DemolisherWeapon/Photon/Photon-cpp/inc;$(ProjectDir)/../../DemolisherWeapon/DemolisherWeapon/Photon/LoadBalancing-cpp/inc;$(ProjectDir)/../../DemolisherWeapon/DemolisherWeapon/Photon/;$(ProjectDir)/../../DemolisherWeapon/DemolisherWeapon/Photon/Common-cpp/inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalDependencies>d3d11.lib;d3dcompiler.lib;DemolisherWeapon.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -135,6 +136,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <PreprocessorDefinitions>DW_MASTER;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ProjectDir)/../../DemolisherWeapon/DemolisherWeapon/Photon/Photon-cpp/inc;$(ProjectDir)/../../DemolisherWeapon/DemolisherWeapon/Photon/LoadBalancing-cpp/inc;$(ProjectDir)/../../DemolisherWeapon/DemolisherWeapon/Photon/;$(ProjectDir)/../../DemolisherWeapon/DemolisherWeapon/Photon/Common-cpp/inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
