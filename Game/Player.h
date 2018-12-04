@@ -136,6 +136,6 @@ private:
 	int m_MaxPP;                                                //最大PP
 	int m_PP;                                                   //PP
     int m_Attack;                                               //攻撃力
-	bool m_damage = false;                                      //ダメージを受けた！
+	bool m_damage = false;           //ダメージを受けた！
 };
 

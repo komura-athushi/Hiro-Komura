@@ -196,13 +196,19 @@
     <MeshContentTask Include="Asset\modelData\stage1_ground.FBX" />
     <MeshContentTask Include="Asset\modelData\stage1_teleport.FBX" />
     <MeshContentTask Include="Asset\modelData\stone.FBX" />
+    <MeshContentTask Include="Asset\modelData\Sword\AncientWarriorBlade.FBX" />
+    <MeshContentTask Include="Asset\modelData\Sword\BattleReadyBlade.FBX" />
     <MeshContentTask Include="Asset\modelData\Sword\BlueLightSword.FBX" />
     <MeshContentTask Include="Asset\modelData\Sword\FireSword.FBX" />
     <MeshContentTask Include="Asset\modelData\Sword\GreatSword.fbx" />
     <MeshContentTask Include="Asset\modelData\Sword\IceSword.FBX" />
+    <MeshContentTask Include="Asset\modelData\Sword\LegendSword.FBX" />
     <MeshContentTask Include="Asset\modelData\Sword\Sword.FBX" />
     <MeshContentTask Include="Asset\modelData\Sword\WindSword.FBX" />
     <MeshContentTask Include="Asset\modelData\unityChan.fbx" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Asset\sprite\Red.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

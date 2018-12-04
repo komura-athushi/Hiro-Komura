@@ -3,8 +3,9 @@
 #define _USE_MATH_DEFINES //M_PI 円周率呼び出し
 #include <math.h> 
 #include "Stage1.h"
+#include "Player.h"
 //鬼（見た目はスケルトン）です
-Oni::Oni():IEnemy(m_MaxHP,m_Attack,m_EXP)
+Oni::Oni():IEnemy(m_MaxHP,m_Attack,m_EXP,m_dropChances)
 {
 
 }
@@ -193,7 +194,7 @@ void Oni::OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventName)
 		SuicideObj::CCollisionObj* attackCol = NewGO<SuicideObj::CCollisionObj>();
 		//形状の作成
 		CVector3 pos = m_position + CVector3::AxisY()*m_collisionheight;
-		pos += m_heikou * 30.0f;
+		pos += m_heikou * 50.0f;
 		attackCol->CreateSphere(pos, CQuaternion::Identity(), m_r);
 		//寿命を設定
 		attackCol->SetTimer(4);//15フレーム後削除される

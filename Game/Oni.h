@@ -1,7 +1,8 @@
 #pragma once
-#include "Player.h"
+#include "Weapon.h"
 #include "IEnemy.h"
 #include "DemolisherWeapon/physics/PhysicsStaticObject.h"
+class Player;
 class Stage1;
 class Oni : public IEnemy
 {
@@ -31,7 +32,7 @@ public:
 	{
 		m_stage1 = stage1;
 	}
-	void SetOldPosition(const CVector3 pos)
+	void SetOldPosition(const CVector3& pos)
 	{
 		m_oldpos = pos;
 	}
@@ -67,12 +68,13 @@ private:
 	CQuaternion m_rotation;                                     //クォータニオン
 	Stage1* m_stage1;
 	int m_timer=0;												//攻撃のクールタイムのためにフレーム数を数える
-	const float m_r = 80.0f;                                    //コリジョンの半径
+	const float m_r = 70.0f;                                    //コリジョンの半径
 	const float m_collisionheight = 50.0f;                      //コリジョンをm_positionからどれだけ上にあげるか
 	//Oniの色々なステータス
 	static const int m_MaxHP = 50;                              //最大HP
 	static const int m_Attack=20;                               //攻撃力
-	static const int m_EXP = 20;                               //経験値
+	static const int m_EXP = 20;                                //経験値
+	int m_dropChances[Weapon::m_HighestRarity] = { 10,5,0,0 };            //エネミーのドロップするアイテム、[1]が0.4fならレア度1が40%でドロップするみたいな
 	bool m_gekiha = false;                                      //deleteするかどうか
 };
 

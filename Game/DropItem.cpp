@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "DropItem.h"
+#include "Weapon.h"
 
 DropItem::DropItem()
 {

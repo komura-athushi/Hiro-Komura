@@ -6,6 +6,10 @@ Weapon::Weapon(const int& id, const std::string& name, const int& rarity, const 
 {
 }
 
+Weapon::Weapon(const Weapon& wpn):m_id(wpn.m_id), m_name(wpn.m_name), m_rarity(wpn.m_rarity), m_atk(wpn.m_atk), m_matk(wpn.m_matk), m_magicid(wpn.m_magicid)
+{
+
+}
 
 Weapon::~Weapon()
 {

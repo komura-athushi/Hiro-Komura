@@ -95,6 +95,15 @@
 >>>>>>> 15cc965a3c482128ede30786523d5ff7eba56075
       <Filter>Assets\modelDate</Filter>
     </MeshContentTask>
+    <MeshContentTask Include="Asset\modelData\Sword\AncientWarriorBlade.FBX">
+      <Filter>Assets\modelDate\Sword</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Asset\modelData\Sword\BattleReadyBlade.FBX">
+      <Filter>Assets\modelDate\Sword</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Asset\modelData\Sword\LegendSword.FBX">
+      <Filter>Assets\modelDate\Sword</Filter>
+    </MeshContentTask>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Assets">
@@ -106,5 +115,13 @@
     <Filter Include="Assets\modelDate\Sword">
       <UniqueIdentifier>{2b335737-352b-4ed6-a4ed-0d0aa194c1a5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Assets\sprite">
+      <UniqueIdentifier>{f5d5b041-2b0f-4ef8-b93d-394d55dbba5b}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Asset\sprite\Red.png">
+      <Filter>Assets\sprite</Filter>
+    </ImageContentTask>
   </ItemGroup>
 </Project>

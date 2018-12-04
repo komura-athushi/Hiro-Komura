@@ -6,7 +6,9 @@ public:
 	~Title();
 	bool Start();
 	void Update();
-
+	void PostRender()override;
+private:
+	CSprite m_sprite;
 	
 };
 

@@ -2,16 +2,19 @@
 #include "IEnemy.h"
 
 
-IEnemy::IEnemy(int h,int a,int e):m_HP(h),m_Attack(a),m_Exp(e)
+IEnemy::IEnemy(const int& h,const int& a,const int& e, const int dropchances[Weapon::m_HighestRarity]):m_HP(h),m_Attack(a),m_Exp(e)
 {
-	
+	/*for (int i = 0; i < Weapon::m_HighestRarity; i++) {
+		m_dropChances[i] = dropchances[i];
+	}*/
+	memcpy(m_dropChances, dropchances, sizeof(dropchances));
 }
 
 IEnemy::~IEnemy()
 {
 }
 
-void IEnemy::CCollision(CVector3 pos,float l, float r)
+void IEnemy::CCollision(const CVector3& pos,const float& l,const float& r)
 {
 	//‚­‚ç‚¢”»’è‚Ìì¬
 	//m_collision = std::make_unique<SuicideObj::CCollisionObj>();
@@ -26,12 +29,12 @@ void IEnemy::CCollision(CVector3 pos,float l, float r)
 	m_collision->SetClass(this);
 }
 
-void IEnemy::SetCCollision(CVector3 pos,float l)
+void IEnemy::SetCCollision(const CVector3& pos,const float& l)
 {
 	m_collision->SetPosition(pos + CVector3::AxisY()*l);
 }
 
-void IEnemy::Damage(int attack)
+void IEnemy::Damage(const int& attack)
 {
 	
 		if (m_timer >= 30) {
@@ -52,4 +55,13 @@ void IEnemy::PostRender()
 	m_font.DrawScreenPos(output, { 00.0f,100.0f });
 }
 
+void IEnemy::Drop()
+{
+	for (int i = 0; i < Weapon::m_HighestRarity; i++) {
+		int rad = rand() % 100;
+		if (int(m_dropChances[i]) <= rad) {
+
+		}
+	}
+}
 

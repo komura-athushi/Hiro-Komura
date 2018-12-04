@@ -4,6 +4,7 @@
 #include "Stage1.h"
 #include "PlayerStatus.h"
 #include <time.h>
+#include "GameData.h"
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nCmdShow)
 {
 	srand((unsigned)time(NULL));
@@ -12,8 +13,10 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	GetEngine().InitGame(hInstance, hPrevInstance, lpCmdLine, nCmdShow, "Game", initparam);	
 	GameObj::PerspectiveCamera cam; SetMainCamera(&cam);
 	Town* town = new Town;
+	//Title* titel = new Title;
 	PlayerStatus* playerstatus = new PlayerStatus;
 	town->SetPlayerStatus(playerstatus);
+	GameData* gamedata = new GameData;
 	SetPhysicsDebugDrawMode(btIDebugDraw::DBG_DrawWireframe);
 	//ゲームループ。
 	GetEngine().RunGameLoop();

@@ -1,4 +1,5 @@
 #pragma once
+#include "Weapon.h"
 class DropItem;
 class IEnemy : public IGameObject
 {
@@ -9,8 +10,9 @@ public:
 	* int h     HPを設定
 	* int a     Attackを設定
 	* int e     撃破時の経験値を設定
+	* int dropchances[]  ドロップするアイテムのレア度と確率、今んとこレア度0～3
 	*/
-	IEnemy(int h,int a,int e);
+	IEnemy(const int& h,const int& a,const int& e, const int dropchances[Weapon::m_HighestRarity]);
 	virtual ~IEnemy();
 
 	/*!
@@ -19,16 +21,18 @@ public:
 	* float l        コリジョンの座標のyをlだけ加算する
 	* float r        コリジョンの半径
 	*/
-    void CCollision(CVector3 pos,float l, float r);
+    void CCollision(const CVector3& pos,const float& l,const float& r);
 
 	/*!
 	* @brief	コリジョンの移動。
 	* CVector3 pos    コリジョンの座標
 	* float l        コリジョンのy座標をlだけ加算      
 	*/
-	void SetCCollision(CVector3 pos,float l);
+	void SetCCollision(const CVector3& pos,const float& l);
 	//プレイヤーがエネミーにダメージを与える時の処理
-	void Damage(int attack);
+	void Damage(const int& attack);
+	//ドロップするアイテムの処理
+	void Drop();
 	//エネミーのHPが0を切ったかどうか
 	bool GetDeath()
 	{
@@ -37,15 +41,11 @@ public:
 	//エネミーの所持している経験値を返す
 	int GetExp()
 	{
-			return m_Exp;
+		return m_Exp;
 	}
 	//文字表示
 	void PostRender()override;
 protected:
-	struct Item {
-		int m_rare;
-		float m_chance;
-	};
 	SuicideObj::CCollisionObj* m_collision;                      //丸いコリジョン
 	//エネミーの色々なステータス
 	int m_MaxHP;                                              //最大HP
@@ -58,6 +58,7 @@ protected:
 	bool m_damage = false;                                    //ダメージを受けたかどうか
 	bool m_death = false;                                     //HPが0以下になったかどうか
 	CFont m_font;                                             //文字表示クラス
+	int m_dropChances[Weapon::m_HighestRarity];			      //エネミーのドロップするアイテム、[1]が0.4fならレア度1が40%でドロップするみたいな
 	DropItem* m_dropitem;
 };
 
