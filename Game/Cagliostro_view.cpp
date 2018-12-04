@@ -39,7 +39,7 @@ bool Cagliostro_view::Start()
 
 void Cagliostro_view::Update()
 {
-	if (Pad(0).GetButton(enButtonSelect)) {
+	if (Pad(0).GetButton(enButtonBack)) {
 		Town* town = new Town;
 		town->SetPlayerStatus(m_playerstatus);
 		delete this;

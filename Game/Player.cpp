@@ -141,7 +141,7 @@ void Player::Move()
 	}
 	else {
 		stickL = Pad(0).GetStick(L);	//アナログスティックの入力量を取得。
-		if (Pad(0).GetButton(enButtonA) //Aボタンが押されたら
+		if (Pad(0).GetDown(enButtonA) //Aボタンが押されたら
 			&& m_charaCon.IsOnGround()  //かつ、地面に居たら
 			) {
 			//ジャンプする。
@@ -282,7 +282,7 @@ void Player::AnimationController()
 		}
 		else {
 			//アニメーションの再生が終わったら、クリアフラグをONにする
-			if (Pad(0).GetButton(enButtonSelect)) {
+			if (Pad(0).GetButton(enButtonBack)) {
 				m_gameclear = true;
 			}
 		}
@@ -296,7 +296,7 @@ void Player::AnimationController()
 		}
 		else {
 			//アニメーションの再生が終わったら、ゲームオーバーフラグをONにする
-			if (Pad(0).GetButton(enButtonSelect)) {
+			if (Pad(0).GetButton(enButtonBack)) {
 				m_gameover = true;
 			}
 		}
