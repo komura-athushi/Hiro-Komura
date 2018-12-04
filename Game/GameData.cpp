@@ -22,17 +22,17 @@ bool GameData::Start()
 		Weapon(4 ,"グレイトソード"        ,2  ,50 ,50 ,4),
 		Weapon(5 ,"ブルーライトソード"    ,3  ,60 ,70 ,5)
 	};
-	m_enemies = new Enemy[2]{
-		Enemy(0 ,"Bone Soldier"          ,50  ,20 ,20  ,new float[4]{0.1f,0.03f,0.0f,0.0f }),
-	    Enemy(1, "ボス"                  ,500 ,40 ,400 ,new float[4]{ 0.0f,0.0f,0.2f,0.0f }),
-	};
+	/*m_enemies = new Enemy[2]{
+		Enemy(0 ,"Bone Soldier"          ,50  ,20 ,20  ,new float[4]{0,10,0,0 }),
+	    Enemy(1, "ボス"                  ,500 ,40 ,400 ,new float[4]{ 0,0,0,0})
+	};*/
 	m_magics = new Magic[6]{
 		Magic(0 ,"斬撃"                  ,1.5f ,30),
 		Magic(1 ,"ファイアボール"        ,1.7f ,40),
 		Magic(2 ,"アイスボール"          ,1.9f ,40),
 		Magic(3 ,"ウィンド"              ,1.6f ,40),
 		Magic(4 ,"超斬撃"                ,2.1f ,50),
-		Magic(5 ,"トゥインクルスター"    ,2.3f ,60),
+		Magic(5 ,"トゥインクルスター"    ,2.3f ,60)
 	};
 	return true;
 }

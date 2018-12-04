@@ -20,12 +20,7 @@ Stage1::~Stage1()
 	/*for (auto& oni : m_oniList) {
 		delete oni;
 	}*/
-<<<<<<< HEAD
 	delete boss;
-
-=======
-	//m_player = FindGO<Player>(L"Player");
->>>>>>> 9d1aea755c2c8ef1254aea0bc83dfb8791247c2c
 }
 
 bool Stage1::Start()

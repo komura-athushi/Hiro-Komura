@@ -74,8 +74,11 @@ private:
 	float m_collisionheight = 50.0f;                            //コリジョンをm_positionからどれだけ上にあげるか
 	//Bossの色々なステータス
 	static const int m_MaxHP = 900;                             //最大HP
-	static const int m_Attack = 40;                             //攻撃力
+	static const int m_Attack1 = 20;							//攻撃力1
+	static const int m_Attack2 = 30;							//攻撃力2
+	static const int m_Attack3 = 40;							//攻撃力3
 	static const int m_EXP = 500;                               //経験値
 	bool m_gekiha = false;
+	int m_dropChances[Weapon::m_HighestRarity] = { 10,5,0,0 };            //エネミーのドロップするアイテム、[1]が0.4fならレア度1が40%でドロップするみたいな
 };
 

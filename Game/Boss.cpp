@@ -4,7 +4,7 @@
 #include <math.h> 
 #include "Stage1.h"
 //ボス（見た目はスケルトン）です
-Boss::Boss() : IEnemy(m_MaxHP, m_Attack, m_EXP)
+Boss::Boss() : IEnemy(m_MaxHP, m_Attack, m_EXP, m_dropChances)
 {
 
 }
@@ -18,12 +18,12 @@ bool Boss::Start()
 {
 	IEnemy::CCollision({ m_position }, m_collisionheight, m_r);
 	//アニメーション
-	m_animClip[enAnimationClip_idle].Load(L"Asset/animData/boss/boss_idle.tka");
-	m_animClip[enAnimationClip_attack1].Load(L"Asset/animData/boss/boss_attack1.tka");
-	m_animClip[enAnimationClip_attack2].Load(L"Asset/animData/boss/boss_attack2.tka");
-	m_animClip[enAnimationClip_attack3].Load(L"Asset/animData/boss/boss_attack3.tka");
-	m_animClip[enAnimationClip_damage].Load(L"Asset/animData/boss/boss_hit.tka");
-	m_animClip[enAnimationClip_death].Load(L"Asset/animData/boss/boss_dead.tka");
+	m_animClip[enAnimationClip_idle].Load(L"Asset/animData/boss/test.tka");
+	m_animClip[enAnimationClip_attack1].Load(L"Asset/animData/boss/test.tka");
+	m_animClip[enAnimationClip_attack2].Load(L"Asset/animData/boss/test.tka");
+	m_animClip[enAnimationClip_attack3].Load(L"Asset/animData/boss/test.tka");
+	m_animClip[enAnimationClip_damage].Load(L"Asset/animData/boss/test.tka");
+	m_animClip[enAnimationClip_death].Load(L"Asset/animData/boss/test.tka");
 	m_animClip[enAnimationClip_idle].SetLoopFlag(true);
 	m_animClip[enAnimationClip_attack1].SetLoopFlag(false);
 	m_animClip[enAnimationClip_attack2].SetLoopFlag(false);
@@ -36,7 +36,7 @@ bool Boss::Start()
 	m_skinModelRender->GetAnimCon().AddAnimationEventListener([&](const wchar_t* clipName, const wchar_t* eventName) {
 		OnAnimationEvent(clipName, eventName);
 	});
-	m_skinModelRender->SetScale(m_scale);
+	m_skinModelRender->SetScale(m_scale);j 
 	m_skinModelRender->SetPos(m_position);
 	CQuaternion rot;
 	CVector3 pos = m_position;
@@ -51,7 +51,7 @@ void Boss::Attack()
 		m_state = enState_Attack1;
 	}
 	else if(m_HP >= 300) {
-		m_Attack=
+		//m_Attack=
 		m_state = enState_Attack2;
 	}
 	else if(m_HP > 0) {
