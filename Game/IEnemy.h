@@ -1,5 +1,6 @@
 #pragma once
 #include "Weapon.h"
+
 class IEnemy : public IGameObject
 {
 public:
@@ -40,6 +41,11 @@ public:
 	int GetExp()
 	{
 		return m_Exp;
+	}
+	//エネミーのポジションを取得
+	CVector3 GetPosition() const
+	{
+		return m_position;
 	}
 	//文字表示
 	void PostRender()override;

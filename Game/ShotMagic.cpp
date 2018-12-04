@@ -25,6 +25,7 @@ ShotMagic::~ShotMagic()
 
 bool ShotMagic::Start()
 {
+	//魔法の番号によって処理を変えます
 	switch (m_id) {
 	case 1:
 		Foie();
@@ -35,12 +36,19 @@ bool ShotMagic::Start()
 	case 3:
 		Zanbas();
 		break;
+	case 4:
+		Shihuta();
+		break;
+	case 5:
+		MagicSphere();
+		break;
 	}
 	return true;
 }
 
  void ShotMagic::Update()
 {
+	 //魔法の番号によって処理を変えます
 	 switch (m_id) {
 	 case 1:
 		 FoieUpdate();
@@ -51,24 +59,33 @@ bool ShotMagic::Start()
 	 case 3:
 		 ZanbasUpdate();
 		 break;
+	 case 4:
+		 ShihutaUpdate();
+		 break;
+	 case 5:
+		 MagicSphereUpdate();
 	 }
 	 int i = 0;
+	 //MagciModel構造体の可変長配列にアクセスします
 	 for (auto& mgml : m_magicmocelList) {
 		 if (mgml.s_delete) {
 			 i++;
 		 }
 		 else {
+			 //削除する時間を超えていたらモデルとコリジョンを削除します
 			 if (mgml.s_timer >= m_deletetime) {
 				 delete mgml.s_skinModelReder;
 				 mgml.s_skinModelReder = nullptr;
 				 delete mgml.s_collision;
 				 mgml.s_collision = nullptr;
 				 mgml.s_delete = true;
+				 //生成したコリジョンとモデルが全て削除されていれば、自身を削除します
 				 if (i == m_modelnumber) {
 					 delete this;
 				 }
 			 }
 			 else {
+				 //モデルとコリジョンを動かします
 				 CVector3 pos = mgml.s_skinModelReder->GetPos() + m_movespeed;
 				 mgml.s_skinModelReder->SetPos(pos);
 				 mgml.s_collision->SetPosition(pos);
@@ -78,8 +95,9 @@ bool ShotMagic::Start()
 	 }
 	
 }
- void ShotMagic::SetCollisionModel(const CVector3& pos, const float& scale,const int& id)
+ void ShotMagic::SetCollisionModel(const CVector3& pos, const float& scale,const int& id,bool damage)
  {
+	 //モデルを作成します
 	 GameObj::CSkinModelRender* skinModelRender = new GameObj::CSkinModelRender;
 	 skinModelRender->Init(L"Resource/modelData/Magic_Sample.cmo");
 	 skinModelRender->SetScale(m_scale);
@@ -93,17 +111,50 @@ bool ShotMagic::Start()
 		 //衝突した判定の名前が"IEnemy"ならm_Attack分だけダメージ与える
 		 if (param.EqualName(L"IEnemy")) {
 			 IEnemy* enemy = param.GetClass<IEnemy>();//相手の判定に設定されているCEnemyのポインタを取得
-			 //エネミーにダメージ
-			 enemy->Damage(m_damage);
-			 //もしエネミーのHPが0以下になったら
-			 if (enemy->GetDeath()) {
-				 //エネミーの経験値をプレイヤーの経験値に加算
-				 PlayerStatus* playerstatus = FindGO<PlayerStatus>(L"PlayerStatus");
-				 playerstatus->PlusExp(enemy->GetExp());
+			 if (damage) {
+				 //エネミーにダメージ
+				 enemy->Damage(m_damage, id);
+				 //もしエネミーのHPが0以下になったら
+				 if (enemy->GetDeath()) {
+					 //エネミーの経験値をプレイヤーの経験値に加算
+					 PlayerStatus* playerstatus = FindGO<PlayerStatus>(L"PlayerStatus");
+					 playerstatus->PlusExp(enemy->GetExp());
+				 }
+			 }
+			 else {
+
+				 if (id == 5) {
+					 CVector3 pos = enemy->GetPosition();
+					 GameObj::CSkinModelRender* skinModelRender = new GameObj::CSkinModelRender;
+					 skinModelRender->Init(L"Resource/modelData/Magic_Sample.cmo");
+					 skinModelRender->SetScale(m_scale * 2);
+					 skinModelRender->SetPos(pos);
+					 //攻撃判定の発生
+					 SuicideObj::CCollisionObj* attackCol = NewGO<SuicideObj::CCollisionObj>();
+					 attackCol->CreateSphere(pos, CQuaternion::Identity(), scale * 2);
+					 //寿命を設定
+					 attackCol->SetTimer(5);
+					 attackCol->SetCallback([&](SuicideObj::CCollisionObj::SCallbackParam& param) {
+						 //衝突した判定の名前が"IEnemy"ならm_Attack分だけダメージ与える
+						 if (param.EqualName(L"IEnemy")) {
+							 IEnemy* enemy = param.GetClass<IEnemy>();//相手の判定に設定されているCEnemyのポインタを取得
+								 //エネミーにダメージ
+							 enemy->Damage(m_damage, id);
+							 //もしエネミーのHPが0以下になったら
+							 if (enemy->GetDeath()) {
+								 //エネミーの経験値をプレイヤーの経験値に加算
+								 PlayerStatus* playerstatus = FindGO<PlayerStatus>(L"PlayerStatus");
+								 playerstatus->PlusExp(enemy->GetExp());
+							 }
+						 }
+					 }
+					 );
+				 }
 			 }
 		 }
 	 }
 	 );
+	 //MagicModelクラスの可変長配列に生成したモデルとコリジョンを格納します
 	 m_magicmocelList.push_back({skinModelRender,attackCol});
  }
 
@@ -145,10 +196,10 @@ bool ShotMagic::Start()
 
  void ShotMagic::Zanbas()
  {
-	 m_scale = { 4.0f,4.0f,4.0f };
+	 m_scale = { 5.0f,5.0f,5.0f };
 	 m_position = m_position; //+ CVector3::AxisY()*60.0f;
 	 m_movespeed = { CVector3::Zero() };
-	 SetCollisionModel(m_position, 180.0f,m_id);
+	 SetCollisionModel(m_position, 225.0f,m_id);
 	 m_deletetime = 10;
 	 m_modelnumber = 1;
 	 m_damage /= m_modelnumber;
@@ -173,6 +224,21 @@ bool ShotMagic::Start()
  }
 	
  void ShotMagic::ShihutaUpdate()
+ {
+	
+ }
+
+ void ShotMagic::MagicSphere()
+ {
+	 m_scale = { 1.5f,1.5f,1.5f };
+	 m_position = m_position + CVector3::AxisY()*60.0f;
+	 SetCollisionModel(m_position, 75.0f, m_id,false);
+	 m_movespeed = m_directionplayer * 15.0f;
+	 m_deletetime = 30.0f;
+	 m_modelnumber = 1;
+ }
+
+ void ShotMagic::MagicSphereUpdate()
  {
 
  }

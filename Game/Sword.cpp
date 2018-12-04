@@ -12,6 +12,7 @@ Sword::~Sword()
 
 bool Sword::Start()
 {
+	//初期状態だとデフォルトの剣を読み込む
 	m_skinModelRender = new GameObj::CSkinModelRender;
 	m_skinModelRender->Init(L"Resource/modelData/Sword.cmo");
 	m_skinModelRender->SetPos(m_position);
@@ -22,6 +23,7 @@ bool Sword::Start()
 
 void Sword::Update()
 {
+
 	if (m_SwordId != m_SwordId2) {
 		m_SwordId = m_SwordId2;
 		m_delete = false;
@@ -38,7 +40,7 @@ void Sword::Update()
 	}
 	else if(m_switch){
 		m_skinModelRender = new GameObj::CSkinModelRender;
-		//計算した番号によって読み込むcmoファイルを変える
+		//受け取った番号によって読み込むファイルを変える
 		switch (m_SwordId) {
 		case 0:
 			m_skinModelRender->Init(L"Resource/modelData/Sword.cmo");

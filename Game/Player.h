@@ -42,12 +42,14 @@ public:
 	void Kougeki();
 	//アニメーションイベント
 	void OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventName);
-	//攻撃の切り替え
+	//武器の切り替え
 	void SwitchWeapon();
 	//武器の切り替えの際にステータスを反映させる
 	void WeaponStatus();
 	//魔法のステータスを反映させる
 	void MagicStatus();
+	//シフタをかける
+	void Shihuta();
 	//プレイヤーステータスクラスのポインタを設定
 	void SetPlayerStatus(PlayerStatus* ps)
 	{
@@ -87,6 +89,11 @@ public:
 	void SetCamera(GameCamera* camera)
 	{
 		m_gamecamera = camera;
+	}
+	//プレイヤーのPPを一定値だけ回復させる
+	void RecoveryPP()
+	{
+		m_PP += m_AttackRecoveryPP;
 	}
 	//プレイヤーがダメージを受けた時の処理
 	void Damage(const int& attack);
@@ -166,9 +173,11 @@ private:
 	bool m_damage = false;                                      //ダメージを受けた！
 	bool m_isbutton = false;                                    //武器切り替えの時に使うやつ
 	int m_PPtimer = 0;											//PP自動回復のクールタイム
-	int m_PPAttackRecovery=5;									//エネミーに攻撃したときに回復するPPの回復量
-	bool m_Shihuta = false;										//シフタがかかったらtrue
+	const int m_AttackRecoveryPP=5;								//エネミーに攻撃したときに回復するPPの回復量
+	bool m_Shihuta = false;										//シフタをかけるならtrue
+	int m_ShihutaAttack = 0;									//シフタにかかっているときにシフタ前の攻撃力を保存
 	int m_Shihutatimer = 0;										//シフタのかかっている時間
-	int m_Shihutatime = 360;									//シフタのかかる時間を制限
+	int m_Shihutatime = 360*10;									//シフタのかかる時間を制限
+	const float m_AttackMultiply = 1.3f;						//シフタがかかった時の攻撃力を上げる倍率
 };
 

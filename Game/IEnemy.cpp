@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "IEnemy.h"
 #include "DropItem.h"
-
+#include "Player.h"
 IEnemy::IEnemy(const int& h,const int& a,const int& e,const int dropchances[Weapon::m_HighestRarity]):m_HP(h),m_Attack(a),m_Exp(e)
 {
 	/*for (int i = 0; i < Weapon::m_HighestRarity; i++) {
@@ -48,38 +48,46 @@ void IEnemy::Damage(const int& attack,int number)
 {
 	switch (number) {
 	case 0:
-		if (m_timer >= 15) {
+		if (m_timer >= 15) {		//通常攻撃
 			m_HP -= attack;
 			m_timer = 0;
 			m_damage = true;
+			//プレイヤーのPPを回復
+			Player* player = FindGO<Player>(L"Player");
+			player->RecoveryPP();
 		}
 		break;
 	case 1:
-		if (m_timer1 >= 30) {
+		if (m_timer1 >= 40) {		//フォイエ
 			m_HP -= attack;
 			m_timer1 = 0;
 			m_damage = true;
 		}
 		break;
 	case 2:
-		if (m_timer2 >= 10) {
+		if (m_timer2 >= 8) {		//イルグランツ
 			m_HP -= attack;
 			m_timer2 = 0;
 			m_damage = true;
 		}
 		break;
 	case 3:
-		if (m_timer3 >= 15) {
+		if (m_timer3 >= 15) {		//ザンバース
 			m_HP -= attack;
 			m_timer3 = 0;
 			m_damage = true;
 		}
 		break;
+	case 4:							//シフタ(ダメージ無し)
+		break;
+	case 5:							//マジスフィ
+
+		break;
 	}
-		if (m_HP <= 0) {
-			m_death = true;
-			m_collision->Delete();
-		}
+	if (m_HP <= 0) {
+		m_death = true;
+		m_collision->Delete();
+	}
 }
 
 void IEnemy::PostRender()
@@ -97,7 +105,7 @@ void IEnemy::Drop()
 			DropItem* dropitem = new DropItem;
 			dropitem->SetRarity(i);
 			dropitem->SetPosition(m_position);
-			dropitem->SetName-(L"DropItem");
+			dropitem->SetName(L"DropItem");
 			return;
 		}
 	}

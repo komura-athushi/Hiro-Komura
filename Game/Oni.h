@@ -72,7 +72,7 @@ private:
 	const float m_attackr = 90.0f;                              //攻撃したときに発生させるコリジョンの半径
 	const float m_collisionheight = 50.0f;                      //コリジョンをm_positionからどれだけ上にあげるか
 	//Oniの色々なステータス
-	static const int m_MaxHP = 100;                             //最大HP
+	static const int m_MaxHP = 150;                             //最大HP
 	static const int m_Attack=20;                               //攻撃力
 	static const int m_EXP = 20;                                //経験値
 	//ヘッダーファイルでは宣言だけ、定義はcppファイルに書いてください

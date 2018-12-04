@@ -92,12 +92,15 @@ bool Town::Start()
 
 void Town::Update()
 {
+	//プレイヤーとステージ1に遷移するオブジェクトの距離を計算
 	CVector3 pos= m_player->GetPosition() - m_stage1_teleport->GetPosition();
+	//距離が一定以下ならステージ1に遷移する
 	if (pos.Length() <= 100.0f) {
 		Stage1* stage1 = new Stage1;
 		stage1->SetPlayerStatus(m_playerstatus);
 		delete this;
 	}
+	//拠点に居る時にSTARTボタンを押すとカリオストロちゃん☆モードに遷移する
 	if (Pad(0).GetButton(enButtonStart)) {
 		Cagliostro_view* cag = new Cagliostro_view;
 		cag->SetPlayerStatus(m_playerstatus);

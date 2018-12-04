@@ -1,5 +1,6 @@
 #pragma once
 class IEnemy;
+//プレイヤーの放つ呪文のクラスです
 class ShotMagic:public IGameObject
 {
 public:
@@ -18,7 +19,14 @@ public:
 	bool Start();
 	void Update();
 	//コリジョンとモデルを設定、座標とコリジョンの大きさ
-	void SetCollisionModel(const CVector3& pos, const float& scale,const int& id);
+	/*!
+	@brief	魔法のモデルをコリジョンを生成します
+	*CVector3 pos;					//座標
+	*float scale;					//コリジョンの大きさ
+	*int id;						//魔法の番号
+	*bool damage;					//trueでダメージありのコリジョンを生成します
+	*/
+	void SetCollisionModel(const CVector3& pos, const float& scale,const int& id,bool damage=true); //こ↑こ↓をfalseにするとダメージ無しのコリジョンを生成します
 	//フォイエ
 	void Foie();
 	void FoieUpdate();
@@ -33,6 +41,7 @@ public:
 	void ShihutaUpdate();
 	//マジックスフィア
 	void MagicSphere();
+	void MagicSphereUpdate();
 	//魔法の番号を取得
 	int GetId() const
 	{
@@ -100,12 +109,12 @@ private:
 	int m_timer = 0;									//複数のモデルとコリジョンを時間差ありで生成する場合のクールタイム
 	//スキンモデル、コリジョン、タイマー、削除したかどうか
 	struct MagicModel {
-		GameObj::CSkinModelRender* s_skinModelReder;
-		SuicideObj::CCollisionObj* s_collision;
-		float s_timer=0.0f;
-		bool s_delete = false;
+		GameObj::CSkinModelRender* s_skinModelReder;    //モデル
+		SuicideObj::CCollisionObj* s_collision;			//コリジョン
+		float s_timer = 0.0f;							//デリートタイム
+		bool s_delete = false;							//モデルとコリジョンを削除したかどうか
 		std::vector<IEnemy*> s_ignoreList;
 	};
-	std::vector<MagicModel> m_magicmocelList;
+	std::vector<MagicModel> m_magicmocelList;			//MagicModel構造体の可変長配列
 };
 
