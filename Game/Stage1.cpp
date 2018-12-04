@@ -6,7 +6,12 @@
 #include "Town.h"
 #include "PlayerStatus.h"
 #include "Oni.h"
+<<<<<<< HEAD
 #include "Boss.h"
+=======
+#include "DropItem.h"
+#include "IEnemy.h"
+>>>>>>> 4621d4808865101770bd6c9e39b60f3ff6afe2b0
 Stage1::Stage1()
 {
 }
@@ -17,10 +22,21 @@ Stage1::~Stage1()
 	delete m_gamecamera;
 	delete m_ground;
 	delete m_lig;
-	/*for (auto& oni : m_oniList) {
+	QueryGOs<Oni>(L"Oni", [&](Oni* oni)
+	{
 		delete oni;
+<<<<<<< HEAD
 	}*/
 	delete boss;
+=======
+		return true;
+	});
+	QueryGOs<DropItem>(L"DropItem", [&](DropItem* dropitem)
+	{
+		delete dropitem;
+		return true;
+	});
+>>>>>>> 4621d4808865101770bd6c9e39b60f3ff6afe2b0
 }
 
 bool Stage1::Start()
@@ -44,6 +60,7 @@ bool Stage1::Start()
 			m_player = new Player;
 			m_player->SetPosition(objData.position);
 			m_player->SetPlayerStatus(m_playerstatus);
+			m_player->SetName(L"Player");
 			//フックした場合はtrueを返す。
 			return true;
 		}
@@ -54,7 +71,7 @@ bool Stage1::Start()
 			Oni* oni = new Oni;
 			oni->SetPosition(objData.position);
 			oni->SetOldPosition(objData.position);
-			oni->SetName(L"Skelton");
+			oni->SetName(L"Oni");
 			//後で削除するのでリストに積んで記憶しておく。
 			m_oniList.push_back(oni);
 			oni->SetPlayer(m_player);
@@ -87,7 +104,7 @@ bool Stage1::Start()
 
 void Stage1::Update()
 {
-	if (m_player->GetGameOver()) {
+	if (m_player->GetGameOver() || m_player->GetGameClear()) {
 		Town* town = new Town;
 		town->SetPlayerStatus(m_playerstatus);
 		delete this;

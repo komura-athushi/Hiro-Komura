@@ -22,5 +22,5 @@ void Title::Update()
 
 void Title::PostRender()
 {
-	m_sprite.Draw({ 100.0f, 100.0f }, CVector4::White(), { 2.0f,2.0f });
+	m_sprite.Draw({ 0.0f, 0.0f },{ 2.0f,2.0f });
 }

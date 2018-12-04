@@ -1,8 +1,9 @@
 #pragma once
-#include "Player.h"
+#include "Weapon.h"
 #include "IEnemy.h"
 #include "DemolisherWeapon/physics/PhysicsStaticObject.h"
 class Stage1;
+class Player;
 class Boss : public IEnemy
 {
 public:
@@ -72,12 +73,20 @@ private:
 	int m_timer = 0;											//攻撃のクールタイムのためにフレーム数を数える
 	float m_r = 80.0f;                                          //コリジョンの半径
 	float m_collisionheight = 50.0f;                            //コリジョンをm_positionからどれだけ上にあげるか
+<<<<<<< HEAD
 	//Bossの色々なステータス
 	static const int m_MaxHP = 900;                             //最大HP
 	static const int m_Attack1 = 20;							//攻撃力1
 	static const int m_Attack2 = 30;							//攻撃力2
 	static const int m_Attack3 = 40;							//攻撃力3
 	static const int m_EXP = 500;                               //経験値
+=======
+	//Oniの色々なステータス
+	static const int m_MaxHP = 50;                              //最大HP
+	static const int m_Attack = 20;                             //攻撃力
+	static const int m_EXP = 20;                                //経験値
+	int m_dropChances[Weapon::m_HighestRarity] = { 0,0,20,0 };            //エネミーのドロップするアイテム、[1]が10ならレア度1が10%でドロップするみたいな
+>>>>>>> 4621d4808865101770bd6c9e39b60f3ff6afe2b0
 	bool m_gekiha = false;
 	int m_dropChances[Weapon::m_HighestRarity] = { 10,5,0,0 };            //エネミーのドロップするアイテム、[1]が0.4fならレア度1が40%でドロップするみたいな
 };

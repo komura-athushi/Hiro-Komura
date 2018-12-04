@@ -1,5 +1,6 @@
 #pragma once
 #include "DemolisherWeapon/physics/character/CCharacterController.h"
+
 class Sword;
 class GameCamera;
 class PlayerStatus;
@@ -41,6 +42,12 @@ public:
 	void Kougeki();
 	//アニメーションイベント
 	void OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventName);
+	//攻撃の切り替え
+	void SwitchWeapon();
+	//武器の切り替えの際にステータスを反映させる
+	void WeaponStatus();
+	//魔法のステータスを反映させる
+	void MagicStatus();
 	//プレイヤーステータスクラスのポインタを設定
 	void SetPlayerStatus(PlayerStatus* ps)
 	{
@@ -58,13 +65,23 @@ public:
 	}
 	//プレイヤーのHPを取得
 	int GetHP() const
-	{
+	{ 
 		return m_HP;
+	}
+	//シフタがかかった！
+	void SetShihuta()
+	{
+		m_Shihuta = true;
 	}
 	//ゲームオーバーかどうかを取得
 	bool GetGameOver() const
 	{
 		return m_gameover;
+	}
+	//ゲームクリアかどうかを取得
+	bool GetGameClear() const
+	{
+		return m_gameclear;
 	}
 	//カメラのポインタをセット
 	void SetCamera(GameCamera* camera)
@@ -76,7 +93,7 @@ public:
 private:
 	bool m_cagliostro = false;
 	GameObj::CSkinModelRender* m_skinModelRender = nullptr;		//スキンモデルレンダラー。
-    SuicideObj::CCollisionObj* m_collision;                        //丸いコリジョン
+    SuicideObj::CCollisionObj* m_collision;                     //丸いコリジョン
 	CFont m_font;                                               //文字表示クラス
 	Bone* m_bone;                                               //骨
 	PlayerStatus* m_playerstatus;                               //プレイヤーステータスのポインタ
@@ -92,6 +109,7 @@ private:
 	int m_timer = 0;                                            //攻撃のクールタイム
 	int m_timer2 = 0;                                           //ダメージのクールタイム
 	bool m_gameover = false;                                    //ゲームオーバーかどうか
+	bool m_gameclear = false;									//ゲームクリアかどうか
 	bool m_isjump = false;                                      //ジャンプしているかどうか
 	//自機の角度　初期は180度
 	float m_degree = 180.0f;                                    //ユニティちゃんの向いてる角度
@@ -112,6 +130,7 @@ private:
 		enAnimationClip_KneelDown,
 		enAnimationClip_Clear,
 		enAnimationClip_attack,
+		enAnimationClip_aria,
 		enAnimationClip_num,
 	};
 	//アニメーション分岐
@@ -124,6 +143,7 @@ private:
 		enState_WaitStartGameClear,
 		enState_GameClear,
 		enState_Attack,
+		enState_Aria,
 	};
 	AnimationClip m_animClip[enAnimationClip_num];
 	EnState m_state = enState_Idle;
@@ -136,6 +156,19 @@ private:
 	int m_MaxPP;                                                //最大PP
 	int m_PP;                                                   //PP
     int m_Attack;                                               //攻撃力
-	bool m_damage = false;           //ダメージを受けた！
+	int m_Mattack;                                              //魔法攻撃力
+	int m_SwordId;                                              //装備中の武器の番号
+	const wchar_t* m_SwordName;                                 //装備中の武器の名前
+	int m_MagicId;                                              //使える魔法の番号
+	const wchar_t* m_MagicName;						            //魔法の名前
+	float m_DamageRate;								       	    //魔法のダメージ倍率
+	int m_PPCost;										        //魔法を放つのに必要なPP
+	bool m_damage = false;                                      //ダメージを受けた！
+	bool m_isbutton = false;                                    //武器切り替えの時に使うやつ
+	int m_PPtimer = 0;											//PP自動回復のクールタイム
+	int m_PPAttackRecovery=5;									//エネミーに攻撃したときに回復するPPの回復量
+	bool m_Shihuta = false;										//シフタがかかったらtrue
+	int m_Shihutatimer = 0;										//シフタのかかっている時間
+	int m_Shihutatime = 360;									//シフタのかかる時間を制限
 };
 

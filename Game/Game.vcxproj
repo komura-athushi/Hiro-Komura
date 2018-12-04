@@ -96,6 +96,7 @@
       <ConformanceMode>true</ConformanceMode>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <PrecompiledHeader>Use</PrecompiledHeader>
+      <AdditionalIncludeDirectories>$(ProjectDir)/../../DemolisherWeapon/DemolisherWeapon/Photon/Photon-cpp/inc;$(ProjectDir)/../../DemolisherWeapon/DemolisherWeapon/Photon/LoadBalancing-cpp/inc;$(ProjectDir)/../../DemolisherWeapon/DemolisherWeapon/Photon/;$(ProjectDir)/../../DemolisherWeapon/DemolisherWeapon/Photon/Common-cpp/inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalDependencies>d3d11.lib;d3dcompiler.lib;DemolisherWeapon.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -135,6 +136,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <PreprocessorDefinitions>DW_MASTER;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ProjectDir)/../../DemolisherWeapon/DemolisherWeapon/Photon/Photon-cpp/inc;$(ProjectDir)/../../DemolisherWeapon/DemolisherWeapon/Photon/LoadBalancing-cpp/inc;$(ProjectDir)/../../DemolisherWeapon/DemolisherWeapon/Photon/;$(ProjectDir)/../../DemolisherWeapon/DemolisherWeapon/Photon/Common-cpp/inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -156,10 +158,13 @@
     <ClCompile Include="Cagliostro_view.cpp" />
     <ClCompile Include="DropItem.cpp" />
     <ClCompile Include="GameData.cpp" />
+    <ClCompile Include="House.cpp" />
     <ClCompile Include="IEnemy.cpp" />
     <ClCompile Include="Magic.cpp" />
+    <ClCompile Include="Material.cpp" />
     <ClCompile Include="Oni.cpp" />
     <ClCompile Include="PlayerStatus.cpp" />
+    <ClCompile Include="ShotMagic.cpp" />
     <ClCompile Include="Stage1.cpp" />
     <ClCompile Include="Stage1_Teleport.cpp" />
     <ClCompile Include="Stone.cpp" />
@@ -174,6 +179,7 @@
     </ClCompile>
     <ClCompile Include="Title.cpp" />
     <ClCompile Include="Ground.cpp" />
+    <ClCompile Include="TownData.cpp" />
     <ClCompile Include="Weapon.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -181,10 +187,13 @@
     <ClInclude Include="Cagliostro_view.h" />
     <ClInclude Include="DropItem.h" />
     <ClInclude Include="GameData.h" />
+    <ClInclude Include="House.h" />
     <ClInclude Include="IEnemy.h" />
     <ClInclude Include="Magic.h" />
+    <ClInclude Include="Material.h" />
     <ClInclude Include="Oni.h" />
     <ClInclude Include="PlayerStatus.h" />
+    <ClInclude Include="ShotMagic.h" />
     <ClInclude Include="Stage1.h" />
     <ClInclude Include="Stage1_Teleport.h" />
     <ClInclude Include="Stone.h" />
@@ -195,6 +204,7 @@
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Title.h" />
     <ClInclude Include="Ground.h" />
+    <ClInclude Include="TownData.h" />
     <ClInclude Include="Weapon.h" />
   </ItemGroup>
   <ItemGroup>
@@ -202,6 +212,8 @@
     <MeshContentTask Include="Asset\modelData\cagliostro\cagliostro.fbx" />
     <MeshContentTask Include="Asset\modelData\enemy\enemy.FBX" />
     <MeshContentTask Include="Asset\modelData\ground.FBX" />
+    <MeshContentTask Include="Asset\modelData\house.FBX" />
+    <MeshContentTask Include="Asset\modelData\Magic_Sample.FBX" />
     <MeshContentTask Include="Asset\modelData\sky.FBX" />
     <MeshContentTask Include="Asset\modelData\skydome.FBX" />
     <MeshContentTask Include="Asset\modelData\stage1_ground.FBX" />

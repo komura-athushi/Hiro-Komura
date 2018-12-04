@@ -2,7 +2,7 @@
 #include "Magic.h"
 
 
-Magic::Magic(const int& id, const std::string& name, const float& damageRate, const int& ppCost)
+Magic::Magic(const int& id, const wchar_t* name, const float& damageRate, const int& ppCost)
 	:m_id(id),m_name(name),m_damageRate(damageRate),m_ppCost(ppCost)
 {
 }

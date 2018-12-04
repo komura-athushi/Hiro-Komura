@@ -3,8 +3,13 @@
 #define _USE_MATH_DEFINES //M_PI 円周率呼び出し
 #include <math.h> 
 #include "Stage1.h"
+#include "Player.h"
 //ボス（見た目はスケルトン）です
+<<<<<<< HEAD
 Boss::Boss() : IEnemy(m_MaxHP, m_Attack, m_EXP, m_dropChances)
+=======
+Boss::Boss() : IEnemy(m_MaxHP, m_Attack, m_EXP,m_dropChances)
+>>>>>>> 4621d4808865101770bd6c9e39b60f3ff6afe2b0
 {
 
 }
@@ -221,7 +226,10 @@ void Boss::Update()
 	}
 	IEnemy::m_timer++;
 	if (m_gekiha) {
+<<<<<<< HEAD
 		//m_stage1->SetEnemyGekiha();
+=======
+>>>>>>> 4621d4808865101770bd6c9e39b60f3ff6afe2b0
 		delete this;
 	}
 }

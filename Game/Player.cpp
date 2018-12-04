@@ -6,6 +6,7 @@
 #include "GameCamera.h"
 #include "PlayerStatus.h"
 #include "IEnemy.h"
+#include "ShotMagic.h"
 Player::Player()
 {
 }
@@ -14,6 +15,7 @@ Player::~Player()
 {
 	delete m_skinModelRender;
 	delete m_sword;
+	m_collision->Delete();
 }
 
 void Player::unityChan()
@@ -27,6 +29,7 @@ void Player::unityChan()
 	m_animClip[enAnimationClip_KneelDown].Load(L"Asset/animData/unityChan/KneelDown.tka");
 	m_animClip[enAnimationClip_Clear].Load(L"Asset/animData/unityChan/Clear.tka");
 	m_animClip[enAnimationClip_attack].Load(L"Asset/animData/unityChan/attack.tka", false, enZtoY);
+	m_animClip[enAnimationClip_aria].Load(L"Asset/animData/unityChan/aria.tka", false, enZtoY);
 	//アニメーションのループフラグをtrueにする
 	for (auto& animClip : m_animClip) {
 		animClip.SetLoopFlag(true);
@@ -37,6 +40,7 @@ void Player::unityChan()
 	m_animClip[enAnimationClip_Clear].SetLoopFlag(false);
 	m_animClip[enAnimationClip_damage].SetLoopFlag(false);
 	m_animClip[enAnimationClip_attack].SetLoopFlag(false);
+	m_animClip[enAnimationClip_aria].SetLoopFlag(false);
 	//unityChanを表示
 	m_skinModelRender = new GameObj::CSkinModelRender;
 	m_skinModelRender->Init(L"Resource/modelData/unityChan.cmo", m_animClip, enAnimationClip_num, enFbxUpAxisY);
@@ -52,6 +56,7 @@ void Player::unityChan()
 	pos.x -= 70.0f;
 	pos.z += 10.0f;
 	m_sword->SetPosition(pos);
+	m_sword->SetSwordId(m_SwordId);
 	m_skinModelRender->GetAnimCon().AddAnimationEventListener([&](const wchar_t* clipName, const wchar_t* eventName) {
 		OnAnimationEvent(clipName, eventName);
 	});
@@ -83,13 +88,16 @@ bool Player::Start()
 	m_collision->SetName(L"Player");
 	//クラスのポインタを設定
 	m_collision->SetClass(this);
+	Status();
+	WeaponStatus();
+	MagicStatus();
 	if (m_cagliostro) {
 		cagliostro();
 	}
 	else {
 		unityChan();
 	}
-	Status();
+
 	return true;
 }
 void Player::Update()
@@ -100,6 +108,7 @@ void Player::Update()
 		//キャラクターのアニメーションの処理、移動や回転も入ってる
 		AnimationController();
 		Kougeki();
+		SwitchWeapon();
 	}
 	if (m_charaCon.IsOnGround()) {
 		//地面についた。
@@ -109,6 +118,15 @@ void Player::Update()
 	m_charaCon.SetPosition(m_position);
 	m_skinModelRender->SetPos(m_position);
 	m_collision->SetPosition(m_position + CVector3::AxisY()*m_collisionUp);
+	if (m_PPtimer >= 50) {
+		if (m_PP < m_MaxPP) {
+			m_PP++;
+			m_PPtimer = 0;
+		}
+	}
+	//PlayerStatusクラスのメンバ変数をプレイヤーのメンバ変数に反映
+	Status();
+	m_PPtimer++;
 	m_timer2++;
 }
 
@@ -116,8 +134,8 @@ void Player::Move()
 {
 	//左スティックの入力量を取得
 	CVector2 stickL;
-	
-	if (m_state == enState_Damage || m_state==enState_GameOver) {
+	//ダメージを受けているとき、ゲームオーバーの時、ゲームクリアの時は右スティックの入力を無効にする
+	if (m_state == enState_Damage || m_state==enState_GameOver || m_state==enState_GameClear) {
 		stickL = { 0.0f,0.0f };
 	}
 	else {
@@ -177,19 +195,33 @@ void Player::Turn()
 
 void Player::Animation()
 {
+	//ダメージを受けたら
 	if (m_damage) {
 		m_state = enState_Damage;
 		m_damage = false;
 	}
+	//Xボタンを押したら
 	else if (Pad(0).GetButton(enButtonX) && m_timer>=15) {
 		if (m_state != enState_Attack) {
 			m_state = enState_Attack;
 			m_timer = 0;
 		}
 	}
+	//Yボタンを押したら
+	else if (Pad(0).GetButton(enButtonY) && m_timer >= 15) {
+		if (m_state != enState_Aria) {
+			if (m_PP >= m_PPCost) {
+				m_state = enState_Aria;
+				m_timer = 0;
+				m_PP -= m_PPCost;
+			}
+		}
+	}
 	if (m_HP<=0 || Pad(0).GetButton(enButtonLT)) {
-		m_collision->Delete();
 		m_state = enState_GameOver;
+	}
+	else if (Pad(0).GetButton(enButtonLB1)) {
+		m_state = enState_GameClear;
 	}
 	m_timer++;
 }
@@ -229,6 +261,7 @@ void Player::AnimationController()
 			m_skinModelRender->GetAnimCon().Play(enAnimationClip_damage, 0.2f);
 		}
 		else {
+			//アニメーションの再生が終わったら、再びアニメーション分岐
 			if (m_movespeed.LengthSq() > 40.0f * 40.0f) {
 				m_state = enState_Run;
 			}
@@ -242,6 +275,18 @@ void Player::AnimationController()
 		break;
 	case enState_GameClear:
 		m_skinModelRender->GetAnimCon().Play(enAnimationClip_Clear, 0.2f);
+		m_sword->SetScale({ 0.001f,0.001f,0.001f });
+		if (m_skinModelRender->GetAnimCon().IsPlaying()) {
+
+		}
+		else {
+			//アニメーションの再生が終わったら、クリアフラグをONにする
+			if (Pad(0).GetButton(enButtonSelect)) {
+				m_gameclear = true;
+			}
+		}
+		Move();
+		Turn();
 		break;
 	case enState_GameOver:
 		m_skinModelRender->GetAnimCon().Play(enAnimationClip_KneelDown, 0.2f);
@@ -249,6 +294,7 @@ void Player::AnimationController()
 		if (m_skinModelRender->GetAnimCon().IsPlaying()) {
 		}
 		else {
+			//アニメーションの再生が終わったら、ゲームオーバーフラグをONにする
 			if (Pad(0).GetButton(enButtonSelect)) {
 				m_gameover = true;
 			}
@@ -257,7 +303,6 @@ void Player::AnimationController()
 		//キャラクターの向き関係
 		Turn();
 		break;
-		//ジャンプだけは他のとこでやる
 	case enState_Jump:
 		m_skinModelRender->GetAnimCon().Play(enAnimationClip_jump, 0.2f);
 		if (!m_charaCon.IsJump()) {
@@ -283,6 +328,7 @@ void Player::AnimationController()
 			m_timer = 0;
 		}
 		else {
+			//アニメーションの再生が終わったら、アニメーション分岐
 			m_timer++;
 			if (m_timer >= 20) {
 				if (m_movespeed.LengthSq() > 40.0f * 40.0f) {
@@ -298,42 +344,73 @@ void Player::AnimationController()
 		//キャラクターの向き関係
 		Turn();
 		break;
+	case enState_Aria:
+		if (m_skinModelRender->GetAnimCon().IsPlaying() || m_isjump == true) {
+			m_skinModelRender->GetAnimCon().Play(enAnimationClip_aria, 0.2f);
+			m_skinModelRender->GetAnimCon().SetSpeed(1.0f);
+			Animation();
+			m_isjump = false;
+			m_timer = 0;
+		}
+		else {
+			//アニメーションの再生が終わったら、アニメーション分岐
+			m_timer++;
+			if (m_timer >= 20) {
+				if (m_movespeed.LengthSq() > 40.0f * 40.0f) {
+					m_state = enState_Run;
+				}
+				else if (m_movespeed.LengthSq() < 40.0f * 40.0f) {
+					m_state = enState_Idle;
+				}
+				m_timer = 0;
+			}
+		}
+		//キャラクターの向き関係
+		Turn();
+		break;
 	}
 }
 
 void Player::Status()
 {
+	//プレイヤーステータスクラスの経験値をプレイヤークラスに加算
 	m_Exp = m_playerstatus->GetExp();
 	m_NextExp = m_playerstatus->GetNextExp();
+	//レベルアップしてなかったら処理を終了する
 	if (m_Level == m_playerstatus->GetLevel()) {
 		return;
 	}
 	else {
+		//レベルアップしてたら、プレイヤーステータスクラスのステータスを反映、ついでにHPとPP回復
 		m_Level = m_playerstatus->GetLevel();
 		m_MaxHP = m_playerstatus->GetMaxHP();
 		m_MaxPP = m_playerstatus->GetMaxPP();
 		m_Attack = m_playerstatus->GetAttack();
+		m_Mattack = m_playerstatus->GetMattack();
 		m_HP = m_MaxHP;
 		m_PP = m_MaxPP;
+		m_SwordId = m_playerstatus->GetSwordId();
 	}
 }  
 
 void Player::PostRender()
 {
 	wchar_t output[256];
-	swprintf_s(output, L"Lv   %d\nExp  %d\nNexp %d\nHP   %d\nPP   %d\nAtk  %d\n",m_Level, m_Exp,m_NextExp,m_HP, m_PP, m_Attack);
+	swprintf_s(output, L"Lv   %d\nExp  %d\nNexp %d\nHP   %d\nPP   %d\nAtk  %d\nMatk %d\nWpn  %s\nMgc  %s\nMgg  %d\n",m_Level, m_Exp,m_NextExp,m_HP, m_PP, m_Attack,m_Mattack, m_SwordName,m_MagicName,int(m_Mattack*m_DamageRate));
 	//swprintf_s(output, L"x   %f\ny   %f\nz  %f\nw   %f\n", m_swordqRot.x, m_swordqRot.y, m_swordqRot.z, m_swordqRot.w);
-	m_font.DrawScreenPos(output, { 800.0f,100.0f });
+	m_font.DrawScreenPos(output, { 700.0f,100.0f });
 }
 
 void Player::Kougeki()
 {
+	//攻撃しているときは武器の位置をunityChanの手に移動させる
 	if (m_state == enState_Attack) {
 		CVector3 pos = m_skinModelRender->GetBonePos(m_bonehand);
 		CQuaternion qRot = m_skinModelRender->GetBoneRot(m_bonehand);
 		m_sword->SetRot(qRot);
 		m_sword->SetPosition(pos);
 	}
+	//攻撃していないときは、武器をunityChanの背中に移動させる
 	else {
 		CVector3 pos = m_playerheikou;
 		CQuaternion qRot;
@@ -366,10 +443,14 @@ void Player::OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventName)
 		pos += m_playerheikou * 90.0f;
 		attackCol->CreateSphere(pos, CQuaternion::Identity(), 70.0f);
 		//寿命を設定
-		attackCol->SetTimer(5);//15フレーム後削除される
+		attackCol->SetTimer(3);//15フレーム後削除される
 		attackCol->SetCallback([&](SuicideObj::CCollisionObj::SCallbackParam& param) {
 			//衝突した判定の名前が"IEnemy"ならm_Attack分だけダメージ与える
 			if (param.EqualName(L"IEnemy")) {
+				m_PP += m_PPAttackRecovery;
+				if (m_PP > m_MaxPP) {
+					m_PP = m_MaxPP;
+				}
 				IEnemy* enemy = param.GetClass<IEnemy>();//相手の判定に設定されているCEnemyのポインタを取得
 				//エネミーにダメージ
 				enemy->Damage(m_Attack);
@@ -377,20 +458,86 @@ void Player::OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventName)
 				if (enemy->GetDeath()) {
 					//エネミーの経験値をプレイヤーの経験値に加算
 					m_playerstatus->PlusExp(enemy->GetExp());
-					//PlayerStatusクラスのメンバ変数をプレイヤーのメンバ変数に反映
-					Status();
 				}
 			}
 		}
 		);
 	}
+	else if (wcscmp(eventName, L"aria") == 0) {
+		ShotMagic* shotmagic = new ShotMagic;
+		shotmagic->SetPosition(m_position);
+		shotmagic->SetDirectionPlayer(m_playerheikou);
+		shotmagic->SetId(m_MagicId);
+		shotmagic->SetDamage(m_Mattack, m_DamageRate);
+	}
+	
+	
 }
 
 void Player::Damage(const int& attack)
 {
-	if (m_timer2 >= 30) {
+	//ゲームオーバーかゲームクリアの場合、ダメージの処理をしない
+	if (m_state == enState_GameOver || m_state==enState_GameClear) {
+		return;
+	}
+	else if (m_timer2 >= 30) {
 		m_HP -= attack;
+		//HPが0より小さくなったら0にする
+		if (m_HP < 0) {
+			m_HP = 0;
+		}
 		m_damage = true;
 		m_timer2 = 0;
 	}
+}
+
+void Player::WeaponStatus()
+{
+	m_Mattack = m_playerstatus->GetMattack();
+	m_Attack = m_playerstatus->GetAttack();
+	m_SwordId = m_playerstatus->GetSwordId();
+	m_SwordName = m_playerstatus->GetSwordName();
+	m_MagicId = m_playerstatus->GetMagicId();
+}
+
+void Player::MagicStatus()
+{
+	m_MagicName = m_playerstatus->GetMagicName();
+	m_DamageRate = m_playerstatus->GetDamageRate();
+	m_PPCost = m_playerstatus->GetPPCost();
+}
+
+void Player::SwitchWeapon()
+{
+	if (!Pad(0).GetButton(enButtonLeft) && !Pad(0).GetButton(enButtonRight)) {
+		m_isbutton=true;
+	}
+	//直前にボタンを押していないときにだけ、入力を有効にする
+	if (m_isbutton) {
+		//左ボタン
+		if (Pad(0).GetButton(enButtonLeft)) {
+			m_isbutton = false;
+			//武器の切り替えが有効であったならば武器のステータスを反映させる
+			if (m_playerstatus->GetWeapon(m_SwordId - 1)) {
+				WeaponStatus();
+				MagicStatus();
+			}
+			else {
+				return;
+			}
+		}
+		//右ボタン
+		if (Pad(0).GetButton(enButtonRight)) {
+			m_isbutton = false;
+			//武器の切り替えが有効であったならば武器のステータスを反映させる
+			if (m_playerstatus->GetWeapon(m_SwordId + 1)) {
+				WeaponStatus();
+				MagicStatus();
+			}
+			else {
+				return;
+			}
+		}
+	}
+	m_sword->SetSwordId(m_SwordId);
 }

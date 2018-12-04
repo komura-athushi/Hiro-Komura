@@ -4,6 +4,7 @@
 #include "GameCamera.h"
 #include "Player.h"
 #include "Stone.h"
+#include "House.h"
 #include "Stage1_Teleport.h"
 #include "Stage1.h"
 #include "PlayerStatus.h"
@@ -24,10 +25,14 @@ Town::~Town()
 	for (auto& stone : m_stoneList) {
 		delete stone;
 	}
+	for (auto& house : m_houseList) {
+		delete house;
+	}
 }
 
 bool Town::Start()
 {
+	//ディレクションライトを設定
 	m_lig = new GameObj::CDirectionLight;
 	m_color = { 1.0f,1.0f,1.0f };
 	m_color.Normalize();
@@ -50,6 +55,15 @@ bool Town::Start()
 			//フックしたのでtrueを返す。
 			return true;
 		}
+		else if (objData.EqualObjectName(L"house") == true) {
+			//Starオブジェクト。
+			House* house = new House;
+			house->SetPosition(objData.position);
+			//後で削除するのでリストに積んで記憶しておく。
+			m_houseList.push_back(house);
+			//フックしたのでtrueを返す。
+			return true;
+		}
 		else if (objData.EqualObjectName(L"stage1_teleport") == true) {
 			//Starオブジェクト。
 			m_stage1_teleport = new Stage1_Teleport;
@@ -63,6 +77,7 @@ bool Town::Start()
 			m_player = new Player;
 			m_player->SetPosition(objData.position);
 			m_player->SetPlayerStatus(m_playerstatus);
+			m_player->SetName(L"Player");
 			//フックした場合はtrueを返す。
 			return true;
 		}
@@ -72,20 +87,6 @@ bool Town::Start()
 	m_gamecamera = new GameCamera;
 	m_gamecamera->SetPlayer(m_player);
 	m_player->SetCamera(m_gamecamera);
-	//GetEngine().GetGraphicsEngine().GetLightManager().SetAmbientLight({ 0.0f, 0.50f, 0.0f });
-	
-	/*m_lig = new GameObj::CDirectionLight;
-	m_lig->SetDirection({ 0.707f, 0.707f, 0.0f });
-	m_lig->SetColor({ 5.0f, 5.0f, 5.0f });
-	
-	m_lig = new GameObj::CDirectionLight;
-	m_lig->SetDirection({ -0.707f, -0.707f, 0.0f });
-	m_lig->SetColor({ 5.0f, 5.0f, 5.0f });
-	
-	m_lig = new GameObj::CDirectionLight;
-	m_lig->SetDirection({ 0.0f, 1.0f, 0.0f });
-	m_lig->SetColor({ 5.0f, 5.0f, 5.0f});*/
-	
 	return true;
 }
 

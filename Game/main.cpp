@@ -11,12 +11,21 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	//ゲームの初期化。
 	InitEngineParameter initparam; 
 	GetEngine().InitGame(hInstance, hPrevInstance, lpCmdLine, nCmdShow, "Game", initparam);	
-	GameObj::PerspectiveCamera cam; SetMainCamera(&cam);
+	GameObj::PerspectiveCamera* cam = new GameObj::PerspectiveCamera;
+	SetMainCamera(cam);
+	cam->SetName(L"Camera");
+	//GameDataクラスのインスタンスを生成
+	GameData* gamedata = &GameData::GetInstance();
+	//インスタンスに名前を設定
+	gamedata->SetName(L"GameData");
+	//PlayerStatusクラスのインスタンスを生成
+	PlayerStatus* playerstatus = &PlayerStatus::GetInstance();
+	//インスタンスに名前を設定
+	playerstatus->SetName(L"PlayerStatus");
+	playerstatus->SetGameData(gamedata);
 	Town* town = new Town;
 	//Title* titel = new Title;
-	PlayerStatus* playerstatus = new PlayerStatus;
 	town->SetPlayerStatus(playerstatus);
-	GameData* gamedata = new GameData;
 	SetPhysicsDebugDrawMode(btIDebugDraw::DBG_DrawWireframe);
 	//ゲームループ。
 	GetEngine().RunGameLoop();

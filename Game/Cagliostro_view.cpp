@@ -10,7 +10,6 @@ Cagliostro_view::Cagliostro_view()
 
 }
 
-
 Cagliostro_view::~Cagliostro_view()
 {
 	delete m_player;
