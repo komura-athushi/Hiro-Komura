@@ -56,6 +56,7 @@ bool DropItem::Start()
 
 void DropItem::Update()
 {
+	//プレイヤーとの距離が一定以下になったらプレイヤーの所持武器に自身を追加する
 	CVector3 pos = m_player->GetPosition() - m_position;
 	if (pos.Length() <= 80.0f) {
 		PlayerStatus* playerstatus = FindGO<PlayerStatus>(L"PlayerStatus");

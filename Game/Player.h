@@ -94,6 +94,9 @@ public:
 	void RecoveryPP()
 	{
 		m_PP += m_AttackRecoveryPP;
+		if (m_PP > m_MaxPP) {
+			m_PP = m_MaxPP;
+		}
 	}
 	//プレイヤーがダメージを受けた時の処理
 	void Damage(const int& attack);

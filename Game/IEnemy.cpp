@@ -13,7 +13,12 @@ IEnemy::IEnemy(const int& h,const int& a,const int& e,const int dropchances[Weap
 
 IEnemy::~IEnemy()
 {
-	Drop();
+	if (m_death) {
+		Drop();
+	}
+	else {
+		m_collision->Delete();
+	}
 }
 
 void IEnemy::CCollision(const CVector3& pos,const float& l,const float& r)
@@ -42,10 +47,12 @@ void IEnemy::SetCCollision(const CVector3& pos,const float& l)
 	m_timer1++;
 	m_timer2++;
 	m_timer3++;
+	m_timer5++;
 }
 
 void IEnemy::Damage(const int& attack,int number)
 {
+
 	switch (number) {
 	case 0:
 		if (m_timer >= 15) {		//通常攻撃
@@ -80,8 +87,12 @@ void IEnemy::Damage(const int& attack,int number)
 		break;
 	case 4:							//シフタ(ダメージ無し)
 		break;
-	case 5:							//マジスフィ
-
+	case 5:							
+		if (m_timer5 >= 20) {		//マジスフィ
+			m_HP -= attack;
+			m_timer5 = 0;
+			m_damage = true;
+		}
 		break;
 	}
 	if (m_HP <= 0) {

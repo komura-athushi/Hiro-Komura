@@ -26,7 +26,7 @@ public:
 	*int id;						//魔法の番号
 	*bool damage;					//trueでダメージありのコリジョンを生成します
 	*/
-	void SetCollisionModel(const CVector3& pos, const float& scale,const int& id,bool damage=true); //こ↑こ↓をfalseにするとダメージ無しのコリジョンを生成します
+	void SetCollisionModel(const CVector3& pos, const float& scale,const int& id,const int& number,bool damage = true); //こ↑こ↓をfalseにするとダメージ無しのコリジョンを生成します
 	//フォイエ
 	void Foie();
 	void FoieUpdate();
@@ -87,11 +87,24 @@ public:
 	{
 		m_damage = int(mattack*damagerate);
 	}
+	//ダメージを取得
+	int GetDamage()
+	{
+		return m_damage;
+	}
 	//プレイヤーの向きを設定
 	void SetDirectionPlayer(const CVector3& pos)
 	{
 		m_directionplayer = pos;
 	}
+	//該当の番号のMagicModelの配列の座標を取得
+	CVector3 GetPosition(const int& number)
+	{
+		return m_magicmocelList[number].s_position;
+	}
+	//該当の番号のMagicModelの配列の色々を削除
+	void DeleteMagicModel(const int& number);
+
 private:
 	int m_id;											//魔法の番号
 	const wchar_t* m_name;								//魔法の名前
@@ -107,13 +120,15 @@ private:
 	int m_modelnumber = 0;								//モデルの数
 	int m_modelcount = 0;								//生成したモデルの数
 	int m_timer = 0;									//複数のモデルとコリジョンを時間差ありで生成する場合のクールタイム
+	int m_timer1 = 0;
 	//スキンモデル、コリジョン、タイマー、削除したかどうか
 	struct MagicModel {
 		GameObj::CSkinModelRender* s_skinModelReder;    //モデル
 		SuicideObj::CCollisionObj* s_collision;			//コリジョン
 		float s_timer = 0.0f;							//デリートタイム
+		CVector3 s_position = {CVector3::Zero()};		//座標
 		bool s_delete = false;							//モデルとコリジョンを削除したかどうか
-		std::vector<IEnemy*> s_ignoreList;
+		int s_number = 0;								//配列の添え字
 	};
 	std::vector<MagicModel> m_magicmocelList;			//MagicModel構造体の可変長配列
 };

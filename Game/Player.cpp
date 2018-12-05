@@ -467,9 +467,8 @@ void Player::OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventName)
 		shotmagic->SetDirectionPlayer(m_playerheikou);
 		shotmagic->SetId(m_MagicId);
 		shotmagic->SetDamage(m_Mattack, m_DamageRate);
+		shotmagic->SetName(L"ShotMagic");
 	}
-	
-	
 }
 
 void Player::Damage(const int& attack)
