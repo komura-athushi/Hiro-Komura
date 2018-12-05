@@ -126,7 +126,7 @@ private:
 	const wchar_t* m_MagicName;						      //魔法の名前
 	float m_DamageRate;									  //魔法のダメージ倍率
 	int m_PPCost;										  //魔法を放つのに必要なPP
-	bool m_haveweaponlist[GameData::enWeapon_num] = { true,true,true,true,true,true };     //プレイヤーの各武器の所持状況
+	bool m_haveweaponlist[GameData::enWeapon_num] = { true,true,true,true,true,true,true,true,true };     //プレイヤーの各武器の所持状況
 	GameData* m_gamedata;                                 //GameDataクラスのポインタ
 	Weapon* m_weapon;									  //Weaponクラスのポインタ
 	Magic* m_magic;										  //Magicクラスのポインタ

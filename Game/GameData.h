@@ -39,6 +39,9 @@ public:
 		enWeapon_WindSword,								//ウィンドソード
 		enWeapon_GreatSword,							//グレイトソード
 		enWeapon_BlueLightSword,						//ブルーライトソード
+		enWeapon_BattleReadyBlade,
+		enWeapon_AncientWarriorBlade,
+		enWeapon_LegendalySword,
 		enWeapon_num									//ウェポンの種類
 	};
 	enum EnMagic {
@@ -48,6 +51,9 @@ public:
 		enMagic_Wind,									//ウィンド
 		enMagic_SuperZangeki,							//超斬撃
 		enMagic_TwincleStar,							//トゥインクルスター
+		enMagic_1,
+		enMagic_2,
+		enMagic_3,
 		enMagic_num										//魔法の種類
 	};
 	enum EnMaterial {

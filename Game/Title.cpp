@@ -7,6 +7,7 @@ Title::Title()
 
 Title::~Title()
 {
+	//newしてないのでspriteはインスタンスが破棄されたらspriteは自動的に破棄されます
 	
 }
 
@@ -26,5 +27,5 @@ void Title::Update()
 
 void Title::PostRender()
 {
-	m_sprite.DrawScreenPos({ 0.0f, 0.0f },{ 1.0f,1.0f });
+	m_sprite.DrawScreenPos(m_position,m_scale);
 }

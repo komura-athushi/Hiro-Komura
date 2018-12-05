@@ -60,6 +60,15 @@ void Sword::Update()
 		case 5:
 			m_skinModelRender->Init(L"Resource/modelData/BlueLightSword.cmo");
 			break;
+		case 6:
+			m_skinModelRender->Init(L"Resource/modelData/BattleReadyBlade.cmo");
+			break;
+		case 7:
+			m_skinModelRender->Init(L"Resource/modelData/AncientWarriorBlade.cmo");
+			break;
+		case 8:
+			m_skinModelRender->Init(L"Resource/modelData/LegendSword.cmo");
+			break;
 		}
 		m_switch = false;
 	}
