@@ -50,11 +50,6 @@ public:
 	void MagicStatus();
 	//シフタをかける
 	void Shihuta();
-	//プレイヤーステータスクラスのポインタを設定
-	void SetPlayerStatus(PlayerStatus* ps)
-	{
-		m_playerstatus = ps;
-	}
 	//プレイヤーの座標をセット
 	void SetPosition(const CVector3& pos)
 	{

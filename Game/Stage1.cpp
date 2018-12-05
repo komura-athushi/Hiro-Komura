@@ -50,7 +50,6 @@ bool Stage1::Start()
 			//プレイヤーのインスタンスを生成する。
 			m_player = new Player;
 			m_player->SetPosition(objData.position);
-			m_player->SetPlayerStatus(m_playerstatus);
 			m_player->SetName(L"Player");
 			//フックした場合はtrueを返す。
 			return true;
@@ -83,7 +82,6 @@ void Stage1::Update()
 	//プレイヤーがゲームオーバーあるいはゲームクリアで拠点に遷移
 	if (m_player->GetGameOver() || m_player->GetGameClear()) {
 		Town* town = new Town;
-		town->SetPlayerStatus(m_playerstatus);
 		delete this;
 	}
 }

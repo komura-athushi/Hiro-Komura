@@ -133,5 +133,8 @@
     <ImageContentTask Include="Asset\sprite\Red.png">
       <Filter>Assets\sprite</Filter>
     </ImageContentTask>
+    <ImageContentTask Include="Asset\sprite\Title.png">
+      <Filter>Assets\sprite</Filter>
+    </ImageContentTask>
   </ItemGroup>
 </Project>

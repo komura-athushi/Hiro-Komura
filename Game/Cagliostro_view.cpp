@@ -29,7 +29,6 @@ bool Cagliostro_view::Start()
 	m_ground->SetStage(-1);
 	m_player = new Player;
 	m_player->SetPosition(m_position);
-	m_player->SetPlayerStatus(m_playerstatus);
 	m_player->Cagliostro();
 	m_gamecamera = new GameCamera;
 	m_gamecamera->SetPlayer(m_player);
@@ -41,7 +40,6 @@ void Cagliostro_view::Update()
 {
 	if (Pad(0).GetButton(enButtonBack)) {
 		Town* town = new Town;
-		town->SetPlayerStatus(m_playerstatus);
 		delete this;
 	}
 }

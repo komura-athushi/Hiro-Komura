@@ -88,6 +88,8 @@ bool Player::Start()
 	m_collision->SetName(L"Player");
 	//クラスのポインタを設定
 	m_collision->SetClass(this);
+	//プレイヤーステータスクラスのポインタを検索検索ぅ～
+	m_playerstatus = FindGO<PlayerStatus>(L"PlayerStatus");
 	Status();
 	WeaponStatus();
 	MagicStatus();

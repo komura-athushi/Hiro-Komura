@@ -10,11 +10,6 @@ public:
 	~Cagliostro_view();
 	bool Start();
 	void Update();
-	//プレイヤーステータスクラスのポインタを受け取る
-	void SetPlayerStatus(PlayerStatus* ps)
-	{
-		m_playerstatus = ps;
-	}
 private:
 	Ground* m_ground;                                  //Groundクラスのポインタ
 	GameCamera* m_gamecamera;                          //GameCameraクラスのポインタ

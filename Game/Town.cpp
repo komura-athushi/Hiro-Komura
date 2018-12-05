@@ -76,7 +76,6 @@ bool Town::Start()
 			//プレイヤーのインスタンスを生成する。
 			m_player = new Player;
 			m_player->SetPosition(objData.position);
-			m_player->SetPlayerStatus(m_playerstatus);
 			m_player->SetName(L"Player");
 			//フックした場合はtrueを返す。
 			return true;
@@ -97,13 +96,11 @@ void Town::Update()
 	//距離が一定以下ならステージ1に遷移する
 	if (pos.Length() <= 100.0f) {
 		Stage1* stage1 = new Stage1;
-		stage1->SetPlayerStatus(m_playerstatus);
 		delete this;
 	}
 	//拠点に居る時にSTARTボタンを押すとカリオストロちゃん☆モードに遷移する
-	if (Pad(0).GetButton(enButtonStart)) {
+	if (Pad(0).GetDown(enButtonStart)) {
 		Cagliostro_view* cag = new Cagliostro_view;
-		cag->SetPlayerStatus(m_playerstatus);
 		delete this;
 	}
 }
