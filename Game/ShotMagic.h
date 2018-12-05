@@ -18,15 +18,27 @@ public:
 	~ShotMagic();
 	bool Start();
 	void Update();
-	//コリジョンとモデルを設定、座標とコリジョンの大きさ
 	/*!
+	//コリジョンとモデルを設定、座標とコリジョンの大きさ
 	@brief	魔法のモデルをコリジョンを生成します
 	*CVector3 pos;					//座標
 	*float scale;					//コリジョンの大きさ
 	*int id;						//魔法の番号
+	*int number						//ダメージ無しの時にいる 
 	*bool damage;					//trueでダメージありのコリジョンを生成します
 	*/
-	void SetCollisionModel(const CVector3& pos, const float& scale,const int& id,const int& number,bool damage = true); //こ↑こ↓をfalseにするとダメージ無しのコリジョンを生成します
+	void SetCollisionModel(const CVector3& pos, const float& scale,const int& id,const int& number=0,bool damage = true); //こ↑こ↓をfalseにするとダメージ無しのコリジョンを生成します
+	/*!
+	//ダメ無しコリジョンを発生させたい場合はこっち
+	//コリジョンとモデルを設定、座標とコリジョンの大きさ
+	@brief	魔法のモデルをコリジョンを生成します
+	*CVector3 pos;					//座標
+	*float scale;					//コリジョンの大きさ
+	*int id;						//魔法の番号
+	*int number						//m_modelcountを代入してください
+	*bool damage;					//trueでダメージありのコリジョンを生成します
+	*/
+	void SetCollisionModelnoDamage(const CVector3& pos, const float& scale, const int& id, const int& number = 0, bool damage = true);
 	//フォイエ
 	void Foie();
 	void FoieUpdate();
@@ -131,5 +143,6 @@ private:
 		int s_number = 0;								//配列の添え字
 	};
 	std::vector<MagicModel> m_magicmocelList;			//MagicModel構造体の可変長配列
+	static const int m_number[];
 };
 
