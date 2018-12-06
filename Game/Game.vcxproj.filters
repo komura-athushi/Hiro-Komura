@@ -1,7 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ImageContentTask Include="Asset\sprite\Red.png" />
+    <ImageContentTask Include="Asset\sprite\Title.png">
+      <Filter>Asset\sprite</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Asset\sprite\Red.png">
+      <Filter>Asset\sprite</Filter>
+    </ImageContentTask>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Boss.cpp" />
@@ -28,11 +33,9 @@
     <ClCompile Include="Ground.cpp" />
     <ClCompile Include="TownData.cpp" />
     <ClCompile Include="Weapon.cpp" />
+    <ClCompile Include="Human.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <MeshContentTask Include="Asset\modelData\cagliostro\cagliostro.fbx">
-      <Filter>Asset\modelData</Filter>
-    </MeshContentTask>
     <MeshContentTask Include="Asset\modelData\Sword\AncientWarriorBlade.FBX">
       <Filter>Asset\modelData</Filter>
     </MeshContentTask>
@@ -42,28 +45,46 @@
     <MeshContentTask Include="Asset\modelData\Sword\BlueLightSword.FBX">
       <Filter>Asset\modelData</Filter>
     </MeshContentTask>
+    <MeshContentTask Include="Asset\modelData\boss\boss.FBX">
+      <Filter>Asset\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Asset\modelData\cagliostro\cagliostro.fbx">
+      <Filter>Asset\modelData</Filter>
+    </MeshContentTask>
     <MeshContentTask Include="Asset\modelData\enemy\enemy.FBX">
       <Filter>Asset\modelData</Filter>
     </MeshContentTask>
+    <MeshContentTask Include="Asset\modelData\Sword\GreatSword.fbx">
+      <Filter>Asset\modelData</Filter>
+    </MeshContentTask>
     <MeshContentTask Include="Asset\modelData\Sword\FireSword.FBX">
+      <Filter>Asset\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Asset\modelData\ground.FBX">
+      <Filter>Asset\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Asset\modelData\house.FBX">
+      <Filter>Asset\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Asset\modelData\Sword\IceSword.FBX">
+      <Filter>Asset\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Asset\modelData\Sword\LegendSword.FBX">
+      <Filter>Asset\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Asset\modelData\Magic_Sample.FBX">
+      <Filter>Asset\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Asset\modelData\sky.FBX">
+      <Filter>Asset\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Asset\modelData\skydome.FBX">
       <Filter>Asset\modelData</Filter>
     </MeshContentTask>
     <MeshContentTask Include="Asset\modelData\stage1_ground.FBX">
       <Filter>Asset\modelData</Filter>
     </MeshContentTask>
     <MeshContentTask Include="Asset\modelData\stage1_teleport.FBX">
-      <Filter>Asset\modelData</Filter>
-    </MeshContentTask>
-    <MeshContentTask Include="Asset\modelData\skydome.FBX">
-      <Filter>Asset\modelData</Filter>
-    </MeshContentTask>
-    <MeshContentTask Include="Asset\modelData\sky.FBX">
-      <Filter>Asset\modelData</Filter>
-    </MeshContentTask>
-    <MeshContentTask Include="Asset\modelData\Magic_Sample.FBX">
-      <Filter>Asset\modelData</Filter>
-    </MeshContentTask>
-    <MeshContentTask Include="Asset\modelData\Sword\LegendSword.FBX">
       <Filter>Asset\modelData</Filter>
     </MeshContentTask>
     <MeshContentTask Include="Asset\modelData\stone.FBX">
@@ -78,19 +99,7 @@
     <MeshContentTask Include="Asset\modelData\Sword\WindSword.FBX">
       <Filter>Asset\modelData</Filter>
     </MeshContentTask>
-    <MeshContentTask Include="Asset\modelData\ground.FBX">
-      <Filter>Asset\modelData</Filter>
-    </MeshContentTask>
-    <MeshContentTask Include="Asset\modelData\house.FBX">
-      <Filter>Asset\modelData</Filter>
-    </MeshContentTask>
-    <MeshContentTask Include="Asset\modelData\Sword\IceSword.FBX">
-      <Filter>Asset\modelData</Filter>
-    </MeshContentTask>
-    <MeshContentTask Include="Asset\modelData\Sword\GreatSword.fbx">
-      <Filter>Asset\modelData</Filter>
-    </MeshContentTask>
-    <MeshContentTask Include="Asset\modelData\boss\boss.FBX">
+    <MeshContentTask Include="Asset\modelData\human\human.FBX">
       <Filter>Asset\modelData</Filter>
     </MeshContentTask>
   </ItemGroup>
@@ -118,22 +127,17 @@
     <ClInclude Include="Ground.h" />
     <ClInclude Include="TownData.h" />
     <ClInclude Include="Weapon.h" />
+    <ClInclude Include="Human.h" />
   </ItemGroup>
   <ItemGroup>
-<<<<<<< HEAD
     <Filter Include="Asset">
-      <UniqueIdentifier>{be6a0280-8a27-4058-817b-b5810352e775}</UniqueIdentifier>
+      <UniqueIdentifier>{792e91a7-d444-4dfa-a858-061836098fba}</UniqueIdentifier>
     </Filter>
     <Filter Include="Asset\modelData">
-      <UniqueIdentifier>{cb8a834a-7cee-4027-8d0a-f3a925d402bb}</UniqueIdentifier>
+      <UniqueIdentifier>{f6526a8d-9cd9-43c9-a489-3e59dd1f25be}</UniqueIdentifier>
     </Filter>
-=======
-    <ImageContentTask Include="Asset\sprite\Red.png">
-      <Filter>Assets\sprite</Filter>
-    </ImageContentTask>
-    <ImageContentTask Include="Asset\sprite\Title.png">
-      <Filter>Assets\sprite</Filter>
-    </ImageContentTask>
->>>>>>> 82dcf267dbacd6717d7ba39049f27c5967bfb012
+    <Filter Include="Asset\sprite">
+      <UniqueIdentifier>{fa65ffda-080e-46b1-bca9-4e5b57d3c2ac}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

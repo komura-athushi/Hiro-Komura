@@ -9,6 +9,7 @@
 #include "Stage1.h"
 #include "PlayerStatus.h"
 #include "Cagliostro_view.h"
+#include "Human.h"
 Town::Town()
 {
 	
@@ -86,6 +87,7 @@ bool Town::Start()
 	m_gamecamera = new GameCamera;
 	m_gamecamera->SetPlayer(m_player);
 	m_player->SetCamera(m_gamecamera);
+	Human* human = new Human;
 	return true;
 }
 

@@ -23,7 +23,7 @@ public:
 	{
 		m_player = player;
 	}
-	/*void SetPosition(const CVector3& pos)
+	void SetPosition(const CVector3& pos)
 	{
 		m_position = pos;
 	}
@@ -34,7 +34,7 @@ public:
 	void SetOldPosition(const CVector3 pos)
 	{
 		m_oldpos = pos;
-	}*/
+	}
 private:
 	GameObj::CSkinModelRender* m_skinModelRender = nullptr;		//スキンモデルレンダラー。
 	PhysicsStaticObject m_staticobject;                         //静的オブジェクト
@@ -61,7 +61,7 @@ private:
 	EnState m_state = enState_Idle_Run;
 	CVector3 m_oldpos = { 30.0f,100.0f,1500.0f };               //ボスの初期位置
 	CVector3 m_position = { 30.0f,100.0f,1500.0f };				//ボスの座標
-	CVector3 m_scale = { 10.0f,10.0f,10.0f };						//ボスのスケール
+	CVector3 m_scale = { 5.0f,5.0f,5.0f };						//ボスのスケール
 	CVector3 m_movespeed = { 0.0f,  0.0f,  0.0f };				//移動速度
 	CVector3 m_parallel = { 0.0f,0.0f,0.0f };					//ユニティちゃんの向きと平行なベクトル
 	Player* m_player;											//プレイヤークラスのポインタ
