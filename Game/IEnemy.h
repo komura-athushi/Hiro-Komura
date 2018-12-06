@@ -1,5 +1,6 @@
 #pragma once
 #include "Weapon.h"
+
 class IEnemy : public IGameObject
 {
 public:
@@ -41,6 +42,11 @@ public:
 	{
 		return m_Exp;
 	}
+	//エネミーのポジションを取得
+	CVector3 GetPosition() const
+	{
+		return m_position;
+	}
 	//文字表示
 	void PostRender()override;
 protected:
@@ -57,6 +63,7 @@ protected:
 	int m_timer1 = 0;										  //フォイエの当たり判定のクールタイム
 	int m_timer2 = 0;										  //イルグランツの
 	int m_timer3 = 0;									      //ザンバースの
+	int m_timer5 = 0;										  //マジスフィの
 	bool m_damage = false;                                    //ダメージを受けたかどうか
 	bool m_death = false;                                     //HPが0以下になったかどうか
 	CFont m_font;                                             //文字表示クラス

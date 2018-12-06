@@ -3,11 +3,13 @@
 //プレイヤーのステータスを管理するクラスです
 class PlayerStatus:public IGameObject
 {
-	//シングルトン
+	//シングルトン、そのクラスのインスタンスが一つしか存在しえないことを示すデザインパターンの一つです
 	private:
 	PlayerStatus();
 	~PlayerStatus();
 public:
+	//この関数を使ってPlayerStatusクラスのインスタンスを生成します
+	//この関数内のローカルな静的変数は最初に関数が呼ばれるときには初期化されますが、以降呼ばれる時は初期化されません
 	static PlayerStatus& GetInstance()
 	{
 		static PlayerStatus inst;
@@ -16,6 +18,7 @@ public:
 public:
 	bool Start();
 	void Update();
+	//GameDataクラスのインスタンスのポインタを設定
 	void SetGameData(GameData* gamedata)
 	{
 		m_gamedata = gamedata;
@@ -123,7 +126,7 @@ private:
 	const wchar_t* m_MagicName;						      //魔法の名前
 	float m_DamageRate;									  //魔法のダメージ倍率
 	int m_PPCost;										  //魔法を放つのに必要なPP
-	bool m_haveweaponlist[GameData::enWeapon_num] = { true,true,true,true,true,true };     //プレイヤーの各武器の所持状況
+	bool m_haveweaponlist[GameData::enWeapon_num] = { true,true,true,true,true,true,true,true,true };     //プレイヤーの各武器の所持状況
 	GameData* m_gamedata;                                 //GameDataクラスのポインタ
 	Weapon* m_weapon;									  //Weaponクラスのポインタ
 	Magic* m_magic;										  //Magicクラスのポインタ

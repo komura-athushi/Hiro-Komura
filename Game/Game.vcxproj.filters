@@ -120,11 +120,20 @@
     <ClInclude Include="Weapon.h" />
   </ItemGroup>
   <ItemGroup>
+<<<<<<< HEAD
     <Filter Include="Asset">
       <UniqueIdentifier>{be6a0280-8a27-4058-817b-b5810352e775}</UniqueIdentifier>
     </Filter>
     <Filter Include="Asset\modelData">
       <UniqueIdentifier>{cb8a834a-7cee-4027-8d0a-f3a925d402bb}</UniqueIdentifier>
     </Filter>
+=======
+    <ImageContentTask Include="Asset\sprite\Red.png">
+      <Filter>Assets\sprite</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Asset\sprite\Title.png">
+      <Filter>Assets\sprite</Filter>
+    </ImageContentTask>
+>>>>>>> 82dcf267dbacd6717d7ba39049f27c5967bfb012
   </ItemGroup>
 </Project>

@@ -1,5 +1,6 @@
 #pragma once
 class IEnemy;
+//プレイヤーの放つ呪文のクラスです
 class ShotMagic:public IGameObject
 {
 public:
@@ -17,8 +18,27 @@ public:
 	~ShotMagic();
 	bool Start();
 	void Update();
+	/*!
 	//コリジョンとモデルを設定、座標とコリジョンの大きさ
-	void SetCollisionModel(const CVector3& pos, const float& scale,const int& id);
+	@brief	魔法のモデルをコリジョンを生成します
+	*CVector3 pos;					//座標
+	*float scale;					//コリジョンの大きさ
+	*int id;						//魔法の番号
+	*int number						//ダメージ無しの時にいる 
+	*bool damage;					//trueでダメージありのコリジョンを生成します
+	*/
+	void SetCollisionModel(const CVector3& pos, const float& scale,const int& id,const int& number=0,bool damage = true); //こ↑こ↓をfalseにするとダメージ無しのコリジョンを生成します
+	/*!
+	//ダメ無しコリジョンを発生させたい場合はこっち
+	//コリジョンとモデルを設定、座標とコリジョンの大きさ
+	@brief	魔法のモデルをコリジョンを生成します
+	*CVector3 pos;					//座標
+	*float scale;					//コリジョンの大きさ
+	*int id;						//魔法の番号
+	*int number						//m_modelcountを代入してください
+	*bool damage;					//trueでダメージありのコリジョンを生成します
+	*/
+	void SetCollisionModelnoDamage(const CVector3& pos, const float& scale, const int& id, const int& number = 0, bool damage = true);
 	//フォイエ
 	void Foie();
 	void FoieUpdate();
@@ -33,6 +53,7 @@ public:
 	void ShihutaUpdate();
 	//マジックスフィア
 	void MagicSphere();
+	void MagicSphereUpdate();
 	//魔法の番号を取得
 	int GetId() const
 	{
@@ -78,11 +99,24 @@ public:
 	{
 		m_damage = int(mattack*damagerate);
 	}
+	//ダメージを取得
+	int GetDamage()
+	{
+		return m_damage;
+	}
 	//プレイヤーの向きを設定
 	void SetDirectionPlayer(const CVector3& pos)
 	{
 		m_directionplayer = pos;
 	}
+	//該当の番号のMagicModelの配列の座標を取得
+	CVector3 GetPosition(const int& number)
+	{
+		return m_magicmocelList[number].s_position;
+	}
+	//該当の番号のMagicModelの配列の色々を削除
+	void DeleteMagicModel(const int& number);
+
 private:
 	int m_id;											//魔法の番号
 	const wchar_t* m_name;								//魔法の名前
@@ -98,14 +132,17 @@ private:
 	int m_modelnumber = 0;								//モデルの数
 	int m_modelcount = 0;								//生成したモデルの数
 	int m_timer = 0;									//複数のモデルとコリジョンを時間差ありで生成する場合のクールタイム
+	int m_timer1 = 0;
 	//スキンモデル、コリジョン、タイマー、削除したかどうか
 	struct MagicModel {
-		GameObj::CSkinModelRender* s_skinModelReder;
-		SuicideObj::CCollisionObj* s_collision;
-		float s_timer=0.0f;
-		bool s_delete = false;
-		std::vector<IEnemy*> s_ignoreList;
+		GameObj::CSkinModelRender* s_skinModelReder;    //モデル
+		SuicideObj::CCollisionObj* s_collision;			//コリジョン
+		float s_timer = 0.0f;							//デリートタイム
+		CVector3 s_position = {CVector3::Zero()};		//座標
+		bool s_delete = false;							//モデルとコリジョンを削除したかどうか
+		int s_number = 0;								//配列の添え字
 	};
-	std::vector<MagicModel> m_magicmocelList;
+	std::vector<MagicModel> m_magicmocelList;			//MagicModel構造体の可変長配列
+	static const int m_number[];
 };
 

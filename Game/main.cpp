@@ -23,9 +23,8 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	//インスタンスに名前を設定
 	playerstatus->SetName(L"PlayerStatus");
 	playerstatus->SetGameData(gamedata);
-	Town* town = new Town;
-	//Title* titel = new Title;
-	town->SetPlayerStatus(playerstatus);
+	//Town* town = new Town;
+	Title* titel = new Title;
 	SetPhysicsDebugDrawMode(btIDebugDraw::DBG_DrawWireframe);
 	//ゲームループ。
 	GetEngine().RunGameLoop();

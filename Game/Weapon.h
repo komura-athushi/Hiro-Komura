@@ -48,7 +48,7 @@ public:
 	{
 		return m_magicid;
 	}
-	static const int m_HighestRarity = 4;     //武器の最高レアリティ
+	static const int m_HighestRarity = 7;     //武器の最高レアリティ
 	static const int m_raritynumber[];        //レアリティごとの武器の種類
 private:
 	int m_id;								//武器の番号
@@ -71,5 +71,11 @@ WindSword             3
 GreatSword            4
 3
 BlueLightSword        5
+4
+BattleReadyBlade      6
+5
+AncientWarriorBlade   7
+6
+LegendalySword        8
 */
 

@@ -5,12 +5,14 @@
 class Enemy;
 class GameData:public IGameObject
 {
-	//シングルトン
+	//シングルトン、そのクラスのインスタンスが一つしか存在しえないことを示すデザインパターンの一つです
 private:
 	//コンストラクタとデストラクタをprivateに宣言することで外部から生成出来なくする
 	GameData();
 	~GameData();
 public:
+	//この関数を使ってGameDataクラスのインスタンスを生成します
+	//この関数内のローカルな静的変数は最初に関数が呼ばれるときには初期化されますが、以降呼ばれる時は初期化されません
 	static GameData& GetInstance()
 	{
 		//privateなコンストラクタを呼び出す
@@ -18,8 +20,6 @@ public:
 		return inst;
 	}
 public:
-	//GameData();
-	//~GameData();
 	bool Start();
 	void Update();
 	//引数の番号の武器のポインタを取得
@@ -39,6 +39,9 @@ public:
 		enWeapon_WindSword,								//ウィンドソード
 		enWeapon_GreatSword,							//グレイトソード
 		enWeapon_BlueLightSword,						//ブルーライトソード
+		enWeapon_BattleReadyBlade,
+		enWeapon_AncientWarriorBlade,
+		enWeapon_LegendalySword,
 		enWeapon_num									//ウェポンの種類
 	};
 	enum EnMagic {
@@ -48,6 +51,9 @@ public:
 		enMagic_Wind,									//ウィンド
 		enMagic_SuperZangeki,							//超斬撃
 		enMagic_TwincleStar,							//トゥインクルスター
+		enMagic_1,
+		enMagic_2,
+		enMagic_3,
 		enMagic_num										//魔法の種類
 	};
 	enum EnMaterial {

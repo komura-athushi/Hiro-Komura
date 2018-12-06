@@ -88,6 +88,8 @@ bool Player::Start()
 	m_collision->SetName(L"Player");
 	//クラスのポインタを設定
 	m_collision->SetClass(this);
+	//プレイヤーステータスクラスのポインタを検索検索ぅ～
+	m_playerstatus = FindGO<PlayerStatus>(L"PlayerStatus");
 	Status();
 	WeaponStatus();
 	MagicStatus();
@@ -124,6 +126,7 @@ void Player::Update()
 			m_PPtimer = 0;
 		}
 	}
+	Shihuta();
 	//PlayerStatusクラスのメンバ変数をプレイヤーのメンバ変数に反映
 	Status();
 	m_PPtimer++;
@@ -140,7 +143,7 @@ void Player::Move()
 	}
 	else {
 		stickL = Pad(0).GetStick(L);	//アナログスティックの入力量を取得。
-		if (Pad(0).GetButton(enButtonA) //Aボタンが押されたら
+		if (Pad(0).GetDown(enButtonA) //Aボタンが押されたら
 			&& m_charaCon.IsOnGround()  //かつ、地面に居たら
 			) {
 			//ジャンプする。
@@ -281,7 +284,7 @@ void Player::AnimationController()
 		}
 		else {
 			//アニメーションの再生が終わったら、クリアフラグをONにする
-			if (Pad(0).GetButton(enButtonSelect)) {
+			if (Pad(0).GetButton(enButtonBack)) {
 				m_gameclear = true;
 			}
 		}
@@ -295,7 +298,7 @@ void Player::AnimationController()
 		}
 		else {
 			//アニメーションの再生が終わったら、ゲームオーバーフラグをONにする
-			if (Pad(0).GetButton(enButtonSelect)) {
+			if (Pad(0).GetButton(enButtonBack)) {
 				m_gameover = true;
 			}
 		}
@@ -386,6 +389,7 @@ void Player::Status()
 		m_MaxHP = m_playerstatus->GetMaxHP();
 		m_MaxPP = m_playerstatus->GetMaxPP();
 		m_Attack = m_playerstatus->GetAttack();
+		m_ShihutaAttack = m_Attack;
 		m_Mattack = m_playerstatus->GetMattack();
 		m_HP = m_MaxHP;
 		m_PP = m_MaxPP;
@@ -396,7 +400,7 @@ void Player::Status()
 void Player::PostRender()
 {
 	wchar_t output[256];
-	swprintf_s(output, L"Lv   %d\nExp  %d\nNexp %d\nHP   %d\nPP   %d\nAtk  %d\nMatk %d\nWpn  %s\nMgc  %s\nMgg  %d\n",m_Level, m_Exp,m_NextExp,m_HP, m_PP, m_Attack,m_Mattack, m_SwordName,m_MagicName,int(m_Mattack*m_DamageRate));
+	swprintf_s(output, L"Lv   %d\nExp  %d\nNexp %d\nHP   %d\nPP   %d\nAtk  %d\nMatk %d\nWpn  %s\nMgc  %s\nMPC  %d\nMgg  %d\n",m_Level, m_Exp,m_NextExp,m_HP, m_PP, m_Attack,m_Mattack, m_SwordName,m_MagicName,m_PPCost,int(m_Mattack*m_DamageRate));
 	//swprintf_s(output, L"x   %f\ny   %f\nz  %f\nw   %f\n", m_swordqRot.x, m_swordqRot.y, m_swordqRot.z, m_swordqRot.w);
 	m_font.DrawScreenPos(output, { 700.0f,100.0f });
 }
@@ -447,10 +451,6 @@ void Player::OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventName)
 		attackCol->SetCallback([&](SuicideObj::CCollisionObj::SCallbackParam& param) {
 			//衝突した判定の名前が"IEnemy"ならm_Attack分だけダメージ与える
 			if (param.EqualName(L"IEnemy")) {
-				m_PP += m_PPAttackRecovery;
-				if (m_PP > m_MaxPP) {
-					m_PP = m_MaxPP;
-				}
 				IEnemy* enemy = param.GetClass<IEnemy>();//相手の判定に設定されているCEnemyのポインタを取得
 				//エネミーにダメージ
 				enemy->Damage(m_Attack);
@@ -469,9 +469,8 @@ void Player::OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventName)
 		shotmagic->SetDirectionPlayer(m_playerheikou);
 		shotmagic->SetId(m_MagicId);
 		shotmagic->SetDamage(m_Mattack, m_DamageRate);
+		shotmagic->SetName(L"ShotMagic");
 	}
-	
-	
 }
 
 void Player::Damage(const int& attack)
@@ -495,6 +494,7 @@ void Player::WeaponStatus()
 {
 	m_Mattack = m_playerstatus->GetMattack();
 	m_Attack = m_playerstatus->GetAttack();
+	m_ShihutaAttack = m_Attack;
 	m_SwordId = m_playerstatus->GetSwordId();
 	m_SwordName = m_playerstatus->GetSwordName();
 	m_MagicId = m_playerstatus->GetMagicId();
@@ -540,4 +540,19 @@ void Player::SwitchWeapon()
 		}
 	}
 	m_sword->SetSwordId(m_SwordId);
+}
+
+void Player::Shihuta()
+{
+	if (m_Shihuta) {
+		m_Attack = (int)(m_ShihutaAttack * m_AttackMultiply);
+		m_Shihutatimer++;
+		if (m_Shihutatimer >= m_Shihutatime) {
+			m_Shihuta = false;
+			m_Shihutatimer = 0;
+		}
+	}
+	else {
+		m_Attack = m_ShihutaAttack;
+	}
 }
