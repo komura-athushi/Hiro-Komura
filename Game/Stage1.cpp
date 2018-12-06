@@ -6,12 +6,9 @@
 #include "Town.h"
 #include "PlayerStatus.h"
 #include "Oni.h"
-<<<<<<< HEAD
 #include "Boss.h"
-=======
 #include "DropItem.h"
 #include "IEnemy.h"
->>>>>>> 4621d4808865101770bd6c9e39b60f3ff6afe2b0
 Stage1::Stage1()
 {
 }
@@ -25,19 +22,13 @@ Stage1::~Stage1()
 	QueryGOs<Oni>(L"Oni", [&](Oni* oni)
 	{
 		delete oni;
-<<<<<<< HEAD
-	}*/
-	delete boss;
-=======
 		return true;
 	});
 	QueryGOs<DropItem>(L"DropItem", [&](DropItem* dropitem)
 	{
 		delete dropitem;
 		return true;
-	});
->>>>>>> 4621d4808865101770bd6c9e39b60f3ff6afe2b0
-}
+	});}
 
 bool Stage1::Start()
 {
@@ -96,9 +87,9 @@ bool Stage1::Start()
 	m_gamecamera = new GameCamera;
 	m_gamecamera->SetPlayer(m_player);
 	m_player->SetCamera(m_gamecamera);
-	//‰¼‚É¶¬‚µ‚Ä‚¨‚è‚Ü‚·
-	boss = new Boss;
-	boss->SetPlayer(m_player);
+	//ƒ{ƒX‚Ì¶¬
+	m_boss = new Boss;
+	m_boss->SetPlayer(m_player);
 	return true;
 }
 

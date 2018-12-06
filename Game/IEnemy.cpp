@@ -97,7 +97,7 @@ void IEnemy::Drop()
 			DropItem* dropitem = new DropItem;
 			dropitem->SetRarity(i);
 			dropitem->SetPosition(m_position);
-			dropitem->SetName-(L"DropItem");
+			dropitem->SetName(L"DropItem");
 			return;
 		}
 	}
