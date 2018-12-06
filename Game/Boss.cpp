@@ -46,6 +46,7 @@ bool Boss::Start()
 	return true;
 }
 
+
 void Boss::Attack()
 {
 	if(m_HP >= 600) {
