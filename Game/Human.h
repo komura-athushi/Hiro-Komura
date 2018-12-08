@@ -1,4 +1,5 @@
 #pragma once
+class Player;
 class Human:public IGameObject
 {
 public:
@@ -8,6 +9,8 @@ public:
 	void Update();
 	//アニメーション
 	void AnimationController();
+	//回転
+	void Turn();
 	//座標を設定
 	void SetPosition(const CVector3& pos)
 	{
@@ -18,6 +21,7 @@ private:
 	CVector3 m_scale = { 100.0f,100.0f,100.0f };
 	CVector3 m_position = { 300.0f,200.0f,0.0f };
 	float m_animationspeed = 0.7f;
+	CQuaternion m_rotation;
 	//アニメーション関係
 	enum EnAnimationClip {
 		enAnimationClip_idle,
@@ -29,5 +33,6 @@ private:
 	};
 	AnimationClip m_animClip[enAnimationClip_num];
 	EnState m_state = enState_Idle;
+	Player* m_player;
 };
 

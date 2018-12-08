@@ -28,7 +28,8 @@ Stage1::~Stage1()
 	{
 		delete dropitem;
 		return true;
-	});}
+	});
+}
 
 bool Stage1::Start()
 {

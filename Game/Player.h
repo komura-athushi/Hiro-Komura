@@ -55,6 +55,11 @@ public:
 	{
 		m_position = pos;
 	}
+	//プレイヤーの回転をセット
+	void SetRotation(const CQuaternion qRot)
+	{
+		m_rotation = qRot;
+	}
 	//プレイヤーの座標を取得
 	CVector3 GetPosition() const
 	{

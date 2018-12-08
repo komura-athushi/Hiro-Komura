@@ -45,6 +45,7 @@ void Player::unityChan()
 	m_skinModelRender = new GameObj::CSkinModelRender;
 	m_skinModelRender->Init(L"Resource/modelData/unityChan.cmo", m_animClip, enAnimationClip_num, enFbxUpAxisY);
 	m_skinModelRender->SetPos(m_position);
+	m_skinModelRender->SetRot(m_rotation);
 	m_sword = new Sword;
 	//unityChan‚Ìƒ{[ƒ“‚ðŒŸõ
 	m_bonehand = m_skinModelRender->FindBoneID(L"Character1_RightHand");
