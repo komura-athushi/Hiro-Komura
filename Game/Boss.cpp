@@ -58,7 +58,7 @@ void Boss::Attack()
 	else if(m_HP > 0) {
 		//m_state = enState_Attack3;
 	}
-}
+} 
 void Boss::Chase()
 {
 	m_movespeed = { 0.0f,0.0f,0.0f };
