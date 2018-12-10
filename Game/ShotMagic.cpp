@@ -83,7 +83,7 @@ bool ShotMagic::Start()
 			 }
 			 else {
 				 //ƒ‚ƒfƒ‹‚ÆƒRƒŠƒWƒ‡ƒ“‚ð“®‚©‚µ‚Ü‚·
-				 mgml.s_position = mgml.s_skinModelReder->GetPos() + m_movespeed;
+				 mgml.s_position = mgml.s_skinModelReder->GetPos() + m_movespeed*GetDeltaTimeSec();
 				 mgml.s_skinModelReder->SetPos(mgml.s_position);
 				 mgml.s_collision->SetPosition(mgml.s_position);
 				 mgml.s_timer += 1.0f;
@@ -169,7 +169,7 @@ bool ShotMagic::Start()
 	 m_scale = { 2.0f,2.0f,2.0f };
 	 m_position = m_position + CVector3::AxisY()*60.0f;
 	 SetCollisionModel(m_position,90.0f,m_id);
-	 m_movespeed = m_directionplayer * 15.0f;
+	 m_movespeed = m_directionplayer * 15.0f*60.0f;
  }
  void ShotMagic::FoieUpdate()
  {
@@ -182,7 +182,7 @@ bool ShotMagic::Start()
 	 m_modelnumber = 3;
 	 m_scale = { 1.0f,1.0f,1.0f };
 	 m_position = m_position + CVector3::AxisY()*60.0f;
-	 m_movespeed = m_directionplayer * 30.0f;
+	 m_movespeed = m_directionplayer * 30.0f*60.0f;
 	 m_damage /= m_modelnumber;
  }
 
@@ -239,7 +239,7 @@ bool ShotMagic::Start()
 	 m_position = m_position + CVector3::AxisY()*60.0f;
 	 //SetCollisionModel(m_position, 28.0f, m_id, m_modelcount,false);
 	 SetCollisionModelnoDamage(m_position, 28.0f, m_id, m_modelcount, false);
-	 m_movespeed = m_directionplayer * 15.0f;
+	 m_movespeed = m_directionplayer * 15.0f*60.0f;
 	
  }
 

@@ -2,6 +2,7 @@
 #include "Weapon.h"
 #include "Magic.h"
 #include "Material.h"
+//データクラスのインスタンスを生成するクラスです
 class Enemy;
 class GameData:public IGameObject
 {
@@ -38,34 +39,33 @@ public:
 		enWeapon_IceSword,								//アイスソード
 		enWeapon_WindSword,								//ウィンドソード
 		enWeapon_GreatSword,							//グレイトソード
-		enWeapon_BlueLightSword,						//ブルーライトソード
-		enWeapon_BattleReadyBlade,
-		enWeapon_AncientWarriorBlade,
-		enWeapon_LegendalySword,
+		enWeapon_BlueLightSword,						//クリスタルエッジ
+		enWeapon_BattleReadyBlade,					    //バトルブレード
+		enWeapon_AncientWarriorBlade,					//バンデッドソード
+		enWeapon_LegendalySword,						//レジェンダリーソード
 		enWeapon_num									//ウェポンの種類
 	};
 	enum EnMagic {
-		enMagic_Zangeki,								//斬撃
-		enMagic_Fire,									//ファイアー
-		enMagic_Ice,									//アイス
-		enMagic_Wind,									//ウィンド
-		enMagic_SuperZangeki,							//超斬撃
-		enMagic_TwincleStar,							//トゥインクルスター
-		enMagic_1,
+		enMagic_Zangeki,								//無し
+		enMagic_Fire,									//フォイエ
+		enMagic_Ice,									//イル・グランツ
+		enMagic_Wind,									//ザンバース
+		enMagic_SuperZangeki,							//シフタ
+		enMagic_TwincleStar,							//マジックスフィア
+		enMagic_1,										
 		enMagic_2,
 		enMagic_3,
 		enMagic_num										//魔法の種類
 	};
 	enum EnMaterial {
-		enMaterial_Straw,								//藁(わら)
-		enMaterial_Soil,								//土
-		enMaterial_Stone,								//石
+		enMaterial_Straw,								//木
+		enMaterial_Soil,								//石
+		enMaterial_Stone,								//レンガ
 		enMaterial_num									//素材の種類
 	};
 private:
 	std::vector<Weapon> m_weaponlist;                   //Weaponクラスの可変長配列
 	std::vector<Magic> m_magiclist;						//Magicクラスの可変長配列
 	std::vector<Material> m_materiallist;				//Materialクラスの可変長配列
-    Enemy* m_enemies;
 };
 

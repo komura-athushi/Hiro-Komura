@@ -19,7 +19,7 @@ bool Boss::Start()
 {
 	IEnemy::CCollision({ m_position }, m_collisionheight, m_r);
 	//アニメーション
-	m_animClip[enAnimationClip_idle].Load(L"Asset/animData/boss/boss_walk.tka");
+	/*m_animClip[enAnimationClip_idle].Load(L"Asset/animData/boss/boss_walk.tka");
 	m_animClip[enAnimationClip_attack1].Load(L"Asset/animData/boss/boss_attack1.tka");
 	m_animClip[enAnimationClip_attack2].Load(L"Asset/animData/boss/boss_attack2.tka");
 	//m_animClip[enAnimationClip_attack3].Load(L"Asset/animData/boss/test.tka");
@@ -218,7 +218,8 @@ void Boss::Update()
 		IEnemy::SetCCollision(m_position, m_collisionheight);
 	}
 	IEnemy::m_timer++;
-		// delete this;
+
+	//delete this;
 }
 
 //void Boss::OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventName)

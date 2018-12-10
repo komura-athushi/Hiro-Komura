@@ -45,6 +45,7 @@ void Player::unityChan()
 	m_skinModelRender = new GameObj::CSkinModelRender;
 	m_skinModelRender->Init(L"Resource/modelData/unityChan.cmo", m_animClip, enAnimationClip_num, enFbxUpAxisY);
 	m_skinModelRender->SetPos(m_position);
+	m_skinModelRender->SetRot(m_rotation);
 	m_sword = new Sword;
 	//unityChanのボーンを検索
 	m_bonehand = m_skinModelRender->FindBoneID(L"Character1_RightHand");
@@ -204,7 +205,7 @@ void Player::Animation()
 		m_damage = false;
 	}
 	//Xボタンを押したら
-	else if (Pad(0).GetButton(enButtonX) && m_timer>=15) {
+	else if (Pad(0).GetDown(enButtonX) && m_timer>=15) {
 		if (m_state != enState_Attack) {
 			m_state = enState_Attack;
 			m_timer = 0;

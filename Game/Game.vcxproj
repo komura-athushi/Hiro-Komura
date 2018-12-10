@@ -157,8 +157,10 @@
     <ClCompile Include="Boss.cpp" />
     <ClCompile Include="Cagliostro_view.cpp" />
     <ClCompile Include="DropItem.cpp" />
+    <ClCompile Include="DropMaterial.cpp" />
     <ClCompile Include="GameData.cpp" />
     <ClCompile Include="House.cpp" />
+    <ClCompile Include="Human.cpp" />
     <ClCompile Include="IEnemy.cpp" />
     <ClCompile Include="Magic.cpp" />
     <ClCompile Include="Material.cpp" />
@@ -186,8 +188,10 @@
     <ClInclude Include="Boss.h" />
     <ClInclude Include="Cagliostro_view.h" />
     <ClInclude Include="DropItem.h" />
+    <ClInclude Include="DropMaterial.h" />
     <ClInclude Include="GameData.h" />
     <ClInclude Include="House.h" />
+    <ClInclude Include="Human.h" />
     <ClInclude Include="IEnemy.h" />
     <ClInclude Include="Magic.h" />
     <ClInclude Include="Material.h" />
@@ -213,7 +217,11 @@
     <MeshContentTask Include="Asset\modelData\enemy\enemy.FBX" />
     <MeshContentTask Include="Asset\modelData\ground.FBX" />
     <MeshContentTask Include="Asset\modelData\house.FBX" />
+    <MeshContentTask Include="Asset\modelData\human\human.FBX" />
     <MeshContentTask Include="Asset\modelData\Magic_Sample.FBX" />
+    <MeshContentTask Include="Asset\modelData\material\brick.FBX" />
+    <MeshContentTask Include="Asset\modelData\material\ishi.FBX" />
+    <MeshContentTask Include="Asset\modelData\material\wood.FBX" />
     <MeshContentTask Include="Asset\modelData\sky.FBX" />
     <MeshContentTask Include="Asset\modelData\skydome.FBX" />
     <MeshContentTask Include="Asset\modelData\stage1_ground.FBX" />
@@ -235,6 +243,9 @@
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Asset\sprite\Title.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Asset\sprite\MokoTitle.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

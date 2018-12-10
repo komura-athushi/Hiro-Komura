@@ -28,7 +28,8 @@ Stage1::~Stage1()
 	{
 		delete dropitem;
 		return true;
-	});}
+	});
+}
 
 bool Stage1::Start()
 {
@@ -69,26 +70,24 @@ bool Stage1::Start()
 			//フックした場合はtrueを返す。
 			return true;
 		}
-		//else if (objData.EqualObjectName(L"boss") == true) {
-		//	//ボス
-		//	//プレイヤーのインスタンスを生成する。
-		//	//Bossオブジェクト。
-		//	boss = new Boss;
-		//	boss->SetPosition(objData.position);
-		//	boss->SetOldPosition(objData.position);
-		//	boss->SetPlayer(m_player);
-		//	boss->SetStage1(this);
-		//	//フックした場合はtrueを返す。
-		//	return true;
-		//}
+		else if (objData.EqualObjectName(L"boss") == true) {
+			//スケルトン
+			//プレイヤーのインスタンスを生成する。
+			//Starオブジェクト。
+			Boss* boss = new Boss;
+			boss->SetPosition(objData.position);
+			boss->SetOldPosition(objData.position);
+			boss->SetName(L"Oni");
+			boss->SetPlayer(m_player);
+			boss->SetStage1(this);
+			//フックした場合はtrueを返す。
+			return true;
+		}
 		return false;
 	});
 	m_gamecamera = new GameCamera;
 	m_gamecamera->SetPlayer(m_player);
 	m_player->SetCamera(m_gamecamera);
-	//ボスの生成
-	m_boss = new Boss;
-	m_boss->SetPlayer(m_player);
 	return true;
 }
 

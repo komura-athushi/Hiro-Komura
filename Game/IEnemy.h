@@ -1,6 +1,7 @@
 #pragma once
 #include "Weapon.h"
-
+//エネミーの基本クラスです
+//HPやドロップ、削除の処理などはこのクラスで処理します
 class IEnemy : public IGameObject
 {
 public:

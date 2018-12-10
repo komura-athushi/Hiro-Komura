@@ -3,6 +3,7 @@ class Ground;
 class GameCamera;
 class Player;
 class PlayerStatus;
+//カリオストロちゃんモード発動☆
 class Cagliostro_view:public IGameObject
 {
 public:

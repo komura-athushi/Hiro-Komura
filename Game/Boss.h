@@ -23,7 +23,7 @@ public:
 	{
 		m_player = player;
 	}
-	/*void SetPosition(const CVector3& pos)
+	void SetPosition(const CVector3& pos)
 	{
 		m_position = pos;
 	}
@@ -34,7 +34,7 @@ public:
 	void SetOldPosition(const CVector3 pos)
 	{
 		m_oldpos = pos;
-	}*/
+	}
 private:
 	GameObj::CSkinModelRender* m_skinModelRender = nullptr;		//スキンモデルレンダラー。
 	PhysicsStaticObject m_staticobject;                         //静的オブジェクト

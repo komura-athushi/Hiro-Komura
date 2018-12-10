@@ -18,6 +18,7 @@ bool House::Start()
 	m_skinModelRender->Init(L"Resource/modelData/house.cmo");
 	m_skinModelRender->SetPos(m_position);
 	m_skinModelRender->SetScale(m_scale);
+	m_skinModelRender->SetRot(m_rotation);
 	m_staticobject.CreateMesh(*m_skinModelRender);
 	return true;
 }

@@ -1,4 +1,5 @@
 #pragma once
+//プレイヤーが装備している武器のデータです
 class Sword:public IGameObject
 {
 public:

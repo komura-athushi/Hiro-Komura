@@ -9,6 +9,7 @@
 #include "Stage1.h"
 #include "PlayerStatus.h"
 #include "Cagliostro_view.h"
+#include "Human.h"
 Town::Town()
 {
 	
@@ -18,6 +19,7 @@ Town::Town()
 Town::~Town()
 {
 	delete m_player;
+	delete m_human;
 	delete m_ground;
 	delete m_gamecamera;
 	delete m_lig;
@@ -59,6 +61,7 @@ bool Town::Start()
 			//Starオブジェクト。
 			House* house = new House;
 			house->SetPosition(objData.position);
+			house->SetRotation(objData.rotation);
 			//後で削除するのでリストに積んで記憶しておく。
 			m_houseList.push_back(house);
 			//フックしたのでtrueを返す。
@@ -71,11 +74,20 @@ bool Town::Start()
 			//フックしたのでtrueを返す。
 			return true;
 		}
+		else if (objData.EqualObjectName(L"human") == true) {
+			//Human
+			m_human = new Human;
+			m_human->SetPosition(objData.position);
+			m_player->SetName(L"Human");
+			//フックした場合はtrueを返す。
+			return true;
+		}
 		else if (objData.EqualObjectName(L"unityChan") == true) {
 			//Unityちゃん。
 			//プレイヤーのインスタンスを生成する。
 			m_player = new Player;
 			m_player->SetPosition(objData.position);
+			m_player->SetRotation(objData.rotation);
 			m_player->SetName(L"Player");
 			//フックした場合はtrueを返す。
 			return true;

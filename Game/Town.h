@@ -2,6 +2,7 @@
 class Ground;
 class GameCamera;
 class Player;
+class Human;
 class Stone;
 class House;
 class Stage1_Teleport;
@@ -20,6 +21,7 @@ private:
 	GameObj::CDirectionLight* m_lig;                   //ディレクションライトクラスのポインタ
 	CVector3 m_color;                                  //ディレクションライトのカラー
 	Player* m_player;                                  //プレイヤークラスのポインタ
+	Human* m_human;									   //ヒューマンクラスのポインタ
 	Stage1_Teleport* m_stage1_teleport;                //ステージ1に遷移するためのクラスのポインタ
 	Level m_level;                                     //レベルデザインのためのクラス
 	PlayerStatus* m_playerstatus;                      //プレイヤーステータスクラスのポインタ
