@@ -34,6 +34,7 @@
     <ClCompile Include="TownData.cpp" />
     <ClCompile Include="Weapon.cpp" />
     <ClCompile Include="Human.cpp" />
+    <ClCompile Include="DropMaterial.cpp" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Asset\modelData\Sword\AncientWarriorBlade.FBX">
@@ -102,6 +103,15 @@
     <MeshContentTask Include="Asset\modelData\human\human.FBX">
       <Filter>Asset\modelData</Filter>
     </MeshContentTask>
+    <MeshContentTask Include="Asset\modelData\material\brick.FBX">
+      <Filter>Asset\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Asset\modelData\material\ishi.FBX">
+      <Filter>Asset\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Asset\modelData\material\wood.FBX">
+      <Filter>Asset\modelData</Filter>
+    </MeshContentTask>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Boss.h" />
@@ -128,6 +138,7 @@
     <ClInclude Include="TownData.h" />
     <ClInclude Include="Weapon.h" />
     <ClInclude Include="Human.h" />
+    <ClInclude Include="DropMaterial.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Asset">

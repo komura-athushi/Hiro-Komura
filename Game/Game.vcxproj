@@ -157,6 +157,7 @@
     <ClCompile Include="Boss.cpp" />
     <ClCompile Include="Cagliostro_view.cpp" />
     <ClCompile Include="DropItem.cpp" />
+    <ClCompile Include="DropMaterial.cpp" />
     <ClCompile Include="GameData.cpp" />
     <ClCompile Include="House.cpp" />
     <ClCompile Include="Human.cpp" />
@@ -187,6 +188,7 @@
     <ClInclude Include="Boss.h" />
     <ClInclude Include="Cagliostro_view.h" />
     <ClInclude Include="DropItem.h" />
+    <ClInclude Include="DropMaterial.h" />
     <ClInclude Include="GameData.h" />
     <ClInclude Include="House.h" />
     <ClInclude Include="Human.h" />
@@ -217,6 +219,9 @@
     <MeshContentTask Include="Asset\modelData\house.FBX" />
     <MeshContentTask Include="Asset\modelData\human\human.FBX" />
     <MeshContentTask Include="Asset\modelData\Magic_Sample.FBX" />
+    <MeshContentTask Include="Asset\modelData\material\brick.FBX" />
+    <MeshContentTask Include="Asset\modelData\material\ishi.FBX" />
+    <MeshContentTask Include="Asset\modelData\material\wood.FBX" />
     <MeshContentTask Include="Asset\modelData\sky.FBX" />
     <MeshContentTask Include="Asset\modelData\skydome.FBX" />
     <MeshContentTask Include="Asset\modelData\stage1_ground.FBX" />

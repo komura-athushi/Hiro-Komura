@@ -2,6 +2,7 @@
 #include "Weapon.h"
 #include "Magic.h"
 #include "Material.h"
+//データクラスのインスタンスを生成するクラスです
 class Enemy;
 class GameData:public IGameObject
 {
@@ -57,9 +58,9 @@ public:
 		enMagic_num										//魔法の種類
 	};
 	enum EnMaterial {
-		enMaterial_Straw,								//藁(わら)
-		enMaterial_Soil,								//土
-		enMaterial_Stone,								//石
+		enMaterial_Straw,								//木
+		enMaterial_Soil,								//石
+		enMaterial_Stone,								//レンガ
 		enMaterial_num									//素材の種類
 	};
 private:

@@ -1,5 +1,6 @@
 #pragma once
 class Player;
+//‚±‚¢‚Â‚É˜b‚µ‚©‚¯‚é‚ÆŠX‚ğ”­“W‚Å‚«‚é(İ’è)
 class Human:public IGameObject
 {
 public:

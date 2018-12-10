@@ -1,4 +1,5 @@
 #pragma once
+//素材のデータクラスです
 class Material
 {
 public:

@@ -36,8 +36,8 @@ bool GameData::Start()
 	m_magiclist.push_back(Magic(8 , L"マジックスフィア"         , 2.3f, 60));
 	//Materialクラスのインスタンスを生成
 	m_materiallist.push_back(Material(L"木"					, 0));
-	m_materiallist.push_back(Material(L"石"					, 0));
-	m_materiallist.push_back(Material(L"レンガ"				, 1));
+	m_materiallist.push_back(Material(L"石"					, 1));
+	m_materiallist.push_back(Material(L"レンガ"				, 2));
 	return true;
 }
 

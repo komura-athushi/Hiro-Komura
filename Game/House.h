@@ -1,5 +1,6 @@
 #pragma once
 #include "DemolisherWeapon/physics/PhysicsStaticObject.h"
+//‰Æ
 class House:public IGameObject
 {
 public:
