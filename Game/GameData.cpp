@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "GameData.h"
-#include "Enemy.h"
 
 GameData::GameData()
 {

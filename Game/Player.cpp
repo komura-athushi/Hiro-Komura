@@ -205,7 +205,7 @@ void Player::Animation()
 		m_damage = false;
 	}
 	//Xƒ{ƒ^ƒ“‚ð‰Ÿ‚µ‚½‚ç
-	else if (Pad(0).GetButton(enButtonX) && m_timer>=15) {
+	else if (Pad(0).GetDown(enButtonX) && m_timer>=15) {
 		if (m_state != enState_Attack) {
 			m_state = enState_Attack;
 			m_timer = 0;
