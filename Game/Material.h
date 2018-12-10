@@ -21,6 +21,7 @@ public:
 	{
 		return m_rarity;
 	}
+	const int m_HighestRarity = 3;
 private:
 	const wchar_t* m_name;					//‘fŞ‚Ì–¼‘O
 	int m_rarity;							//‘fŞ‚ÌƒŒƒAƒŠƒeƒB
@@ -28,9 +29,10 @@ private:
 
 /*
 b’è“I‚È‘fŞ‚ÌƒŒƒAƒŠƒeƒB‚Æ”Ô†‚Æ–¼‘O
-0
-‚í‚ç                 0
-“y					 1
 1
-ÎŞ			     2
+“y					0
+2
+Î					1
+3
+ƒŒƒ“ƒK			    2
 */

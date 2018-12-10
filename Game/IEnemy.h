@@ -53,20 +53,25 @@ public:
 protected:
 	SuicideObj::CCollisionObj* m_collision;                   //丸いコリジョン
 	CVector3 m_position;									  //座標
+	CVector3 m_collisionposition;
+	CVector3 m_fontposition;
 	//エネミーの色々なステータス
 	int m_MaxHP;                                              //最大HP
 	int m_HP;                                                 //HP
 	int m_MaxPP;                                              //最大PP
 	int m_PP;                                                 //PP
 	int m_Attack;                                             //攻撃力
+	int m_damagecount;										  //受けたダメージ
 	int m_Exp;                                                //経験値
 	int m_timer = 0;                                          //当たり判定にクールタイム
 	int m_timer1 = 0;										  //フォイエの当たり判定のクールタイム
 	int m_timer2 = 0;										  //イルグランツの
 	int m_timer3 = 0;									      //ザンバースの
 	int m_timer5 = 0;										  //マジスフィの
+	int m_fonttimer = 0;									  //文字表示のタイマー
 	bool m_damage = false;                                    //ダメージを受けたかどうか
 	bool m_death = false;                                     //HPが0以下になったかどうか
+	bool m_displayfont = false;								  //ダメ表示するかどうか
 	CFont m_font;                                             //文字表示クラス
 	int m_dropChances[Weapon::m_HighestRarity];			      //エネミーのドロップするアイテム、[1]が0.4fならレア度1が40%でドロップするみたいな
 };

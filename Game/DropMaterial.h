@@ -1,4 +1,5 @@
 #pragma once
+#include "Material.h"
 class Player;
 //エネミーがドロップする素材のクラスです
 class DropMaterial:public IGameObject
@@ -8,6 +9,10 @@ public:
 	~DropMaterial();
 	bool Start();
 	void Update();
+	void SetPosition(const CVector3 pos)
+	{
+		m_position = pos;
+	}
 	//レアリティの中の番号を設定
 	void SetNumber(const int& number)
 	{

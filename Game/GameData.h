@@ -58,9 +58,9 @@ public:
 		enMagic_num										//–‚–@‚Ìí—Ş
 	};
 	enum EnMaterial {
-		enMaterial_Straw,								//–Ø
-		enMaterial_Soil,								//Î
-		enMaterial_Stone,								//ƒŒƒ“ƒK
+		enMaterial_Wood,								//–Ø
+		enMaterial_Ishi,								//Î
+		enMaterial_Brick,								//ƒŒƒ“ƒK
 		enMaterial_num									//‘fŞ‚Ìí—Ş
 	};
 private:

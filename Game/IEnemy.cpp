@@ -2,6 +2,7 @@
 #include "IEnemy.h"
 #include "DropItem.h"
 #include "Player.h"
+#include "GameCamera.h"
 IEnemy::IEnemy(const int& h,const int& a,const int& e,const int dropchances[Weapon::m_HighestRarity]):m_HP(h),m_Attack(a),m_Exp(e)
 {
 	/*for (int i = 0; i < Weapon::m_HighestRarity; i++) {
@@ -38,11 +39,22 @@ void IEnemy::CCollision(const CVector3& pos,const float& l,const float& r)
 
 void IEnemy::SetCCollision(const CVector3& pos,const float& l)
 {
+	if (m_displayfont) {
+		m_fonttimer++;
+		if (m_fonttimer == 40) {
+			m_fonttimer = 0;
+			m_displayfont = false;
+		}
+	}
+	else {
+		m_fontposition = pos + CVector3::AxisY()*l;
+	}
 	if (m_death) {
 		return;
 	}
 	m_collision->SetPosition(pos + CVector3::AxisY()*l);
 	m_position = pos;
+	m_collisionposition = pos + CVector3::AxisY()*l;
 	m_timer++;
 	m_timer1++;
 	m_timer2++;
@@ -52,7 +64,6 @@ void IEnemy::SetCCollision(const CVector3& pos,const float& l)
 
 void IEnemy::Damage(const int& attack,int number)
 {
-
 	switch (number) {
 	case 0:
 		if (m_timer >= 15) {		//通常攻撃
@@ -99,13 +110,26 @@ void IEnemy::Damage(const int& attack,int number)
 		m_death = true;
 		m_collision->Delete();
 	}
+	if (m_damage) {
+		m_damagecount = attack;
+		m_displayfont = true;
+	}
 }
 
 void IEnemy::PostRender()
 {
-	wchar_t output[256];
-	swprintf_s(output, L"HP   %d\natk  %d\nドロップ  %d\n", m_HP,m_Attack,m_dropChances[1]);
-	m_font.DrawScreenPos(output, { 00.0f,100.0f });
+	if (!m_displayfont) {
+		return;
+	}
+	GameCamera* gc = FindGO<GameCamera>();
+	if (gc != nullptr) {
+	    wchar_t output[256];
+	    //swprintf_s(output, L"HP   %d\natk  %d\nドロップ  %d\n", m_HP,m_Attack,m_dropChances[1]);
+	    swprintf_s(output, L"%d\n", m_damagecount);
+		CVector2 pos = gc->GetCamera()->CalcScreenPosFromWorldPos(m_fontposition);
+		//m_font.DrawScreenPos(output,pos);
+		m_font.Draw(output, pos);
+	}
 }
 
 void IEnemy::Drop()
