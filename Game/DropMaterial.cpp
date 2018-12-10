@@ -10,3 +10,13 @@ DropMaterial::DropMaterial()
 DropMaterial::~DropMaterial()
 {
 }
+
+bool DropMaterial::Start()
+{
+	return true;
+}
+
+void DropMaterial::Update()
+{
+
+}
