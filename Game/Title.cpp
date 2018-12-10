@@ -13,7 +13,8 @@ Title::~Title()
 
 bool Title::Start()
 {
-	m_sprite.Init(L"Resource/sprite/Title.dds");
+	//m_sprite.Init(L"Resource/sprite/Title.dds");
+	m_sprite.Init(L"Resource/sprite/MokoTitle.dds");
 	return true;
 }
 

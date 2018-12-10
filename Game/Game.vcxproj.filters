@@ -7,6 +7,9 @@
     <ImageContentTask Include="Asset\sprite\Red.png">
       <Filter>Asset\sprite</Filter>
     </ImageContentTask>
+    <ImageContentTask Include="Asset\sprite\MokoTitle.png">
+      <Filter>Asset\sprite</Filter>
+    </ImageContentTask>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Boss.cpp" />
