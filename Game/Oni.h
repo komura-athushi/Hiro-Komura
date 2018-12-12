@@ -77,6 +77,7 @@ private:
 	static const int m_EXP = 20;                                //経験値
 	//ヘッダーファイルでは宣言だけ、定義はcppファイルに書いてください
 	static const int m_dropChances[];                           //エネミーのドロップするアイテム、[1]が10ならレア度1が10%でドロップするみたいな
+	static const int m_dropmaterialChances[];					//エネミーのドロップする素材の確率
 	bool m_gekiha = false;                                      //deleteするかどうか
 };
 

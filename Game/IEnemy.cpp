@@ -1,15 +1,17 @@
 #include "stdafx.h"
 #include "IEnemy.h"
 #include "DropItem.h"
+#include "DropMaterial.h"
 #include "Player.h"
 #include "GameCamera.h"
-IEnemy::IEnemy(const int& h,const int& a,const int& e,const int dropchances[Weapon::m_HighestRarity]):m_HP(h),m_Attack(a),m_Exp(e)
+IEnemy::IEnemy(const int& h,const int& a,const int& e,const int dropchances[Weapon::m_HighestRarity],const int dropmaterialchances[Material::m_HighestRarity]):m_HP(h),m_Attack(a),m_Exp(e)
 {
 	/*for (int i = 0; i < Weapon::m_HighestRarity; i++) {
 		m_dropChances[i] = *dropchances;
 		dropchances++;
 	}*/
 	memcpy(m_dropChances, dropchances, sizeof(dropchances));
+	memcpy(m_dropmaterialChances, dropmaterialchances, sizeof(dropmaterialchances));
 }
 
 IEnemy::~IEnemy()
@@ -135,13 +137,29 @@ void IEnemy::PostRender()
 void IEnemy::Drop()
 {
 	int rad = rand() % 100 + 1;
+	int rpos = rand() % 10 + 30;
 	for (int i = 0; i < Weapon::m_HighestRarity; i++) {
 		if (m_dropChances[i] >= rad) {
 			DropItem* dropitem = new DropItem;
 			dropitem->SetRarity(i);
-			dropitem->SetPosition(m_position);
+			CVector3 pos = m_position;
+			pos.x += rpos * 1.5f;
+			pos.z += rpos * 1.5f;
+			dropitem->SetPosition(pos);
 			dropitem->SetName(L"DropItem");
-			return;
+			break;
+		}
+	}
+	for (int i = 0; i < Material::m_HighestRarity; i++) {
+		if (m_dropmaterialChances[i] >= rad) {
+			DropMaterial* dropmaterial = new DropMaterial;
+			dropmaterial->SetRarity(i);
+			CVector3 pos = m_position;
+			pos.x -= rpos * 1.5f;
+			pos.z -= rpos * 1.5f;
+			dropmaterial->SetPosition(pos);
+			dropmaterial->SetName(L"DropMaterial");
+			break;
 		}
 	}
 }

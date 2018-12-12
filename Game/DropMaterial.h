@@ -1,5 +1,4 @@
 #pragma once
-#include "Material.h"
 class Player;
 //エネミーがドロップする素材のクラスです
 class DropMaterial:public IGameObject
@@ -31,6 +30,6 @@ private:
 	int m_state;                                                //ドロップ品の番号
 	Player* m_player;                                           //プレイヤークラスのポインタ
 	int m_rarity;												//素材のレアリティ
-	int m_number;												//武器のレアリティの中の番号
+	int m_number;												//素材のレアリティの中の番号
 };
 

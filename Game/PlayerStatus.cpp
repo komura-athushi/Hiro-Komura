@@ -94,3 +94,11 @@ bool PlayerStatus::GetWeapon(int number)
 	}
 	return false;
 }
+
+void PlayerStatus::PostRender()
+{
+	wchar_t output[256];
+	swprintf_s(output, L"–Ø   %d\nÎ   %d\nƒŒƒ“ƒK  %d\n", m_havemateriallist[0], m_havemateriallist[1], m_havemateriallist[2]);
+	//swprintf_s(output, L"x   %f\ny   %f\nz  %f\nw   %f\n", m_swordqRot.x, m_swordqRot.y, m_swordqRot.z, m_swordqRot.w);
+	m_font.DrawScreenPos(output, { 00.0f,200.0f }, CVector4::White());
+}

@@ -85,9 +85,14 @@ public:
 	//経験値を加算
 	void PlusExp(const int& exp);
 	//指定の番号の武器をプレイヤーに所持させる
-	void SetWeapon(int number)
+	void SetWeapon(const int& number)
 	{
 		m_haveweaponlist[number] = true;
+	}
+	//指定の番号の素材をプレイヤーに所持させる
+	void SetMaterial(const int& number)
+	{
+		m_havemateriallist[number] += 1;
 	}
 	//魔法の番号を取得
 	const wchar_t* GetMagicName() const
@@ -106,6 +111,8 @@ public:
 	}
 	//武器切り替えの際に武器の切り替えが出来ればtrue、出来なければfalseを返す
 	bool GetWeapon(int number);
+	//文字表示
+	void PostRender()override;
 private:  
 	int m_Level=1;                                        //レベル
 	int m_Exp=0;                                          //経験値
@@ -126,7 +133,8 @@ private:
 	const wchar_t* m_MagicName;						      //魔法の名前
 	float m_DamageRate;									  //魔法のダメージ倍率
 	int m_PPCost;										  //魔法を放つのに必要なPP
-	bool m_haveweaponlist[GameData::enWeapon_num] = { true,true,true,true,true,true,true,true,true };     //プレイヤーの各武器の所持状況]
+	CFont m_font;                                               //文字表示クラス
+	bool m_haveweaponlist[GameData::enWeapon_num] = { true,true,true,true,true,true,true,true,true };     //プレイヤーの各武器の所持状況
 	int m_havemateriallist[GameData::enMaterial_num] = { 0,0,0 };										  //プレイヤーの各素材の所持状況
 	GameData* m_gamedata;                                 //GameDataクラスのポインタ
 	Weapon* m_weapon;									  //Weaponクラスのポインタ

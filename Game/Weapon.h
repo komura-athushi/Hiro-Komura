@@ -61,21 +61,21 @@ private:
 
 /*
 暫定的なソードのレアリティと番号と名前
-0
-Sword                 0
 1
+Sword                 0
+2
 FireSword             1
 IceSword              2
 WindSword             3
-2 
+3 
 GreatSword            4
-3
-BlueLightSword        5
 4
-BattleReadyBlade      6
+BlueLightSword        5
 5
-AncientWarriorBlade   7
+BattleReadyBlade      6
 6
+AncientWarriorBlade   7
+7
 LegendalySword        8
 */
 

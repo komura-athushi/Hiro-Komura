@@ -21,7 +21,8 @@ public:
 	{
 		return m_rarity;
 	}
-	const int m_HighestRarity = 3;
+	static const int m_HighestRarity = 3;
+	static const int m_raritynumber[];      //レアリティごとの素材の種類
 private:
 	const wchar_t* m_name;					//素材の名前
 	int m_rarity;							//素材のレアリティ

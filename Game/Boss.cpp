@@ -4,8 +4,11 @@
 #include <math.h> 
 #include "Stage1.h"
 #include "Player.h"
+//cppでエネミーのレア度ごとのドロップ率を設定
+const int Boss::m_dropChances[Weapon::m_HighestRarity] = { 0,0,0,100,0,0,0 };
+const int Boss::m_dropmaterialChances[Material::m_HighestRarity] = { 0.0f,100.0f,0.0f };
 //ボス（見た目はスケルトン）です
-Boss::Boss() : IEnemy(m_MaxHP, m_Attack, m_EXP, m_dropChances)
+Boss::Boss() : IEnemy(m_MaxHP, m_Attack, m_EXP, m_dropChances,m_dropmaterialChances)
 {
 
 }

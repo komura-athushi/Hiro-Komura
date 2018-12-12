@@ -1,5 +1,6 @@
 #pragma once
 #include "Weapon.h"
+#include "Material.h"
 //エネミーの基本クラスです
 //HPやドロップ、削除の処理などはこのクラスで処理します
 class IEnemy : public IGameObject
@@ -11,9 +12,10 @@ public:
 	* int h     HPを設定
 	* int a     Attackを設定
 	* int e     撃破時の経験値を設定
-	* int dropchances[]  ドロップするアイテムのレア度と確率、今んとこレア度0～3
+	* int dropchances[]  ドロップするアイテムのレア度と確率
+	* int dropmaterialchances[]  ドロップする素材のレア度と確率
 	*/
-	IEnemy(const int& h,const int& a,const int& e,const int dropchances[Weapon::m_HighestRarity]);
+	IEnemy(const int& h,const int& a,const int& e,const int dropchances[Weapon::m_HighestRarity],const int dropmaterialchances[Material::m_HighestRarity]);
 	virtual ~IEnemy();
 	/*!
 	* @brief	コリジョンの生成。
@@ -74,5 +76,6 @@ protected:
 	bool m_displayfont = false;								  //ダメ表示するかどうか
 	CFont m_font;                                             //文字表示クラス
 	int m_dropChances[Weapon::m_HighestRarity];			      //エネミーのドロップするアイテム、[1]が0.4fならレア度1が40%でドロップするみたいな
+	int m_dropmaterialChances[Material::m_HighestRarity];	  //エネミーのドロップする素材の確率
 };
 

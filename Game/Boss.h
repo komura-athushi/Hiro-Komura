@@ -1,5 +1,6 @@
 #pragma once
 #include "Weapon.h"
+#include "Material.h"
 #include "IEnemy.h"
 #include "DemolisherWeapon/physics/PhysicsStaticObject.h"
 class Stage1;
@@ -79,6 +80,7 @@ private:
 	static const int m_Attack2 = 30;							//攻撃力2
 	static const int m_Attack3 = 40;							//攻撃力3
 	static const int m_EXP = 500;                               //経験値
-	int m_dropChances[Weapon::m_HighestRarity] = { 0,0,20,0 };            //エネミーのドロップするアイテム、[1]が10ならレア度1が10%でドロップするみたいな
+	static const int m_dropChances[];				            //エネミーのドロップするアイテム、[1]が10ならレア度1が10%でドロップするみたいな
+	static const int m_dropmaterialChances[];
 };
 

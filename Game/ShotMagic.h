@@ -140,7 +140,6 @@ private:
 		float s_timer = 0.0f;							//デリートタイム
 		CVector3 s_position = {CVector3::Zero()};		//座標
 		bool s_delete = false;							//モデルとコリジョンを削除したかどうか
-		int s_number = 0;								//配列の添え字
 	};
 	std::vector<MagicModel> m_magicmocelList;			//MagicModel構造体の可変長配列
 	static const int m_number[];

@@ -8,6 +8,7 @@
 #include "Oni.h"
 #include "Boss.h"
 #include "DropItem.h"
+#include "DropMaterial.h"
 #include "IEnemy.h"
 Stage1::Stage1()
 {
@@ -27,6 +28,11 @@ Stage1::~Stage1()
 	QueryGOs<DropItem>(L"DropItem", [&](DropItem* dropitem)
 	{
 		delete dropitem;
+		return true;
+	});
+	QueryGOs<DropMaterial>(L"DropMaterial", [&](DropMaterial* dropmaterial)
+	{
+		delete dropmaterial;
 		return true;
 	});
 }
