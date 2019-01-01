@@ -37,6 +37,7 @@ bool GameData::Start()
 	m_materiallist.push_back(Material(L"–Ø"					, 1));
 	m_materiallist.push_back(Material(L"Î"					, 2));
 	m_materiallist.push_back(Material(L"ƒŒƒ“ƒK"				, 3));
+
 	return true;
 }
 

@@ -162,6 +162,7 @@
     <ClCompile Include="House.cpp" />
     <ClCompile Include="Human.cpp" />
     <ClCompile Include="IEnemy.cpp" />
+    <ClCompile Include="Equipment.cpp" />
     <ClCompile Include="Magic.cpp" />
     <ClCompile Include="Material.cpp" />
     <ClCompile Include="Oni.cpp" />
@@ -193,6 +194,7 @@
     <ClInclude Include="House.h" />
     <ClInclude Include="Human.h" />
     <ClInclude Include="IEnemy.h" />
+    <ClInclude Include="Equipment.h" />
     <ClInclude Include="Magic.h" />
     <ClInclude Include="Material.h" />
     <ClInclude Include="Oni.h" />

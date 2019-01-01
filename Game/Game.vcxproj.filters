@@ -38,6 +38,7 @@
     <ClCompile Include="Ground.cpp" />
     <ClCompile Include="TownData.cpp" />
     <ClCompile Include="Weapon.cpp" />
+    <ClCompile Include="Equipment.cpp" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Asset\modelData\Sword\AncientWarriorBlade.FBX">
@@ -142,6 +143,7 @@
     <ClInclude Include="Ground.h" />
     <ClInclude Include="TownData.h" />
     <ClInclude Include="Weapon.h" />
+    <ClInclude Include="Equipment.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Asset">

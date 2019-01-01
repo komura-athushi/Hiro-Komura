@@ -2,6 +2,7 @@
 #include "Weapon.h"
 #include "Magic.h"
 #include "Material.h"
+#include "Equipment.h"
 //データクラスのインスタンスを生成するクラスです
 class Enemy;
 class GameData:public IGameObject
@@ -67,5 +68,6 @@ private:
 	std::vector<Weapon> m_weaponlist;                   //Weaponクラスの可変長配列
 	std::vector<Magic> m_magiclist;						//Magicクラスの可変長配列
 	std::vector<Material> m_materiallist;				//Materialクラスの可変長配列
+	std::vector<Equipment> m_equipment;					//Equipmentクラスの可変長配列
 };
 

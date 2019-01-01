@@ -114,7 +114,7 @@ public:
 	//文字表示
 	void PostRender()override;
 private:  
-	int m_Level=1;                                        //レベル
+	int m_Level=1;                                        //レベルo
 	int m_Exp=0;                                          //経験値
 	int m_NextExp = 40;                                   //次のレベルアップに必要な経験値
 	int m_LevelExp=40;                                    //レベルごとに必要な累計経験値
@@ -133,11 +133,10 @@ private:
 	const wchar_t* m_MagicName;						      //魔法の名前
 	float m_DamageRate;									  //魔法のダメージ倍率
 	int m_PPCost;										  //魔法を放つのに必要なPP
-	CFont m_font;                                               //文字表示クラス
+	CFont m_font;                                         //文字表示クラス
 	bool m_haveweaponlist[GameData::enWeapon_num] = { true,true,true,true,true,true,true,true,true };     //プレイヤーの各武器の所持状況
 	int m_havemateriallist[GameData::enMaterial_num] = { 0,0,0 };										  //プレイヤーの各素材の所持状況
 	GameData* m_gamedata;                                 //GameDataクラスのポインタ
 	Weapon* m_weapon;									  //Weaponクラスのポインタ
 	Magic* m_magic;										  //Magicクラスのポインタ
-}; 
-
+};
