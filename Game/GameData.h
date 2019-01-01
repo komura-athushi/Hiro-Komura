@@ -3,8 +3,8 @@
 #include "Magic.h"
 #include "Material.h"
 #include "Equipment.h"
-//データクラスのインスタンスを生成するクラスです
 class Enemy;
+//データクラスのインスタンスを生成するクラスです
 class GameData:public IGameObject
 {
 	//シングルトン、そのクラスのインスタンスが一つしか存在しえないことを示すデザインパターンの一つです
@@ -68,6 +68,6 @@ private:
 	std::vector<Weapon> m_weaponlist;                   //Weaponクラスの可変長配列
 	std::vector<Magic> m_magiclist;						//Magicクラスの可変長配列
 	std::vector<Material> m_materiallist;				//Materialクラスの可変長配列
-	std::vector<Equipment> m_equipment;					//Equipmentクラスの可変長配列
+	std::vector<Equipment> m_equipmentlist;				//Equipmentクラスの可変長配列
 };
 

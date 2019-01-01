@@ -1,5 +1,8 @@
 #pragma once
-#include "GameData.h"
+class GameData;
+class Weapon;
+class Magic;
+//武器を収納しているインベントリのクラスです
 class Equipment
 {
 public:
@@ -21,9 +24,9 @@ private:
 	const wchar_t* m_MagicName;						      //魔法の名前
 	float m_DamageRate;									  //魔法のダメージ倍率
 	int m_PPCost;                                         //魔法を放つのに必要なPP
-	int m_weaponextend=0;                                 //武器エクステンドレベル
+	int m_weaponextend = 0;                               //武器エクステンドレベル
 	GameData* m_gamedata;                                 //GameDataクラスのポインタ
 	Weapon* m_weapon;									  //Weaponクラスのポインタ
-	Magic* m_magic;	
+	Magic* m_magic;										  //Magicクラスのポインタ		  
 };
 

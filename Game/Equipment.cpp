@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "Equipment.h"
-
+#include "GameData.h"
 
 Equipment::Equipment()
 {

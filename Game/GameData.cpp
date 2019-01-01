@@ -5,7 +5,6 @@ GameData::GameData()
 {
 }
 
-
 GameData::~GameData()
 {
 }
