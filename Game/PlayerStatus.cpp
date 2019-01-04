@@ -12,6 +12,11 @@ PlayerStatus::~PlayerStatus()
 
 bool PlayerStatus::Start()
 {
+	for (int i = 0; i < GameData::enWeapon_num; i++) {
+		m_weaponinventorylist.push_back({ Equipment(i),false });
+		m_haveweaponmateriallist.push_back(0);
+	}
+	m_weaponinventorylist[0].s_ishave = true;
 	GetWeaponStatus();
 	GetMagicStatus();
 	return true;
@@ -73,7 +78,7 @@ bool PlayerStatus::GetWeapon(int number)
 	//左ボタン押した時の処理
 	if (m_SwordId > number) {
 		for (int i = number; i >= 0; i--) {
-			if (m_haveweaponlist[i]) {
+			if (m_weaponinventorylist[i].s_ishave) {
 				m_SwordId = i;
 				GetWeaponStatus();
 				GetMagicStatus();
@@ -84,7 +89,7 @@ bool PlayerStatus::GetWeapon(int number)
 	//右ボタンを押したときの処理
 	else if (m_SwordId < number) {
 		for (int i = number; i < GameData::enWeapon_num; i++) {
-			if (m_haveweaponlist[i]) {
+			if (m_weaponinventorylist[i].s_ishave) {
 				m_SwordId = i;
 				GetWeaponStatus();
 				GetMagicStatus();
@@ -98,7 +103,7 @@ bool PlayerStatus::GetWeapon(int number)
 void PlayerStatus::PostRender()
 {
 	wchar_t output[256];
-	swprintf_s(output, L"木   %d\n石   %d\nレンガ  %d\n", m_havemateriallist[0], m_havemateriallist[1], m_havemateriallist[2]);
+	swprintf_s(output, L"木   %d\n石   %d\nレンガ  %d\nそざい  %d\n", m_havemateriallist[0], m_havemateriallist[1], m_havemateriallist[2],m_haveweaponmateriallist[m_SwordId]);
 	//swprintf_s(output, L"x   %f\ny   %f\nz  %f\nw   %f\n", m_swordqRot.x, m_swordqRot.y, m_swordqRot.z, m_swordqRot.w);
 	m_font.DrawScreenPos(output, { 00.0f,200.0f }, CVector4::White());
 }

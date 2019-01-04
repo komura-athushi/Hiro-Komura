@@ -6,14 +6,15 @@ class Magic;
 class Equipment
 {
 public:
-	Equipment();
+	//Equipment();
+	Equipment(const int& number);
 	~Equipment();
 	//武器のステータスを取得
 	void GetWeaponStatus();
 	//魔法のステータスを取得
 	void GetMagicStatus();
 	//武器IDを設定
-	void SetWeaponID(const int& id);
+	//void SetWeaponID(const int& id);
 private:
 	int m_SwordMattack = 0;                               //武器の魔法攻撃力                          
 	int m_SwordAttack = 0;                                //武器の攻撃力

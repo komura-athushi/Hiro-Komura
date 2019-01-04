@@ -2,21 +2,18 @@
 #include "Equipment.h"
 #include "GameData.h"
 
-Equipment::Equipment()
+//Equipment::Equipment()
+//{
+//	
+//}
+Equipment::Equipment(const int& number) :m_SwordId(number)
 {
-	
-}
-
-Equipment::~Equipment()
-{
-}
-
-void Equipment::SetWeaponID(const int& id)
-{
-	m_SwordId = id;
 	m_gamedata = FindGO<GameData>(L"GameData");
 	GetWeaponStatus();
 	GetMagicStatus();
+}
+Equipment::~Equipment()
+{
 }
 
 void Equipment::GetWeaponStatus()

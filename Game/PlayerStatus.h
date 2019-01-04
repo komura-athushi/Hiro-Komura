@@ -1,5 +1,6 @@
 #pragma once
 #include "GameData.h"
+#include "Equipment.h"
 //プレイヤーのステータスを管理するクラスです
 class PlayerStatus:public IGameObject
 {
@@ -87,7 +88,12 @@ public:
 	//指定の番号の武器をプレイヤーに所持させる
 	void SetWeapon(const int& number)
 	{
-		m_haveweaponlist[number] = true;
+		if (m_weaponinventorylist[number].s_ishave) {
+			m_haveweaponmateriallist[number] += 1;
+		}
+		else {
+			m_weaponinventorylist[number].s_ishave = true;
+		}
 	}
 	//指定の番号の素材をプレイヤーに所持させる
 	void SetMaterial(const int& number)
@@ -109,12 +115,17 @@ public:
 	{
 		return m_PPCost;
 	}
+    //現在装備中の武器強化素材の所持状況を返す
+	int GetWeaponMaterial(const int& number)
+	{
+
+	}
 	//武器切り替えの際に武器の切り替えが出来ればtrue、出来なければfalseを返す
 	bool GetWeapon(int number);
 	//文字表示
 	void PostRender()override;
 private:  
-	int m_Level=1;                                        //レベルo
+	int m_Level=1;                                        //レベル
 	int m_Exp=0;                                          //経験値
 	int m_NextExp = 40;                                   //次のレベルアップに必要な経験値
 	int m_LevelExp=40;                                    //レベルごとに必要な累計経験値
@@ -134,7 +145,12 @@ private:
 	float m_DamageRate;									  //魔法のダメージ倍率
 	int m_PPCost;										  //魔法を放つのに必要なPP
 	CFont m_font;                                         //文字表示クラス
-	bool m_haveweaponlist[GameData::enWeapon_num] = { true,true,true,true,true,true,true,true,true };     //プレイヤーの各武器の所持状況
+	struct WeaponInventory {							  //所持している武器の状況を表す構造体
+		Equipment s_equipment;
+		bool s_ishave;
+	};
+	std::vector<WeaponInventory> m_weaponinventorylist;   //WeaponInventory構造体の配列
+	std::vector<int> m_haveweaponmateriallist;			  //武器強化素材の所持状況を表す配列
 	int m_havemateriallist[GameData::enMaterial_num] = { 0,0,0 };										  //プレイヤーの各素材の所持状況
 	GameData* m_gamedata;                                 //GameDataクラスのポインタ
 	Weapon* m_weapon;									  //Weaponクラスのポインタ
