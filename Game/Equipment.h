@@ -9,10 +9,55 @@ public:
 	//Equipment();
 	Equipment(const int& number);
 	~Equipment();
-	//武器のステータスを取得
-	void GetWeaponStatus();
-	//魔法のステータスを取得
-	void GetMagicStatus();
+	//武器のステータスを設定
+	void SetWeaponStatus();
+	//魔法のステータスを設定
+	void SetMagicStatus();
+	//武器の番号を取得
+	int GetId() const
+	{
+		return m_SwordId;
+	}
+	//武器の名前を取得
+	const wchar_t* GetName() const
+	{
+		return m_SwordName;
+	}
+	//武器のレアリティを取得
+	int GetRarity() const
+	{
+		return m_Rarity;
+	}
+	//武器の物理攻撃力を取得
+	int GetAtk() const
+	{
+		return m_SwordAttack;
+	}
+	//武器の魔法攻撃力を取得
+	int GetMatk() const
+	{
+		return m_SwordMattack;
+	}
+	//武器の魔法の番号を取得
+	int GetMagicId() const
+	{
+		return m_MagicId;
+	}
+	//魔法の名前を取得
+	const wchar_t* GetMagicName() const
+	{
+		return m_MagicName;
+	}
+	//魔法のダメージ倍率を取得
+	float GetDamageRate() const
+	{
+		return m_DamageRate;
+	}
+	//魔法のPPコストを取得
+	int GetPPCost() const
+	{
+		return m_PPCost;
+	}
 	//武器IDを設定
 	//void SetWeaponID(const int& id);
 private:

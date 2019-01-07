@@ -1,22 +1,21 @@
 #include "stdafx.h"
 #include "Equipment.h"
 #include "GameData.h"
-
 //Equipment::Equipment()
 //{
 //	
 //}
-Equipment::Equipment(const int& number) :m_SwordId(number)
+Equipment::Equipment(const int& number):m_SwordId(number)
 {
 	m_gamedata = FindGO<GameData>(L"GameData");
-	GetWeaponStatus();
-	GetMagicStatus();
+	SetWeaponStatus();
+	SetMagicStatus();
 }
 Equipment::~Equipment()
 {
 }
 
-void Equipment::GetWeaponStatus()
+void Equipment::SetWeaponStatus()
 {
 	m_weapon = m_gamedata->GetWeapon(m_SwordId);
 	m_SwordMattack = m_weapon->GetMatk();
@@ -26,10 +25,12 @@ void Equipment::GetWeaponStatus()
 	m_SwordName = m_weapon->GetName();
 }
 
-void Equipment::GetMagicStatus()
+void Equipment::SetMagicStatus()
 {
 	m_magic = m_gamedata->GetMagic(m_MagicId);
 	m_MagicName = m_magic->GetName();
 	m_DamageRate = m_magic->GetDamageRate();
 	m_PPCost = m_magic->GetPPCost();
 }
+
+

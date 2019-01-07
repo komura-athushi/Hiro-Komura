@@ -85,7 +85,7 @@ void IEnemy::Damage(const int& attack,int number)
 		}
 		break;
 	case 2:
-		if (m_timer2 >= 8) {		//イルグランツ
+		if (m_timer2 >= 15) {		//イルグランツ
 			m_HP -= attack;
 			m_timer2 = 0;
 			m_damage = true;

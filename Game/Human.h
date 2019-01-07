@@ -19,7 +19,7 @@ public:
 	}
 private:
 	GameObj::CSkinModelRender* m_skinModelRender = nullptr;		//スキンモデルレンダラー。
-	CVector3 m_scale = { 100.0f,100.0f,100.0f };
+	CVector3 m_scale = { 2.0f,2.0f,2.0f };
 	CVector3 m_position = { 300.0f,200.0f,0.0f };
 	float m_animationspeed = 0.7f;
 	CQuaternion m_rotation;

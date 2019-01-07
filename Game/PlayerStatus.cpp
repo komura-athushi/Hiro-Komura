@@ -12,13 +12,19 @@ PlayerStatus::~PlayerStatus()
 
 bool PlayerStatus::Start()
 {
-	for (int i = 0; i < GameData::enWeapon_num; i++) {
-		m_weaponinventorylist.push_back({ Equipment(i),false });
-		m_haveweaponmateriallist.push_back(0);
+	if (m_Master) {
+		for (int i = 0; i < GameData::enWeapon_num; i++) {
+			m_weaponinventorylist.push_back({ Equipment(i),true,10 });
+		}
+	}
+	else {
+		for (int i = 0; i < GameData::enWeapon_num; i++) {
+			m_weaponinventorylist.push_back({ Equipment(i),false,0 });
+		}
 	}
 	m_weaponinventorylist[0].s_ishave = true;
-	GetWeaponStatus();
-	GetMagicStatus();
+	SetWeaponStatus();
+	SetMagicStatus();
 	return true;
 }
 
@@ -49,24 +55,22 @@ void PlayerStatus::PlusExp(const int& exp)
 		m_NextExp -= ep;
 }
 
-void PlayerStatus::GetWeaponStatus()
+void PlayerStatus::SetWeaponStatus()
 {
-	m_weapon = m_gamedata->GetWeapon(m_SwordId);
-	m_SwordMattack = m_weapon->GetMatk();
-	m_SwordAttack = m_weapon->GetAtk();
-	m_MagicId = m_weapon->GetMagicId();
-	m_Rarity = m_weapon->GetRarity();
-	m_SwordName = m_weapon->GetName();
+	m_SwordMattack = m_weaponinventorylist[m_SwordId].s_equipment.GetMatk();
+	m_SwordAttack = m_weaponinventorylist[m_SwordId].s_equipment.GetAtk();
+	m_MagicId = m_weaponinventorylist[m_SwordId].s_equipment.GetMagicId();
+	m_Rarity = m_weaponinventorylist[m_SwordId].s_equipment.GetRarity();
+	m_SwordName = m_weaponinventorylist[m_SwordId].s_equipment.GetName();
 	m_Mattack = m_Clever + m_SwordMattack;
 	m_Attack = m_Power + m_SwordAttack;
 }
 
-void PlayerStatus::GetMagicStatus()
+void PlayerStatus::SetMagicStatus()
 {
-	m_magic = m_gamedata->GetMagic(m_MagicId);
-	m_MagicName = m_magic->GetName();
-	m_DamageRate = m_magic->GetDamageRate();
-	m_PPCost = m_magic->GetPPCost();
+	m_MagicName = m_weaponinventorylist[m_SwordId].s_equipment.GetMagicName();
+	m_DamageRate = m_weaponinventorylist[m_SwordId].s_equipment.GetDamageRate();
+	m_PPCost = m_weaponinventorylist[m_SwordId].s_equipment.GetPPCost();
 }
 
 bool PlayerStatus::GetWeapon(int number)
@@ -80,8 +84,8 @@ bool PlayerStatus::GetWeapon(int number)
 		for (int i = number; i >= 0; i--) {
 			if (m_weaponinventorylist[i].s_ishave) {
 				m_SwordId = i;
-				GetWeaponStatus();
-				GetMagicStatus();
+				SetWeaponStatus();
+				SetMagicStatus();
 				return true;
 			}
 		}
@@ -91,8 +95,8 @@ bool PlayerStatus::GetWeapon(int number)
 		for (int i = number; i < GameData::enWeapon_num; i++) {
 			if (m_weaponinventorylist[i].s_ishave) {
 				m_SwordId = i;
-				GetWeaponStatus();
-				GetMagicStatus();
+				SetWeaponStatus();
+				SetMagicStatus();
 				return true;
 			}
 		}
@@ -100,10 +104,20 @@ bool PlayerStatus::GetWeapon(int number)
 	return false;
 }
 
+void PlayerStatus::SetWeapon(const int& number)
+{
+	if (m_weaponinventorylist[number].s_ishave) {
+		m_weaponinventorylist[number].s_material += 1;
+	}
+	else {
+		m_weaponinventorylist[number].s_ishave = true;
+	}
+}
+
 void PlayerStatus::PostRender()
 {
 	wchar_t output[256];
-	swprintf_s(output, L"–Ø   %d\nÎ   %d\nƒŒƒ“ƒK  %d\n‚»‚´‚¢  %d\n", m_havemateriallist[0], m_havemateriallist[1], m_havemateriallist[2],m_haveweaponmateriallist[m_SwordId]);
+	swprintf_s(output, L"–Ø   %d\nÎ   %d\nƒŒƒ“ƒK  %d\n‚»‚´‚¢  %d\n", m_havemateriallist[0], m_havemateriallist[1], m_havemateriallist[2],m_weaponinventorylist[m_SwordId].s_material);
 	//swprintf_s(output, L"x   %f\ny   %f\nz  %f\nw   %f\n", m_swordqRot.x, m_swordqRot.y, m_swordqRot.z, m_swordqRot.w);
 	m_font.DrawScreenPos(output, { 00.0f,200.0f }, CVector4::White());
 }

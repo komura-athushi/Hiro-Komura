@@ -5,6 +5,7 @@
 class PlayerStatus:public IGameObject
 {
 	//シングルトン、そのクラスのインスタンスが一つしか存在しえないことを示すデザインパターンの一つです
+	//コンストラクタをprivateな関数にすることでインスタンスの生成を制限します
 	private:
 	PlayerStatus();
 	~PlayerStatus();
@@ -24,10 +25,10 @@ public:
 	{
 		m_gamedata = gamedata;
 	}
-	//武器のステータスを取得
-	void GetWeaponStatus();
-	//魔法のステータスを取得
-	void GetMagicStatus();
+	//武器のステータスを設定
+	void SetWeaponStatus();
+	//魔法のステータスを設定
+	void SetMagicStatus();
 	//レベルを取得
 	int GetLevel() const
 	{
@@ -83,18 +84,6 @@ public:
 	{
 		m_Level = level;
 	}
-	//経験値を加算
-	void PlusExp(const int& exp);
-	//指定の番号の武器をプレイヤーに所持させる
-	void SetWeapon(const int& number)
-	{
-		if (m_weaponinventorylist[number].s_ishave) {
-			m_haveweaponmateriallist[number] += 1;
-		}
-		else {
-			m_weaponinventorylist[number].s_ishave = true;
-		}
-	}
 	//指定の番号の素材をプレイヤーに所持させる
 	void SetMaterial(const int& number)
 	{
@@ -118,10 +107,14 @@ public:
     //現在装備中の武器強化素材の所持状況を返す
 	int GetWeaponMaterial(const int& number)
 	{
-
+		return m_weaponinventorylist[number].s_material;
 	}
 	//武器切り替えの際に武器の切り替えが出来ればtrue、出来なければfalseを返す
 	bool GetWeapon(int number);
+	//経験値を加算
+	void PlusExp(const int& exp);
+	//指定の番号の武器をプレイヤーに所持させる
+	void SetWeapon(const int& number);
 	//文字表示
 	void PostRender()override;
 private:  
@@ -147,12 +140,13 @@ private:
 	CFont m_font;                                         //文字表示クラス
 	struct WeaponInventory {							  //所持している武器の状況を表す構造体
 		Equipment s_equipment;
-		bool s_ishave;
+		bool s_ishave = false;
+		int s_material = 0;
 	};
 	std::vector<WeaponInventory> m_weaponinventorylist;   //WeaponInventory構造体の配列
-	std::vector<int> m_haveweaponmateriallist;			  //武器強化素材の所持状況を表す配列
 	int m_havemateriallist[GameData::enMaterial_num] = { 0,0,0 };										  //プレイヤーの各素材の所持状況
 	GameData* m_gamedata;                                 //GameDataクラスのポインタ
 	Weapon* m_weapon;									  //Weaponクラスのポインタ
 	Magic* m_magic;										  //Magicクラスのポインタ
+	bool m_Master = false;								  //武器全所持モード
 };
