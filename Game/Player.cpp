@@ -7,6 +7,7 @@
 #include "PlayerStatus.h"
 #include "IEnemy.h"
 #include "ShotMagic.h"
+#include "Human.h"
 Player::Player()
 {
 }
@@ -108,10 +109,14 @@ void Player::Update()
 	if (m_cagliostro) {
 	}
 	else {
-		//キャラクターのアニメーションの処理、移動や回転も入ってる
-		AnimationController();
-		Kougeki();
-		SwitchWeapon();
+		if (m_stop) {
+		}
+		else {
+			//キャラクターのアニメーションの処理、移動や回転も入ってる
+			AnimationController();
+			Kougeki();
+			SwitchWeapon();
+		}
 	}
 	if (m_charaCon.IsOnGround()) {
 		//地面についた。
@@ -127,6 +132,9 @@ void Player::Update()
 			m_PPtimer = 0;
 		}
 	}
+
+	RelationHuman();
+	//攻撃力上昇魔法
 	Shihuta();
 	//PlayerStatusクラスのメンバ変数をプレイヤーのメンバ変数に反映
 	Status();
@@ -555,5 +563,22 @@ void Player::Shihuta()
 	}
 	else {
 		m_Attack = m_ShihutaAttack;
+	}
+}
+
+void Player::RelationHuman()
+{
+	Human* m_human = FindGO<Human>(L"Human");
+	if (m_human == nullptr) {
+		return;
+	}
+	CVector3 pos = m_human->GetPosition() - m_position;
+	if (pos.Length() <= 300.0f && m_state==enState_Idle) {
+		if (Pad(0).GetDown(enButtonB)) {
+			m_stop = true;
+		}
+		if (Pad(0).GetDown(enButtonA)) {
+			m_stop = false;
+		}
 	}
 }

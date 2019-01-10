@@ -10,6 +10,7 @@
 #include "DropItem.h"
 #include "DropMaterial.h"
 #include "IEnemy.h"
+#include "GameData.h"
 Stage1::Stage1()
 {
 }
@@ -102,6 +103,10 @@ void Stage1::Update()
 	//プレイヤーがゲームオーバーあるいはゲームクリアで拠点に遷移
 	if (m_player->GetGameOver() || m_player->GetGameClear()) {
 		Town* town = new Town;
+		if (m_player->GetGameClear()) {
+			GameData* gamedata = FindGO<GameData>(L"GameData");
+			gamedata->SetClear(0);
+		}
 		delete this;
 	}
 }

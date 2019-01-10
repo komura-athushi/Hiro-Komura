@@ -34,6 +34,26 @@ public:
 	{
 		return &m_magiclist[number];
 	}
+	//ステージをクリア
+	void SetClear(const int& number)
+	{
+		m_stage[number] = true;
+	}
+	//該当のステージをクリア済みかどうか
+	bool GetStageClear(const int& number)
+	{
+		return m_stage[number];
+	}
+	//街の発展レベルを取得
+	int GetTownLevel() const
+	{
+		return m_townlevel;
+	}
+	//街の発展レベルをうぴー
+	void UpTownLevel()
+	{
+		m_townlevel++;
+	}
 	enum EnWeapon {
 		enWeapon_Sword,									//ソード
 		enWeapon_FireSword,								//ファイアソード
@@ -69,5 +89,7 @@ private:
 	std::vector<Magic> m_magiclist;						//Magicクラスの可変長配列
 	std::vector<Material> m_materiallist;				//Materialクラスの可変長配列
 	std::vector<Equipment> m_equipmentlist;				//Equipmentクラスの可変長配列
+	bool m_stage[3] = { false,false,false };			//各ステージをクリアしたかどうか
+	int m_townlevel = 0;								//街の発展レベル
 };
 

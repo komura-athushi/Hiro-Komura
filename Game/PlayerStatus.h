@@ -25,10 +25,6 @@ public:
 	{
 		m_gamedata = gamedata;
 	}
-	//武器のステータスを設定
-	void SetWeaponStatus();
-	//魔法のステータスを設定
-	void SetMagicStatus();
 	//レベルを取得
 	int GetLevel() const
 	{
@@ -104,11 +100,20 @@ public:
 	{
 		return m_PPCost;
 	}
+	//該当の素材の所持数を取得
+	int GetMaterial(const int& number) const
+	{
+		return m_havemateriallist[number];
+	}
     //現在装備中の武器強化素材の所持状況を返す
 	int GetWeaponMaterial(const int& number)
 	{
 		return m_weaponinventorylist[number].s_material;
 	}
+	//武器のステータスを設定
+	void SetWeaponStatus();
+	//魔法のステータスを設定
+	void SetMagicStatus();
 	//武器切り替えの際に武器の切り替えが出来ればtrue、出来なければfalseを返す
 	bool GetWeapon(int number);
 	//経験値を加算
@@ -148,5 +153,5 @@ private:
 	GameData* m_gamedata;                                 //GameDataクラスのポインタ
 	Weapon* m_weapon;									  //Weaponクラスのポインタ
 	Magic* m_magic;										  //Magicクラスのポインタ
-	bool m_Master = false;								  //武器全所持モード
+	bool m_Master = true;								  //武器全所持モード
 };
