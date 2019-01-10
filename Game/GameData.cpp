@@ -5,7 +5,6 @@ GameData::GameData()
 {
 }
 
-
 GameData::~GameData()
 {
 }
@@ -24,7 +23,7 @@ bool GameData::Start()
 	m_weaponlist.push_back(Weapon(7 , L"バンデッドソード"       , 6,120, 70, 7));
 	m_weaponlist.push_back(Weapon(8 , L"レジェンダリーソード"   , 7,150,150, 8));
 	//Magicクラスのインスタンスを生成
-	m_magiclist.push_back(Magic(0 , L"無し"					    , 0.0f,  0));
+	m_magiclist.push_back(Magic(0 , L"無し"					    , 0.0f, 999));
 	m_magiclist.push_back(Magic(1 , L"フォイエ"		  	        , 1.7f, 40));
 	m_magiclist.push_back(Magic(2 , L"イル・グランツ"			, 1.9f, 40));
 	m_magiclist.push_back(Magic(3 , L"ザンバース"				, 1.6f, 40));
@@ -34,9 +33,10 @@ bool GameData::Start()
 	m_magiclist.push_back(Magic(7 , L"マジックスフィア"         , 2.3f, 60));
 	m_magiclist.push_back(Magic(8 , L"マジックスフィア"         , 2.3f, 60));
 	//Materialクラスのインスタンスを生成
-	m_materiallist.push_back(Material(L"木"					, 0));
-	m_materiallist.push_back(Material(L"石"					, 1));
-	m_materiallist.push_back(Material(L"レンガ"				, 2));
+	m_materiallist.push_back(Material(L"木"					, 1));
+	m_materiallist.push_back(Material(L"石"					, 2));
+	m_materiallist.push_back(Material(L"レンガ"				, 3));
+
 	return true;
 }
 

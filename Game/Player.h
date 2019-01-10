@@ -4,6 +4,7 @@
 class Sword;
 class GameCamera;
 class PlayerStatus;
+class Human;
 //プレイヤーです
 class Player:public IGameObject
 {
@@ -50,6 +51,10 @@ public:
 	void MagicStatus();
 	//シフタをかける
 	void Shihuta();
+	//プレイヤーがダメージを受けた時の処理
+	void Damage(const int& attack);
+	//村人関係
+	void RelationHuman();
 	//プレイヤーの座標をセット
 	void SetPosition(const CVector3& pos)
 	{
@@ -98,8 +103,11 @@ public:
 			m_PP = m_MaxPP;
 		}
 	}
-	//プレイヤーがダメージを受けた時の処理
-	void Damage(const int& attack);
+	//プレイヤーを停止させる
+	void SetStop()
+	{
+		m_stop = true;
+	}
 private:
 	bool m_cagliostro = false;
 	GameObj::CSkinModelRender* m_skinModelRender = nullptr;		//スキンモデルレンダラー。
@@ -107,6 +115,7 @@ private:
 	CFont m_font;                                               //文字表示クラス
 	Bone* m_bone;                                               //骨
 	PlayerStatus* m_playerstatus;                               //プレイヤーステータスのポインタ
+	Human* m_human;												//Humanクラスのポインタ
 	int m_bonehand;                                             //右手のboneの番号
 	int m_bonecenter;                                           //centerの番号
 	CVector3 m_savemovespeed;                                   //m_movespeedを記憶しておく
@@ -121,6 +130,7 @@ private:
 	bool m_gameover = false;                                    //ゲームオーバーかどうか
 	bool m_gameclear = false;									//ゲームクリアかどうか
 	bool m_isjump = false;                                      //ジャンプしているかどうか
+	bool m_stop = false;										//プレイヤーを停止させる
 	//自機の角度　初期は180度
 	float m_degree = 180.0f;                                    //ユニティちゃんの向いてる角度
 	float m_radian = 0;                                         //上記をラジアン単位に直したもの

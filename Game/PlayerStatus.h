@@ -1,9 +1,11 @@
 #pragma once
 #include "GameData.h"
+#include "Equipment.h"
 //プレイヤーのステータスを管理するクラスです
 class PlayerStatus:public IGameObject
 {
 	//シングルトン、そのクラスのインスタンスが一つしか存在しえないことを示すデザインパターンの一つです
+	//コンストラクタをprivateな関数にすることでインスタンスの生成を制限します
 	private:
 	PlayerStatus();
 	~PlayerStatus();
@@ -23,10 +25,6 @@ public:
 	{
 		m_gamedata = gamedata;
 	}
-	//武器のステータスを取得
-	void GetWeaponStatus();
-	//魔法のステータスを取得
-	void GetMagicStatus();
 	//レベルを取得
 	int GetLevel() const
 	{
@@ -82,12 +80,10 @@ public:
 	{
 		m_Level = level;
 	}
-	//経験値を加算
-	void PlusExp(const int& exp);
-	//指定の番号の武器をプレイヤーに所持させる
-	void SetWeapon(int number)
+	//指定の番号の素材をプレイヤーに所持させる
+	void SetMaterial(const int& number)
 	{
-		m_haveweaponlist[number] = true;
+		m_havemateriallist[number] += 1;
 	}
 	//魔法の番号を取得
 	const wchar_t* GetMagicName() const
@@ -104,8 +100,28 @@ public:
 	{
 		return m_PPCost;
 	}
+	//該当の素材の所持数を取得
+	int GetMaterial(const int& number) const
+	{
+		return m_havemateriallist[number];
+	}
+    //現在装備中の武器強化素材の所持状況を返す
+	int GetWeaponMaterial(const int& number)
+	{
+		return m_weaponinventorylist[number].s_material;
+	}
+	//武器のステータスを設定
+	void SetWeaponStatus();
+	//魔法のステータスを設定
+	void SetMagicStatus();
 	//武器切り替えの際に武器の切り替えが出来ればtrue、出来なければfalseを返す
 	bool GetWeapon(int number);
+	//経験値を加算
+	void PlusExp(const int& exp);
+	//指定の番号の武器をプレイヤーに所持させる
+	void SetWeapon(const int& number);
+	//文字表示
+	void PostRender()override;
 private:  
 	int m_Level=1;                                        //レベル
 	int m_Exp=0;                                          //経験値
@@ -126,10 +142,16 @@ private:
 	const wchar_t* m_MagicName;						      //魔法の名前
 	float m_DamageRate;									  //魔法のダメージ倍率
 	int m_PPCost;										  //魔法を放つのに必要なPP
-	bool m_haveweaponlist[GameData::enWeapon_num] = { true,true,true,true,true,true,true,true,true };     //プレイヤーの各武器の所持状況]
+	CFont m_font;                                         //文字表示クラス
+	struct WeaponInventory {							  //所持している武器の状況を表す構造体
+		Equipment s_equipment;
+		bool s_ishave = false;
+		int s_material = 0;
+	};
+	std::vector<WeaponInventory> m_weaponinventorylist;   //WeaponInventory構造体の配列
 	int m_havemateriallist[GameData::enMaterial_num] = { 0,0,0 };										  //プレイヤーの各素材の所持状況
 	GameData* m_gamedata;                                 //GameDataクラスのポインタ
 	Weapon* m_weapon;									  //Weaponクラスのポインタ
 	Magic* m_magic;										  //Magicクラスのポインタ
-}; 
-
+	bool m_Master = true;								  //武器全所持モード
+};

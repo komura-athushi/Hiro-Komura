@@ -78,7 +78,7 @@ bool Town::Start()
 			//Human
 			m_human = new Human;
 			m_human->SetPosition(objData.position);
-			m_player->SetName(L"Human");
+			m_human->SetName(L"Human");
 			//フックした場合はtrueを返す。
 			return true;
 		}

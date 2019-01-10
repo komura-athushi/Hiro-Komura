@@ -20,7 +20,7 @@ public:
 	}
 private:
 	GameObj::CSkinModelRender* m_skinModelRender = nullptr;		//スキンモデルレンダラー。
-	CVector3 m_position = { 0.0f,0.0f,0.0f };                     //座標
+	CVector3 m_position = { 0.0f,0.0f,0.0f };                   //座標
 	CVector3 m_scale = { 1.0f,1.0f,1.0f };                      //大きさ
 	CQuaternion m_rotation;										//回転
 	PhysicsStaticObject m_staticobject;                         //静的オブジェクト

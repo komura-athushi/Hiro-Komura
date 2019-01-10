@@ -21,6 +21,8 @@ public:
 	{
 		return m_rarity;
 	}
+	static const int m_HighestRarity = 3;
+	static const int m_raritynumber[];      //レアリティごとの素材の種類
 private:
 	const wchar_t* m_name;					//素材の名前
 	int m_rarity;							//素材のレアリティ
@@ -28,9 +30,10 @@ private:
 
 /*
 暫定的な素材のレアリティと番号と名前
-0
-わら                 0
-土					 1
 1
-石材			     2
+土					0
+2
+石					1
+3
+レンガ			    2
 */

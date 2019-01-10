@@ -2,8 +2,9 @@
 #include "Weapon.h"
 #include "Magic.h"
 #include "Material.h"
-//データクラスのインスタンスを生成するクラスです
+#include "Equipment.h"
 class Enemy;
+//データクラスのインスタンスを生成するクラスです
 class GameData:public IGameObject
 {
 	//シングルトン、そのクラスのインスタンスが一つしか存在しえないことを示すデザインパターンの一つです
@@ -33,6 +34,26 @@ public:
 	{
 		return &m_magiclist[number];
 	}
+	//ステージをクリア
+	void SetClear(const int& number)
+	{
+		m_stage[number] = true;
+	}
+	//該当のステージをクリア済みかどうか
+	bool GetStageClear(const int& number)
+	{
+		return m_stage[number];
+	}
+	//街の発展レベルを取得
+	int GetTownLevel() const
+	{
+		return m_townlevel;
+	}
+	//街の発展レベルをうぴー
+	void UpTownLevel()
+	{
+		m_townlevel++;
+	}
 	enum EnWeapon {
 		enWeapon_Sword,									//ソード
 		enWeapon_FireSword,								//ファイアソード
@@ -58,14 +79,17 @@ public:
 		enMagic_num										//魔法の種類
 	};
 	enum EnMaterial {
-		enMaterial_Straw,								//木
-		enMaterial_Soil,								//石
-		enMaterial_Stone,								//レンガ
+		enMaterial_Wood,								//木
+		enMaterial_Ishi,								//石
+		enMaterial_Brick,								//レンガ
 		enMaterial_num									//素材の種類
 	};
 private:
 	std::vector<Weapon> m_weaponlist;                   //Weaponクラスの可変長配列
 	std::vector<Magic> m_magiclist;						//Magicクラスの可変長配列
 	std::vector<Material> m_materiallist;				//Materialクラスの可変長配列
+	std::vector<Equipment> m_equipmentlist;				//Equipmentクラスの可変長配列
+	bool m_stage[3] = { false,false,false };			//各ステージをクリアしたかどうか
+	int m_townlevel = 0;								//街の発展レベル
 };
 

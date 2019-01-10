@@ -1,5 +1,7 @@
 #pragma once
 class Player;
+class GameData;
+class PlayerStatus;
 //こいつに話しかけると街を発展できる(設定)
 class Human:public IGameObject
 {
@@ -17,12 +19,19 @@ public:
 	{
 		m_position = pos;
 	}
+	//座標を取得
+	CVector3 GetPosition() const
+	{
+		return m_position;
+	}
+	void PostRender() override;
 private:
 	GameObj::CSkinModelRender* m_skinModelRender = nullptr;		//スキンモデルレンダラー。
-	CVector3 m_scale = { 100.0f,100.0f,100.0f };
+	CVector3 m_scale = { 2.0f,2.0f,2.0f };
 	CVector3 m_position = { 300.0f,200.0f,0.0f };
 	float m_animationspeed = 0.7f;
 	CQuaternion m_rotation;
+	bool m_developtown = false;								   //街を発展できるかどうか
 	//アニメーション関係
 	enum EnAnimationClip {
 		enAnimationClip_idle,
@@ -32,8 +41,11 @@ private:
 	enum EnState {
 		enState_Idle,
 	};
+	const int m_necessarymaterial = 10;						   //街の発展に必要な素材の数
 	AnimationClip m_animClip[enAnimationClip_num];
 	EnState m_state = enState_Idle;
 	Player* m_player;
+	PlayerStatus* m_playerstatus;
+	GameData* m_gamedata;
 };
 

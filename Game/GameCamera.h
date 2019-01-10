@@ -29,7 +29,12 @@ public:
 	{
 		return m_target;
 	}
-	
+	//
+	GameObj::PerspectiveCamera* GetCamera()
+	{
+		return m_camera;
+	}
+private:
 	GameObj::PerspectiveCamera* m_camera;                  //3Dカメラのインスタンス
 	CVector3 m_position = { 0.0f,200.0f,400.0f};           //カメラの座標
 	CVector3 m_target;                                     //カメラの注視点

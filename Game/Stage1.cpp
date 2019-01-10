@@ -8,7 +8,9 @@
 #include "Oni.h"
 #include "Boss.h"
 #include "DropItem.h"
+#include "DropMaterial.h"
 #include "IEnemy.h"
+#include "GameData.h"
 Stage1::Stage1()
 {
 }
@@ -27,6 +29,11 @@ Stage1::~Stage1()
 	QueryGOs<DropItem>(L"DropItem", [&](DropItem* dropitem)
 	{
 		delete dropitem;
+		return true;
+	});
+	QueryGOs<DropMaterial>(L"DropMaterial", [&](DropMaterial* dropmaterial)
+	{
+		delete dropmaterial;
 		return true;
 	});
 }
@@ -96,6 +103,10 @@ void Stage1::Update()
 	//プレイヤーがゲームオーバーあるいはゲームクリアで拠点に遷移
 	if (m_player->GetGameOver() || m_player->GetGameClear()) {
 		Town* town = new Town;
+		if (m_player->GetGameClear()) {
+			GameData* gamedata = FindGO<GameData>(L"GameData");
+			gamedata->SetClear(0);
+		}
 		delete this;
 	}
 }

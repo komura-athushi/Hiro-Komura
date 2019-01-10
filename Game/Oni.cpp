@@ -6,8 +6,9 @@
 #include "Player.h"
 //cppでエネミーのレア度ごとのドロップ率を設定
 const int Oni::m_dropChances[Weapon::m_HighestRarity] = { 0,100,0,0,0,0,0 };
+const int Oni::m_dropmaterialChances[Material::m_HighestRarity] = { 100.0f,0.0f,0.0f };
 //鬼（見た目はスケルトン）です
-Oni::Oni():IEnemy(m_MaxHP,m_Attack,m_EXP,m_dropChances)
+Oni::Oni():IEnemy(m_MaxHP,m_Attack,m_EXP,m_dropChances,m_dropmaterialChances)
 {
 
 }
@@ -175,12 +176,12 @@ void Oni::Update()
 	AnimationController();
 	Damage();
 	Dead();
+	IEnemy::SetCCollision(m_position, m_collisionheight);
 	if (!IEnemy::m_death) {
 		CQuaternion rot;
 		CVector3 pos = m_position;
 		pos.y += 55.0f;
 		m_staticobject.SetPositionAndRotation(pos, rot);
-		IEnemy::SetCCollision(m_position, m_collisionheight);
 	}
 	if (m_gekiha) {
 		delete this;

@@ -1,7 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
+<<<<<<< HEAD
     <ImageContentTask Include="Asset\sprite\MokoTitle.png">
+=======
+    <ImageContentTask Include="Asset\sprite\Title.png">
+>>>>>>> 4185813d14c1e4dabb78efe0ce972fea17747da3
       <Filter>Asset\sprite</Filter>
     </ImageContentTask>
     <ImageContentTask Include="Asset\sprite\Red.png">
@@ -17,6 +21,10 @@
     <ClCompile Include="DropItem.cpp" />
     <ClCompile Include="DropMaterial.cpp" />
     <ClCompile Include="GameData.cpp" />
+<<<<<<< HEAD
+=======
+    <ClCompile Include="House.cpp" />
+>>>>>>> 4185813d14c1e4dabb78efe0ce972fea17747da3
     <ClCompile Include="Human.cpp" />
     <ClCompile Include="IEnemy.cpp" />
     <ClCompile Include="Magic.cpp" />
@@ -36,8 +44,12 @@
     <ClCompile Include="Ground.cpp" />
     <ClCompile Include="TownData.cpp" />
     <ClCompile Include="Weapon.cpp" />
+<<<<<<< HEAD
     <ClCompile Include="House.cpp" />
     <ClCompile Include="Oni.cpp" />
+=======
+    <ClCompile Include="Equipment.cpp" />
+>>>>>>> 4185813d14c1e4dabb78efe0ce972fea17747da3
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Asset\modelData\Sword\AncientWarriorBlade.FBX">
@@ -53,15 +65,22 @@
       <Filter>Asset\modelData</Filter>
     </MeshContentTask>
     <MeshContentTask Include="Asset\modelData\material\brick.FBX">
+<<<<<<< HEAD
+      <Filter>Asset\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Asset\modelData\cagliostro\cagliostro.fbx">
+=======
+>>>>>>> 4185813d14c1e4dabb78efe0ce972fea17747da3
       <Filter>Asset\modelData</Filter>
     </MeshContentTask>
     <MeshContentTask Include="Asset\modelData\cagliostro\cagliostro.fbx">
       <Filter>Asset\modelData</Filter>
     </MeshContentTask>
-    <MeshContentTask Include="Asset\modelData\enemy\enemy.FBX">
-      <Filter>Asset\modelData</Filter>
-    </MeshContentTask>
+<<<<<<< HEAD
     <MeshContentTask Include="Asset\modelData\Sword\FireSword.FBX">
+=======
+    <MeshContentTask Include="Asset\modelData\enemy\enemy.FBX">
+>>>>>>> 4185813d14c1e4dabb78efe0ce972fea17747da3
       <Filter>Asset\modelData</Filter>
     </MeshContentTask>
     <MeshContentTask Include="Asset\modelData\Sword\GreatSword.fbx">
@@ -80,6 +99,12 @@
       <Filter>Asset\modelData</Filter>
     </MeshContentTask>
     <MeshContentTask Include="Asset\modelData\material\ishi.FBX">
+<<<<<<< HEAD
+=======
+      <Filter>Asset\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Asset\modelData\Sword\LegendSword.FBX">
+>>>>>>> 4185813d14c1e4dabb78efe0ce972fea17747da3
       <Filter>Asset\modelData</Filter>
     </MeshContentTask>
     <MeshContentTask Include="Asset\modelData\Magic_Sample.FBX">
@@ -100,19 +125,26 @@
     <MeshContentTask Include="Asset\modelData\stone.FBX">
       <Filter>Asset\modelData</Filter>
     </MeshContentTask>
-    <MeshContentTask Include="Asset\modelData\Sword\Sword.FBX">
-      <Filter>Asset\modelData</Filter>
-    </MeshContentTask>
     <MeshContentTask Include="Asset\modelData\unityChan.fbx">
       <Filter>Asset\modelData</Filter>
     </MeshContentTask>
+<<<<<<< HEAD
+=======
+    <MeshContentTask Include="Asset\modelData\Sword\Sword.FBX">
+      <Filter>Asset\modelData</Filter>
+    </MeshContentTask>
+>>>>>>> 4185813d14c1e4dabb78efe0ce972fea17747da3
     <MeshContentTask Include="Asset\modelData\Sword\WindSword.FBX">
       <Filter>Asset\modelData</Filter>
     </MeshContentTask>
     <MeshContentTask Include="Asset\modelData\material\wood.FBX">
       <Filter>Asset\modelData</Filter>
     </MeshContentTask>
+<<<<<<< HEAD
     <MeshContentTask Include="Asset\modelData\Sword\LegendSword.FBX">
+=======
+    <MeshContentTask Include="Asset\modelData\Sword\GreatSword.fbx">
+>>>>>>> 4185813d14c1e4dabb78efe0ce972fea17747da3
       <Filter>Asset\modelData</Filter>
     </MeshContentTask>
   </ItemGroup>
@@ -142,6 +174,7 @@
     <ClInclude Include="Ground.h" />
     <ClInclude Include="TownData.h" />
     <ClInclude Include="Weapon.h" />
+<<<<<<< HEAD
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Asset">
@@ -154,4 +187,48 @@
       <UniqueIdentifier>{4b8b3945-e921-4f5c-909d-e6c9b5eb7448}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
+=======
+    <ClInclude Include="Equipment.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Asset">
+      <UniqueIdentifier>{535ba16f-ee87-42e1-8077-25a6b558d98a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Asset\modelData">
+      <UniqueIdentifier>{e941061a-6b51-4112-8b44-1c487fc5b789}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Asset\sprite">
+      <UniqueIdentifier>{91596f2e-5672-475b-878e-bef6f546c8a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Asset\sprite\sword">
+      <UniqueIdentifier>{c71f8680-38ce-43d4-85bc-c0661429f210}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Asset\sprite\Weapon\battlereadyblade.png">
+      <Filter>Asset\sprite\sword</Filter>
+    </Image>
+    <Image Include="Asset\sprite\Weapon\bluelightsword.png">
+      <Filter>Asset\sprite\sword</Filter>
+    </Image>
+    <Image Include="Asset\sprite\Weapon\firesword.png">
+      <Filter>Asset\sprite\sword</Filter>
+    </Image>
+    <Image Include="Asset\sprite\Weapon\greatsword.png">
+      <Filter>Asset\sprite\sword</Filter>
+    </Image>
+    <Image Include="Asset\sprite\Weapon\icesword.png">
+      <Filter>Asset\sprite\sword</Filter>
+    </Image>
+    <Image Include="Asset\sprite\Weapon\windsword.png">
+      <Filter>Asset\sprite\sword</Filter>
+    </Image>
+    <Image Include="Asset\sprite\Weapon\sword.png">
+      <Filter>Asset\sprite\sword</Filter>
+    </Image>
+    <Image Include="Asset\sprite\Weapon\ancientwarriorblade.png">
+      <Filter>Asset\sprite\sword</Filter>
+    </Image>
+  </ItemGroup>
+>>>>>>> 4185813d14c1e4dabb78efe0ce972fea17747da3
 </Project>

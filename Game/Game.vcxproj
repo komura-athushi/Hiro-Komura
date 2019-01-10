@@ -162,6 +162,7 @@
     <ClCompile Include="House.cpp" />
     <ClCompile Include="Human.cpp" />
     <ClCompile Include="IEnemy.cpp" />
+    <ClCompile Include="Equipment.cpp" />
     <ClCompile Include="Magic.cpp" />
     <ClCompile Include="Material.cpp" />
     <ClCompile Include="Oni.cpp" />
@@ -193,6 +194,7 @@
     <ClInclude Include="House.h" />
     <ClInclude Include="Human.h" />
     <ClInclude Include="IEnemy.h" />
+    <ClInclude Include="Equipment.h" />
     <ClInclude Include="Magic.h" />
     <ClInclude Include="Material.h" />
     <ClInclude Include="Oni.h" />
@@ -246,6 +248,16 @@
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Asset\sprite\MokoTitle.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Asset\sprite\Weapon\ancientwarriorblade.png" />
+    <Image Include="Asset\sprite\Weapon\battlereadyblade.png" />
+    <Image Include="Asset\sprite\Weapon\bluelightsword.png" />
+    <Image Include="Asset\sprite\Weapon\firesword.png" />
+    <Image Include="Asset\sprite\Weapon\greatsword.png" />
+    <Image Include="Asset\sprite\Weapon\icesword.png" />
+    <Image Include="Asset\sprite\Weapon\sword.png" />
+    <Image Include="Asset\sprite\Weapon\windsword.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
