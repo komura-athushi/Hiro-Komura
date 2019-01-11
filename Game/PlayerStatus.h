@@ -105,10 +105,20 @@ public:
 	{
 		return m_havemateriallist[number];
 	}
+	//該当の素材を指定数だけ減らす
+	void CutMateial(const int& number,const int& amount)
+	{
+		m_havemateriallist[number] -= amount;
+	}
     //現在装備中の武器強化素材の所持状況を返す
 	int GetWeaponMaterial(const int& number)
 	{
 		return m_weaponinventorylist[number].s_material;
+	}
+	//現在装備中の武器の強化レベルを取得
+	int GetWeaponLv(const int& number)
+	{
+		return m_weaponinventorylist[number].s_equipment.GetLv();
 	}
 	//武器のステータスを設定
 	void SetWeaponStatus();

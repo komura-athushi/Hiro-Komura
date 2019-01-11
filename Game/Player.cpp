@@ -110,6 +110,7 @@ void Player::Update()
 	}
 	else {
 		if (m_stop) {
+			Turn();
 		}
 		else {
 			//キャラクターのアニメーションの処理、移動や回転も入ってる
@@ -406,14 +407,6 @@ void Player::Status()
 	}
 }  
 
-void Player::PostRender()
-{
-	wchar_t output[256];
-	swprintf_s(output, L"Lv   %d\nExp  %d\nNexp %d\nHP   %d\nPP   %d\nAtk  %d\nMatk %d\nWpn  %s\nMgc  %s\nMPC  %d\nMgg  %d\n",m_Level, m_Exp,m_NextExp,m_HP, m_PP, m_Attack,m_Mattack, m_SwordName,m_MagicName,m_PPCost,int(m_Mattack*m_DamageRate));
-	//swprintf_s(output, L"x   %f\ny   %f\nz  %f\nw   %f\n", m_swordqRot.x, m_swordqRot.y, m_swordqRot.z, m_swordqRot.w);
-	m_font.DrawScreenPos(output, { 700.0f,100.0f }, CVector4(200.0f,00.0f,100.0f,00.0f));
-}
-
 void Player::Kougeki()
 {
 	//攻撃しているときは武器の位置をunityChanの手に移動させる
@@ -575,10 +568,23 @@ void Player::RelationHuman()
 	CVector3 pos = m_human->GetPosition() - m_position;
 	if (pos.Length() <= 300.0f && m_state==enState_Idle) {
 		if (Pad(0).GetDown(enButtonB)) {
+			if (m_human->GetTalk() && m_human->isLevelUpTown()) {
+				m_human->SetLevelUpTown();
+			}
+			m_human->OnTalk();
 			m_stop = true;
 		}
 		if (Pad(0).GetDown(enButtonA)) {
+			m_human->OffTalk();
 			m_stop = false;
 		}
 	}
+}
+
+void Player::PostRender()
+{
+	wchar_t output[256];
+	swprintf_s(output, L"Lv   %d\nExp  %d\nNexp %d\nHP   %d\nPP   %d\nAtk  %d\nMatk %d\nWpn  %s\nMgc  %s\nMPC  %d\nMgg  %d\nWLv  %d\n", m_Level, m_Exp, m_NextExp, m_HP, m_PP, m_Attack, m_Mattack, m_SwordName, m_MagicName, m_PPCost, int(m_Mattack*m_DamageRate),m_playerstatus->GetWeaponLv(m_SwordId));
+	//swprintf_s(output, L"x   %f\ny   %f\nz  %f\nw   %f\n", m_swordqRot.x, m_swordqRot.y, m_swordqRot.z, m_swordqRot.w);
+	m_font.DrawScreenPos(output, { 700.0f,100.0f }, CVector4(200.0f, 00.0f, 100.0f, 00.0f));
 }

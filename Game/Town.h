@@ -15,7 +15,15 @@ public:
 	~Town();
 	bool Start();
 	void Update();
+	//街を発展
+	void DevelopTown()
+	{
+		m_developtown = true;
+	}
+	//レベル構築
+	void BuildLevel();
 private:
+	bool m_developtown = false;
 	Ground* m_ground;                                  //Groundクラスのポインタ
 	GameCamera* m_gamecamera;                          //GameCameraクラスのポインタ
 	GameObj::CDirectionLight* m_lig;                   //ディレクションライトクラスのポインタ

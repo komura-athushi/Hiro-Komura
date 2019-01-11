@@ -25,14 +25,19 @@ public:
 	bool Start();
 	void Update();
 	//引数の番号の武器のポインタを取得
-	Weapon* GetWeapon(int number) 
+	Weapon* GetWeapon(const int& number) 
 	{
 		return &m_weaponlist[number];
 	}
 	//引数の番号の魔法のポインタを取得
-	Magic* GetMagic(int number)
+	Magic* GetMagic(const int& number)
 	{
 		return &m_magiclist[number];
+	}
+	//引数の番号の素材のポインタを取得
+	Material* GetMaterial(const int& number)
+	{
+		return &m_materiallist[number];
 	}
 	//ステージをクリア
 	void SetClear(const int& number)
@@ -84,6 +89,7 @@ public:
 		enMaterial_Brick,								//レンガ
 		enMaterial_num									//素材の種類
 	};
+	static const int m_stagenumber = 3;					//ステージ数
 private:
 	std::vector<Weapon> m_weaponlist;                   //Weaponクラスの可変長配列
 	std::vector<Magic> m_magiclist;						//Magicクラスの可変長配列

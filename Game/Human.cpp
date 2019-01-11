@@ -3,6 +3,7 @@
 #include "Player.h"
 #include "GameData.h"
 #include "PlayerStatus.h"
+#include "Town.h"
 Human::Human()
 {
 }
@@ -27,25 +28,33 @@ bool Human::Start()
 	m_skinModelRender->SetRot(m_rotation);
 	m_gamedata = FindGO<GameData>(L"GameData");
 	m_playerstatus = FindGO<PlayerStatus>(L"PlayerStatus");
-	switch (m_gamedata->GetTownLevel) {
-	case 0:
-		if (m_gamedata->GetStageClear(0)) {
-			if (m_necessarymaterial <= m_playerstatus->GetMaterial(0)) {
-				m_developtown = true;
-			}
+	m_townlevel = m_gamedata->GetTownLevel();
+	if (m_gamedata->GetStageClear(m_townlevel)) {
+		if (m_necessarymaterial <= m_playerstatus->GetMaterial(m_townlevel)) {
+			m_developtown = true;
 		}
-		break;
 	}
 	return true;
 }
 
 void Human::Update()
 {
+	m_townlevel = m_gamedata->GetTownLevel();
 	if (m_player == nullptr) {
 		m_player = FindGO<Player>();
 	}
 	else {
 		Turn();
+	}
+	if (m_leveluptown) {
+		PlayerStatus* playerstatus = FindGO<PlayerStatus>(L"PlayerStatus");
+		playerstatus->CutMateial(m_townlevel, m_necessarymaterial);
+		Town* tonw = FindGO<Town>();
+		tonw->DevelopTown();
+		m_gamedata->UpTownLevel();
+		m_developtown = false;								
+		m_leveluptown = false;
+		m_ontalk = false;
 	}
 	AnimationController();
 }
@@ -73,5 +82,20 @@ void Human::AnimationController()
 
 void Human::PostRender()
 {
-
+	if (!m_ontalk) {
+		return;
+	}
+	wchar_t output[256];
+	if (m_developtown) {
+		swprintf_s(output, L"ŠX‚ğ”­“W‚³‚¹‚é‚±‚Æ‚ª‚Å‚«‚Ü‚·B\nŠX‚ğ”­“W‚³‚¹‚Ü‚·‚©H\n");
+	}
+	else {
+		if (m_gamedata->GetStageClear(m_townlevel)) {
+			swprintf_s(output, L"ŠX‚ğ”­“W‚³‚¹‚é‚É‚Í%s‚ª%dŒÂ•K—v‚Å‚·\n",m_gamedata->GetMaterial(m_townlevel)->GetMaterialName(), m_necessarymaterial-m_playerstatus->GetMaterial(m_townlevel));
+		}
+		else {
+			swprintf_s(output, L"ŠX‚ğ”­“W‚³‚¹‚é‚É‚ÍƒXƒe[ƒW%d‚ğƒNƒŠƒA‚·‚é•K—v‚ª‚ ‚è‚Ü‚·\n", m_townlevel + 1);
+		}
+	}
+	m_font.DrawScreenPos(output, { 00.0f,00.0f }, CVector4::White());
 }

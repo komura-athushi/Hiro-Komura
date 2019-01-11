@@ -218,7 +218,7 @@
     <MeshContentTask Include="Asset\modelData\cagliostro\cagliostro.fbx" />
     <MeshContentTask Include="Asset\modelData\enemy\enemy.FBX" />
     <MeshContentTask Include="Asset\modelData\ground.FBX" />
-    <MeshContentTask Include="Asset\modelData\house.FBX" />
+    <MeshContentTask Include="Asset\modelData\House\house.FBX" />
     <MeshContentTask Include="Asset\modelData\human\human.FBX" />
     <MeshContentTask Include="Asset\modelData\Magic_Sample.FBX" />
     <MeshContentTask Include="Asset\modelData\material\brick.FBX" />
@@ -232,10 +232,10 @@
     <MeshContentTask Include="Asset\modelData\Sword\AncientWarriorBlade.FBX" />
     <MeshContentTask Include="Asset\modelData\Sword\BattleReadyBlade.FBX" />
     <MeshContentTask Include="Asset\modelData\Sword\BlueLightSword.FBX" />
+    <MeshContentTask Include="Asset\modelData\Sword\excaliburmorgan.FBX" />
     <MeshContentTask Include="Asset\modelData\Sword\FireSword.FBX" />
     <MeshContentTask Include="Asset\modelData\Sword\GreatSword.fbx" />
     <MeshContentTask Include="Asset\modelData\Sword\IceSword.FBX" />
-    <MeshContentTask Include="Asset\modelData\Sword\LegendSword.FBX" />
     <MeshContentTask Include="Asset\modelData\Sword\Sword.FBX" />
     <MeshContentTask Include="Asset\modelData\Sword\WindSword.FBX" />
     <MeshContentTask Include="Asset\modelData\unityChan.fbx" />

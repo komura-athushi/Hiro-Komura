@@ -10,6 +10,7 @@
 #include "PlayerStatus.h"
 #include "Cagliostro_view.h"
 #include "Human.h"
+#include "GameData.h"
 Town::Town()
 {
 	
@@ -40,61 +41,7 @@ bool Town::Start()
 	m_color.Normalize();
 	m_lig->SetDirection(m_color);
 	m_lig->SetColor({ 1.0f, 1.0f, 1.0f });
-	//レベルを構築する。
-	m_level.Init(L"Asset/level/town00.tkl", [&](LevelObjectData& objData) {
-		if (objData.EqualObjectName(L"ground") == true) {
-			m_ground = new Ground;
-			m_ground->SetStage(0);
-			m_ground->SetPosition(objData.position);
-			return true;
-		}
-		else if (objData.EqualObjectName(L"stone") == true) {
-			//Starオブジェクト。
-			Stone* stone = new Stone;
-			stone->SetPosition(objData.position);
-			//後で削除するのでリストに積んで記憶しておく。
-			m_stoneList.push_back(stone);
-			//フックしたのでtrueを返す。
-			return true;
-		}
-		else if (objData.EqualObjectName(L"house") == true) {
-			//Starオブジェクト。
-			House* house = new House;
-			house->SetPosition(objData.position);
-			house->SetRotation(objData.rotation);
-			//後で削除するのでリストに積んで記憶しておく。
-			m_houseList.push_back(house);
-			//フックしたのでtrueを返す。
-			return true;
-		}
-		else if (objData.EqualObjectName(L"stage1_teleport") == true) {
-			//Starオブジェクト。
-			m_stage1_teleport = new Stage1_Teleport;
-			m_stage1_teleport->SetPosition(objData.position);
-			//フックしたのでtrueを返す。
-			return true;
-		}
-		else if (objData.EqualObjectName(L"human") == true) {
-			//Human
-			m_human = new Human;
-			m_human->SetPosition(objData.position);
-			m_human->SetName(L"Human");
-			//フックした場合はtrueを返す。
-			return true;
-		}
-		else if (objData.EqualObjectName(L"unityChan") == true) {
-			//Unityちゃん。
-			//プレイヤーのインスタンスを生成する。
-			m_player = new Player;
-			m_player->SetPosition(objData.position);
-			m_player->SetRotation(objData.rotation);
-			m_player->SetName(L"Player");
-			//フックした場合はtrueを返す。
-			return true;
-		}
-
-		return false;
-	});
+	BuildLevel();
 	m_gamecamera = new GameCamera;
 	m_gamecamera->SetPlayer(m_player);
 	m_player->SetCamera(m_gamecamera);
@@ -111,8 +58,131 @@ void Town::Update()
 		delete this;
 	}
 	//拠点に居る時にSTARTボタンを押すとカリオストロちゃん☆モードに遷移する
-	if (Pad(0).GetDown(enButtonStart)) {
+	else if (Pad(0).GetDown(enButtonStart)) {
 		Cagliostro_view* cag = new Cagliostro_view;
 		delete this;
 	}
+	else if (m_developtown) {
+		Town* town = new Town;
+		delete this;
+	}
 }
+
+void Town::BuildLevel()
+{
+	GameData* gamedata = FindGO<GameData>(L"GameData");
+	//レベルを構築する。
+	switch (gamedata->GetTownLevel()) {
+	case 0:
+		m_level.Init(L"Asset/level/town00.tkl", [&](LevelObjectData& objData) {
+			if (objData.EqualObjectName(L"ground") == true) {
+				m_ground = new Ground;
+				m_ground->SetStage(0);
+				m_ground->SetPosition(objData.position);
+				return true;
+			}
+			else if (objData.EqualObjectName(L"stone") == true) {
+				//Starオブジェクト。
+				Stone* stone = new Stone;
+				stone->SetPosition(objData.position);
+				//後で削除するのでリストに積んで記憶しておく。
+				m_stoneList.push_back(stone);
+				//フックしたのでtrueを返す。
+				return true;
+			}
+			else if (objData.EqualObjectName(L"house") == true) {
+				//Starオブジェクト。
+				House* house = new House;
+				house->SetPosition(objData.position);
+				house->SetRotation(objData.rotation);
+				//後で削除するのでリストに積んで記憶しておく。
+				m_houseList.push_back(house);
+				//フックしたのでtrueを返す。
+				return true;
+			}
+			else if (objData.EqualObjectName(L"stage1_teleport") == true) {
+				//Starオブジェクト。
+				m_stage1_teleport = new Stage1_Teleport;
+				m_stage1_teleport->SetPosition(objData.position);
+				//フックしたのでtrueを返す。
+				return true;
+			}
+			else if (objData.EqualObjectName(L"human") == true) {
+				//Human
+				m_human = new Human;
+				m_human->SetPosition(objData.position);
+				m_human->SetName(L"Human");
+				//フックした場合はtrueを返す。
+				return true;
+			}
+			else if (objData.EqualObjectName(L"unityChan") == true) {
+				//Unityちゃん。
+				//プレイヤーのインスタンスを生成する。
+				m_player = new Player;
+				m_player->SetPosition(objData.position);
+				m_player->SetRotation(objData.rotation);
+				m_player->SetName(L"Player");
+				//フックした場合はtrueを返す。
+				return true;
+			}
+			return false;
+		});
+		break;
+	case 1:
+		m_level.Init(L"Asset/level/town01.tkl", [&](LevelObjectData& objData) {
+			if (objData.EqualObjectName(L"ground") == true) {
+				m_ground = new Ground;
+				m_ground->SetStage(0);
+				m_ground->SetPosition(objData.position);
+				return true;
+			}
+			else if (objData.EqualObjectName(L"stone") == true) {
+				//Starオブジェクト。
+				Stone* stone = new Stone;
+				stone->SetPosition(objData.position);
+				//後で削除するのでリストに積んで記憶しておく。
+				m_stoneList.push_back(stone);
+				//フックしたのでtrueを返す。
+				return true;
+			}
+			else if (objData.EqualObjectName(L"house") == true) {
+				//Starオブジェクト。
+				House* house = new House;
+				house->SetPosition(objData.position);
+				house->SetRotation(objData.rotation);
+				//後で削除するのでリストに積んで記憶しておく。
+				m_houseList.push_back(house);
+				//フックしたのでtrueを返す。
+				return true;
+			}
+			else if (objData.EqualObjectName(L"stage1_teleport") == true) {
+				//Starオブジェクト。
+				m_stage1_teleport = new Stage1_Teleport;
+				m_stage1_teleport->SetPosition(objData.position);
+				//フックしたのでtrueを返す。
+				return true;
+			}
+			else if (objData.EqualObjectName(L"human") == true) {
+				//Human
+				m_human = new Human;
+				m_human->SetPosition(objData.position);
+				m_human->SetName(L"Human");
+				//フックした場合はtrueを返す。
+				return true;
+			}
+			else if (objData.EqualObjectName(L"unityChan") == true) {
+				//Unityちゃん。
+				//プレイヤーのインスタンスを生成する。
+				m_player = new Player;
+				m_player->SetPosition(objData.position);
+				m_player->SetRotation(objData.rotation);
+				m_player->SetName(L"Player");
+				//フックした場合はtrueを返す。
+				return true;
+			}
+			return false;
+		});
+		break;
+	}
+}
+

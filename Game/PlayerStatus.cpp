@@ -12,16 +12,10 @@ PlayerStatus::~PlayerStatus()
 
 bool PlayerStatus::Start()
 {
-	if (m_Master) {
-		for (int i = 0; i < GameData::enWeapon_num; i++) {
-			m_weaponinventorylist.push_back({ Equipment(i),true,10 });
-		}
+	for (int i = 0; i < GameData::enWeapon_num; i++) {
+		m_weaponinventorylist.push_back({ Equipment(i),false,0 });
 	}
-	else {
-		for (int i = 0; i < GameData::enWeapon_num; i++) {
-			m_weaponinventorylist.push_back({ Equipment(i),false,0 });
-		}
-	}
+	
 	m_weaponinventorylist[0].s_ishave = true;
 	SetWeaponStatus();
 	SetMagicStatus();
@@ -30,7 +24,18 @@ bool PlayerStatus::Start()
 
 void PlayerStatus::Update()
 {
-
+	if (Pad(0).GetDown(enButtonLSB)) {
+		for (int i = 0; i < GameData::enWeapon_num; i++) {
+			m_weaponinventorylist[i]={ Equipment(i),true,50 };
+		}
+		for (int i = 0; i < GameData::enMaterial_num; i++) {
+			m_havemateriallist[i] = 100;
+		}
+		for (int i = 0; i < m_gamedata->m_stagenumber; i++) {
+			m_gamedata->SetClear(i);
+		}
+		
+	}
 }
 
 void PlayerStatus::PlusExp(const int& exp)
