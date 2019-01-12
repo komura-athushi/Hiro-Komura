@@ -32,7 +32,7 @@ void PlayerStatus::Update()
 			m_havemateriallist[i] = 100;
 		}
 		for (int i = 0; i < m_gamedata->m_stagenumber; i++) {
-			m_gamedata->SetClear(i);
+			//m_gamedata->SetClear(i);
 		}
 		
 	}

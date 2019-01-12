@@ -544,6 +544,14 @@ void Player::SwitchWeapon()
 	m_sword->SetSwordId(m_SwordId);
 }
 
+void Player::RecoveryPP()
+{
+	m_PP += m_AttackRecoveryPP;
+	if (m_PP > m_MaxPP) {
+		m_PP = m_MaxPP;
+	}
+}
+
 void Player::Shihuta()
 {
 	if (m_Shihuta) {

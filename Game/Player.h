@@ -55,6 +55,8 @@ public:
 	void Damage(const int& attack);
 	//村人関係
 	void RelationHuman();
+	//プレイヤーのPPを一定値だけ回復させる
+	void RecoveryPP();
 	//プレイヤーの座標をセット
 	void SetPosition(const CVector3& pos)
 	{
@@ -94,14 +96,6 @@ public:
 	void SetCamera(GameCamera* camera)
 	{
 		m_gamecamera = camera;
-	}
-	//プレイヤーのPPを一定値だけ回復させる
-	void RecoveryPP()
-	{
-		m_PP += m_AttackRecoveryPP;
-		if (m_PP > m_MaxPP) {
-			m_PP = m_MaxPP;
-		}
 	}
 	//プレイヤーを停止させる
 	void SetStop()
