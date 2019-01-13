@@ -153,6 +153,10 @@ private:
 	float m_DamageRate;									  //魔法のダメージ倍率
 	int m_PPCost;										  //魔法を放つのに必要なPP
 	CFont m_font;                                         //文字表示クラス
+	CSprite m_cursor;									  //武器のカーソル
+	CSprite m_sprite[GameData::enWeapon_num];             //画像表示クラス
+	CVector3 m_scale = { 0.1f,0.1f,0.1f };				  //画像の大きさ
+	CVector2 m_position = { 350.0f,670.0f };			  //画像の位置
 	struct WeaponInventory {							  //所持している武器の状況を表す構造体
 		Equipment s_equipment;
 		bool s_ishave = false;

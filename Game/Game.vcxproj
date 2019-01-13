@@ -250,14 +250,20 @@
     <ImageContentTask Include="Asset\sprite\MokoTitle.png" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="Asset\sprite\Weapon\ancientwarriorblade.png" />
-    <Image Include="Asset\sprite\Weapon\battlereadyblade.png" />
-    <Image Include="Asset\sprite\Weapon\bluelightsword.png" />
-    <Image Include="Asset\sprite\Weapon\firesword.png" />
-    <Image Include="Asset\sprite\Weapon\greatsword.png" />
-    <Image Include="Asset\sprite\Weapon\icesword.png" />
-    <Image Include="Asset\sprite\Weapon\sword.png" />
-    <Image Include="Asset\sprite\Weapon\windsword.png" />
+    <ImageContentTask Include="Asset\sprite\Weapon\ancientwarriorblade.png" />
+    <ImageContentTask Include="Asset\sprite\Weapon\battlereadyblade.png" />
+    <ImageContentTask Include="Asset\sprite\Weapon\bluelightsword.png" />
+    <ImageContentTask Include="Asset\sprite\Weapon\firesword.png" />
+    <ImageContentTask Include="Asset\sprite\Weapon\greatsword.png" />
+    <ImageContentTask Include="Asset\sprite\Weapon\icesword.png" />
+    <ImageContentTask Include="Asset\sprite\Weapon\sword.png" />
+    <ImageContentTask Include="Asset\sprite\Weapon\windsword.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Asset\sprite\Weapon\excaliburmorgan.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Asset\sprite\Weapon\cursor.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

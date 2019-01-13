@@ -10,6 +10,36 @@
     <ImageContentTask Include="Asset\sprite\MokoTitle.png">
       <Filter>Asset\sprite</Filter>
     </ImageContentTask>
+    <ImageContentTask Include="Asset\sprite\Weapon\ancientwarriorblade.png">
+      <Filter>Asset\sprite\sword</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Asset\sprite\Weapon\battlereadyblade.png">
+      <Filter>Asset\sprite\sword</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Asset\sprite\Weapon\bluelightsword.png">
+      <Filter>Asset\sprite\sword</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Asset\sprite\Weapon\firesword.png">
+      <Filter>Asset\sprite\sword</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Asset\sprite\Weapon\greatsword.png">
+      <Filter>Asset\sprite\sword</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Asset\sprite\Weapon\sword.png">
+      <Filter>Asset\sprite\sword</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Asset\sprite\Weapon\icesword.png">
+      <Filter>Asset\sprite\sword</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Asset\sprite\Weapon\windsword.png">
+      <Filter>Asset\sprite\sword</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Asset\sprite\Weapon\excaliburmorgan.png">
+      <Filter>Asset\sprite\sword</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Asset\sprite\Weapon\cursor.png">
+      <Filter>Asset\sprite\sword</Filter>
+    </ImageContentTask>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Boss.cpp" />
@@ -158,31 +188,5 @@
     <Filter Include="Asset\sprite\sword">
       <UniqueIdentifier>{c71f8680-38ce-43d4-85bc-c0661429f210}</UniqueIdentifier>
     </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="Asset\sprite\Weapon\battlereadyblade.png">
-      <Filter>Asset\sprite\sword</Filter>
-    </Image>
-    <Image Include="Asset\sprite\Weapon\bluelightsword.png">
-      <Filter>Asset\sprite\sword</Filter>
-    </Image>
-    <Image Include="Asset\sprite\Weapon\firesword.png">
-      <Filter>Asset\sprite\sword</Filter>
-    </Image>
-    <Image Include="Asset\sprite\Weapon\greatsword.png">
-      <Filter>Asset\sprite\sword</Filter>
-    </Image>
-    <Image Include="Asset\sprite\Weapon\icesword.png">
-      <Filter>Asset\sprite\sword</Filter>
-    </Image>
-    <Image Include="Asset\sprite\Weapon\windsword.png">
-      <Filter>Asset\sprite\sword</Filter>
-    </Image>
-    <Image Include="Asset\sprite\Weapon\sword.png">
-      <Filter>Asset\sprite\sword</Filter>
-    </Image>
-    <Image Include="Asset\sprite\Weapon\ancientwarriorblade.png">
-      <Filter>Asset\sprite\sword</Filter>
-    </Image>
   </ItemGroup>
 </Project>
