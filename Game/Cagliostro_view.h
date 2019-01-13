@@ -3,6 +3,7 @@ class Ground;
 class GameCamera;
 class Player;
 class PlayerStatus;
+class Fade;
 //カリオストロちゃんモード発動☆
 class Cagliostro_view:public IGameObject
 {
@@ -19,5 +20,8 @@ private:
 	Player* m_player;                                  //プレイヤークラスのポインタ
 	PlayerStatus* m_playerstatus;                      //プレイヤーステータスクラスのポインタ
 	CVector3 m_position = { 0.0f,0.0f,0.0f };
+	Fade* m_fade;
+	//trueなら画面切り替えする
+	bool m_isWaitFadeout = false;
 };
 

@@ -3,6 +3,7 @@
 #include "Town.h"
 #include "Stage1.h"
 #include "PlayerStatus.h"
+#include "Fade.h"
 #include <time.h>
 #include "GameData.h"
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nCmdShow)
@@ -25,6 +26,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	playerstatus->SetGameData(gamedata);
 	//Town* town = new Town;
 	Title* titel = new Title;
+	Fade* fade = new Fade;
 	SetPhysicsDebugDrawMode(btIDebugDraw::DBG_DrawWireframe);
 	//ゲームループ。
 	GetEngine().RunGameLoop();

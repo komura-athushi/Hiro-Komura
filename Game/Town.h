@@ -7,6 +7,7 @@ class Stone;
 class House;
 class Stage1_Teleport;
 class PlayerStatus;
+class Fade;
 //拠点となる町です
 class Town:public IGameObject
 {
@@ -35,6 +36,15 @@ private:
 	PlayerStatus* m_playerstatus;                      //プレイヤーステータスクラスのポインタ
 	//各オブジェクトの可変長配列
 	std::vector<Stone*> m_stoneList;                   //Stoneクラスのポインタを格納するための可変長配列
-	std::vector<House*> m_houseList;                   //Stoneクラスのポインタを格納するための可変長配列
+	std::vector<House*> m_houseList;
+	Fade* m_fade;
+	//trueなら画面切り替えする
+	bool m_isWaitFadeout = false;
+	enum State {
+		enTown,
+		enCga,
+		enSt1,
+	};
+	State m_state;
 };
 

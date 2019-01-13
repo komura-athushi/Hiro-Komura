@@ -40,6 +40,9 @@
     <ImageContentTask Include="Asset\sprite\Weapon\cursor.png">
       <Filter>Asset\sprite\sword</Filter>
     </ImageContentTask>
+    <ImageContentTask Include="Asset\sprite\loading.png">
+      <Filter>Asset\sprite</Filter>
+    </ImageContentTask>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Boss.cpp" />
@@ -69,6 +72,7 @@
     <ClCompile Include="TownData.cpp" />
     <ClCompile Include="Weapon.cpp" />
     <ClCompile Include="Equipment.cpp" />
+    <ClCompile Include="Fade.cpp" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Asset\modelData\Sword\AncientWarriorBlade.FBX">
@@ -174,6 +178,7 @@
     <ClInclude Include="TownData.h" />
     <ClInclude Include="Weapon.h" />
     <ClInclude Include="Equipment.h" />
+    <ClInclude Include="Fade.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Asset">

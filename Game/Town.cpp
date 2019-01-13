@@ -11,6 +11,7 @@
 #include "Cagliostro_view.h"
 #include "Human.h"
 #include "GameData.h"
+#include "Fade.h"
 Town::Town()
 {
 	
@@ -45,26 +46,59 @@ bool Town::Start()
 	m_gamecamera = new GameCamera;
 	m_gamecamera->SetPlayer(m_player);
 	m_player->SetCamera(m_gamecamera);
+	m_fade = FindGO<Fade>();
+	m_fade->StartFadeIn();
 	return true;
 }
 
 void Town::Update()
 {
-	//プレイヤーとステージ1に遷移するオブジェクトの距離を計算
-	CVector3 pos= m_player->GetPosition() - m_stage1_teleport->GetPosition();
-	//距離が一定以下ならステージ1に遷移する
-	if (pos.Length() <= 100.0f) {
-		Stage1* stage1 = new Stage1;
-		delete this;
+	if (m_isWaitFadeout) {
+		if (!m_fade->IsFade()) {
+			if (m_state == enSt1) {
+				Stage1* stage1 = new Stage1;
+				delete this;
+			}
+			else if (m_state == enCga) {
+				Cagliostro_view* cag = new Cagliostro_view;
+				delete this;
+			}
+			else {
+				Town* town = new Town;
+				delete this;
+			}
+			switch (m_state) {
+			case enSt1:
+				
+			case enCga:
+				
+			case enTown:
+				
+				break;
+			}
+		}
 	}
-	//拠点に居る時にSTARTボタンを押すとカリオストロちゃん☆モードに遷移する
-	else if (Pad(0).GetDown(enButtonStart)) {
-		Cagliostro_view* cag = new Cagliostro_view;
-		delete this;
-	}
-	else if (m_developtown) {
-		Town* town = new Town;
-		delete this;
+	else {
+		//プレイヤーとステージ1に遷移するオブジェクトの距離を計算
+		CVector3 pos = m_player->GetPosition() - m_stage1_teleport->GetPosition();
+		//距離が一定以下ならステージ1に遷移する
+		if (pos.Length() <= 100.0f) {
+			m_state = enSt1;
+			m_isWaitFadeout = true;
+			m_fade->StartFadeOut();
+		}
+		//拠点に居る時にSTARTボタンを押すとカリオストロちゃん☆モードに遷移する
+		else if (Pad(0).GetDown(enButtonStart)) {
+			m_state = enCga;
+			m_isWaitFadeout = true;
+			m_fade->StartFadeOut();
+		}
+		//街を再構築
+		else if (m_developtown) {
+			m_state = enTown;
+			m_isWaitFadeout = true;
+			m_fade->StartFadeOut();
+		}
 	}
 }
 
