@@ -29,6 +29,7 @@ bool Human::Start()
 	m_gamedata = FindGO<GameData>(L"GameData");
 	m_playerstatus = FindGO<PlayerStatus>(L"PlayerStatus");
 	m_townlevel = m_gamedata->GetTownLevel();
+	//条件を満たし手入れば、街を発展できるようにする
 	if (m_gamedata->GetStageClear(m_townlevel)) {
 		if (m_necessarymaterial <= m_playerstatus->GetMaterial(m_townlevel)) {
 			m_developtown = true;
@@ -47,10 +48,13 @@ void Human::Update()
 		Turn();
 	}
 	if (m_leveluptown) {
+		//プレイヤーの指定の素材を一定数減らす
 		PlayerStatus* playerstatus = FindGO<PlayerStatus>(L"PlayerStatus");
 		playerstatus->CutMateial(m_townlevel, m_necessarymaterial);
+		//街の発展フラグをonにする
 		Town* tonw = FindGO<Town>();
 		tonw->DevelopTown();
+		//発展レベルを上げる
 		m_gamedata->UpTownLevel();
 		m_developtown = false;								
 		m_leveluptown = false;
@@ -62,9 +66,11 @@ void Human::Update()
 void Human::Turn()
 {
 	CVector3 pos = m_player->GetPosition() - m_position;
+	//プレイヤーが一定距離以内に居たらプレイヤーの方向を向くようにする
 	if (pos.Length() <= 300.0f) {
 		m_rotation.SetRotation(CVector3::AxisY(), atan2f(pos.x,pos.z));
 	}
+	//プレイヤーが一定距離以外に居たら回転をもとに戻す
 	else if (pos.Length() >= 1500.0f) {
 		m_rotation.SetRotationDeg(CVector3::AxisY(), 180.0f);
 	}

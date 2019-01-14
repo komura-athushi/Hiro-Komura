@@ -183,7 +183,6 @@
     </ClCompile>
     <ClCompile Include="Title.cpp" />
     <ClCompile Include="Ground.cpp" />
-    <ClCompile Include="TownData.cpp" />
     <ClCompile Include="Weapon.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -212,7 +211,6 @@
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Title.h" />
     <ClInclude Include="Ground.h" />
-    <ClInclude Include="TownData.h" />
     <ClInclude Include="Weapon.h" />
   </ItemGroup>
   <ItemGroup>

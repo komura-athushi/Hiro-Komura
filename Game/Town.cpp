@@ -55,6 +55,7 @@ void Town::Update()
 {
 	if (m_isWaitFadeout) {
 		if (!m_fade->IsFade()) {
+			//m_stateによって次のモードを分岐させる
 			if (m_state == enSt1) {
 				Stage1* stage1 = new Stage1;
 				delete this;
@@ -66,15 +67,6 @@ void Town::Update()
 			else {
 				Town* town = new Town;
 				delete this;
-			}
-			switch (m_state) {
-			case enSt1:
-				
-			case enCga:
-				
-			case enTown:
-				
-				break;
 			}
 		}
 	}
@@ -104,9 +96,10 @@ void Town::Update()
 
 void Town::BuildLevel()
 {
+	//レベルを構築する。
 	const wchar_t* levelname=nullptr;
 	GameData* gamedata = FindGO<GameData>(L"GameData");
-	//レベルを構築する。
+	//街のレベルにより読み込むレベルファイルを決定する
 	switch (gamedata->GetTownLevel()) {
 	case 0:
 		levelname = L"Asset/level/town00.tkl";

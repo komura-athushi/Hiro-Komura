@@ -167,5 +167,4 @@ private:
 	GameData* m_gamedata;                                 //GameDataクラスのポインタ
 	Weapon* m_weapon;									  //Weaponクラスのポインタ
 	Magic* m_magic;										  //Magicクラスのポインタ
-	bool m_Master = true;								  //武器全所持モード
 };

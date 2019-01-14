@@ -12,13 +12,15 @@ PlayerStatus::~PlayerStatus()
 
 bool PlayerStatus::Start()
 {
+	//武器の所持状況をすべてfalseに設定
 	for (int i = 0; i < GameData::enWeapon_num; i++) {
 		m_weaponinventorylist.push_back({ Equipment(i),false,0 });
 	}
-	
+	//最初の武器だけ所持状況をtrueに設定する
 	m_weaponinventorylist[0].s_ishave = true;
 	SetWeaponStatus();
 	SetMagicStatus();
+	//該当するddsファイルを読み込んでおく
 	m_sprite[0].Init(L"Resource/sprite/sword.dds");
 	m_sprite[1].Init(L"Resource/sprite/firesword.dds");
 	m_sprite[2].Init(L"Resource/sprite/icesword.dds");
@@ -34,6 +36,7 @@ bool PlayerStatus::Start()
 
 void PlayerStatus::Update()
 {
+	//LSBボタンを押すと全部武器所持状態に移行
 	if (Pad(0).GetDown(enButtonLSB)) {
 		for (int i = 0; i < GameData::enWeapon_num; i++) {
 			m_weaponinventorylist[i]={ Equipment(i),true,50 };

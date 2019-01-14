@@ -574,6 +574,7 @@ void Player::RelationHuman()
 		return;
 	}
 	CVector3 pos = m_human->GetPosition() - m_position;
+	//待機状態かつ距離が一定以内の時にBボタンを押すと話せる
 	if (pos.Length() <= 300.0f && m_state==enState_Idle) {
 		if (Pad(0).GetDown(enButtonB)) {
 			if (m_human->GetTalk() && m_human->isLevelUpTown()) {

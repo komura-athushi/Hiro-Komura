@@ -69,7 +69,6 @@
     <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="Title.cpp" />
     <ClCompile Include="Ground.cpp" />
-    <ClCompile Include="TownData.cpp" />
     <ClCompile Include="Weapon.cpp" />
     <ClCompile Include="Equipment.cpp" />
     <ClCompile Include="Fade.cpp" />
@@ -175,7 +174,6 @@
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Title.h" />
     <ClInclude Include="Ground.h" />
-    <ClInclude Include="TownData.h" />
     <ClInclude Include="Weapon.h" />
     <ClInclude Include="Equipment.h" />
     <ClInclude Include="Fade.h" />
