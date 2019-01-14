@@ -15,7 +15,7 @@ private:
 public:
 	//この関数を使ってGameDataクラスのインスタンスを生成します
 	//この関数内のローカルな静的変数は最初に関数が呼ばれるときには初期化されますが、以降呼ばれる時は初期化されません
-	static GameData& GetInstance()
+	static GameData& GetInstance() 
 	{
 		//privateなコンストラクタを呼び出す
 		static GameData inst;

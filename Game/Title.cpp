@@ -40,5 +40,9 @@ void Title::Update()
 
 void Title::PostRender()
 {
-	m_sprite.DrawScreenPos(m_position,m_scale);
+	m_sprite.DrawScreenPos(m_position,m_scale, CVector2::Zero(),
+		0.0f,
+		{ 1.0f, 1.0f, 1.0f, 1.0f },
+		DirectX::SpriteEffects_None,
+		0.9f);
 }

@@ -45,5 +45,4 @@ void Fade::PostRender()
 			DirectX::SpriteEffects_None,
 			1.0f);
 	}
-	//m_sprite.DrawScreenPos(CVector2::Zero(), CVector2::One());
 }

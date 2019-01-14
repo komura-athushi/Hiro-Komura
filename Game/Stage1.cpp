@@ -112,13 +112,10 @@ void Stage1::Update()
 	else {
 		//プレイヤーがゲームオーバーあるいはゲームクリアで拠点に遷移
 		if (m_player->GetGameOver() || m_player->GetGameClear()) {
-			if (m_player->GetGameClear()) {
-				GameData* gamedata = FindGO<GameData>(L"GameData");
-				gamedata->SetClear(0);
-				m_isWaitFadeout = true;
-				m_fade->StartFadeOut();
-			}
-			
+			GameData* gamedata = FindGO<GameData>(L"GameData");
+			gamedata->SetClear(0);
+			m_isWaitFadeout = true;
+			m_fade->StartFadeOut();
 		}
 	}
 	

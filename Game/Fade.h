@@ -1,9 +1,20 @@
 #pragma once
 class Fade : public IGameObject
 {
-public:
+	//シングルトン、そのクラスのインスタンスが一つしか存在しえないことを示すデザインパターンの一つです
+private:
+	//コンストラクタとデストラクタをprivateに宣言することで外部から生成出来なくします
 	Fade();
 	~Fade();
+public:
+	//この関数を使ってGameDataクラスのインスタンスを生成します
+	//この関数内のローカルな静的変数は最初に関数が呼ばれるときには初期化されますが、以降呼ばれる時は初期化されません
+	static Fade& GetInstance()
+	{
+		//privateなコンストラクタを呼び出す
+		static Fade inst;
+		return inst;
+	}
 	bool Start() override;
 	void Update() override;
 	void PostRender() override;
