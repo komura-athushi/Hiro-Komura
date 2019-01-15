@@ -109,7 +109,7 @@ bool ShotMagic::Start()
 	 /*skinModelRender->Init(L"Resource/modelData/Magic_Sample.cmo");
 	 skinModelRender->SetScale(m_scale);
 	 skinModelRender->SetPos(pos);*/
-	 effect->Play(L"Asset/effect/magicsphere.efk", 1.0f, pos, CQuaternion::Identity(),scl);
+	 effect->Play(L"Asset/effect/efk/magic_proj01.efk", 1.0f, pos, CQuaternion::Identity(),scl*12);
 	 //UŒ‚”»’è‚Ì”­¶
 	 attackCol->CreateSphere(pos, CQuaternion::Identity(),scale);
 	 //õ–½‚ğİ’è

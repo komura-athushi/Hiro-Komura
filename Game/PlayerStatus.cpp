@@ -47,7 +47,7 @@ void PlayerStatus::Update()
 		for (int i = 0; i < m_gamedata->m_stagenumber; i++) {
 			//m_gamedata->SetClear(i);
 		}
-		PlusExp(10000000);
+		PlusExp(1000000000);
 	}
 }
 
@@ -142,6 +142,7 @@ void PlayerStatus::PostRender()
 	//武器のアイコン表示
 	CVector2 pos = m_position;
 	for (int i = 0; i < GameData::enWeapon_num; i++) {
+		//所持状況がtrueなら該当する画像を表示する
 		if (m_weaponinventorylist[i].s_ishave) {
 			m_sprite[i].DrawScreenPos(pos, m_scale);
 			if (m_SwordId == i) {

@@ -474,7 +474,7 @@ void Player::OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventName)
 		shotmagic->SetDamage(m_Mattack, m_DamageRate);
 		shotmagic->SetName(L"ShotMagic");
 		GameObj::Suicider::CEffekseer* effect = new GameObj::Suicider::CEffekseer;
-		effect->Play(L"Asset/effect/aria.efk",1.0f,m_position);
+		effect->Play(L"Asset/effect/efk/magic_cast01.efk", 1.0f, m_position, CQuaternion::Identity(), {12.0f,12.0f,12.0f});
 		effect->SetSpeed(2.0f);
 	}
 }
