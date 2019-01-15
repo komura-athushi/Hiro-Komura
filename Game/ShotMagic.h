@@ -27,7 +27,7 @@ public:
 	*int number						//ダメージ無しの時にいる 
 	*bool damage;					//trueでダメージありのコリジョンを生成します
 	*/
-	void SetCollisionModel(const CVector3& pos, const float& scale,const int& id,const int& number=0,bool damage = true); //こ↑こ↓をfalseにするとダメージ無しのコリジョンを生成します
+	void SetCollisionModel(const CVector3& pos, const float& scale,const int& id, const CVector3& scl = CVector3::Zero(),const int& number=0,bool damage = true); //こ↑こ↓をfalseにするとダメージ無しのコリジョンを生成します
 	/*!
 	//ダメ無しコリジョンを発生させたい場合はこっち
 	//コリジョンとモデルを設定、座標とコリジョンの大きさ
@@ -38,7 +38,7 @@ public:
 	*int number						//m_modelcountを代入してください
 	*bool damage;					//trueでダメージありのコリジョンを生成します
 	*/
-	void SetCollisionModelnoDamage(const CVector3& pos, const float& scale, const int& id, const int& number = 0, bool damage = true);
+	void SetCollisionModelnoDamage(const CVector3& pos, const float& scale, const int& id, const CVector3& scl = CVector3::Zero(), const int& number = 0, bool damage = true);
 	//フォイエ
 	void Foie();
 	void FoieUpdate();
@@ -135,7 +135,7 @@ private:
 	int m_timer1 = 0;
 	//スキンモデル、コリジョン、タイマー、削除したかどうか
 	struct MagicModel {
-		GameObj::CSkinModelRender* s_skinModelReder;    //モデル
+		GameObj::Suicider::CEffekseer* s_effect;		//エフェクト
 		SuicideObj::CCollisionObj* s_collision;			//コリジョン
 		float s_timer = 0.0f;							//デリートタイム
 		CVector3 s_position = {CVector3::Zero()};		//座標
