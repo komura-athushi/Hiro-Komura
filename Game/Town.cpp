@@ -10,6 +10,8 @@
 #include "PlayerStatus.h"
 #include "Cagliostro_view.h"
 #include "Human.h"
+#include "GameData.h"
+#include "Fade.h"
 Town::Town()
 {
 	
@@ -40,8 +42,73 @@ bool Town::Start()
 	m_color.Normalize();
 	m_lig->SetDirection(m_color);
 	m_lig->SetColor({ 1.0f, 1.0f, 1.0f });
+	BuildLevel();
+	m_gamecamera = new GameCamera;
+	m_gamecamera->SetPlayer(m_player);
+	m_player->SetCamera(m_gamecamera);
+	m_fade = FindGO<Fade>();
+	m_fade->StartFadeIn();
+	return true;
+}
+
+void Town::Update()
+{
+	if (m_isWaitFadeout) {
+		if (!m_fade->IsFade()) {
+			//m_stateによって次のモードを分岐させる
+			if (m_state == enSt1) {
+				Stage1* stage1 = new Stage1;
+				delete this;
+			}
+			else if (m_state == enCga) {
+				Cagliostro_view* cag = new Cagliostro_view;
+				delete this;
+			}
+			else {
+				Town* town = new Town;
+				delete this;
+			}
+		}
+	}
+	else {
+		//プレイヤーとステージ1に遷移するオブジェクトの距離を計算
+		CVector3 pos = m_player->GetPosition() - m_stage1_teleport->GetPosition();
+		//距離が一定以下ならステージ1に遷移する
+		if (pos.Length() <= 100.0f) {
+			m_state = enSt1;
+			m_isWaitFadeout = true;
+			m_fade->StartFadeOut();
+		}
+		//拠点に居る時にSTARTボタンを押すとカリオストロちゃん☆モードに遷移する
+		else if (Pad(0).GetDown(enButtonStart)) {
+			m_state = enCga;
+			m_isWaitFadeout = true;
+			m_fade->StartFadeOut();
+		}
+		//街を再構築
+		else if (m_developtown) {
+			m_state = enTown;
+			m_isWaitFadeout = true;
+			m_fade->StartFadeOut();
+		}
+	}
+}
+
+void Town::BuildLevel()
+{
 	//レベルを構築する。
-	m_level.Init(L"Asset/level/town00.tkl", [&](LevelObjectData& objData) {
+	const wchar_t* levelname=nullptr;
+	GameData* gamedata = FindGO<GameData>(L"GameData");
+	//街のレベルにより読み込むレベルファイルを決定する
+	switch (gamedata->GetTownLevel()) {
+	case 0:
+		levelname = L"Asset/level/town00.tkl";
+		break;
+	case 1:
+		levelname = L"Asset/level/town01.tkl";
+		break;
+	}
+	m_level.Init(levelname, [&](LevelObjectData& objData) {
 		if (objData.EqualObjectName(L"ground") == true) {
 			m_ground = new Ground;
 			m_ground->SetStage(0);
@@ -92,27 +159,7 @@ bool Town::Start()
 			//フックした場合はtrueを返す。
 			return true;
 		}
-
 		return false;
 	});
-	m_gamecamera = new GameCamera;
-	m_gamecamera->SetPlayer(m_player);
-	m_player->SetCamera(m_gamecamera);
-	return true;
 }
 
-void Town::Update()
-{
-	//プレイヤーとステージ1に遷移するオブジェクトの距離を計算
-	CVector3 pos= m_player->GetPosition() - m_stage1_teleport->GetPosition();
-	//距離が一定以下ならステージ1に遷移する
-	if (pos.Length() <= 100.0f) {
-		Stage1* stage1 = new Stage1;
-		delete this;
-	}
-	//拠点に居る時にSTARTボタンを押すとカリオストロちゃん☆モードに遷移する
-	if (Pad(0).GetDown(enButtonStart)) {
-		Cagliostro_view* cag = new Cagliostro_view;
-		delete this;
-	}
-}

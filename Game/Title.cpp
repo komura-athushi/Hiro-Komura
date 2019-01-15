@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Title.h"
 #include "Town.h"
+#include "Fade.h"
 Title::Title()
 {
 }
@@ -15,18 +16,33 @@ bool Title::Start()
 {
 	//m_sprite.Init(L"Resource/sprite/Title.dds");
 	m_sprite.Init(L"Resource/sprite/MokoTitle.dds");
+	m_fade = FindGO<Fade>();
+	m_fade->StartFadeIn();
 	return true;
 }
 
 void Title::Update()
 {
-	if (Pad(0).GetDown(enButtonStart)) {
-		Town* town = new Town;
-		delete this;
+	
+	if (m_isWaitFadeout) {
+		if (!m_fade->IsFade()) {
+			Town* town = new Town;
+			delete this;
+		}
+	}
+	else {
+		if (Pad(0).GetDown(enButtonStart)) {
+			m_isWaitFadeout = true;
+			m_fade->StartFadeOut();
+		}
 	}
 }
 
 void Title::PostRender()
 {
-	m_sprite.DrawScreenPos(m_position,m_scale);
+	m_sprite.DrawScreenPos(m_position,m_scale, CVector2::Zero(),
+		0.0f,
+		{ 1.0f, 1.0f, 1.0f, 1.0f },
+		DirectX::SpriteEffects_None,
+		0.9f);
 }

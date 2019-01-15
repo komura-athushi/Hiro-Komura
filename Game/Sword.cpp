@@ -67,7 +67,7 @@ void Sword::Update()
 			m_skinModelRender->Init(L"Resource/modelData/AncientWarriorBlade.cmo");
 			break;
 		case 8:
-			m_skinModelRender->Init(L"Resource/modelData/LegendSword.cmo");
+			m_skinModelRender->Init(L"Resource/modelData/excaliburmorgan.cmo");
 			break;
 		}
 		m_switch = false;

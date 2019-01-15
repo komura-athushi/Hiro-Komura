@@ -3,6 +3,7 @@
 #include "Town.h"
 #include "Stage1.h"
 #include "PlayerStatus.h"
+#include "Fade.h"
 #include <time.h>
 #include "GameData.h"
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nCmdShow)
@@ -14,15 +15,17 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	GameObj::PerspectiveCamera* cam = new GameObj::PerspectiveCamera;
 	SetMainCamera(cam);
 	cam->SetName(L"Camera");
-	//GameDataクラスのインスタンスを生成
+	//GameDataクラスのインスタンスを静的な関数を使って生成
 	GameData* gamedata = &GameData::GetInstance();
 	//インスタンスに名前を設定
 	gamedata->SetName(L"GameData");
-	//PlayerStatusクラスのインスタンスを生成
+	//PlayerStatusクラスのインスタンスを静的な関数を使って生成
 	PlayerStatus* playerstatus = &PlayerStatus::GetInstance();
 	//インスタンスに名前を設定
 	playerstatus->SetName(L"PlayerStatus");
 	playerstatus->SetGameData(gamedata);
+	//Fadeクラスのインスタンスを静的な関数を使って生成
+	Fade* fade = &Fade::GetInstance();
 	//Town* town = new Town;
 	Title* titel = new Title;
 	SetPhysicsDebugDrawMode(btIDebugDraw::DBG_DrawWireframe);

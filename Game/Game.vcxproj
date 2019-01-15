@@ -158,6 +158,7 @@
     <ClCompile Include="Cagliostro_view.cpp" />
     <ClCompile Include="DropItem.cpp" />
     <ClCompile Include="DropMaterial.cpp" />
+    <ClCompile Include="Fade.cpp" />
     <ClCompile Include="GameData.cpp" />
     <ClCompile Include="House.cpp" />
     <ClCompile Include="Human.cpp" />
@@ -182,7 +183,6 @@
     </ClCompile>
     <ClCompile Include="Title.cpp" />
     <ClCompile Include="Ground.cpp" />
-    <ClCompile Include="TownData.cpp" />
     <ClCompile Include="Weapon.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -190,6 +190,7 @@
     <ClInclude Include="Cagliostro_view.h" />
     <ClInclude Include="DropItem.h" />
     <ClInclude Include="DropMaterial.h" />
+    <ClInclude Include="Fade.h" />
     <ClInclude Include="GameData.h" />
     <ClInclude Include="House.h" />
     <ClInclude Include="Human.h" />
@@ -210,7 +211,6 @@
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Title.h" />
     <ClInclude Include="Ground.h" />
-    <ClInclude Include="TownData.h" />
     <ClInclude Include="Weapon.h" />
   </ItemGroup>
   <ItemGroup>
@@ -218,7 +218,7 @@
     <MeshContentTask Include="Asset\modelData\cagliostro\cagliostro.fbx" />
     <MeshContentTask Include="Asset\modelData\enemy\enemy.FBX" />
     <MeshContentTask Include="Asset\modelData\ground.FBX" />
-    <MeshContentTask Include="Asset\modelData\house.FBX" />
+    <MeshContentTask Include="Asset\modelData\House\house.FBX" />
     <MeshContentTask Include="Asset\modelData\human\human.FBX" />
     <MeshContentTask Include="Asset\modelData\Magic_Sample.FBX" />
     <MeshContentTask Include="Asset\modelData\material\brick.FBX" />
@@ -232,10 +232,10 @@
     <MeshContentTask Include="Asset\modelData\Sword\AncientWarriorBlade.FBX" />
     <MeshContentTask Include="Asset\modelData\Sword\BattleReadyBlade.FBX" />
     <MeshContentTask Include="Asset\modelData\Sword\BlueLightSword.FBX" />
+    <MeshContentTask Include="Asset\modelData\Sword\excaliburmorgan.FBX" />
     <MeshContentTask Include="Asset\modelData\Sword\FireSword.FBX" />
     <MeshContentTask Include="Asset\modelData\Sword\GreatSword.fbx" />
     <MeshContentTask Include="Asset\modelData\Sword\IceSword.FBX" />
-    <MeshContentTask Include="Asset\modelData\Sword\LegendSword.FBX" />
     <MeshContentTask Include="Asset\modelData\Sword\Sword.FBX" />
     <MeshContentTask Include="Asset\modelData\Sword\WindSword.FBX" />
     <MeshContentTask Include="Asset\modelData\unityChan.fbx" />
@@ -250,14 +250,23 @@
     <ImageContentTask Include="Asset\sprite\MokoTitle.png" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="Asset\sprite\Weapon\ancientwarriorblade.png" />
-    <Image Include="Asset\sprite\Weapon\battlereadyblade.png" />
-    <Image Include="Asset\sprite\Weapon\bluelightsword.png" />
-    <Image Include="Asset\sprite\Weapon\firesword.png" />
-    <Image Include="Asset\sprite\Weapon\greatsword.png" />
-    <Image Include="Asset\sprite\Weapon\icesword.png" />
-    <Image Include="Asset\sprite\Weapon\sword.png" />
-    <Image Include="Asset\sprite\Weapon\windsword.png" />
+    <ImageContentTask Include="Asset\sprite\Weapon\ancientwarriorblade.png" />
+    <ImageContentTask Include="Asset\sprite\Weapon\battlereadyblade.png" />
+    <ImageContentTask Include="Asset\sprite\Weapon\bluelightsword.png" />
+    <ImageContentTask Include="Asset\sprite\Weapon\firesword.png" />
+    <ImageContentTask Include="Asset\sprite\Weapon\greatsword.png" />
+    <ImageContentTask Include="Asset\sprite\Weapon\icesword.png" />
+    <ImageContentTask Include="Asset\sprite\Weapon\sword.png" />
+    <ImageContentTask Include="Asset\sprite\Weapon\windsword.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Asset\sprite\Weapon\excaliburmorgan.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Asset\sprite\Weapon\cursor.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Asset\sprite\loading.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

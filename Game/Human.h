@@ -24,6 +24,31 @@ public:
 	{
 		return m_position;
 	}
+	//街を発展できるかどうか
+	bool isLevelUpTown()
+	{
+		return m_developtown;
+	}
+	//街を発展させる！
+	void SetLevelUpTown()
+	{
+		m_leveluptown = true;
+	}
+	//トークをオンにする
+	void OnTalk()
+	{
+		m_ontalk = true;
+	}
+	//トークをオフにする
+	void OffTalk()
+	{
+		m_ontalk = false;
+	}
+	//トーク状態を取得
+	bool GetTalk() const
+	{
+		return m_ontalk;
+	}
 	void PostRender() override;
 private:
 	GameObj::CSkinModelRender* m_skinModelRender = nullptr;		//スキンモデルレンダラー。
@@ -32,6 +57,10 @@ private:
 	float m_animationspeed = 0.7f;
 	CQuaternion m_rotation;
 	bool m_developtown = false;								   //街を発展できるかどうか
+	bool m_leveluptown = false;								   //街を発展させます
+	int m_townlevel = 0;									   //街の発展レベル
+	CFont m_font;                                              //文字表示クラス
+	bool m_ontalk = false;									   //トークオン
 	//アニメーション関係
 	enum EnAnimationClip {
 		enAnimationClip_idle,

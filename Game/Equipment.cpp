@@ -7,6 +7,7 @@
 //}
 Equipment::Equipment(const int& number):m_SwordId(number)
 {
+	//GameDataクラスを経由して各ステータスを取得する
 	m_gamedata = FindGO<GameData>(L"GameData");
 	SetWeaponStatus();
 	SetMagicStatus();

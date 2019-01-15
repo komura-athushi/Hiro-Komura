@@ -11,6 +11,7 @@
 #include "DropMaterial.h"
 #include "IEnemy.h"
 #include "GameData.h"
+#include "Fade.h"
 Stage1::Stage1()
 {
 }
@@ -95,18 +96,27 @@ bool Stage1::Start()
 	m_gamecamera = new GameCamera;
 	m_gamecamera->SetPlayer(m_player);
 	m_player->SetCamera(m_gamecamera);
+	m_fade = FindGO<Fade>();
+	m_fade->StartFadeIn();
 	return true;
 }
 
 void Stage1::Update()
 {
-	//プレイヤーがゲームオーバーあるいはゲームクリアで拠点に遷移
-	if (m_player->GetGameOver() || m_player->GetGameClear()) {
-		Town* town = new Town;
-		if (m_player->GetGameClear()) {
+	if (m_isWaitFadeout) {
+		if (!m_fade->IsFade()) {
+			Town* town = new Town;
+			delete this;
+		}
+	}
+	else {
+		//プレイヤーがゲームオーバーあるいはゲームクリアで拠点に遷移
+		if (m_player->GetGameOver() || m_player->GetGameClear()) {
 			GameData* gamedata = FindGO<GameData>(L"GameData");
 			gamedata->SetClear(0);
+			m_isWaitFadeout = true;
+			m_fade->StartFadeOut();
 		}
-		delete this;
 	}
+	
 }

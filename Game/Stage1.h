@@ -5,6 +5,7 @@ class GameCamera;
 class PlayerStatus;
 class Oni;
 class Boss;
+class Fade;
 //ステージ1に関係するものを生成したり、管理したりするクラスです
 class Stage1:public IGameObject
 {
@@ -23,5 +24,8 @@ private:
 	PlayerStatus* m_playerstatus;                      //プレイヤーステータスクラスのポインタ
 	std::vector<Oni*> m_oniList;
 	Boss* m_boss;
+	Fade* m_fade;
+	//trueなら画面切り替えする
+	bool m_isWaitFadeout = false;
 };
 

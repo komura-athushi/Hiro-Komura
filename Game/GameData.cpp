@@ -11,7 +11,7 @@ GameData::~GameData()
 
 bool GameData::Start()
 {
-	//コンストラクタを使って各データクラスの初期化を行います
+	//コンストラクタを使って各データクラスの生成および、各ステータスの設定をします
 	//Weaponクラスのインスタンスを生成
 	m_weaponlist.push_back(Weapon(0 , L"もこうスラッシュ"		, 1, 10, 20, 0));
 	m_weaponlist.push_back(Weapon(1 , L"ファイアソード"			, 2, 30, 40, 1));
@@ -21,7 +21,7 @@ bool GameData::Start()
 	m_weaponlist.push_back(Weapon(5 , L"クリスタルエッジ"		, 4, 60, 70, 5));
 	m_weaponlist.push_back(Weapon(6 , L"バトルブレード"         , 5, 80, 80, 6));
 	m_weaponlist.push_back(Weapon(7 , L"バンデッドソード"       , 6,120, 70, 7));
-	m_weaponlist.push_back(Weapon(8 , L"レジェンダリーソード"   , 7,150,150, 8));
+	m_weaponlist.push_back(Weapon(8 , L"エクスカリバーモルガン" , 7,150,150, 8));
 	//Magicクラスのインスタンスを生成
 	m_magiclist.push_back(Magic(0 , L"無し"					    , 0.0f, 999));
 	m_magiclist.push_back(Magic(1 , L"フォイエ"		  	        , 1.7f, 40));

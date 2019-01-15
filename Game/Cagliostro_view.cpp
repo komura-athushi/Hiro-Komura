@@ -5,6 +5,7 @@
 #include "Player.h"
 #include "PlayerStatus.h"
 #include "Town.h"
+#include "Fade.h"
 Cagliostro_view::Cagliostro_view()
 {
 
@@ -33,14 +34,24 @@ bool Cagliostro_view::Start()
 	m_gamecamera = new GameCamera;
 	m_gamecamera->SetPlayer(m_player);
 	m_player->SetCamera(m_gamecamera);
+	m_fade = FindGO<Fade>();
+	m_fade->StartFadeIn();
 	return true;
 }
 
 void Cagliostro_view::Update()
 {
-	if (Pad(0).GetButton(enButtonBack)) {
-		Town* town = new Town;
-		delete this;
+	if (m_isWaitFadeout) {
+		if (!m_fade->IsFade()) {
+			Town* town = new Town;
+			delete this;
+		}
+	}
+	else {
+		if (Pad(0).GetButton(enButtonBack)) {
+			m_isWaitFadeout = true;
+			m_fade->StartFadeOut();
+		}
 	}
 }
 

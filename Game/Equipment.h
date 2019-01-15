@@ -28,6 +28,11 @@ public:
 	{
 		return m_Rarity;
 	}
+	//•Ší‚Ì‹­‰»ƒŒƒxƒ‹‚ğæ“¾
+	int GetLv() const
+	{
+		return m_weaponextend;
+	}
 	//•Ší‚Ì•¨—UŒ‚—Í‚ğæ“¾
 	int GetAtk() const
 	{
@@ -58,8 +63,7 @@ public:
 	{
 		return m_PPCost;
 	}
-	//•ŠíID‚ğİ’è
-	//void SetWeaponID(const int& id);
+	
 private:
 	int m_SwordMattack = 0;                               //•Ší‚Ì–‚–@UŒ‚—Í                          
 	int m_SwordAttack = 0;                                //•Ší‚ÌUŒ‚—Í
