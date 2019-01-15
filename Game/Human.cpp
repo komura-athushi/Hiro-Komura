@@ -27,7 +27,7 @@ bool Human::Start()
 	m_skinModelRender->SetRot(m_rotation);
 	m_gamedata = FindGO<GameData>(L"GameData");
 	m_playerstatus = FindGO<PlayerStatus>(L"PlayerStatus");
-	switch (m_gamedata->GetTownLevel) {
+	switch (m_gamedata->GetTownLevel()) {
 	case 0:
 		if (m_gamedata->GetStageClear(0)) {
 			if (m_necessarymaterial <= m_playerstatus->GetMaterial(0)) {
