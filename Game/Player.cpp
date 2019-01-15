@@ -8,6 +8,7 @@
 #include "IEnemy.h"
 #include "ShotMagic.h"
 #include "Human.h"
+#include "Effekseer.h"
 Player::Player()
 {
 }
@@ -472,6 +473,9 @@ void Player::OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventName)
 		shotmagic->SetId(m_MagicId);
 		shotmagic->SetDamage(m_Mattack, m_DamageRate);
 		shotmagic->SetName(L"ShotMagic");
+		GameObj::Suicider::CEffekseer* effect = new GameObj::Suicider::CEffekseer;
+		effect->Play(L"Asset/effect/aria.efk",1.0f,m_position);
+		effect->SetSpeed(1.3f);
 	}
 }
 
