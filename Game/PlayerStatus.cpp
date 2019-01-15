@@ -47,7 +47,7 @@ void PlayerStatus::Update()
 		for (int i = 0; i < m_gamedata->m_stagenumber; i++) {
 			//m_gamedata->SetClear(i);
 		}
-		
+		PlusExp(10000000);
 	}
 }
 

@@ -599,5 +599,5 @@ void Player::PostRender()
 	wchar_t output[256];
 	swprintf_s(output, L"Lv   %d\nExp  %d\nNexp %d\nHP   %d\nPP   %d\nAtk  %d\nMatk %d\nWpn  %s\nMgc  %s\nMPC  %d\nMgg  %d\nWLv  %d\n", m_Level, m_Exp, m_NextExp, m_HP, m_PP, m_Attack, m_Mattack, m_SwordName, m_MagicName, m_PPCost, int(m_Mattack*m_DamageRate),m_playerstatus->GetWeaponLv(m_SwordId));
 	//swprintf_s(output, L"x   %f\ny   %f\nz  %f\nw   %f\n", m_swordqRot.x, m_swordqRot.y, m_swordqRot.z, m_swordqRot.w);
-	m_font.DrawScreenPos(output, { 700.0f,100.0f }, CVector4(200.0f, 00.0f, 100.0f, 00.0f));
+	m_font.DrawScreenPos(output, { 700.0f,100.0f }, CVector4(200.0f, 00.0f, 100.0f, 1.0f));
 }
