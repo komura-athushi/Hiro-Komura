@@ -106,14 +106,14 @@ void Boss::AnimationController()
 	//ステート分岐によってアニメーションを再生させる
 	switch (m_state) {
 	case enState_Idle_Run:
-		if (m_movespeed.LengthSq() > 300.0f * 300.0f) {
-			//走りモーション。
-			m_skinModelRender->GetAnimCon().Play(enAnimationClip_idle, 0.2f);
-		}
-		else {
-			//待機モーション
-			//m_skinModelRender->GetAnimCon().Play(enAnimationClip_idle, 0.2f);
-		}
+		//if (m_movespeed.LengthSq() > 300.0f * 300.0f) {
+		//	//走りモーション。
+		//	m_skinModelRender->GetAnimCon().Play(enAnimationClip_idle, 0.2f);
+		//}
+		//else {
+		//	//待機モーション
+		//	//m_skinModelRender->GetAnimCon().Play(enAnimationClip_idle, 0.2f);
+		//}
 		m_state = enState_Idle_Run;
 		Chase();
 		Turn();
@@ -121,13 +121,14 @@ void Boss::AnimationController()
 	case enState_Attack1:
 		//攻撃と攻撃の間にクールタイムを設ける
 		if (m_timer > 60) {
-			if (m_skinModelRender->GetAnimCon().IsPlaying()) {
+			/*if (m_skinModelRender->GetAnimCon().IsPlaying()) {
 				m_skinModelRender->GetAnimCon().Play(enAnimationClip_attack1, 0.0f);
 				m_timer = 0;
 			}
 			else {
 				m_state = enState_Idle_Run;
-			}
+			}*/
+			
 		}
 		Turn();
 		break;

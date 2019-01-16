@@ -13,6 +13,7 @@ public:
 	bool Start() override;
 	void Update() override;
 	void Attack();       										//攻撃
+	void Attack1();       										//攻撃1
 	void Chase();												//追跡
 	void AnimationController();									//アニメーションの再生
 	void Damage();												//ダメージを受けた時のアクション
@@ -62,7 +63,7 @@ private:
 	EnState m_state = enState_Idle_Run;
 	CVector3 m_oldpos = { 30.0f,100.0f,1500.0f };               //ボスの初期位置
 	CVector3 m_position = { 30.0f,100.0f,1500.0f };				//ボスの座標
-	CVector3 m_scale = { 3.0f,3.0f,3.0f };						//ボスのスケール
+	CVector3 m_scale = { 1.5f,1.5f,1.5f };						//ボスのスケール
 	CVector3 m_movespeed = { 0.0f,  0.0f,  0.0f };				//移動速度
 	CVector3 m_parallel = { 0.0f,0.0f,0.0f };					//ユニティちゃんの向きと平行なベクトル
 	Player* m_player;											//プレイヤークラスのポインタ

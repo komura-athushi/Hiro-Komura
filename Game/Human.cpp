@@ -28,20 +28,11 @@ bool Human::Start()
 	m_skinModelRender->SetRot(m_rotation);
 	m_gamedata = FindGO<GameData>(L"GameData");
 	m_playerstatus = FindGO<PlayerStatus>(L"PlayerStatus");
-<<<<<<< HEAD
-	switch (m_gamedata->GetTownLevel()) {
-	case 0:
-		if (m_gamedata->GetStageClear(0)) {
-			if (m_necessarymaterial <= m_playerstatus->GetMaterial(0)) {
-				m_developtown = true;
-			}
-=======
 	m_townlevel = m_gamedata->GetTownLevel();
 	//ðŒ‚ð–ž‚½‚µŽè“ü‚ê‚ÎAŠX‚ð”­“W‚Å‚«‚é‚æ‚¤‚É‚·‚é
 	if (m_gamedata->GetStageClear(m_townlevel)) {
 		if (m_necessarymaterial <= m_playerstatus->GetMaterial(m_townlevel)) {
 			m_developtown = true;
->>>>>>> 5e675cf9b759c4cc1e2e471c8155c018c0d36018
 		}
 	}
 	return true;
