@@ -3,6 +3,7 @@
 #include "PlayerStatus.h"
 #include "Player.h"
 #include "IEnemy.h"
+#include "Effekseer.h"
 const int ShotMagic::m_number[10] = { 0,1,2,3,4,5,6,7,8,9 };
 ShotMagic::ShotMagic(const int& id, const wchar_t* name, const float& damageRate, const int& ppCost)
 	:m_id(id), m_name(name), m_damageRate(damageRate), m_ppCost(ppCost)
@@ -75,16 +76,16 @@ bool ShotMagic::Start()
 		 else {
 			 //削除する時間を超えていたらモデルとコリジョンを削除します
 			 if (mgml.s_timer >= m_deletetime) {
-				 delete mgml.s_skinModelReder;
-				 mgml.s_skinModelReder = nullptr;
+				 delete mgml.s_effect;
+				 mgml.s_effect = nullptr;
 				 delete mgml.s_collision;
 				 mgml.s_collision = nullptr;
 				 mgml.s_delete = true;
 			 }
 			 else {
 				 //モデルとコリジョンを動かします
-				 mgml.s_position = mgml.s_skinModelReder->GetPos() + m_movespeed*GetDeltaTimeSec();
-				 mgml.s_skinModelReder->SetPos(mgml.s_position);
+				 mgml.s_position = mgml.s_effect->GetPos() + m_movespeed*GetDeltaTimeSec();
+				 mgml.s_effect->SetPos(mgml.s_position);
 				 mgml.s_collision->SetPosition(mgml.s_position);
 				 mgml.s_timer += 1.0f;
 			 }
@@ -98,16 +99,27 @@ bool ShotMagic::Start()
 		 delete this;
 	 }
 }
- void ShotMagic::SetCollisionModel(const CVector3& pos, const float& scale,const int& id, const int& number, bool damage)
+ void ShotMagic::SetCollisionModel(const CVector3& pos, const float& scale,const int& id, const CVector3& scl, const int& number, bool damage)
  {
-	 GameObj::CSkinModelRender* skinModelRender = new GameObj::CSkinModelRender;
+	 GameObj::Suicider::CEffekseer* effect = new GameObj::Suicider::CEffekseer;
 	 SuicideObj::CCollisionObj* attackCol = NewGO<SuicideObj::CCollisionObj>();
 	 //MagicModelクラスの可変長配列に生成したモデルとコリジョンを格納します
-	 m_magicmocelList.push_back({ skinModelRender,attackCol });
+	 m_magicmocelList.push_back({ effect,attackCol });
 	 //モデルを作成します
-	 skinModelRender->Init(L"Resource/modelData/Magic_Sample.cmo");
+	 /*skinModelRender->Init(L"Resource/modelData/Magic_Sample.cmo");
 	 skinModelRender->SetScale(m_scale);
-	 skinModelRender->SetPos(pos);
+	 skinModelRender->SetPos(pos);*/
+	 switch (m_id) {
+	 case 1:
+		 effect->Play(L"Asset/effect/efk/magic_proj02.efk", 1.0f, pos, CQuaternion::Identity(), scl * 12);
+		 break;
+	 case 2:
+		 effect->Play(L"Asset/effect/efk/magic_proj03.efk", 1.0f, pos, CQuaternion::Identity(), scl * 12);
+		 break;
+	 default:
+		 effect->Play(L"Asset/effect/efk/magic_proj01.efk", 1.0f, pos, CQuaternion::Identity(), scl * 12);
+		 break;
+	 }
 	 //攻撃判定の発生
 	 attackCol->CreateSphere(pos, CQuaternion::Identity(),scale);
 	 //寿命を設定
@@ -168,7 +180,7 @@ bool ShotMagic::Start()
 	 m_modelnumber = m_modelnumber1;
 	 m_scale = m_scale1;
 	 m_position = m_position + CVector3::AxisY()*60.0f;
-	 SetCollisionModel(m_position,m_collisionscale1,m_id);
+	 SetCollisionModel(m_position,m_collisionscale1,m_id,m_scale);
 	 m_movespeed = m_directionplayer * m_multiplyspeed1;
 	 m_damage /= m_modelnumber;
  }
@@ -191,7 +203,7 @@ bool ShotMagic::Start()
  {
 	 if (m_modelcount != m_modelnumber) {
 		 if (m_timer >= m_time2) {
-			 SetCollisionModel(m_position, m_collisionscale2,m_id);
+			 SetCollisionModel(m_position, m_collisionscale2,m_id,m_scale);
 			 m_timer = 0;
 		 }
 	 }
@@ -204,7 +216,7 @@ bool ShotMagic::Start()
 	 m_modelnumber = m_modelnumber3;
 	 m_scale = m_scale3;
 	 m_position = m_position; //+CVector3::AxisY()*60.0f;
-	 SetCollisionModel(m_position, m_collisionscale3, m_id);
+	 SetCollisionModel(m_position, m_collisionscale3, m_id,m_scale);
 	 m_movespeed = m_directionplayer * m_multiplyspeed3;
 	 m_damage /= m_modelnumber;
  }
@@ -220,7 +232,7 @@ bool ShotMagic::Start()
 	 m_modelnumber = m_modelnumber4;
 	 m_scale = m_scale4;
 	 m_position = m_position; //+CVector3::AxisY()*60.0f;
-	 SetCollisionModel(m_position, m_collisionscale4, m_id);
+	 SetCollisionModel(m_position, m_collisionscale4, m_id,m_scale);
 	 m_movespeed = m_directionplayer * m_multiplyspeed4;
 	 m_damage /= m_modelnumber;
 	 Player* player = FindGO<Player>(L"Player");
@@ -238,7 +250,7 @@ bool ShotMagic::Start()
 	 m_modelnumber = m_modelnumber5;
 	 m_scale = m_scale5;
 	 m_position = m_position + CVector3::AxisY()*60.0f;
-	 SetCollisionModelnoDamage(m_position, m_collisionscale5, m_id, m_modelcount, false);
+	 SetCollisionModelnoDamage(m_position, m_collisionscale5, m_id,m_scale, m_modelcount, false);
 	 m_movespeed = m_directionplayer * m_multiplyspeed5;
 	 m_damage /= m_modelnumber;
 	
@@ -251,14 +263,14 @@ bool ShotMagic::Start()
 
  void ShotMagic::DeleteMagicModel(const int& number)
  {
-	 delete m_magicmocelList[number].s_skinModelReder;
-	 m_magicmocelList[number].s_skinModelReder = nullptr;
+	 delete m_magicmocelList[number].s_effect;
+	 m_magicmocelList[number].s_effect = nullptr;
 	 DeleteGO(m_magicmocelList[number].s_collision);
 	 m_magicmocelList[number].s_collision = nullptr;
 	 m_magicmocelList[number].s_delete = true;
  }
 
- void ShotMagic::SetCollisionModelnoDamage(const CVector3& pos, const float& scale, const int& id, const int& number, bool damage)
+ void ShotMagic::SetCollisionModelnoDamage(const CVector3& pos, const float& scale, const int& id, const CVector3& scl, const int& number, bool damage)
  {
-	 SetCollisionModel(pos, scale, id, m_number[number], damage);
+	 SetCollisionModel(pos, scale, id, scl, m_number[number], damage);
  }

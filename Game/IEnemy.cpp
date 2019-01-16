@@ -130,7 +130,7 @@ void IEnemy::PostRender()
 	    swprintf_s(output, L"%d\n", m_damagecount);
 		CVector2 pos = gc->GetCamera()->CalcScreenPosFromWorldPos(m_fontposition);
 		//m_font.DrawScreenPos(output,pos);
-		m_font.Draw(output, pos);
+		m_font.Draw(output, pos, CVector4(225.0f, 00.0f, 00.0f, 0.8f));
 	}
 }
 
