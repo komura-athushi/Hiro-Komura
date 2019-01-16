@@ -113,6 +113,9 @@ bool ShotMagic::Start()
 	 case 1:
 		 effect->Play(L"Asset/effect/efk/magic_proj02.efk", 1.0f, pos, CQuaternion::Identity(), scl * 12);
 		 break;
+	 case 2:
+		 effect->Play(L"Asset/effect/efk/magic_proj03.efk", 1.0f, pos, CQuaternion::Identity(), scl * 12);
+		 break;
 	 default:
 		 effect->Play(L"Asset/effect/efk/magic_proj01.efk", 1.0f, pos, CQuaternion::Identity(), scl * 12);
 		 break;
