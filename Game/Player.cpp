@@ -468,6 +468,11 @@ void Player::OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventName)
 		);
 	}
 	//Žô•¶‰r¥I
+	else if (wcscmp(eventName, L"aria_start") == 0) {
+		GameObj::Suicider::CEffekseer* effect = new GameObj::Suicider::CEffekseer;
+		effect->Play(L"Asset/effect/efk/magic_cast01.efk", 1.0f, m_position, CQuaternion::Identity(), { 12.0f,12.0f,12.0f });
+		effect->SetSpeed(2.0f);
+	}
 	else if (wcscmp(eventName, L"aria") == 0) {
 		ShotMagic* shotmagic = new ShotMagic;
 		shotmagic->SetPosition(m_position);
@@ -475,9 +480,6 @@ void Player::OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventName)
 		shotmagic->SetId(m_MagicId);
 		shotmagic->SetDamage(m_Mattack, m_DamageRate);
 		shotmagic->SetName(L"ShotMagic");
-		GameObj::Suicider::CEffekseer* effect = new GameObj::Suicider::CEffekseer;
-		effect->Play(L"Asset/effect/efk/magic_cast01.efk", 1.0f, m_position, CQuaternion::Identity(), {12.0f,12.0f,12.0f});
-		effect->SetSpeed(2.0f);
 	}
 }
 
