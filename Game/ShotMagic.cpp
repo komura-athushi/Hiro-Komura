@@ -120,6 +120,12 @@ bool ShotMagic::Start()
 		 effect->Play(L"Asset/effect/efk/magic_proj01.efk", 1.0f, pos, CQuaternion::Identity(), scl * 12);
 		 break;
 	 }
+	 CVector3 topos = m_movespeed;
+	 topos.Normalize();
+	 float degree = atan2f(topos.x, topos.z);
+	 CQuaternion qRot;
+	 qRot.SetRotation(CVector3::AxisY(), degree);
+	 effect->SetRot(qRot);
 	 //çUåÇîªíËÇÃî≠ê∂
 	 attackCol->CreateSphere(pos, CQuaternion::Identity(),scale);
 	 //éıñΩÇê›íË
@@ -180,8 +186,8 @@ bool ShotMagic::Start()
 	 m_modelnumber = m_modelnumber1;
 	 m_scale = m_scale1;
 	 m_position = m_position + CVector3::AxisY()*60.0f;
-	 SetCollisionModel(m_position,m_collisionscale1,m_id,m_scale);
 	 m_movespeed = m_directionplayer * m_multiplyspeed1;
+	 SetCollisionModel(m_position,m_collisionscale1,m_id,m_scale);
 	 m_damage /= m_modelnumber;
  }
  void ShotMagic::FoieUpdate()
@@ -194,8 +200,8 @@ bool ShotMagic::Start()
 	 m_deletetime = m_deletetime2;
 	 m_modelnumber = m_modelnumber2;
 	 m_scale = m_scale2;
-	 m_position = m_position + CVector3::AxisY()*60.0f;
 	 m_movespeed = m_directionplayer * m_multiplyspeed1;
+	 m_position = m_position + CVector3::AxisY()*60.0f;
 	 m_damage /= m_modelnumber;
  }
 
@@ -216,8 +222,8 @@ bool ShotMagic::Start()
 	 m_modelnumber = m_modelnumber3;
 	 m_scale = m_scale3;
 	 m_position = m_position; //+CVector3::AxisY()*60.0f;
-	 SetCollisionModel(m_position, m_collisionscale3, m_id,m_scale);
 	 m_movespeed = m_directionplayer * m_multiplyspeed3;
+	 SetCollisionModel(m_position, m_collisionscale3, m_id,m_scale);
 	 m_damage /= m_modelnumber;
  }
 
@@ -232,8 +238,8 @@ bool ShotMagic::Start()
 	 m_modelnumber = m_modelnumber4;
 	 m_scale = m_scale4;
 	 m_position = m_position; //+CVector3::AxisY()*60.0f;
-	 SetCollisionModel(m_position, m_collisionscale4, m_id,m_scale);
 	 m_movespeed = m_directionplayer * m_multiplyspeed4;
+	 SetCollisionModel(m_position, m_collisionscale4, m_id,m_scale);
 	 m_damage /= m_modelnumber;
 	 Player* player = FindGO<Player>(L"Player");
 	 player->SetShihuta();
@@ -250,8 +256,8 @@ bool ShotMagic::Start()
 	 m_modelnumber = m_modelnumber5;
 	 m_scale = m_scale5;
 	 m_position = m_position + CVector3::AxisY()*60.0f;
-	 SetCollisionModelnoDamage(m_position, m_collisionscale5, m_id,m_scale, m_modelcount, false);
 	 m_movespeed = m_directionplayer * m_multiplyspeed5;
+	 SetCollisionModelnoDamage(m_position, m_collisionscale5, m_id,m_scale, m_modelcount, false);
 	 m_damage /= m_modelnumber;
 	
  }

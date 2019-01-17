@@ -48,6 +48,7 @@ void Player::unityChan()
 	m_skinModelRender->Init(L"Resource/modelData/unityChan.cmo", m_animClip, enAnimationClip_num, enFbxUpAxisY);
 	m_skinModelRender->SetPos(m_position);
 	m_skinModelRender->SetRot(m_rotation);
+	m_sprite.Init(L"Resource/sprite/HP_waku.dds");
 	m_sword = new Sword;
 	//unityChan‚Ìƒ{[ƒ“‚ðŒŸõ
 	m_bonehand = m_skinModelRender->FindBoneID(L"Character1_RightHand");
@@ -466,6 +467,7 @@ void Player::OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventName)
 		}
 		);
 	}
+	//Žô•¶‰r¥I
 	else if (wcscmp(eventName, L"aria") == 0) {
 		ShotMagic* shotmagic = new ShotMagic;
 		shotmagic->SetPosition(m_position);
@@ -600,4 +602,9 @@ void Player::PostRender()
 	swprintf_s(output, L"Lv   %d\nExp  %d\nNexp %d\nHP   %d\nPP   %d\nAtk  %d\nMatk %d\nWpn  %s\nMgc  %s\nMPC  %d\nMgg  %d\nWLv  %d\n", m_Level, m_Exp, m_NextExp, m_HP, m_PP, m_Attack, m_Mattack, m_SwordName, m_MagicName, m_PPCost, int(m_Mattack*m_DamageRate),m_playerstatus->GetWeaponLv(m_SwordId));
 	//swprintf_s(output, L"x   %f\ny   %f\nz  %f\nw   %f\n", m_swordqRot.x, m_swordqRot.y, m_swordqRot.z, m_swordqRot.w);
 	m_font.DrawScreenPos(output, { 700.0f,100.0f }, CVector4(200.0f, 00.0f, 100.0f, 1.0f));
+	/*m_sprite.DrawScreenPos(CVector2::Zero(), CVector2::One(), CVector2::Zero(),
+		0.0f,
+		{ 1.0f, 1.0f, 1.0f, 1.0f },
+		DirectX::SpriteEffects_None,
+		0.4f);*/
 }

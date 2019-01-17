@@ -43,6 +43,9 @@
     <ImageContentTask Include="Asset\sprite\loading.png">
       <Filter>Asset\sprite</Filter>
     </ImageContentTask>
+    <ImageContentTask Include="Asset\sprite\HP_waku.png">
+      <Filter>Asset\sprite</Filter>
+    </ImageContentTask>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Boss.cpp" />

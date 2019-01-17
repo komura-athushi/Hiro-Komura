@@ -38,10 +38,25 @@ bool Town::Start()
 {
 	//ディレクションライトを設定
 	m_lig = new GameObj::CDirectionLight;
-	m_color = { 1.0f,1.0f,1.0f };
+	m_color = { 1.0f,-1.0f,1.0f };
 	m_color.Normalize();
 	m_lig->SetDirection(m_color);
 	m_lig->SetColor({ 1.0f, 1.0f, 1.0f });
+	ShadowMapHandler* shadowMap=new ShadowMapHandler;
+
+	//初期化
+
+	shadowMap->Init(2048,//解像度(幅
+
+		2048,//解像度(高さ
+
+		m_lig->GetDirection()//ライトの方向
+
+	);
+
+	shadowMap->SetArea({ 2000.0f,2000.0f,2000.0f });//シャドウマップの範囲(Zがライトの方向)
+
+	shadowMap->SetTarget({0.0f,0.0f,0.0f});//シャドウマップの範囲の中心位置*/
 	BuildLevel();
 	m_gamecamera = new GameCamera;
 	m_gamecamera->SetPlayer(m_player);
