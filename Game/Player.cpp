@@ -232,7 +232,7 @@ void Player::Animation()
 			}
 		}
 	}
-	if (m_HP<=0 || Pad(0).GetButton(enButtonLT)) {
+	if (m_HP <= 0 || Pad(0).GetButton(enButtonLT)) {
 		m_state = enState_GameOver;
 	}
 	else if (Pad(0).GetButton(enButtonLB1)) {

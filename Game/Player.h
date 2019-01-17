@@ -121,7 +121,7 @@ private:
 	GameCamera* m_gamecamera;                                   //カメラのポインタ
 	CVector3 m_movespeed;                                       //移動速度
 	CVector3 m_position = {0.0f,100.0f,00.0f};                  //ユニティちゃんの座標
-	CVector3 m_playerheikou = { 0.0f,0.0f,0.0f };               //プレイヤーと平行なベクトル
+	CVector3 m_playerheikou = { 1.0f,0.0f,0.0f };               //プレイヤーと平行なベクトル
 	CVector3 m_scale = { 1.0f,1.0f,1.0f };                      //大きさ
 	int m_timer = 0;                                            //攻撃のクールタイム
 	int m_timer2 = 0;                                           //ダメージのクールタイム

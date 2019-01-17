@@ -54,8 +54,8 @@ void GameCamera::cagliostro()
 	CVector2 stickR;
 	stickR = Pad(0).GetStick(R);
 	stickR.x = -stickR.x;
-	float m_sdegreexz = -stickR.x * 2.0f;
-	float m_sdegreey = -stickR.y * 2.0f;
+	float m_sdegreexz = -stickR.x * 2.0f*60.0f*GetDeltaTimeSec();
+	float m_sdegreey = -stickR.y * 2.0f*60.0f*GetDeltaTimeSec();
 	//‰ñ“]“x‰ÁŽZ
 	m_degreexz += m_sdegreexz;
 	m_degreey += m_sdegreey;
