@@ -46,15 +46,15 @@ bool Town::Start()
 
 	//初期化
 
-	shadowMap->Init(2048,//解像度(幅
+	shadowMap->Init(12048,//解像度(幅
 
-		2048,//解像度(高さ
+		12048,//解像度(高さ
 
 		m_lig->GetDirection()//ライトの方向
 
 	);
 
-	shadowMap->SetArea({ 2000.0f,2000.0f,2000.0f });//シャドウマップの範囲(Zがライトの方向)
+	shadowMap->SetArea({ 20000.0f,20000.0f,20000.0f });//シャドウマップの範囲(Zがライトの方向)
 
 	shadowMap->SetTarget({0.0f,0.0f,0.0f});//シャドウマップの範囲の中心位置*/
 	BuildLevel();
