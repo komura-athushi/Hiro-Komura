@@ -4,6 +4,7 @@
 #include <math.h> 
 #include "Stage1.h"
 #include "Player.h"
+#include "BossAttack.h"
 //cppでエネミーのレア度ごとのドロップ率を設定
 const int Boss::m_dropChances[Weapon::m_HighestRarity] = { 0,0,0,100,0,0,0 };
 const int Boss::m_dropmaterialChances[Material::m_HighestRarity] = { 0.0f,100.0f,0.0f };
@@ -21,20 +22,7 @@ Boss::~Boss()
 bool Boss::Start()
 {
 	IEnemy::CCollision({ m_position }, m_collisionheight, m_r);
-	//アニメーション
-	/*m_animClip[enAnimationClip_idle].Load(L"Asset/animData/boss/boss_walk.tka");
-	m_animClip[enAnimationClip_attack1].Load(L"Asset/animData/boss/boss_attack1.tka");
-	m_animClip[enAnimationClip_attack2].Load(L"Asset/animData/boss/boss_attack2.tka");
-	//m_animClip[enAnimationClip_attack3].Load(L"Asset/animData/boss/test.tka");
-	//m_animClip[enAnimationClip_damage].Load(L"Asset/animData/boss/test.tka");
-	//m_animClip[enAnimationClip_death].Load(L"Asset/animData/boss/test.tka");
-	m_animClip[enAnimationClip_idle].SetLoopFlag(true);
-	m_animClip[enAnimationClip_attack1].SetLoopFlag(false);
-	m_animClip[enAnimationClip_attack2].SetLoopFlag(false);
-	/*m_animClip[enAnimationClip_attack3].SetLoopFlag(false);
-	m_animClip[enAnimationClip_damage].SetLoopFlag(false);
-	m_animClip[enAnimationClip_death].SetLoopFlag(false);*/
-	//鬼のスキンモデルレンダーを表示
+	//ボスのスキンモデルレンダーを表示
 	m_skinModelRender = new GameObj::CSkinModelRender;
 	m_skinModelRender->Init(L"Resource/modelData/boss.cmo");//, m_animClip, enAnimationClip_num, enFbxUpAxisZ);
 	/*m_skinModelRender->GetAnimCon().AddAnimationEventListener([&](const wchar_t* clipName, const wchar_t* eventName) {
@@ -46,14 +34,35 @@ bool Boss::Start()
 	CVector3 pos = m_position;
 	pos.y += 55.0f;
 	m_staticobject.CreateCapsule(pos, rot, 40.0f, 50.0f);
+
+	
 	return true;
 }
 
 
 void Boss::Attack()
 {
+	//プレイヤーの座標を取得
+	CVector3 m_playerposition = m_player->GetPosition();
+	//プレイヤーと敵の距離
+	CVector3 pos = m_player->GetPosition() - m_position;
 	if(m_HP >= 600) {
 		m_state = enState_Attack1;
+		BossAttack* bossattack = new BossAttack;
+		//弾丸の座標にエネミーの座標を代入する。
+		CVector3 l_pos = m_position;
+		l_pos.y += 70.0f;
+		bossattack->SetPosition(l_pos);
+
+		CVector3 bulletPos = m_playerposition - l_pos;
+		bulletPos.Normalize();
+		//弾のスピードを変える
+		CVector3 bulletPos2 = bossattack->GetPosition();
+		bulletPos2 += bulletPos * 800.0f;
+		bossattack->SetPosition(bulletPos2);
+
+		//タイマーをリセット。
+		m_timer = 0;
 	}
 	else if(m_HP >= 300) {
 		m_state = enState_Attack2;
@@ -211,6 +220,7 @@ void Boss::Dead()
 void Boss::Update()
 {
 	m_timer++;
+	Attack();
 	//AnimationController();
 	//Damage();
 	//Dead();
