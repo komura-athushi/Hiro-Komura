@@ -25,6 +25,7 @@ Town::~Town()
 	delete m_ground;
 	delete m_gamecamera;
 	delete m_lig;
+	delete m_shadowMap;
 	delete m_stage1_teleport;
 	for (auto& stone : m_stoneList) {
 		delete stone;
@@ -42,11 +43,11 @@ bool Town::Start()
 	m_color.Normalize();
 	m_lig->SetDirection(m_color);
 	m_lig->SetColor({ 1.0f, 1.0f, 1.0f });
-	ShadowMapHandler* shadowMap=new ShadowMapHandler;
+	m_shadowMap=new ShadowMapHandler;
 
 	//初期化
 
-	shadowMap->Init(12048,//解像度(幅
+	m_shadowMap->Init(12048,//解像度(幅
 
 		12048,//解像度(高さ
 
@@ -54,9 +55,9 @@ bool Town::Start()
 
 	);
 
-	shadowMap->SetArea({ 20000.0f,20000.0f,20000.0f });//シャドウマップの範囲(Zがライトの方向)
+	m_shadowMap->SetArea({ 20000.0f,20000.0f,20000.0f });//シャドウマップの範囲(Zがライトの方向)
 
-	shadowMap->SetTarget({0.0f,0.0f,0.0f});//シャドウマップの範囲の中心位置*/
+	m_shadowMap->SetTarget({0.0f,0.0f,0.0f});//シャドウマップの範囲の中心位置*/
 	BuildLevel();
 	m_gamecamera = new GameCamera;
 	m_gamecamera->SetPlayer(m_player);

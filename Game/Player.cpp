@@ -243,7 +243,7 @@ void Player::Animation()
 
 void Player::AnimationController()
 {
-	m_skinModelRender->GetAnimCon().SetSpeed(1.0f);
+	m_skinModelRender->GetAnimCon().SetSpeed(1.0f*60.0f*GetDeltaTimeSec());
 	//ステート分岐によってアニメーションを再生させる
 	switch (m_state) {
 	case enState_Run:
@@ -337,7 +337,7 @@ void Player::AnimationController()
 	case enState_Attack:
 		if (m_skinModelRender->GetAnimCon().IsPlaying() || m_isjump==true) {
 			m_skinModelRender->GetAnimCon().Play(enAnimationClip_attack, 0.2f);
-			m_skinModelRender->GetAnimCon().SetSpeed(7.0f);
+			m_skinModelRender->GetAnimCon().SetSpeed(7.0f*60.0f*GetDeltaTimeSec());
 			Animation();
 			m_isjump = false;
 			m_timer = 0;
@@ -362,7 +362,7 @@ void Player::AnimationController()
 	case enState_Aria:
 		if (m_skinModelRender->GetAnimCon().IsPlaying() || m_isjump == true) {
 			m_skinModelRender->GetAnimCon().Play(enAnimationClip_aria, 0.2f);
-			m_skinModelRender->GetAnimCon().SetSpeed(1.0f);
+			m_skinModelRender->GetAnimCon().SetSpeed(1.0f*60.0f*GetDeltaTimeSec());
 			Animation();
 			m_isjump = false;
 			m_timer = 0;
