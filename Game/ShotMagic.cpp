@@ -4,6 +4,7 @@
 #include "Player.h"
 #include "IEnemy.h"
 #include "Effekseer.h"
+
 const int ShotMagic::m_number[10] = { 0,1,2,3,4,5,6,7,8,9 };
 ShotMagic::ShotMagic(const int& id, const wchar_t* name, const float& damageRate, const int& ppCost)
 	:m_id(id), m_name(name), m_damageRate(damageRate), m_ppCost(ppCost)
@@ -116,6 +117,9 @@ bool ShotMagic::Start()
 	 case 2:
 		 effect->Play(L"Asset/effect/efk/magic_proj03.efk", 1.0f, pos, CQuaternion::Identity(), scl * 12);
 		 break;
+	 case 3:
+		 effect->Play(L"Asset/effect/efk/magic_explo04.efk", 1.0f, pos, CQuaternion::Identity(), scl * 12);
+		 break;
 	 default:
 		 effect->Play(L"Asset/effect/efk/magic_proj01.efk", 1.0f, pos, CQuaternion::Identity(), scl * 12);
 		 break;
@@ -200,7 +204,7 @@ bool ShotMagic::Start()
 	 m_deletetime = m_deletetime2;
 	 m_modelnumber = m_modelnumber2;
 	 m_scale = m_scale2;
-	 m_movespeed = m_directionplayer * m_multiplyspeed1;
+	 m_movespeed = m_directionplayer * m_multiplyspeed2;
 	 m_position = m_position + CVector3::AxisY()*60.0f;
 	 m_damage /= m_modelnumber;
  }
@@ -225,6 +229,7 @@ bool ShotMagic::Start()
 	 m_movespeed = m_directionplayer * m_multiplyspeed3;
 	 SetCollisionModel(m_position, m_collisionscale3, m_id,m_scale);
 	 m_damage /= m_modelnumber;
+	 m_damage /= m_multihit;
  }
 
  void ShotMagic::ZanbasUpdate()

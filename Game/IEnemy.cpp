@@ -43,7 +43,7 @@ void IEnemy::SetCCollision(const CVector3& pos,const float& l)
 {
 	if (m_displayfont) {
 		m_fonttimer++;
-		if (m_fonttimer == 40) {
+		if (m_fonttimer == 20) {
 			m_fonttimer = 0;
 			m_displayfont = false;
 		}
@@ -92,7 +92,7 @@ void IEnemy::Damage(const int& attack,int number)
 		}
 		break;
 	case 3:
-		if (m_timer3 >= 15) {		//ザンバース
+		if (m_timer3 >= 30) {		//ザンバース
 			m_HP -= attack;
 			m_timer3 = 0;
 			m_damage = true;
