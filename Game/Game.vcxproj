@@ -295,7 +295,6 @@
     <MeshContentTask Include="Asset\modelData\cagliostro\cagliostro.fbx" />
     <MeshContentTask Include="Asset\modelData\enemy\enemy.FBX" />
     <MeshContentTask Include="Asset\modelData\ground.FBX" />
-    <MeshContentTask Include="Asset\modelData\House\house.FBX" />
     <MeshContentTask Include="Asset\modelData\human\human.FBX" />
     <MeshContentTask Include="Asset\modelData\Magic_Sample.FBX" />
     <MeshContentTask Include="Asset\modelData\material\brick.FBX" />

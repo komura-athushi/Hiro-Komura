@@ -42,6 +42,6 @@ bool Ground::Start()
 
 void Ground::Update()
 {
-	
+
 }
 

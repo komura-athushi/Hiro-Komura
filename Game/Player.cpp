@@ -598,6 +598,32 @@ void Player::RelationHuman()
 	}
 }
 
+void Player::OutTarget()
+{
+	std::vector<CVector3> enemyList;
+	int enemynumber = 0;
+	CVector3 target;
+	QueryGOs<IEnemy>(L"Enemy", [&](IEnemy* enemy)
+	{
+		CVector3 pos = enemy->GetCollisionPosition();
+		enemyList.push_back(pos);
+		enemynumber++;
+		return true;
+	});
+	if (enemynumber == 0) {
+		return;
+	}
+	target = m_position - enemyList[0];
+	for (int i = 0; i < enemynumber; i++) {
+		CVector3 pos = m_position - enemyList[enemynumber];
+		
+		if (target.Length() > pos.Length()) {
+			target = pos;
+		}
+	}
+	m_target = target;
+}
+
 void Player::PostRender()
 {
 	wchar_t output[256];

@@ -60,6 +60,8 @@ public:
 	void RelationHuman();
 	//プレイヤーのPPを一定値だけ回復させる
 	void RecoveryPP();
+	//オートターゲット
+	void OutTarget();
 	//プレイヤーの座標をセット
 	void SetPosition(const CVector3& pos)
 	{
@@ -125,6 +127,8 @@ private:
 	CVector3 m_scale = { 1.0f,1.0f,1.0f };                      //大きさ
 	int m_timer = 0;                                            //攻撃のクールタイム
 	int m_timer2 = 0;                                           //ダメージのクールタイム
+	CVector3 m_target = CVector3::Zero();
+	bool m_ontarget = false;									//ターゲット表示するかどうか
 	bool m_gameover = false;                                    //ゲームオーバーかどうか
 	bool m_gameclear = false;									//ゲームクリアかどうか
 	bool m_isjump = false;                                      //ジャンプしているかどうか

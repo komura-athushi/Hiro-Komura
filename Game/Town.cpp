@@ -47,9 +47,9 @@ bool Town::Start()
 
 	//初期化
 
-	m_shadowMap->Init(12048,//解像度(幅
+	m_shadowMap->Init(8048,//解像度(幅
 
-		12048,//解像度(高さ
+		8048,//解像度(高さ
 
 		m_lig->GetDirection()//ライトの方向
 

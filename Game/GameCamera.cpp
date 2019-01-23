@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "GameCamera.h"
 #include "Player.h"
+#include "IEnemy.h"
 #define _USE_MATH_DEFINES //M_PI â~é¸ó¶åƒÇ—èoÇµ
 #include <math.h> 
 GameCamera::GameCamera()
@@ -151,7 +152,7 @@ void GameCamera::Hutu()
 	toPos *= m_r;
 	m_position = m_target + toPos;
 	toPos *= 2;
-	m_target -= toPos;
+	//m_target -= toPos;
 	/*m_target.y = m_playerposition.y;
 	m_target.y += 140.0f;*/
 }

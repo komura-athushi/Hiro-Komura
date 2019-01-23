@@ -146,9 +146,6 @@
     <MeshContentTask Include="Asset\modelData\Sword\GreatSword.fbx">
       <Filter>Asset\modelData</Filter>
     </MeshContentTask>
-    <MeshContentTask Include="Asset\modelData\House\house.FBX">
-      <Filter>Asset\modelData</Filter>
-    </MeshContentTask>
     <MeshContentTask Include="Asset\modelData\Sword\excaliburmorgan.FBX">
       <Filter>Asset\modelData</Filter>
     </MeshContentTask>

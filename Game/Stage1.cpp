@@ -23,7 +23,7 @@ Stage1::~Stage1()
 	delete m_ground;
 	delete m_lig;
 	delete m_shadowMap;
-	QueryGOs<Oni>(L"Oni", [&](Oni* oni)
+	QueryGOs<Oni>(L"Enemy", [&](Oni* oni)
 	{
 		delete oni;
 		return true;
@@ -52,9 +52,9 @@ bool Stage1::Start()
 
 	//初期化
 
-	m_shadowMap->Init(12048,//解像度(幅
+	m_shadowMap->Init(8048,//解像度(幅
 
-		12048,//解像度(高さ
+		8048,//解像度(高さ
 
 		m_lig->GetDirection()//ライトの方向
 
@@ -87,7 +87,7 @@ bool Stage1::Start()
 			Oni* oni = new Oni;
 			oni->SetPosition(objData.position);
 			oni->SetOldPosition(objData.position);
-			oni->SetName(L"Oni");
+			oni->SetName(L"Enemy");
 			//後で削除するのでリストに積んで記憶しておく。
 			m_oniList.push_back(oni);
 			oni->SetPlayer(m_player);
@@ -102,7 +102,7 @@ bool Stage1::Start()
 			Boss* boss = new Boss;
 			boss->SetPosition(objData.position);
 			boss->SetOldPosition(objData.position);
-			boss->SetName(L"Oni");
+			boss->SetName(L"Enemy");
 			boss->SetPlayer(m_player);
 			boss->SetStage1(this);
 			//フックした場合はtrueを返す。

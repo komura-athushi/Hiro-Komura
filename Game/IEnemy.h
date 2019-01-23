@@ -50,6 +50,11 @@ public:
 	{
 		return m_position;
 	}
+	//エネミーのコリジョンの座標を取得
+	CVector3 GetCollisionPosition() const
+	{
+		return m_collisionposition;
+	}
 	//文字表示
 	void PostRender()override;
 protected:
