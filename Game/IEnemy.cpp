@@ -106,7 +106,8 @@ void IEnemy::Damage(const int& attack,int number)
 			m_timer5 = 0;
 			m_damage = true;
 		}
-		break;
+		break;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
+		                                                                                    
 	}
 	if (m_HP <= 0) {
 		m_death = true;

@@ -131,6 +131,12 @@ void Town::BuildLevel()
 			m_ground->SetPosition(objData.position);
 			return true;
 		}
+		else if (objData.EqualObjectName(L"ground2") == true) {
+			m_ground = new Ground;
+			m_ground->SetStage(0);
+			m_ground->SetPosition(objData.position);
+			return true;
+		}
 		else if (objData.EqualObjectName(L"stone") == true) {
 			//Starオブジェクト。
 			Stone* stone = new Stone;

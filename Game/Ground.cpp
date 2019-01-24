@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "Ground.h"
+#include "GameData.h"
 Ground::Ground()
 {
 	
@@ -20,10 +21,16 @@ bool Ground::Start()
 	m_skinModelRender2->SetScale(m_scale);
 	m_skinModelRender2->SetIsShadowCaster(false);
 	m_staticobject2.CreateMesh(*m_skinModelRender2);
+	GameData* gamedata = FindGO<GameData>(L"GameData");
 	//ステージによって読み込むfbxファイルを変えます
 	switch (m_stage) {
 	case 0:
-		m_skinModelRender->Init(L"Resource/modelData/ground.cmo");
+		if (gamedata->GetTownLevel() == 0) {
+			m_skinModelRender->Init(L"Resource/modelData/ground.cmo");
+		}
+		else if (gamedata->GetTownLevel()==1) {
+			m_skinModelRender->Init(L"Resource/modelData/ground2.cmo");
+		}
 		break;
 	case 1:
 		m_skinModelRender->Init(L"Resource/modelData/stage1_ground.cmo");
