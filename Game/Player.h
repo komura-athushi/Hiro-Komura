@@ -111,6 +111,8 @@ private:
 	bool m_cagliostro = false;
 	GameObj::CSkinModelRender* m_skinModelRender = nullptr;		//スキンモデルレンダラー
 	CSprite m_sprite;
+	CSprite m_sprite2;											//ゲームクリアとかゲームオーバーの
+	bool m_displaysprite = false;
     SuicideObj::CCollisionObj* m_collision;                     //丸いコリジョン
 	CFont m_font;                                               //文字表示クラス
 	Bone* m_bone;                                               //骨

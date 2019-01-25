@@ -635,4 +635,26 @@ void Player::PostRender()
 		{ 1.0f, 1.0f, 1.0f, 1.0f },
 		DirectX::SpriteEffects_None,
 		0.4f);*/
+	if (m_state == enState_GameOver && !m_skinModelRender->GetAnimCon().IsPlaying()) {
+		if (!m_displaysprite) {
+			m_sprite2.Init(L"Resource/sprite/gameover.dds");
+			m_displaysprite = true;
+		}
+		m_sprite2.DrawScreenPos(CVector2::Zero(), CVector2::One(), CVector2::Zero(),
+			0.0f,
+			{ 1.0f, 1.0f, 1.0f, 1.0f },
+			DirectX::SpriteEffects_None,
+			0.5f);
+	}
+	else if (m_state == enState_GameClear && !m_skinModelRender->GetAnimCon().IsPlaying()) {
+		if (!m_displaysprite) {
+			m_sprite2.Init(L"Resource/sprite/clear.dds");
+			m_displaysprite = true;
+		}
+		m_sprite2.DrawScreenPos(CVector2::Zero(), CVector2::One(), CVector2::Zero(),
+			0.0f,
+			{ 1.0f, 1.0f, 1.0f, 1.0f },
+			DirectX::SpriteEffects_None,
+			0.5f);
+	}
 }

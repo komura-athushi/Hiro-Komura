@@ -24,6 +24,8 @@ Stage1::~Stage1()
 	delete m_lig;
 	delete m_shadowMap;
 	QueryGOs<Oni>(L"Enemy", [&](Oni* oni)
+
+
 	{
 		delete oni;
 		return true;
@@ -137,3 +139,4 @@ void Stage1::Update()
 	}
 	
 }
+
