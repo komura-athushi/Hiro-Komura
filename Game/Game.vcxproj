@@ -301,6 +301,7 @@
     <MeshContentTask Include="Asset\modelData\material\brick.FBX" />
     <MeshContentTask Include="Asset\modelData\material\ishi.FBX" />
     <MeshContentTask Include="Asset\modelData\material\wood.FBX" />
+    <MeshContentTask Include="Asset\modelData\meseta\meseta.FBX" />
     <MeshContentTask Include="Asset\modelData\sky.FBX" />
     <MeshContentTask Include="Asset\modelData\skydome.FBX" />
     <MeshContentTask Include="Asset\modelData\stage1_ground.FBX" />

@@ -15,7 +15,7 @@ public:
 	* int dropchances[]  ドロップするアイテムのレア度と確率
 	* int dropmaterialchances[]  ドロップする素材のレア度と確率
 	*/
-	IEnemy(const int& h,const int& a,const int& e,const int dropchances[Weapon::m_HighestRarity],const int dropmaterialchances[Material::m_HighestRarity]);
+	IEnemy(const int& h,const int& a,const int& e,const int dropchances[Weapon::m_HighestRarity],const int dropmaterialchances[Material::m_HighestRarity],const int& meseta);
 	virtual ~IEnemy();
 	/*!
 	* @brief	コリジョンの生成。
@@ -80,6 +80,7 @@ protected:
 	bool m_death = false;                                     //HPが0以下になったかどうか
 	bool m_displayfont = false;								  //ダメ表示するかどうか
 	CFont m_font;                                             //文字表示クラス
+	int m_meseta = 0;
 	int m_dropChances[Weapon::m_HighestRarity];			      //エネミーのドロップするアイテム、[1]が0.4fならレア度1が40%でドロップするみたいな
 	int m_dropmaterialChances[Material::m_HighestRarity];	  //エネミーのドロップする素材の確率
 };

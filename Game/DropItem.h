@@ -28,6 +28,11 @@ public:
 	{
 		m_rarity = rare;
 	}
+	//メセタの額を設定
+	void SetMeseta(const int& meseta)
+	{
+		m_meseta = meseta;
+	}
 private:
 	GameObj::CSkinModelRender* m_skinModelRender = nullptr;		//スキンモデルレンダラー。
 	CVector3 m_position;                                        //座標
@@ -37,5 +42,6 @@ private:
 	Player* m_player;                                           //プレイヤークラスのポインタ
 	int m_rarity;												//武器のレアリティ
 	int m_number;												//武器のレアリティの中の番号
+	int m_meseta = 0;
 };
 

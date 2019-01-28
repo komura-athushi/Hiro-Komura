@@ -4,7 +4,7 @@
 #include "DropMaterial.h"
 #include "Player.h"
 #include "GameCamera.h"
-IEnemy::IEnemy(const int& h,const int& a,const int& e,const int dropchances[Weapon::m_HighestRarity],const int dropmaterialchances[Material::m_HighestRarity]):m_HP(h),m_Attack(a),m_Exp(e)
+IEnemy::IEnemy(const int& h,const int& a,const int& e,const int dropchances[Weapon::m_HighestRarity],const int dropmaterialchances[Material::m_HighestRarity],const int& meseta):m_HP(h),m_Attack(a),m_Exp(e)
 {
 	/*for (int i = 0; i < Weapon::m_HighestRarity; i++) {
 		m_dropChances[i] = *dropchances;

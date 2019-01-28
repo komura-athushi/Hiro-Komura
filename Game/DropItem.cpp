@@ -16,7 +16,7 @@ DropItem::~DropItem()
 bool DropItem::Start()
 {
 	//ドロップさせる武器の番号を決めます
-	m_state = 0;
+	/*m_state = 0;
 	int type = Weapon::m_raritynumber[m_rarity];
 	int rn = int(float(100 / type));
 	int randm = rand() % 100+1;
@@ -28,10 +28,10 @@ bool DropItem::Start()
 	for (int i = 0; i < m_rarity; i++) {
 		m_state += Weapon::m_raritynumber[i];
 	}
-	m_state += m_number;
+	m_state += m_number;*/
 	m_skinModelRender = new GameObj::CSkinModelRender;
 	//武器の番号によって読み込むfbxファイルを決めます
-	switch (m_state) {
+	/*switch (m_state) {
 	case 1:
 		m_skinModelRender->Init(L"Resource/modelData/FireSword.cmo");
 		break;
@@ -47,7 +47,8 @@ bool DropItem::Start()
 	case 5:
 		m_skinModelRender->Init(L"Resource/modelData/BlueLightSword.cmo");
 		break;
-	}
+	}*/
+	m_skinModelRender->Init(L"Resouse/modelData/meseta.cmo");
 	m_skinModelRender->SetPos(m_position);
 	m_skinModelRender->SetScale(m_scale);
 	m_player = FindGO<Player>(L"Player");
@@ -60,7 +61,8 @@ void DropItem::Update()
 	CVector3 pos = m_player->GetPosition() - m_position;
 	if (pos.Length() <= 80.0f) {
 		PlayerStatus* playerstatus = FindGO<PlayerStatus>(L"PlayerStatus");
-		playerstatus->SetWeapon(m_state);
+		//playerstatus->SetWeapon(m_state);
+		playerstatus->AddMeseta(m_meseta);
 		delete this;
 	}
 }

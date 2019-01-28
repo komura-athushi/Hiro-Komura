@@ -120,6 +120,19 @@ public:
 	{
 		return m_weaponinventorylist[number].s_equipment.GetLv();
 	}
+	//所持中のメセタの額を取得
+	int GetHaveMeseta() const
+	{
+		return m_havemeseta;
+	}
+	//引数より所持メセタが多いかどうかを返す
+	bool isManyMeseta(const int& meseta) {
+		return m_havemeseta >= meseta;
+	}
+	//引数分のメセタをプレイヤーのメセタに加算
+	void AddMeseta(const int& meseta) {
+		m_havemeseta += meseta;
+	}
 	//武器のステータスを設定
 	void SetWeaponStatus();
 	//魔法のステータスを設定
@@ -163,7 +176,8 @@ private:
 		int s_material = 0;
 	};
 	std::vector<WeaponInventory> m_weaponinventorylist;   //WeaponInventory構造体の配列
-	int m_havemateriallist[GameData::enMaterial_num] = { 0,0,0 };										  //プレイヤーの各素材の所持状況
+	int m_havemateriallist[GameData::enMaterial_num] = { 0,0,0 };		//プレイヤーの各素材の所持状況
+	int m_havemeseta = 0;								  //所持しているメセタの額
 	GameData* m_gamedata;                                 //GameDataクラスのポインタ
 	Weapon* m_weapon;									  //Weaponクラスのポインタ
 	Magic* m_magic;										  //Magicクラスのポインタ

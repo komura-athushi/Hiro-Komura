@@ -158,6 +158,9 @@
     <MeshContentTask Include="Asset\modelData\ground2.FBX">
       <Filter>Asset\modelData</Filter>
     </MeshContentTask>
+    <MeshContentTask Include="Asset\modelData\meseta\meseta.FBX">
+      <Filter>Asset\modelData</Filter>
+    </MeshContentTask>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Boss.h" />

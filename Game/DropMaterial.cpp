@@ -15,7 +15,6 @@ DropMaterial::~DropMaterial()
 
 bool DropMaterial::Start()
 {
-
 	//ƒhƒƒbƒv‚³‚¹‚é•Ší‚Ì”Ô†‚ğŒˆ‚ß‚Ü‚·
 	m_state = 0;
 	int type = Material::m_raritynumber[m_rarity];
