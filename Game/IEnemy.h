@@ -80,8 +80,9 @@ protected:
 	bool m_death = false;                                     //HPが0以下になったかどうか
 	bool m_displayfont = false;								  //ダメ表示するかどうか
 	CFont m_font;                                             //文字表示クラス
-	int m_meseta = 0;
+	int m_dropmeseta;
 	int m_dropChances[Weapon::m_HighestRarity];			      //エネミーのドロップするアイテム、[1]が0.4fならレア度1が40%でドロップするみたいな
 	int m_dropmaterialChances[Material::m_HighestRarity];	  //エネミーのドロップする素材の確率
+	static const int m_mesetarand = 4;
 };
 

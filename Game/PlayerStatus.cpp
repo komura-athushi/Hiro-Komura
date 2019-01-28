@@ -39,7 +39,7 @@ void PlayerStatus::Update()
 	//LSBボタンを押すと全部武器所持状態に移行
 	if (Pad(0).GetDown(enButtonLSB)) {
 		for (int i = 0; i < GameData::enWeapon_num; i++) {
-			m_weaponinventorylist[i]={ Equipment(i),true,50 };
+			m_weaponinventorylist[i]={ Equipment(i),true};
 		}
 		for (int i = 0; i < GameData::enMaterial_num; i++) {
 			m_havemateriallist[i] = 100;
@@ -47,7 +47,7 @@ void PlayerStatus::Update()
 		for (int i = 0; i < m_gamedata->m_stagenumber; i++) {
 			//m_gamedata->SetClear(i);
 		}
-		PlusExp(1000000000);
+		//PlusExp(1000000000);
 	}
 }
 
@@ -136,7 +136,7 @@ void PlayerStatus::PostRender()
 {
 	//ステを文字表示
 	wchar_t output[256];
-	swprintf_s(output, L"木   %d\n石   %d\nレンガ  %d\nそざい  %d\n", m_havemateriallist[0], m_havemateriallist[1], m_havemateriallist[2],m_weaponinventorylist[m_SwordId].s_material);
+	swprintf_s(output, L"木   %d\n石   %d\nレンガ  %d\nメセタ  %d\n", m_havemateriallist[0], m_havemateriallist[1], m_havemateriallist[2],m_havemeseta);
 	//swprintf_s(output, L"x   %f\ny   %f\nz  %f\nw   %f\n", m_swordqRot.x, m_swordqRot.y, m_swordqRot.z, m_swordqRot.w);
 	m_font.DrawScreenPos(output, { 00.0f,200.0f }, CVector4::White());
 	//武器のアイコン表示

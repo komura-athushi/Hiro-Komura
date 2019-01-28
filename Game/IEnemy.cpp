@@ -4,7 +4,7 @@
 #include "DropMaterial.h"
 #include "Player.h"
 #include "GameCamera.h"
-IEnemy::IEnemy(const int& h,const int& a,const int& e,const int dropchances[Weapon::m_HighestRarity],const int dropmaterialchances[Material::m_HighestRarity],const int& meseta):m_HP(h),m_Attack(a),m_Exp(e)
+IEnemy::IEnemy(const int& h,const int& a,const int& e,const int dropchances[Weapon::m_HighestRarity],const int dropmaterialchances[Material::m_HighestRarity],const int& meseta):m_HP(h),m_Attack(a),m_Exp(e),m_dropmeseta(meseta)
 {
 	/*for (int i = 0; i < Weapon::m_HighestRarity; i++) {
 		m_dropChances[i] = *dropchances;
@@ -139,7 +139,7 @@ void IEnemy::Drop()
 {
 	int rad = rand() % 100 + 1;
 	int rpos = rand() % 10 + 30;
-	for (int i = 0; i < Weapon::m_HighestRarity; i++) {
+	/*for (int i = 0; i < Weapon::m_HighestRarity; i++) {
 		if (m_dropChances[i] >= rad) {
 			DropItem* dropitem = new DropItem;
 			dropitem->SetRarity(i);
@@ -150,7 +150,20 @@ void IEnemy::Drop()
 			dropitem->SetName(L"DropItem");
 			break;
 		}
+	}*/
+	DropItem* dropitem = new DropItem;
+	if(rad >= 50){
+		m_dropmeseta += rand() % m_dropmeseta / m_mesetarand;
 	}
+	else {
+		m_dropmeseta -= rand() % m_dropmeseta / m_mesetarand;
+	}
+	dropitem->SetMeseta(m_dropmeseta);
+	CVector3 pos = m_position;
+	pos.x += rpos * 1.5f;
+	pos.z += rpos * 1.5f;
+	dropitem->SetPosition(pos);
+	dropitem->SetName(L"DropItem");
 	for (int i = 0; i < Material::m_HighestRarity; i++) {
 		if (m_dropmaterialChances[i] >= rad) {
 			DropMaterial* dropmaterial = new DropMaterial;

@@ -78,6 +78,7 @@ private:
 	//ヘッダーファイルでは宣言だけ、定義はcppファイルに書いてください
 	static const int m_dropChances[];                           //エネミーのドロップするアイテム、[1]が10ならレア度1が10%でドロップするみたいな
 	static const int m_dropmaterialChances[];					//エネミーのドロップする素材の確率
+	static const int m_meseta = 50;								//ドロップするメセタの大体の額
 	bool m_gekiha = false;                                      //deleteするかどうか
 };
 

@@ -48,7 +48,8 @@ bool DropItem::Start()
 		m_skinModelRender->Init(L"Resource/modelData/BlueLightSword.cmo");
 		break;
 	}*/
-	m_skinModelRender->Init(L"Resouse/modelData/meseta.cmo");
+	m_skinModelRender->Init(L"Resource/modelData/meseta.cmo");
+	m_position.y += 30.0f;
 	m_skinModelRender->SetPos(m_position);
 	m_skinModelRender->SetScale(m_scale);
 	m_player = FindGO<Player>(L"Player");

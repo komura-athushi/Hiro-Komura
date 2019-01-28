@@ -8,7 +8,7 @@
 const int Oni::m_dropChances[Weapon::m_HighestRarity] = { 0,100,0,0,0,0,0 };
 const int Oni::m_dropmaterialChances[Material::m_HighestRarity] = { 100.0f,0.0f,0.0f };
 //鬼（見た目はスケルトン）です
-Oni::Oni():IEnemy(m_MaxHP,m_Attack,m_EXP,m_dropChances,m_dropmaterialChances)
+Oni::Oni():IEnemy(m_MaxHP,m_Attack,m_EXP,m_dropChances,m_dropmaterialChances,m_meseta)
 {
 
 }
