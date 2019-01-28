@@ -83,6 +83,6 @@ protected:
 	int m_dropmeseta;
 	int m_dropChances[Weapon::m_HighestRarity];			      //エネミーのドロップするアイテム、[1]が0.4fならレア度1が40%でドロップするみたいな
 	int m_dropmaterialChances[Material::m_HighestRarity];	  //エネミーのドロップする素材の確率
-	static const int m_mesetarand = 4;
+	static const int m_mesetarand = 3;
 };
 

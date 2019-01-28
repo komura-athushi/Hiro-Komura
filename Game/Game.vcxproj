@@ -242,6 +242,7 @@
     <ClCompile Include="Equipment.cpp" />
     <ClCompile Include="Magic.cpp" />
     <ClCompile Include="Material.cpp" />
+    <ClCompile Include="Merchant.cpp" />
     <ClCompile Include="Oni.cpp" />
     <ClCompile Include="PlayerStatus.cpp" />
     <ClCompile Include="ShotMagic.cpp" />
@@ -275,6 +276,7 @@
     <ClInclude Include="Equipment.h" />
     <ClInclude Include="Magic.h" />
     <ClInclude Include="Material.h" />
+    <ClInclude Include="Merchant.h" />
     <ClInclude Include="Oni.h" />
     <ClInclude Include="PlayerStatus.h" />
     <ClInclude Include="ShotMagic.h" />

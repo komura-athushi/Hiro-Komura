@@ -81,6 +81,7 @@
     <ClCompile Include="Weapon.cpp" />
     <ClCompile Include="Equipment.cpp" />
     <ClCompile Include="Fade.cpp" />
+    <ClCompile Include="Merchant.cpp" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Asset\modelData\Sword\AncientWarriorBlade.FBX">
@@ -189,6 +190,7 @@
     <ClInclude Include="Weapon.h" />
     <ClInclude Include="Equipment.h" />
     <ClInclude Include="Fade.h" />
+    <ClInclude Include="Merchant.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Asset">
