@@ -1,6 +1,9 @@
 #pragma once
 #include "DemolisherWeapon/physics/character/CCharacterController.h"
 
+
+
+
 class Sword;
 class GameCamera;
 class PlayerStatus;
@@ -57,6 +60,8 @@ public:
 	void RelationHuman();
 	//プレイヤーのPPを一定値だけ回復させる
 	void RecoveryPP();
+	//オートターゲット
+	void OutTarget();
 	//プレイヤーの座標をセット
 	void SetPosition(const CVector3& pos)
 	{
@@ -104,7 +109,10 @@ public:
 	}
 private:
 	bool m_cagliostro = false;
-	GameObj::CSkinModelRender* m_skinModelRender = nullptr;		//スキンモデルレンダラー。
+	GameObj::CSkinModelRender* m_skinModelRender = nullptr;		//スキンモデルレンダラー
+	CSprite m_sprite;
+	CSprite m_sprite2;											//ゲームクリアとかゲームオーバーの
+	bool m_displaysprite = false;
     SuicideObj::CCollisionObj* m_collision;                     //丸いコリジョン
 	CFont m_font;                                               //文字表示クラス
 	Bone* m_bone;                                               //骨
@@ -117,10 +125,12 @@ private:
 	GameCamera* m_gamecamera;                                   //カメラのポインタ
 	CVector3 m_movespeed;                                       //移動速度
 	CVector3 m_position = {0.0f,100.0f,00.0f};                  //ユニティちゃんの座標
-	CVector3 m_playerheikou = { 0.0f,0.0f,0.0f };               //プレイヤーと平行なベクトル
+	CVector3 m_playerheikou = { 1.0f,0.0f,0.0f };               //プレイヤーと平行なベクトル
 	CVector3 m_scale = { 1.0f,1.0f,1.0f };                      //大きさ
 	int m_timer = 0;                                            //攻撃のクールタイム
 	int m_timer2 = 0;                                           //ダメージのクールタイム
+	CVector3 m_target = CVector3::Zero();
+	bool m_ontarget = false;									//ターゲット表示するかどうか
 	bool m_gameover = false;                                    //ゲームオーバーかどうか
 	bool m_gameclear = false;									//ゲームクリアかどうか
 	bool m_isjump = false;                                      //ジャンプしているかどうか

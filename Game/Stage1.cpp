@@ -22,7 +22,10 @@ Stage1::~Stage1()
 	delete m_gamecamera;
 	delete m_ground;
 	delete m_lig;
-	QueryGOs<Oni>(L"Oni", [&](Oni* oni)
+	delete m_shadowMap;
+	QueryGOs<Oni>(L"Enemy", [&](Oni* oni)
+
+
 	{
 		delete oni;
 		return true;
@@ -41,11 +44,27 @@ Stage1::~Stage1()
 
 bool Stage1::Start()
 {
+	//ディレクションライトを設定
 	m_lig = new GameObj::CDirectionLight;
-	m_color = { 1.0f,1.0f,1.0f };
+	m_color = { 1.0f,-1.0f,1.0f };
 	m_color.Normalize();
 	m_lig->SetDirection(m_color);
 	m_lig->SetColor({ 1.0f, 1.0f, 1.0f });
+	m_shadowMap = new ShadowMapHandler;
+
+	//初期化
+
+	m_shadowMap->Init(8048,//解像度(幅
+
+		8048,//解像度(高さ
+
+		m_lig->GetDirection()//ライトの方向
+
+	);
+
+	m_shadowMap->SetArea({ 20000.0f,20000.0f,20000.0f });//シャドウマップの範囲(Zがライトの方向)
+
+	m_shadowMap->SetTarget({ 0.0f,0.0f,0.0f });//シャドウマップの範囲の中心位置*/
 	//レベルを構築する。
 	m_level.Init(L"Asset/level/stage1.tkl", [&](LevelObjectData& objData) {
 		if (objData.EqualObjectName(L"stage1_ground") == true) {
@@ -70,7 +89,7 @@ bool Stage1::Start()
 			Oni* oni = new Oni;
 			oni->SetPosition(objData.position);
 			oni->SetOldPosition(objData.position);
-			oni->SetName(L"Oni");
+			oni->SetName(L"Enemy");
 			//後で削除するのでリストに積んで記憶しておく。
 			m_oniList.push_back(oni);
 			oni->SetPlayer(m_player);
@@ -85,7 +104,7 @@ bool Stage1::Start()
 			Boss* boss = new Boss;
 			boss->SetPosition(objData.position);
 			boss->SetOldPosition(objData.position);
-			boss->SetName(L"Oni");
+			boss->SetName(L"Enemy");
 			boss->SetPlayer(m_player);
 			boss->SetStage1(this);
 			//フックした場合はtrueを返す。
@@ -120,3 +139,4 @@ void Stage1::Update()
 	}
 	
 }
+

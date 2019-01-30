@@ -25,6 +25,7 @@ Town::~Town()
 	delete m_ground;
 	delete m_gamecamera;
 	delete m_lig;
+	delete m_shadowMap;
 	delete m_stage1_teleport;
 	for (auto& stone : m_stoneList) {
 		delete stone;
@@ -38,10 +39,25 @@ bool Town::Start()
 {
 	//ディレクションライトを設定
 	m_lig = new GameObj::CDirectionLight;
-	m_color = { 1.0f,1.0f,1.0f };
+	m_color = { 1.0f,-1.0f,1.0f };
 	m_color.Normalize();
 	m_lig->SetDirection(m_color);
 	m_lig->SetColor({ 1.0f, 1.0f, 1.0f });
+	m_shadowMap=new ShadowMapHandler;
+
+	//初期化
+
+	m_shadowMap->Init(8048,//解像度(幅
+
+		8048,//解像度(高さ
+
+		m_lig->GetDirection()//ライトの方向
+
+	);
+
+	m_shadowMap->SetArea({ 20000.0f,20000.0f,20000.0f });//シャドウマップの範囲(Zがライトの方向)
+
+	m_shadowMap->SetTarget({0.0f,0.0f,0.0f});//シャドウマップの範囲の中心位置*/
 	BuildLevel();
 	m_gamecamera = new GameCamera;
 	m_gamecamera->SetPlayer(m_player);
@@ -110,6 +126,12 @@ void Town::BuildLevel()
 	}
 	m_level.Init(levelname, [&](LevelObjectData& objData) {
 		if (objData.EqualObjectName(L"ground") == true) {
+			m_ground = new Ground;
+			m_ground->SetStage(0);
+			m_ground->SetPosition(objData.position);
+			return true;
+		}
+		else if (objData.EqualObjectName(L"ground2") == true) {
 			m_ground = new Ground;
 			m_ground->SetStage(0);
 			m_ground->SetPosition(objData.position);

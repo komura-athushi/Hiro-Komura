@@ -20,6 +20,7 @@ private:
 	Player* m_player;                                  //プレイヤークラスのポインタ
 	PlayerStatus* m_playerstatus;                      //プレイヤーステータスクラスのポインタ
 	CVector3 m_position = { 0.0f,0.0f,0.0f };
+	ShadowMapHandler* m_shadowMap;					   //シャドウマップ
 	Fade* m_fade;
 	//trueなら画面切り替えする
 	bool m_isWaitFadeout = false;

@@ -4,6 +4,7 @@
 #include "Player.h"
 #include "IEnemy.h"
 #include "Effekseer.h"
+
 const int ShotMagic::m_number[10] = { 0,1,2,3,4,5,6,7,8,9 };
 ShotMagic::ShotMagic(const int& id, const wchar_t* name, const float& damageRate, const int& ppCost)
 	:m_id(id), m_name(name), m_damageRate(damageRate), m_ppCost(ppCost)
@@ -87,7 +88,7 @@ bool ShotMagic::Start()
 				 mgml.s_position = mgml.s_effect->GetPos() + m_movespeed*GetDeltaTimeSec();
 				 mgml.s_effect->SetPos(mgml.s_position);
 				 mgml.s_collision->SetPosition(mgml.s_position);
-				 mgml.s_timer += 1.0f;
+				 mgml.s_timer += 60.0f*GetDeltaTimeSec();
 			 }
 		 }
 	 }
@@ -116,10 +117,22 @@ bool ShotMagic::Start()
 	 case 2:
 		 effect->Play(L"Asset/effect/efk/magic_proj03.efk", 1.0f, pos, CQuaternion::Identity(), scl * 12);
 		 break;
+	 case 3:
+		 effect->Play(L"Asset/effect/efk/magic_explo04.efk", 1.0f, pos, CQuaternion::Identity(), scl * 12);
+		 break;
+	 case 4:
+		 effect->Play(L"Asset/effect/powerup/powerup.efk", 1.0f, pos, CQuaternion::Identity(), scl * 12);
+		 break;
 	 default:
 		 effect->Play(L"Asset/effect/efk/magic_proj01.efk", 1.0f, pos, CQuaternion::Identity(), scl * 12);
 		 break;
 	 }
+	 CVector3 topos = m_movespeed;
+	 topos.Normalize();
+	 float degree = atan2f(topos.x, topos.z);
+	 CQuaternion qRot;
+	 qRot.SetRotation(CVector3::AxisY(), degree);
+	 effect->SetRot(qRot);
 	 //çUåÇîªíËÇÃî≠ê∂
 	 attackCol->CreateSphere(pos, CQuaternion::Identity(),scale);
 	 //éıñΩÇê›íË
@@ -180,8 +193,8 @@ bool ShotMagic::Start()
 	 m_modelnumber = m_modelnumber1;
 	 m_scale = m_scale1;
 	 m_position = m_position + CVector3::AxisY()*60.0f;
-	 SetCollisionModel(m_position,m_collisionscale1,m_id,m_scale);
 	 m_movespeed = m_directionplayer * m_multiplyspeed1;
+	 SetCollisionModel(m_position,m_collisionscale1,m_id,m_scale);
 	 m_damage /= m_modelnumber;
  }
  void ShotMagic::FoieUpdate()
@@ -194,8 +207,8 @@ bool ShotMagic::Start()
 	 m_deletetime = m_deletetime2;
 	 m_modelnumber = m_modelnumber2;
 	 m_scale = m_scale2;
+	 m_movespeed = m_directionplayer * m_multiplyspeed2;
 	 m_position = m_position + CVector3::AxisY()*60.0f;
-	 m_movespeed = m_directionplayer * m_multiplyspeed1;
 	 m_damage /= m_modelnumber;
  }
 
@@ -216,9 +229,10 @@ bool ShotMagic::Start()
 	 m_modelnumber = m_modelnumber3;
 	 m_scale = m_scale3;
 	 m_position = m_position; //+CVector3::AxisY()*60.0f;
-	 SetCollisionModel(m_position, m_collisionscale3, m_id,m_scale);
 	 m_movespeed = m_directionplayer * m_multiplyspeed3;
+	 SetCollisionModel(m_position, m_collisionscale3, m_id,m_scale);
 	 m_damage /= m_modelnumber;
+	 m_damage /= m_multihit;
  }
 
  void ShotMagic::ZanbasUpdate()
@@ -232,8 +246,8 @@ bool ShotMagic::Start()
 	 m_modelnumber = m_modelnumber4;
 	 m_scale = m_scale4;
 	 m_position = m_position; //+CVector3::AxisY()*60.0f;
-	 SetCollisionModel(m_position, m_collisionscale4, m_id,m_scale);
 	 m_movespeed = m_directionplayer * m_multiplyspeed4;
+	 SetCollisionModel(m_position, m_collisionscale4, m_id,m_scale);
 	 m_damage /= m_modelnumber;
 	 Player* player = FindGO<Player>(L"Player");
 	 player->SetShihuta();
@@ -250,8 +264,8 @@ bool ShotMagic::Start()
 	 m_modelnumber = m_modelnumber5;
 	 m_scale = m_scale5;
 	 m_position = m_position + CVector3::AxisY()*60.0f;
-	 SetCollisionModelnoDamage(m_position, m_collisionscale5, m_id,m_scale, m_modelcount, false);
 	 m_movespeed = m_directionplayer * m_multiplyspeed5;
+	 SetCollisionModelnoDamage(m_position, m_collisionscale5, m_id,m_scale, m_modelcount, false);
 	 m_damage /= m_modelnumber;
 	
  }

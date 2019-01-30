@@ -34,6 +34,7 @@ private:
 	Stage1_Teleport* m_stage1_teleport;                //ステージ1に遷移するためのクラスのポインタ
 	Level m_level;                                     //レベルデザインのためのクラス
 	PlayerStatus* m_playerstatus;                      //プレイヤーステータスクラスのポインタ
+	ShadowMapHandler* m_shadowMap;					   //シャドウマップ
 	//各オブジェクトの可変長配列
 	std::vector<Stone*> m_stoneList;                   //Stoneクラスのポインタを格納するための可変長配列
 	std::vector<House*> m_houseList;				   //Houseクラスのポインタの可変長配列

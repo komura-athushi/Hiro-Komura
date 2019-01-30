@@ -48,6 +48,7 @@ void Player::unityChan()
 	m_skinModelRender->Init(L"Resource/modelData/unityChan.cmo", m_animClip, enAnimationClip_num, enFbxUpAxisY);
 	m_skinModelRender->SetPos(m_position);
 	m_skinModelRender->SetRot(m_rotation);
+	m_sprite.Init(L"Resource/sprite/HP_waku.dds");
 	m_sword = new Sword;
 	//unityChanのボーンを検索
 	m_bonehand = m_skinModelRender->FindBoneID(L"Character1_RightHand");
@@ -231,7 +232,7 @@ void Player::Animation()
 			}
 		}
 	}
-	if (m_HP<=0 || Pad(0).GetButton(enButtonLT)) {
+	if (m_HP <= 0 || Pad(0).GetButton(enButtonLT)) {
 		m_state = enState_GameOver;
 	}
 	else if (Pad(0).GetButton(enButtonLB1)) {
@@ -242,7 +243,7 @@ void Player::Animation()
 
 void Player::AnimationController()
 {
-	m_skinModelRender->GetAnimCon().SetSpeed(1.0f);
+	m_skinModelRender->GetAnimCon().SetSpeed(1.0f*60.0f*GetDeltaTimeSec());
 	//ステート分岐によってアニメーションを再生させる
 	switch (m_state) {
 	case enState_Run:
@@ -336,7 +337,7 @@ void Player::AnimationController()
 	case enState_Attack:
 		if (m_skinModelRender->GetAnimCon().IsPlaying() || m_isjump==true) {
 			m_skinModelRender->GetAnimCon().Play(enAnimationClip_attack, 0.2f);
-			m_skinModelRender->GetAnimCon().SetSpeed(7.0f);
+			m_skinModelRender->GetAnimCon().SetSpeed(7.0f*60.0f*GetDeltaTimeSec());
 			Animation();
 			m_isjump = false;
 			m_timer = 0;
@@ -361,7 +362,7 @@ void Player::AnimationController()
 	case enState_Aria:
 		if (m_skinModelRender->GetAnimCon().IsPlaying() || m_isjump == true) {
 			m_skinModelRender->GetAnimCon().Play(enAnimationClip_aria, 0.2f);
-			m_skinModelRender->GetAnimCon().SetSpeed(1.0f);
+			m_skinModelRender->GetAnimCon().SetSpeed(1.0f*60.0f*GetDeltaTimeSec());
 			Animation();
 			m_isjump = false;
 			m_timer = 0;
@@ -466,6 +467,12 @@ void Player::OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventName)
 		}
 		);
 	}
+	//呪文詠唱！
+	else if (wcscmp(eventName, L"aria_start") == 0) {
+		GameObj::Suicider::CEffekseer* effect = new GameObj::Suicider::CEffekseer;
+		effect->Play(L"Asset/effect/efk/magic_cast01.efk", 1.0f, m_position, CQuaternion::Identity(), { 12.0f,12.0f,12.0f });
+		effect->SetSpeed(2.0f);
+	}
 	else if (wcscmp(eventName, L"aria") == 0) {
 		ShotMagic* shotmagic = new ShotMagic;
 		shotmagic->SetPosition(m_position);
@@ -473,9 +480,6 @@ void Player::OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventName)
 		shotmagic->SetId(m_MagicId);
 		shotmagic->SetDamage(m_Mattack, m_DamageRate);
 		shotmagic->SetName(L"ShotMagic");
-		GameObj::Suicider::CEffekseer* effect = new GameObj::Suicider::CEffekseer;
-		effect->Play(L"Asset/effect/efk/magic_cast01.efk", 1.0f, m_position, CQuaternion::Identity(), {12.0f,12.0f,12.0f});
-		effect->SetSpeed(2.0f);
 	}
 }
 
@@ -594,10 +598,63 @@ void Player::RelationHuman()
 	}
 }
 
+void Player::OutTarget()
+{
+	std::vector<CVector3> enemyList;
+	int enemynumber = 0;
+	CVector3 target;
+	QueryGOs<IEnemy>(L"Enemy", [&](IEnemy* enemy)
+	{
+		CVector3 pos = enemy->GetCollisionPosition();
+		enemyList.push_back(pos);
+		enemynumber++;
+		return true;
+	});
+	if (enemynumber == 0) {
+		return;
+	}
+	target = m_position - enemyList[0];
+	for (int i = 0; i < enemynumber; i++) {
+		CVector3 pos = m_position - enemyList[enemynumber];
+		
+		if (target.Length() > pos.Length()) {
+			target = pos;
+		}
+	}
+	m_target = target;
+}
+
 void Player::PostRender()
 {
 	wchar_t output[256];
 	swprintf_s(output, L"Lv   %d\nExp  %d\nNexp %d\nHP   %d\nPP   %d\nAtk  %d\nMatk %d\nWpn  %s\nMgc  %s\nMPC  %d\nMgg  %d\nWLv  %d\n", m_Level, m_Exp, m_NextExp, m_HP, m_PP, m_Attack, m_Mattack, m_SwordName, m_MagicName, m_PPCost, int(m_Mattack*m_DamageRate),m_playerstatus->GetWeaponLv(m_SwordId));
 	//swprintf_s(output, L"x   %f\ny   %f\nz  %f\nw   %f\n", m_swordqRot.x, m_swordqRot.y, m_swordqRot.z, m_swordqRot.w);
 	m_font.DrawScreenPos(output, { 700.0f,100.0f }, CVector4(200.0f, 00.0f, 100.0f, 1.0f));
+	/*m_sprite.DrawScreenPos(CVector2::Zero(), CVector2::One(), CVector2::Zero(),
+		0.0f,
+		{ 1.0f, 1.0f, 1.0f, 1.0f },
+		DirectX::SpriteEffects_None,
+		0.4f);*/
+	if (m_state == enState_GameOver && !m_skinModelRender->GetAnimCon().IsPlaying()) {
+		if (!m_displaysprite) {
+			m_sprite2.Init(L"Resource/sprite/gameover.dds");
+			m_displaysprite = true;
+		}
+		m_sprite2.DrawScreenPos(CVector2::Zero(), CVector2::One(), CVector2::Zero(),
+			0.0f,
+			{ 1.0f, 1.0f, 1.0f, 1.0f },
+			DirectX::SpriteEffects_None,
+			0.5f);
+	}
+	else if (m_state == enState_GameClear && !m_skinModelRender->GetAnimCon().IsPlaying()) {
+		if (!m_displaysprite) {
+			m_sprite2.Init(L"Resource/sprite/clear.dds");
+			m_displaysprite = true;
+		}
+		m_sprite2.DrawScreenPos(CVector2::Zero(), CVector2::One(), CVector2::Zero(),
+			0.0f,
+			{ 1.0f, 1.0f, 1.0f, 1.0f },
+			DirectX::SpriteEffects_None,
+			0.5f);
+	}
 }

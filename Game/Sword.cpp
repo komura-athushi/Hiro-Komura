@@ -23,7 +23,6 @@ bool Sword::Start()
 
 void Sword::Update()
 {
-
 	if (m_SwordId != m_SwordId2) {
 		m_SwordId = m_SwordId2;
 		m_delete = false;

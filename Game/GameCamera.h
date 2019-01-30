@@ -29,7 +29,6 @@ public:
 	{
 		return m_target;
 	}
-	//
 	GameObj::PerspectiveCamera* GetCamera()
 	{
 		return m_camera;

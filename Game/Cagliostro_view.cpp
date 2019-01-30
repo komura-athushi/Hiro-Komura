@@ -17,15 +17,32 @@ Cagliostro_view::~Cagliostro_view()
 	delete m_ground;
 	delete m_gamecamera;
 	delete m_lig;
+	delete m_shadowMap;
 }
 
 bool Cagliostro_view::Start()
 {
+	//ディレクションライトを設定
 	m_lig = new GameObj::CDirectionLight;
-	m_color = { 1.0f,1.0f,1.0f };
+	m_color = { 1.0f,-1.0f,1.0f };
 	m_color.Normalize();
 	m_lig->SetDirection(m_color);
 	m_lig->SetColor({ 1.0f, 1.0f, 1.0f });
+	m_shadowMap = new ShadowMapHandler;
+
+	//初期化
+
+	m_shadowMap->Init(12048,//解像度(幅
+
+		12048,//解像度(高さ
+
+		m_lig->GetDirection()//ライトの方向
+
+	);
+
+	m_shadowMap->SetArea({ 20000.0f,20000.0f,20000.0f });//シャドウマップの範囲(Zがライトの方向)
+
+	m_shadowMap->SetTarget({ 0.0f,0.0f,0.0f });//シャドウマップの範囲の中心位置*/
 	m_ground = new Ground;
 	m_ground->SetStage(-1);
 	m_player = new Player;
