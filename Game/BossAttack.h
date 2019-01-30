@@ -1,6 +1,5 @@
 #pragma once
-#include "IEnemy.h"
-class BossAttack : public IEnemy
+class BossAttack : public IGameObject
 {
 public:
 	BossAttack();
@@ -30,6 +29,10 @@ public:
 	{
 		return m_moveSpeed;
 	}
+	void SetNumber(const int& number)
+	{
+		m_number = number;
+	}
 private:
 	GameObj::CSkinModelRender* m_bullet1skinModel = nullptr;		//1スキンモデルレンダラー。
 	GameObj::CSkinModelRender* m_bullet2skinModel = nullptr;		//2スキンモデルレンダラー。
@@ -37,7 +40,10 @@ private:
 	CVector3 m_position = { 0.0f,0.0f,0.0f };	//座標。
 	CVector3 m_moveSpeed = { 0.0f,0.0f,0.0f };	//移動速度。
 	CVector3 m_bulletpos = { 0.0f,0.0f,0.0f };
+	CVector3 m_scale = { 20.0f,20.0f,20.0f };						//弾のスケール
+	CQuaternion m_rotation;											//クォータニオン
 	int m_timer = 0;
-	static const int m_EXP = 500;                               //経験値
+	int m_number = 0;
+	//const wchar_t m_name[] = L"bullet";
 };
 

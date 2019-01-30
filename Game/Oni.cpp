@@ -83,6 +83,7 @@ void Oni::Chase()
 		}
 		m_position += m_movespeed;
 	}
+	
 	m_skinModelRender->SetPos(m_position);
 }
 

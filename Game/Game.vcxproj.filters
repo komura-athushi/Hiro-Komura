@@ -72,6 +72,8 @@
     <MeshContentTask Include="Asset\modelData\Sword\Sword.FBX" />
     <MeshContentTask Include="Asset\modelData\Sword\WindSword.FBX" />
     <MeshContentTask Include="Asset\modelData\unityChan.fbx" />
+    <MeshContentTask Include="Asset\modelData\boss\bullet2.FBX" />
+    <MeshContentTask Include="Asset\modelData\boss\bullet3.FBX" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Boss.h" />
