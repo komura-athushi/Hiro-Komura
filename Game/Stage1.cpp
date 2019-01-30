@@ -12,6 +12,7 @@
 #include "IEnemy.h"
 #include "GameData.h"
 #include "Fade.h"
+#include "MainSound.h"
 Stage1::Stage1()
 {
 }
@@ -115,6 +116,8 @@ bool Stage1::Start()
 	m_player->SetCamera(m_gamecamera);
 	m_fade = FindGO<Fade>();
 	m_fade->StartFadeIn();
+	MainSound* ms = FindGO<MainSound>();
+	ms->SetBGM(2);
 	return true;
 }
 

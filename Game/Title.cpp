@@ -2,6 +2,7 @@
 #include "Title.h"
 #include "Town.h"
 #include "Fade.h"
+#include "MainSound.h"
 Title::Title()
 {
 }
