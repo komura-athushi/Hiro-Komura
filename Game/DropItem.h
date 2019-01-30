@@ -33,6 +33,11 @@ public:
 	{
 		m_meseta = meseta;
 	}
+	//武器であると設定
+	void SetisWeapon()
+	{
+		m_isweapon = true;
+	}
 private:
 	GameObj::CSkinModelRender* m_skinModelRender = nullptr;		//スキンモデルレンダラー。
 	CVector3 m_position;                                        //座標
@@ -42,6 +47,9 @@ private:
 	Player* m_player;                                           //プレイヤークラスのポインタ
 	int m_rarity;												//武器のレアリティ
 	int m_number;												//武器のレアリティの中の番号
-	int m_meseta = 0;
+	int m_meseta;												//メメタの額
+	bool m_isweapon = false;									//自身が武器かどうか
+	static const float m_height;								//ドロップ時に+するy座標
+	static const float m_height_weapon;							//ドロップ時に+するy座標(武器)
 };
 

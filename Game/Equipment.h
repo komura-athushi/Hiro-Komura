@@ -63,7 +63,11 @@ public:
 	{
 		return m_PPCost;
 	}
-	
+	//武器の売却価格を取得
+	int GetMeseta() const
+	{
+		return m_meseta;
+	}
 private:
 	int m_SwordMattack = 0;                               //武器の魔法攻撃力                          
 	int m_SwordAttack = 0;                                //武器の攻撃力
@@ -75,6 +79,7 @@ private:
 	float m_DamageRate;									  //魔法のダメージ倍率
 	int m_PPCost;                                         //魔法を放つのに必要なPP
 	int m_weaponextend = 0;                               //武器エクステンドレベル
+	int m_meseta = 0;
 	GameData* m_gamedata;                                 //GameDataクラスのポインタ
 	Weapon* m_weapon;									  //Weaponクラスのポインタ
 	Magic* m_magic;										  //Magicクラスのポインタ		  

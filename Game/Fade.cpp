@@ -11,6 +11,7 @@ Fade::~Fade()
 }
 bool Fade::Start()
 {
+	//ƒ[ƒh‰æ–Ê‚Ì‰æ‘œ‚ğ“Ç‚İ‚Ş
 	m_sprite.Init(L"Resource/sprite/loading.dds");
 	return true;
 }

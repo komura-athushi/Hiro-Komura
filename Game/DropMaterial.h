@@ -8,6 +8,7 @@ public:
 	~DropMaterial();
 	bool Start();
 	void Update();
+	//À•W‚ğİ’è
 	void SetPosition(const CVector3 pos)
 	{
 		m_position = pos;

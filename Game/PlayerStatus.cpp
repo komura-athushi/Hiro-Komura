@@ -39,7 +39,7 @@ void PlayerStatus::Update()
 	//LSBボタンを押すと全部武器所持状態に移行
 	if (Pad(0).GetDown(enButtonLSB)) {
 		for (int i = 0; i < GameData::enWeapon_num; i++) {
-			m_weaponinventorylist[i]={ Equipment(i),true};
+			m_weaponinventorylist[i] = { Equipment(i),true};
 		}
 		for (int i = 0; i < GameData::enMaterial_num; i++) {
 			m_havemateriallist[i] = 100;
@@ -60,7 +60,7 @@ void PlayerStatus::PlusExp(const int& exp)
 	while (m_LevelExp <= m_Exp) {
 		ep -= m_NextExp;
 		m_Level+=1;
-		m_NextExp = (int)((1 + (float)(m_Level*m_Level * 0.1f)) * 80);
+		m_NextExp = (int)((1 + (float)(m_Level*m_Level * 0.1f)) * 50);
 		m_LevelExp += m_NextExp;
 		m_Power += 5 + rand() % 3;
 		m_Attack = m_Power + m_SwordAttack;
@@ -69,6 +69,7 @@ void PlayerStatus::PlusExp(const int& exp)
 		m_Clever += 10;
 		m_Attack = m_Power + m_SwordAttack;
 		m_Mattack = m_Clever + m_SwordMattack;
+		m_levelup = true;
 	}
 		m_NextExp -= ep;
 }
@@ -94,7 +95,7 @@ void PlayerStatus::SetMagicStatus()
 bool PlayerStatus::GetWeapon(int number)
 {
 	//引数が武器の番号の範囲を超えていたら関数の処理を終了させる
-	if (number<0 || number>GameData::enWeapon_num-1) {
+	if (number < 0 || number > GameData::enWeapon_num-1) {
 		return false;
 	}
 	//左ボタン押した時の処理
@@ -125,7 +126,7 @@ bool PlayerStatus::GetWeapon(int number)
 void PlayerStatus::SetWeapon(const int& number)
 {
 	if (m_weaponinventorylist[number].s_ishave) {
-		m_weaponinventorylist[number].s_material += 1;
+		m_havemeseta += m_weaponinventorylist[number].s_equipment.GetMeseta();
 	}
 	else {
 		m_weaponinventorylist[number].s_ishave = true;

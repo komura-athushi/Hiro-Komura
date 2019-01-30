@@ -319,6 +319,7 @@
     <MeshContentTask Include="Asset\modelData\Sword\Sword.FBX" />
     <MeshContentTask Include="Asset\modelData\Sword\WindSword.FBX" />
     <MeshContentTask Include="Asset\modelData\unityChan.fbx" />
+    <MeshContentTask Include="Asset\modelData\zunko\zunko.FBX" />
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Asset\sprite\Red.png" />

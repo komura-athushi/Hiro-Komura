@@ -131,10 +131,12 @@ void GameCamera::unityChan()
 // 普通視点の処理 カメラの座標を移動させる、カメラの注視点をリセット
 void GameCamera::Hutu()
 {
-	//注視点を設定する
-	m_target = { 0.0f,0.0f,0.0f };
-	m_target.y += 140.0f;
-	m_target += m_player->GetPosition();
+	if (!m_tage) {
+		//注視点を設定する
+		m_target = { 0.0f,0.0f,0.0f };
+		m_target.y += 140.0f;
+		m_target += m_player->GetPosition();
+	}
 	//Y軸周りに回転させる。
 	CQuaternion qRot;
 	qRot.SetRotation(m_axisY, m_radianx);

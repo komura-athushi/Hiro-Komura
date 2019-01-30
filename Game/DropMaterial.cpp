@@ -55,6 +55,7 @@ void DropMaterial::Update()
 	CVector3 pos = m_player->GetPosition() - m_position;
 	if (pos.Length() <= 80.0f) {
 		PlayerStatus* playerstatus = FindGO<PlayerStatus>(L"PlayerStatus");
+		//ƒvƒŒƒCƒ„[‚ÌŠŽ‘fÞ‚É’Ç‰Á
 		playerstatus->SetMaterial(m_state);
 		delete this;
 	}

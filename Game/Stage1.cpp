@@ -24,8 +24,6 @@ Stage1::~Stage1()
 	delete m_lig;
 	delete m_shadowMap;
 	QueryGOs<Oni>(L"Enemy", [&](Oni* oni)
-
-
 	{
 		delete oni;
 		return true;
@@ -130,9 +128,11 @@ void Stage1::Update()
 	}
 	else {
 		//プレイヤーがゲームオーバーあるいはゲームクリアで拠点に遷移
-		if (m_player->GetGameOver() || m_player->GetGameClear()) {
-			GameData* gamedata = FindGO<GameData>(L"GameData");
-			gamedata->SetClear(0);
+		if (m_player->GetTransScene()) {
+			if (m_player->GetGameClear()) {
+				GameData* gamedata = FindGO<GameData>(L"GameData");
+				gamedata->SetClear(0);
+			}
 			m_isWaitFadeout = true;
 			m_fade->StartFadeOut();
 		}
