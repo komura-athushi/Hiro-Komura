@@ -14,7 +14,6 @@ Title::~Title()
 
 bool Title::Start()
 {
-	//m_sprite.Init(L"Resource/sprite/Title.dds");
 	m_sprite.Init(L"Resource/sprite/MokoTitle.dds");
 	m_fade = FindGO<Fade>();
 	m_fade->StartFadeIn();
@@ -44,5 +43,5 @@ void Title::PostRender()
 		0.0f,
 		{ 1.0f, 1.0f, 1.0f, 1.0f },
 		DirectX::SpriteEffects_None,
-		0.9f);
+		0.2f);
 }

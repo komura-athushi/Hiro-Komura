@@ -44,6 +44,6 @@ void Fade::PostRender()
 			0.0f,
 			{ 1.0f, 1.0f, 1.0f, m_currentAlpha },
 			DirectX::SpriteEffects_None,
-			1.0f);
+			0.1f);
 	}
 }

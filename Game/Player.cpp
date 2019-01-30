@@ -695,7 +695,7 @@ void Player::PostRender()
 			0.0f,
 			{ 1.0f, 1.0f, 1.0f, 1.0f },
 			DirectX::SpriteEffects_None,
-			0.5f);
+			1.0f);
 	}
 	//ゲームクリア表示
 	else if (m_state == enState_GameClear && !m_skinModelRender->GetAnimCon().IsPlaying()) {
@@ -707,6 +707,6 @@ void Player::PostRender()
 			0.0f,
 			{ 1.0f, 1.0f, 1.0f, 1.0f },
 			DirectX::SpriteEffects_None,
-			0.5f);
+			1.0f);
 	}
 }

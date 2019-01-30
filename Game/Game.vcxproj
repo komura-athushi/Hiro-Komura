@@ -241,6 +241,7 @@
     <ClCompile Include="IEnemy.cpp" />
     <ClCompile Include="Equipment.cpp" />
     <ClCompile Include="Magic.cpp" />
+    <ClCompile Include="MainSound.cpp" />
     <ClCompile Include="Material.cpp" />
     <ClCompile Include="Merchant.cpp" />
     <ClCompile Include="Oni.cpp" />
@@ -275,6 +276,7 @@
     <ClInclude Include="IEnemy.h" />
     <ClInclude Include="Equipment.h" />
     <ClInclude Include="Magic.h" />
+    <ClInclude Include="MainSound.h" />
     <ClInclude Include="Material.h" />
     <ClInclude Include="Merchant.h" />
     <ClInclude Include="Oni.h" />

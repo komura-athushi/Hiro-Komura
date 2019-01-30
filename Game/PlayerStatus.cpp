@@ -139,19 +139,29 @@ void PlayerStatus::PostRender()
 	wchar_t output[256];
 	swprintf_s(output, L"木   %d\n石   %d\nレンガ  %d\nメセタ  %d\n", m_havemateriallist[0], m_havemateriallist[1], m_havemateriallist[2],m_havemeseta);
 	//swprintf_s(output, L"x   %f\ny   %f\nz  %f\nw   %f\n", m_swordqRot.x, m_swordqRot.y, m_swordqRot.z, m_swordqRot.w);
-	m_font.DrawScreenPos(output, { 00.0f,200.0f }, CVector4::White());
+	m_font.DrawScreenPos(output, { 00.0f,200.0f }, CVector4::White(),
+		CVector2::One(),
+		CVector2::Zero(),
+		0.0f,
+		DirectX::SpriteEffects_None,
+		1.0f
+	);
 	//武器のアイコン表示
 	CVector2 pos = m_position;
 	for (int i = 0; i < GameData::enWeapon_num; i++) {
 		//所持状況がtrueなら該当する画像を表示する
 		if (m_weaponinventorylist[i].s_ishave) {
-			m_sprite[i].DrawScreenPos(pos, m_scale);
+			m_cursor.DrawScreenPos(pos, m_scale, CVector2::Zero(),
+				0.0f,
+				CVector4::White(),
+				DirectX::SpriteEffects_None,
+				1.0f);
 			if (m_SwordId == i) {
 				m_cursor.DrawScreenPos(pos, m_scale,CVector2::Zero(),
 					0.0f,
 					CVector4::White(),
 					DirectX::SpriteEffects_None,
-					0.4f);
+					0.9f);
 			}
 			pos.x += 64.0f;
 		}

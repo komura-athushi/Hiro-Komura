@@ -13,6 +13,7 @@
 #include "Merchant.h"
 #include "GameData.h"
 #include "Fade.h"
+#include "MainSound.h"
 Town::Town()
 {
 	
@@ -66,6 +67,8 @@ bool Town::Start()
 	m_player->SetCamera(m_gamecamera);
 	m_fade = FindGO<Fade>();
 	m_fade->StartFadeIn();
+	MainSound* ms = FindGO<MainSound>();
+	ms->SetBGM(1);
 	return true;
 }
 
