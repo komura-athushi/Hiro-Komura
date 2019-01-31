@@ -244,6 +244,18 @@ void Player::Animation()
 	m_timer += m_frame * GetDeltaTimeSec();
 }
 
+void Player::ClearVoice()
+{
+	//SE
+	SuicideObj::CSE* se = NewGO<SuicideObj::CSE>(L"Asset/sound/unityChan/clear.wav");
+	se->Play(); //Ä¶(Ä¶‚ªI‚í‚é‚Æíœ‚³‚ê‚Ü‚·)
+	se->SetVolume(2.0f);
+	//3DÄ¶
+	se->SetPos(m_position);//‰¹‚ÌˆÊ’u
+	se->SetDistance(200.0f);//‰¹‚ª•·‚±‚¦‚é”ÍˆÍ
+	se->Play(true); //‘æˆêˆø”‚ðtrue
+}
+
 void Player::AnimationController()
 {
 	m_skinModelRender->GetAnimCon().SetSpeed(1.0f*60.0f*GetDeltaTimeSec());
@@ -294,6 +306,10 @@ void Player::AnimationController()
 	case enState_GameClear:
 		m_skinModelRender->GetAnimCon().Play(enAnimationClip_Clear, 0.2f);
 		m_sword->SetScale({ 0.001f,0.001f,0.001f });
+		if (!m_clear_over_voice) {
+			ClearVoice();
+			m_clear_over_voice = true;
+		}
 		if (m_skinModelRender->GetAnimCon().IsPlaying()) {
 
 		}

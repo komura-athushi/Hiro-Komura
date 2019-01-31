@@ -63,6 +63,8 @@ public:
 	void LevelUp();
 	//オートターゲット
 	void OutTarget();
+	//クリアボイス
+	void ClearVoice();
 	//プレイヤーの座標をセット
 	void SetPosition(const CVector3& pos)
 	{
@@ -110,6 +112,7 @@ public:
 	}
 	//プレイヤーを停止させる
 	void SetStop()
+
 	{
 		m_stop = true;
 	}
@@ -197,13 +200,14 @@ private:
 	int m_PPCost;										        //魔法を放つのに必要なPP
 	bool m_damage = false;                                      //ダメージを受けた！
 	bool m_isbutton = false;                                    //武器切り替えの時に使うやつ
-	float m_PPtimer = 0.0f;											//PP自動回復のクールタイム
+	float m_PPtimer = 0.0f;										//PP自動回復のクールタイム
 	static const int m_AttackRecoveryPP= 5;					    //エネミーに攻撃したときに回復するPPの回復量
 	bool m_Shihuta = false;										//シフタをかけるならtrue
 	int m_ShihutaAttack = 0;									//シフタにかかっているときにシフタ前の攻撃力を保存
-	float m_Shihutatimer = 0.0f;										//シフタのかかっている時間
-	float m_Shihutatime = 360*10.0f;									//シフタのかかる時間を制限
+	float m_Shihutatimer = 0.0f;								//シフタのかかっている時間
+	float m_Shihutatime = 360*10.0f;							//シフタのかかる時間を制限
 	const float m_AttackMultiply = 1.3f;						//シフタがかかった時の攻撃力を上げる倍率
 	static const float m_frame;
+	bool m_clear_over_voice = false;
 };
 
