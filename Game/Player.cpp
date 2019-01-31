@@ -249,7 +249,7 @@ void Player::ClearVoice()
 	//SE
 	SuicideObj::CSE* se = NewGO<SuicideObj::CSE>(L"Asset/sound/unityChan/clear.wav");
 	se->Play(); //再生(再生が終わると削除されます)
-	se->SetVolume(2.0f);
+	se->SetVolume(2.6f);
 	//3D再生
 	se->SetPos(m_position);//音の位置
 	se->SetDistance(200.0f);//音が聞こえる範囲
@@ -465,6 +465,14 @@ void Player::OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventName)
 {
 	(void)clipName;
 	if (wcscmp(eventName,L"attack")==0) {
+		//SE
+		SuicideObj::CSE* se = NewGO<SuicideObj::CSE>(L"Asset/sound/unityChan/attack.wav");
+		se->Play(); //再生(再生が終わると削除されます)
+		se->SetVolume(2.6f);
+		//3D再生
+		se->SetPos(m_position);//音の位置
+		se->SetDistance(200.0f);//音が聞こえる範囲
+		se->Play(true); //第一引数をtrue
 		//攻撃判定の発生
 		SuicideObj::CCollisionObj* attackCol = NewGO<SuicideObj::CCollisionObj>();
 		//形状の作成
