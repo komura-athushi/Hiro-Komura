@@ -151,7 +151,7 @@ void PlayerStatus::PostRender()
 	for (int i = 0; i < GameData::enWeapon_num; i++) {
 		//ŠŽó‹µ‚ªtrue‚È‚çŠY“–‚·‚é‰æ‘œ‚ð•\Ž¦‚·‚é
 		if (m_weaponinventorylist[i].s_ishave) {
-			m_cursor.DrawScreenPos(pos, m_scale, CVector2::Zero(),
+			m_sprite[i].DrawScreenPos(pos, m_scale, CVector2::Zero(),
 				0.0f,
 				CVector4::White(),
 				DirectX::SpriteEffects_None,
