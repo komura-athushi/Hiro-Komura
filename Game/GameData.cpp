@@ -13,15 +13,15 @@ bool GameData::Start()
 {
 	//コンストラクタを使って各データクラスの生成および、各ステータスの設定をします
 	//Weaponクラスのインスタンスを生成
-	m_weaponlist.push_back(Weapon(0 , L"もこうスラッシュ"		, 1, 10, 20, 0));
-	m_weaponlist.push_back(Weapon(1 , L"ファイアソード"			, 2, 30, 40, 1));
-	m_weaponlist.push_back(Weapon(2 , L"アイスソード"			, 2, 30, 40, 2));
-	m_weaponlist.push_back(Weapon(3 , L"ウィンドソード"			, 2, 30, 40, 3));
-	m_weaponlist.push_back(Weapon(4 , L"グレイトソード"			, 3, 50, 50, 4));
-	m_weaponlist.push_back(Weapon(5 , L"クリスタルエッジ"		, 4, 60, 70, 5));
-	m_weaponlist.push_back(Weapon(6 , L"バトルブレード"         , 5, 80, 80, 6));
-	m_weaponlist.push_back(Weapon(7 , L"バンデッドソード"       , 6,120, 70, 7));
-	m_weaponlist.push_back(Weapon(8 , L"エクスカリバーモルガン" , 7,150,150, 8));
+	m_weaponlist.push_back(Weapon(0 , L"もこうスラッシュ"		, 1, 10, 20, 0,  100));
+	m_weaponlist.push_back(Weapon(1 , L"ファイアソード"			, 2, 30, 40, 1,  500));
+	m_weaponlist.push_back(Weapon(2 , L"アイスソード"			, 2, 30, 40, 2,  500));
+	m_weaponlist.push_back(Weapon(3 , L"ウィンドソード"			, 2, 30, 40, 3,  500));
+	m_weaponlist.push_back(Weapon(4 , L"グレイトソード"			, 3, 50, 50, 4, 1000));
+	m_weaponlist.push_back(Weapon(5 , L"クリスタルエッジ"		, 4, 60, 70, 5, 1500));
+	m_weaponlist.push_back(Weapon(6 , L"バトルブレード"         , 5, 80, 80, 6, 2000));
+	m_weaponlist.push_back(Weapon(7 , L"バンデッドソード"       , 6,120, 70, 7, 5000));
+	m_weaponlist.push_back(Weapon(8 , L"エクスカリバーモルガン" , 7,150,150, 8,10000));
 	//Magicクラスのインスタンスを生成
 	m_magiclist.push_back(Magic(0 , L"無し"					    , 0.0f,999));
 	m_magiclist.push_back(Magic(1 , L"フォイエ"		  	        , 1.7f, 40));

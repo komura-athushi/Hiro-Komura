@@ -14,6 +14,8 @@ public:
 	void AnimationController();
 	//回転
 	void Turn();
+	//文字表示
+	void PostRender() override;
 	//座標を設定
 	void SetPosition(const CVector3& pos)
 	{
@@ -49,7 +51,6 @@ public:
 	{
 		return m_ontalk;
 	}
-	void PostRender() override;
 private:
 	GameObj::CSkinModelRender* m_skinModelRender = nullptr;		//スキンモデルレンダラー。
 	CVector3 m_scale = { 2.0f,2.0f,2.0f };
@@ -70,7 +71,7 @@ private:
 	enum EnState {
 		enState_Idle,
 	};
-	const int m_necessarymaterial = 10;						   //街の発展に必要な素材の数
+	static const int m_necessarymaterial = 10;						   //街の発展に必要な素材の数
 	AnimationClip m_animClip[enAnimationClip_num];
 	EnState m_state = enState_Idle;
 	Player* m_player;

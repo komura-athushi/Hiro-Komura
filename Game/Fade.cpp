@@ -11,6 +11,7 @@ Fade::~Fade()
 }
 bool Fade::Start()
 {
+	//ƒ[ƒh‰æ–Ê‚Ì‰æ‘œ‚ğ“Ç‚İ‚Ş
 	m_sprite.Init(L"Resource/sprite/loading.dds");
 	return true;
 }
@@ -43,6 +44,6 @@ void Fade::PostRender()
 			0.0f,
 			{ 1.0f, 1.0f, 1.0f, m_currentAlpha },
 			DirectX::SpriteEffects_None,
-			1.0f);
+			0.1f);
 	}
 }

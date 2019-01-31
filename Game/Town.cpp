@@ -10,8 +10,10 @@
 #include "PlayerStatus.h"
 #include "Cagliostro_view.h"
 #include "Human.h"
+#include "Merchant.h"
 #include "GameData.h"
 #include "Fade.h"
+#include "MainSound.h"
 Town::Town()
 {
 	
@@ -22,6 +24,7 @@ Town::~Town()
 {
 	delete m_player;
 	delete m_human;
+	delete m_merchant;
 	delete m_ground;
 	delete m_gamecamera;
 	delete m_lig;
@@ -64,6 +67,8 @@ bool Town::Start()
 	m_player->SetCamera(m_gamecamera);
 	m_fade = FindGO<Fade>();
 	m_fade->StartFadeIn();
+	MainSound* ms = FindGO<MainSound>();
+	ms->SetBGM(1);
 	return true;
 }
 
@@ -164,10 +169,17 @@ void Town::BuildLevel()
 			return true;
 		}
 		else if (objData.EqualObjectName(L"human") == true) {
-			//Human
 			m_human = new Human;
 			m_human->SetPosition(objData.position);
 			m_human->SetName(L"Human");
+			//フックした場合はtrueを返す。
+			return true;
+		}
+		else if (objData.EqualObjectName(L"merchant") == true) {
+			m_merchant = new Merchant;
+			m_merchant->SetPosition(objData.position);
+			m_merchant->SetRotation(objData.rotation);
+			m_merchant->SetName(L"Merchant");
 			//フックした場合はtrueを返す。
 			return true;
 		}

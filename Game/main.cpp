@@ -6,6 +6,7 @@
 #include "Fade.h"
 #include <time.h>
 #include "GameData.h"
+#include "MainSound.h"
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nCmdShow)
 {
 	srand((unsigned)time(NULL));
@@ -26,7 +27,8 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	playerstatus->SetGameData(gamedata);
 	//Fadeクラスのインスタンスを静的な関数を使って生成
 	Fade* fade = &Fade::GetInstance();
-	//Town* town = new Town;
+	//MainSoundクラスのインスタンスを静的な関数をつかって生成
+	MainSound* mainsound = &MainSound::GetInstance();
 	Title* titel = new Title;
 	SetPhysicsDebugDrawMode(btIDebugDraw::DBG_DrawWireframe);
 	//ゲームループ。

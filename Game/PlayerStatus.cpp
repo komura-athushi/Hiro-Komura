@@ -39,7 +39,7 @@ void PlayerStatus::Update()
 	//LSBボタンを押すと全部武器所持状態に移行
 	if (Pad(0).GetDown(enButtonLSB)) {
 		for (int i = 0; i < GameData::enWeapon_num; i++) {
-			m_weaponinventorylist[i]={ Equipment(i),true,50 };
+			m_weaponinventorylist[i] = { Equipment(i),true};
 		}
 		for (int i = 0; i < GameData::enMaterial_num; i++) {
 			m_havemateriallist[i] = 100;
@@ -47,7 +47,7 @@ void PlayerStatus::Update()
 		for (int i = 0; i < m_gamedata->m_stagenumber; i++) {
 			//m_gamedata->SetClear(i);
 		}
-		PlusExp(1000000000);
+		//PlusExp(1000000000);
 	}
 }
 
@@ -60,7 +60,7 @@ void PlayerStatus::PlusExp(const int& exp)
 	while (m_LevelExp <= m_Exp) {
 		ep -= m_NextExp;
 		m_Level+=1;
-		m_NextExp = (int)((1 + (float)(m_Level*m_Level * 0.1f)) * 80);
+		m_NextExp = (int)((1 + (float)(m_Level*m_Level * 0.1f)) * 50);
 		m_LevelExp += m_NextExp;
 		m_Power += 5 + rand() % 3;
 		m_Attack = m_Power + m_SwordAttack;
@@ -69,6 +69,7 @@ void PlayerStatus::PlusExp(const int& exp)
 		m_Clever += 10;
 		m_Attack = m_Power + m_SwordAttack;
 		m_Mattack = m_Clever + m_SwordMattack;
+		m_levelup = true;
 	}
 		m_NextExp -= ep;
 }
@@ -94,7 +95,7 @@ void PlayerStatus::SetMagicStatus()
 bool PlayerStatus::GetWeapon(int number)
 {
 	//引数が武器の番号の範囲を超えていたら関数の処理を終了させる
-	if (number<0 || number>GameData::enWeapon_num-1) {
+	if (number < 0 || number > GameData::enWeapon_num-1) {
 		return false;
 	}
 	//左ボタン押した時の処理
@@ -125,7 +126,7 @@ bool PlayerStatus::GetWeapon(int number)
 void PlayerStatus::SetWeapon(const int& number)
 {
 	if (m_weaponinventorylist[number].s_ishave) {
-		m_weaponinventorylist[number].s_material += 1;
+		m_havemeseta += m_weaponinventorylist[number].s_equipment.GetMeseta();
 	}
 	else {
 		m_weaponinventorylist[number].s_ishave = true;
@@ -136,21 +137,31 @@ void PlayerStatus::PostRender()
 {
 	//ステを文字表示
 	wchar_t output[256];
-	swprintf_s(output, L"木   %d\n石   %d\nレンガ  %d\nそざい  %d\n", m_havemateriallist[0], m_havemateriallist[1], m_havemateriallist[2],m_weaponinventorylist[m_SwordId].s_material);
+	swprintf_s(output, L"木   %d\n石   %d\nレンガ  %d\nメセタ  %d\n", m_havemateriallist[0], m_havemateriallist[1], m_havemateriallist[2],m_havemeseta);
 	//swprintf_s(output, L"x   %f\ny   %f\nz  %f\nw   %f\n", m_swordqRot.x, m_swordqRot.y, m_swordqRot.z, m_swordqRot.w);
-	m_font.DrawScreenPos(output, { 00.0f,200.0f }, CVector4::White());
+	m_font.DrawScreenPos(output, { 00.0f,200.0f }, CVector4::White(),
+		CVector2::One(),
+		CVector2::Zero(),
+		0.0f,
+		DirectX::SpriteEffects_None,
+		1.0f
+	);
 	//武器のアイコン表示
 	CVector2 pos = m_position;
 	for (int i = 0; i < GameData::enWeapon_num; i++) {
 		//所持状況がtrueなら該当する画像を表示する
 		if (m_weaponinventorylist[i].s_ishave) {
-			m_sprite[i].DrawScreenPos(pos, m_scale);
+			m_sprite[i].DrawScreenPos(pos, m_scale, CVector2::Zero(),
+				0.0f,
+				CVector4::White(),
+				DirectX::SpriteEffects_None,
+				1.0f);
 			if (m_SwordId == i) {
 				m_cursor.DrawScreenPos(pos, m_scale,CVector2::Zero(),
 					0.0f,
 					CVector4::White(),
 					DirectX::SpriteEffects_None,
-					0.4f);
+					0.9f);
 			}
 			pos.x += 64.0f;
 		}

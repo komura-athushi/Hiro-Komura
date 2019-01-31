@@ -75,5 +75,6 @@ private:
 	static const int m_EXP = 500;                               //経験値
 	static const int m_dropChances[];				            //エネミーのドロップするアイテム、[1]が10ならレア度1が10%でドロップするみたいな
 	static const int m_dropmaterialChances[];
+	static const int m_meseta = 500;
 };
 

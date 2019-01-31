@@ -1,22 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-<<<<<<< HEAD
-    <ImageContentTask Include="Asset\sprite\Red.png" />
-    <ImageContentTask Include="Asset\sprite\Title.png" />
-    <ImageContentTask Include="Asset\sprite\MokoTitle.png" />
-    <ImageContentTask Include="Asset\sprite\Weapon\ancientwarriorblade.png" />
-    <ImageContentTask Include="Asset\sprite\Weapon\battlereadyblade.png" />
-    <ImageContentTask Include="Asset\sprite\Weapon\bluelightsword.png" />
-    <ImageContentTask Include="Asset\sprite\Weapon\firesword.png" />
-    <ImageContentTask Include="Asset\sprite\Weapon\greatsword.png" />
-    <ImageContentTask Include="Asset\sprite\Weapon\icesword.png" />
-    <ImageContentTask Include="Asset\sprite\Weapon\sword.png" />
-    <ImageContentTask Include="Asset\sprite\Weapon\windsword.png" />
-    <ImageContentTask Include="Asset\sprite\Weapon\excaliburmorgan.png" />
-    <ImageContentTask Include="Asset\sprite\Weapon\cursor.png" />
-    <ImageContentTask Include="Asset\sprite\loading.png" />
-=======
     <ImageContentTask Include="Asset\sprite\Title.png">
       <Filter>Asset\sprite</Filter>
     </ImageContentTask>
@@ -68,19 +52,16 @@
     <ImageContentTask Include="Asset\sprite\gameover.png">
       <Filter>Asset\sprite</Filter>
     </ImageContentTask>
->>>>>>> 569c576601c17402af27d5bac0f8699fa16b46ef
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Boss.cpp" />
     <ClCompile Include="Cagliostro_view.cpp" />
     <ClCompile Include="DropItem.cpp" />
     <ClCompile Include="DropMaterial.cpp" />
-    <ClCompile Include="Fade.cpp" />
     <ClCompile Include="GameData.cpp" />
     <ClCompile Include="House.cpp" />
     <ClCompile Include="Human.cpp" />
     <ClCompile Include="IEnemy.cpp" />
-    <ClCompile Include="Equipment.cpp" />
     <ClCompile Include="Magic.cpp" />
     <ClCompile Include="Material.cpp" />
     <ClCompile Include="Oni.cpp" />
@@ -98,38 +79,12 @@
     <ClCompile Include="Title.cpp" />
     <ClCompile Include="Ground.cpp" />
     <ClCompile Include="Weapon.cpp" />
-    <ClCompile Include="BossAttack.cpp" />
+    <ClCompile Include="Equipment.cpp" />
+    <ClCompile Include="Fade.cpp" />
+    <ClCompile Include="Merchant.cpp" />
+    <ClCompile Include="MainSound.cpp" />
   </ItemGroup>
   <ItemGroup>
-<<<<<<< HEAD
-    <MeshContentTask Include="Asset\modelData\boss\boss.FBX" />
-    <MeshContentTask Include="Asset\modelData\cagliostro\cagliostro.fbx" />
-    <MeshContentTask Include="Asset\modelData\enemy\enemy.FBX" />
-    <MeshContentTask Include="Asset\modelData\ground.FBX" />
-    <MeshContentTask Include="Asset\modelData\House\house.FBX" />
-    <MeshContentTask Include="Asset\modelData\human\human.FBX" />
-    <MeshContentTask Include="Asset\modelData\Magic_Sample.FBX" />
-    <MeshContentTask Include="Asset\modelData\material\brick.FBX" />
-    <MeshContentTask Include="Asset\modelData\material\ishi.FBX" />
-    <MeshContentTask Include="Asset\modelData\material\wood.FBX" />
-    <MeshContentTask Include="Asset\modelData\sky.FBX" />
-    <MeshContentTask Include="Asset\modelData\skydome.FBX" />
-    <MeshContentTask Include="Asset\modelData\stage1_ground.FBX" />
-    <MeshContentTask Include="Asset\modelData\stage1_teleport.FBX" />
-    <MeshContentTask Include="Asset\modelData\stone.FBX" />
-    <MeshContentTask Include="Asset\modelData\Sword\AncientWarriorBlade.FBX" />
-    <MeshContentTask Include="Asset\modelData\Sword\BattleReadyBlade.FBX" />
-    <MeshContentTask Include="Asset\modelData\Sword\BlueLightSword.FBX" />
-    <MeshContentTask Include="Asset\modelData\Sword\excaliburmorgan.FBX" />
-    <MeshContentTask Include="Asset\modelData\Sword\FireSword.FBX" />
-    <MeshContentTask Include="Asset\modelData\Sword\GreatSword.fbx" />
-    <MeshContentTask Include="Asset\modelData\Sword\IceSword.FBX" />
-    <MeshContentTask Include="Asset\modelData\Sword\Sword.FBX" />
-    <MeshContentTask Include="Asset\modelData\Sword\WindSword.FBX" />
-    <MeshContentTask Include="Asset\modelData\unityChan.fbx" />
-    <MeshContentTask Include="Asset\modelData\boss\bullet2.FBX" />
-    <MeshContentTask Include="Asset\modelData\boss\bullet3.FBX" />
-=======
     <MeshContentTask Include="Asset\modelData\Sword\AncientWarriorBlade.FBX">
       <Filter>Asset\modelData</Filter>
     </MeshContentTask>
@@ -205,19 +160,22 @@
     <MeshContentTask Include="Asset\modelData\ground2.FBX">
       <Filter>Asset\modelData</Filter>
     </MeshContentTask>
->>>>>>> 569c576601c17402af27d5bac0f8699fa16b46ef
+    <MeshContentTask Include="Asset\modelData\meseta\meseta.FBX">
+      <Filter>Asset\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Asset\modelData\zunko\zunko.FBX">
+      <Filter>Asset\modelData</Filter>
+    </MeshContentTask>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Boss.h" />
     <ClInclude Include="Cagliostro_view.h" />
     <ClInclude Include="DropItem.h" />
     <ClInclude Include="DropMaterial.h" />
-    <ClInclude Include="Fade.h" />
     <ClInclude Include="GameData.h" />
     <ClInclude Include="House.h" />
     <ClInclude Include="Human.h" />
     <ClInclude Include="IEnemy.h" />
-    <ClInclude Include="Equipment.h" />
     <ClInclude Include="Magic.h" />
     <ClInclude Include="Material.h" />
     <ClInclude Include="Oni.h" />
@@ -234,6 +192,23 @@
     <ClInclude Include="Title.h" />
     <ClInclude Include="Ground.h" />
     <ClInclude Include="Weapon.h" />
-    <ClInclude Include="BossAttack.h" />
+    <ClInclude Include="Equipment.h" />
+    <ClInclude Include="Fade.h" />
+    <ClInclude Include="Merchant.h" />
+    <ClInclude Include="MainSound.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Asset">
+      <UniqueIdentifier>{535ba16f-ee87-42e1-8077-25a6b558d98a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Asset\modelData">
+      <UniqueIdentifier>{e941061a-6b51-4112-8b44-1c487fc5b789}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Asset\sprite">
+      <UniqueIdentifier>{91596f2e-5672-475b-878e-bef6f546c8a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Asset\sprite\sword">
+      <UniqueIdentifier>{c71f8680-38ce-43d4-85bc-c0661429f210}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

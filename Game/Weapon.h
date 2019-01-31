@@ -12,8 +12,9 @@ public:
 	*int atk;							//武器の物理攻撃力
 	*int matk;							//武器の魔法攻撃力
 	*int mnumber;						//武器の魔法の番号
+	*int meseta							//売却時の価格
 	*/
-	Weapon(const int& id, const wchar_t* name,const int& rarity,const int& atk,const int& matk,const int& mnumber);
+	Weapon(const int& id, const wchar_t* name,const int& rarity,const int& atk,const int& matk,const int& mnumber,int const& meseta);
 	//コピーコンストラクタ
 	Weapon(const Weapon& wpn);
 	~Weapon();
@@ -48,6 +49,11 @@ public:
 	{
 		return m_magicid;
 	}
+	//売却価格を取得
+	int GetMeseta() const
+	{
+		return m_meseta;
+	}
 	static const int m_HighestRarity = 7;   //武器の最高レアリティ
 	static const int m_raritynumber[];      //レアリティごとの武器の種類
 private:
@@ -57,6 +63,7 @@ private:
 	int m_atk;								//武器の物理攻撃力
 	int m_matk;								//武器の魔法攻撃力
 	int m_magicid;							//武器の魔法の番号
+	int m_meseta;							//売却したときの価格
 };
 
 /*

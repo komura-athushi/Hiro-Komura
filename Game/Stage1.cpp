@@ -12,6 +12,7 @@
 #include "IEnemy.h"
 #include "GameData.h"
 #include "Fade.h"
+#include "MainSound.h"
 Stage1::Stage1()
 {
 }
@@ -24,8 +25,6 @@ Stage1::~Stage1()
 	delete m_lig;
 	delete m_shadowMap;
 	QueryGOs<Oni>(L"Enemy", [&](Oni* oni)
-
-
 	{
 		delete oni;
 		return true;
@@ -117,6 +116,12 @@ bool Stage1::Start()
 	m_player->SetCamera(m_gamecamera);
 	m_fade = FindGO<Fade>();
 	m_fade->StartFadeIn();
+	MainSound* ms = FindGO<MainSound>();
+	ms->SetBGM(2);
+	//SE
+	SuicideObj::CSE* se = NewGO<SuicideObj::CSE>(L"Asset/sound/unityChan/start.wav");
+	se->Play(); //再生(再生が終わると削除されます)
+	se->SetVolume(2.6f);
 	return true;
 }
 
@@ -130,9 +135,11 @@ void Stage1::Update()
 	}
 	else {
 		//プレイヤーがゲームオーバーあるいはゲームクリアで拠点に遷移
-		if (m_player->GetGameOver() || m_player->GetGameClear()) {
-			GameData* gamedata = FindGO<GameData>(L"GameData");
-			gamedata->SetClear(0);
+		if (m_player->GetTransScene()) {
+			if (m_player->GetGameClear()) {
+				GameData* gamedata = FindGO<GameData>(L"GameData");
+				gamedata->SetClear(0);
+			}
 			m_isWaitFadeout = true;
 			m_fade->StartFadeOut();
 		}

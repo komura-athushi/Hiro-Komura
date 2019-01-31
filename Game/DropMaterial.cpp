@@ -15,7 +15,6 @@ DropMaterial::~DropMaterial()
 
 bool DropMaterial::Start()
 {
-
 	//ドロップさせる武器の番号を決めます
 	m_state = 0;
 	int type = Material::m_raritynumber[m_rarity];
@@ -56,6 +55,7 @@ void DropMaterial::Update()
 	CVector3 pos = m_player->GetPosition() - m_position;
 	if (pos.Length() <= 80.0f) {
 		PlayerStatus* playerstatus = FindGO<PlayerStatus>(L"PlayerStatus");
+		//プレイヤーの所持素材に追加
 		playerstatus->SetMaterial(m_state);
 		delete this;
 	}

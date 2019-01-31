@@ -242,7 +242,9 @@
     <ClCompile Include="IEnemy.cpp" />
     <ClCompile Include="Equipment.cpp" />
     <ClCompile Include="Magic.cpp" />
+    <ClCompile Include="MainSound.cpp" />
     <ClCompile Include="Material.cpp" />
+    <ClCompile Include="Merchant.cpp" />
     <ClCompile Include="Oni.cpp" />
     <ClCompile Include="PlayerStatus.cpp" />
     <ClCompile Include="ShotMagic.cpp" />
@@ -276,7 +278,9 @@
     <ClInclude Include="IEnemy.h" />
     <ClInclude Include="Equipment.h" />
     <ClInclude Include="Magic.h" />
+    <ClInclude Include="MainSound.h" />
     <ClInclude Include="Material.h" />
+    <ClInclude Include="Merchant.h" />
     <ClInclude Include="Oni.h" />
     <ClInclude Include="PlayerStatus.h" />
     <ClInclude Include="ShotMagic.h" />
@@ -305,6 +309,7 @@
     <MeshContentTask Include="Asset\modelData\material\brick.FBX" />
     <MeshContentTask Include="Asset\modelData\material\ishi.FBX" />
     <MeshContentTask Include="Asset\modelData\material\wood.FBX" />
+    <MeshContentTask Include="Asset\modelData\meseta\meseta.FBX" />
     <MeshContentTask Include="Asset\modelData\sky.FBX" />
     <MeshContentTask Include="Asset\modelData\skydome.FBX" />
     <MeshContentTask Include="Asset\modelData\stage1_ground.FBX" />
@@ -320,6 +325,7 @@
     <MeshContentTask Include="Asset\modelData\Sword\Sword.FBX" />
     <MeshContentTask Include="Asset\modelData\Sword\WindSword.FBX" />
     <MeshContentTask Include="Asset\modelData\unityChan.fbx" />
+    <MeshContentTask Include="Asset\modelData\zunko\zunko.FBX" />
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Asset\sprite\Red.png" />

@@ -24,14 +24,35 @@ public:
 	{
 		return m_position;
 	}
+	//カメラの座標を設定
+	void SetPosition(const CVector3& pos)
+	{
+		m_position = pos;
+	}
 	//カメラの注視点を取得
 	CVector3 GetTarget() const
 	{
 		return m_target;
 	}
+	//カメラの注視点を設定
+	void SetTarget(const CVector3& pos)
+	{
+		m_target = pos;
+	}
+	//カメラのポインタを取得
 	GameObj::PerspectiveCamera* GetCamera()
 	{
 		return m_camera;
+	}
+	//ターゲット
+	void SetTage()
+	{
+		m_tage = true;
+	}
+	//ターゲットオフ
+	void OffTage()
+	{
+		m_tage = false;
 	}
 private:
 	GameObj::PerspectiveCamera* m_camera;                  //3Dカメラのインスタンス
@@ -44,5 +65,6 @@ private:
 	CVector3 m_playerposition;                             //プレイヤーの座標
 	Player* m_player;                                      //プレイヤークラスのポインタ
 	float m_topos = 80.0f;
+	bool m_tage = false;
 };
 

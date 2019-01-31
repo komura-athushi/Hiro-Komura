@@ -3,6 +3,7 @@ class Ground;
 class GameCamera;
 class Player;
 class Human;
+class Merchant;
 class Stone;
 class House;
 class Stage1_Teleport;
@@ -31,6 +32,7 @@ private:
 	CVector3 m_color;                                  //ディレクションライトのカラー
 	Player* m_player;                                  //プレイヤークラスのポインタ
 	Human* m_human;									   //ヒューマンクラスのポインタ
+	Merchant* m_merchant;							   //マーチャントクラスのポインタ
 	Stage1_Teleport* m_stage1_teleport;                //ステージ1に遷移するためのクラスのポインタ
 	Level m_level;                                     //レベルデザインのためのクラス
 	PlayerStatus* m_playerstatus;                      //プレイヤーステータスクラスのポインタ

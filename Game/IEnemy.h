@@ -1,6 +1,7 @@
 #pragma once
 #include "Weapon.h"
 #include "Material.h"
+class GameCamera;
 //エネミーの基本クラスです
 //HPやドロップ、削除の処理などはこのクラスで処理します
 class IEnemy : public IGameObject
@@ -14,8 +15,9 @@ public:
 	* int e     撃破時の経験値を設定
 	* int dropchances[]  ドロップするアイテムのレア度と確率
 	* int dropmaterialchances[]  ドロップする素材のレア度と確率
+	* int meseta   ドロップするメセタの大体の額
 	*/
-	IEnemy(const int& h,const int& a,const int& e,const int dropchances[Weapon::m_HighestRarity],const int dropmaterialchances[Material::m_HighestRarity]);
+	IEnemy(const int& h,const int& a,const int& e,const int dropchances[Weapon::m_HighestRarity],const int dropmaterialchances[Material::m_HighestRarity],const int& meseta);
 	virtual ~IEnemy();
 	/*!
 	* @brief	コリジョンの生成。
@@ -70,17 +72,22 @@ protected:
 	int m_Attack;                                             //攻撃力
 	int m_damagecount;										  //受けたダメージ
 	int m_Exp;                                                //経験値
-	int m_timer = 0;                                          //当たり判定にクールタイム
-	int m_timer1 = 0;										  //フォイエの当たり判定のクールタイム
-	int m_timer2 = 0;										  //イルグランツの
-	int m_timer3 = 0;									      //ザンバースの
-	int m_timer5 = 0;										  //マジスフィの
-	int m_fonttimer = 0;									  //文字表示のタイマー
+	float m_timer = 0.0f;                                          //当たり判定にクールタイム
+	float m_timer1 = 0.0f;										  //フォイエの当たり判定のクールタイム
+	float m_timer2 = 0.0f;										  //イルグランツの
+	float m_timer3 = 0.0f;									      //ザンバースの
+	float m_timer5 = 0.0f;										  //マジスフィの
+	float m_fonttimer = 0.0f;									  //文字表示のタイマー
 	bool m_damage = false;                                    //ダメージを受けたかどうか
 	bool m_death = false;                                     //HPが0以下になったかどうか
 	bool m_displayfont = false;								  //ダメ表示するかどうか
 	CFont m_font;                                             //文字表示クラス
+	int m_dropmeseta;										  //ドロップするメセタの大体の額
 	int m_dropChances[Weapon::m_HighestRarity];			      //エネミーのドロップするアイテム、[1]が0.4fならレア度1が40%でドロップするみたいな
 	int m_dropmaterialChances[Material::m_HighestRarity];	  //エネミーのドロップする素材の確率
+	bool m_isdropWeapon = false;							  //武器がドロップしたかどうか
+	static const int m_mesetarand = 2;
+	static const float m_frame;								  //fps
+	GameCamera* m_gamecamera;
 };
 

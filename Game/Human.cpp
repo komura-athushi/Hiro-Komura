@@ -18,8 +18,10 @@ bool Human::Start()
 {
 	//アニメーションファイルをロード
 	m_animClip[enAnimationClip_idle].Load(L"Asset/animData/unityChan/idle.tka", true);//, enZtoY);
+	//m_animClip[enAnimationClip_idle].Load(L"Asset/animData/idle.tka", true);//, enZtoY);
 	m_skinModelRender = new GameObj::CSkinModelRender;
 	m_skinModelRender->Init(L"Resource/modelData/unityChan.cmo", m_animClip, enAnimationClip_num,enFbxUpAxisY);//, enFbxUpAxisZ);
+	//m_skinModelRender->Init(L"Resource/modelData/zunko.cmo", m_animClip,enAnimationClip_num);
 	//m_skinModelRender->Init(L"Resource/modelData/human.cmo");
 	m_skinModelRender->SetPos(m_position);
 	m_skinModelRender->SetScale(m_scale);
@@ -43,6 +45,7 @@ void Human::Update()
 	m_townlevel = m_gamedata->GetTownLevel();
 	if (m_player == nullptr) {
 		m_player = FindGO<Player>();
+		return;
 	}
 	else {
 		Turn();

@@ -8,7 +8,9 @@
 #include "IEnemy.h"
 #include "ShotMagic.h"
 #include "Human.h"
+#include "Merchant.h"
 #include "Effekseer.h"
+const float Player::m_frame = 40.0f;
 Player::Player()
 {
 }
@@ -48,7 +50,6 @@ void Player::unityChan()
 	m_skinModelRender->Init(L"Resource/modelData/unityChan.cmo", m_animClip, enAnimationClip_num, enFbxUpAxisY);
 	m_skinModelRender->SetPos(m_position);
 	m_skinModelRender->SetRot(m_rotation);
-	m_sprite.Init(L"Resource/sprite/HP_waku.dds");
 	m_sword = new Sword;
 	//unityChanのボーンを検索
 	m_bonehand = m_skinModelRender->FindBoneID(L"Character1_RightHand");
@@ -132,17 +133,19 @@ void Player::Update()
 	if (m_PPtimer >= 50) {
 		if (m_PP < m_MaxPP) {
 			m_PP++;
-			m_PPtimer = 0;
+			m_PPtimer = 0.0f;
 		}
 	}
-
 	RelationHuman();
+	RelationMerchant();
 	//攻撃力上昇魔法
 	Shihuta();
 	//PlayerStatusクラスのメンバ変数をプレイヤーのメンバ変数に反映
 	Status();
-	m_PPtimer++;
-	m_timer2++;
+	LevelUp();
+	//OutTarget();
+	m_PPtimer += m_frame * GetDeltaTimeSec();
+	m_timer2 += m_frame * GetDeltaTimeSec();
 }
 
 void Player::Move()
@@ -238,7 +241,31 @@ void Player::Animation()
 	else if (Pad(0).GetButton(enButtonLB1)) {
 		m_state = enState_GameClear;
 	}
-	m_timer++;
+	m_timer += m_frame * GetDeltaTimeSec();
+}
+
+void Player::ClearVoice()
+{
+	//SE
+	if (m_state == enState_GameClear) {
+		SuicideObj::CSE* se = NewGO<SuicideObj::CSE>(L"Asset/sound/unityChan/clear.wav");
+		se->Play(); //再生(再生が終わると削除されます)
+		se->SetVolume(2.6f);
+		//3D再生
+		se->SetPos(m_position);//音の位置
+		se->SetDistance(200.0f);//音が聞こえる範囲
+		se->Play(true); //第一引数をtrue
+	}
+	else {
+		//SE
+		SuicideObj::CSE* se = NewGO<SuicideObj::CSE>(L"Asset/sound/unityChan/gameover.wav");
+		se->Play(); //再生(再生が終わると削除されます)
+		se->SetVolume(2.6f);
+		//3D再生
+		se->SetPos(m_position);//音の位置
+		se->SetDistance(200.0f);//音が聞こえる範囲
+		se->Play(true); //第一引数をtrue
+	}
 }
 
 void Player::AnimationController()
@@ -291,6 +318,10 @@ void Player::AnimationController()
 	case enState_GameClear:
 		m_skinModelRender->GetAnimCon().Play(enAnimationClip_Clear, 0.2f);
 		m_sword->SetScale({ 0.001f,0.001f,0.001f });
+		if (!m_clear_over_voice) {
+			ClearVoice();
+			m_clear_over_voice = true;
+		}
 		if (m_skinModelRender->GetAnimCon().IsPlaying()) {
 
 		}
@@ -298,6 +329,7 @@ void Player::AnimationController()
 			//アニメーションの再生が終わったら、クリアフラグをONにする
 			if (Pad(0).GetButton(enButtonBack)) {
 				m_gameclear = true;
+				m_transscene = true;
 			}
 		}
 		Move();
@@ -306,12 +338,17 @@ void Player::AnimationController()
 	case enState_GameOver:
 		m_skinModelRender->GetAnimCon().Play(enAnimationClip_KneelDown, 0.2f);
 		m_sword->SetScale({ 0.001f,0.001f,0.001f });
+		if (!m_clear_over_voice) {
+			ClearVoice();
+			m_clear_over_voice = true;
+		}
 		if (m_skinModelRender->GetAnimCon().IsPlaying()) {
 		}
 		else {
 			//アニメーションの再生が終わったら、ゲームオーバーフラグをONにする
 			if (Pad(0).GetButton(enButtonBack)) {
 				m_gameover = true;
+				m_transscene = true;
 			}
 		}
 		Move();
@@ -344,7 +381,7 @@ void Player::AnimationController()
 		}
 		else {
 			//アニメーションの再生が終わったら、アニメーション分岐
-			m_timer++;
+			m_timer += m_frame * GetDeltaTimeSec();
 			if (m_timer >= 20) {
 				if (m_movespeed.LengthSq() > 40.0f * 40.0f) {
 					m_state = enState_Run;
@@ -369,7 +406,7 @@ void Player::AnimationController()
 		}
 		else {
 			//アニメーションの再生が終わったら、アニメーション分岐
-			m_timer++;
+			m_timer += m_frame * GetDeltaTimeSec();
 			if (m_timer >= 20) {
 				if (m_movespeed.LengthSq() > 40.0f * 40.0f) {
 					m_state = enState_Run;
@@ -444,6 +481,14 @@ void Player::OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventName)
 {
 	(void)clipName;
 	if (wcscmp(eventName,L"attack")==0) {
+		//SE
+		SuicideObj::CSE* se = NewGO<SuicideObj::CSE>(L"Asset/sound/unityChan/attack.wav");
+		se->Play(); //再生(再生が終わると削除されます)
+		se->SetVolume(2.6f);
+		//3D再生
+		se->SetPos(m_position);//音の位置
+		se->SetDistance(200.0f);//音が聞こえる範囲
+		se->Play(true); //第一引数をtrue
 		//攻撃判定の発生
 		SuicideObj::CCollisionObj* attackCol = NewGO<SuicideObj::CCollisionObj>();
 		//形状の作成
@@ -467,12 +512,21 @@ void Player::OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventName)
 		}
 		);
 	}
-	//呪文詠唱！
+	//呪文詠唱スタート！
 	else if (wcscmp(eventName, L"aria_start") == 0) {
 		GameObj::Suicider::CEffekseer* effect = new GameObj::Suicider::CEffekseer;
 		effect->Play(L"Asset/effect/efk/magic_cast01.efk", 1.0f, m_position, CQuaternion::Identity(), { 12.0f,12.0f,12.0f });
 		effect->SetSpeed(2.0f);
+		//SE
+		SuicideObj::CSE* se = NewGO<SuicideObj::CSE>(L"Asset/sound/unityChan/aria.wav");
+		se->Play(); //再生(再生が終わると削除されます)
+		se->SetVolume(2.6f);
+		//3D再生
+		se->SetPos(m_position);//音の位置
+		se->SetDistance(200.0f);//音が聞こえる範囲
+		se->Play(true); //第一引数をtrue
 	}
+	//魔法を発生させる
 	else if (wcscmp(eventName, L"aria") == 0) {
 		ShotMagic* shotmagic = new ShotMagic;
 		shotmagic->SetPosition(m_position);
@@ -560,11 +614,23 @@ void Player::RecoveryPP()
 	}
 }
 
+void Player::LevelUp()
+{
+	if (m_playerstatus->GetLevelUp()) {
+		GameObj::Suicider::CEffekseer* effect = new GameObj::Suicider::CEffekseer;
+		CVector3 pos = m_position;
+		pos.y += m_height;
+		effect->Play(L"Asset/effect/lvup/lvup.efk", 1.0f, pos, CQuaternion::Identity(), { 20.0f,20.0f,20.0f });
+		effect->SetSpeed(1.5f);
+		m_playerstatus->OffLevelUp();
+	}
+}
+
 void Player::Shihuta()
 {
 	if (m_Shihuta) {
 		m_Attack = (int)(m_ShihutaAttack * m_AttackMultiply);
-		m_Shihutatimer++;
+		m_Shihutatimer += 40.0f * GetDeltaTimeSec();
 		if (m_Shihutatimer >= m_Shihutatime) {
 			m_Shihuta = false;
 			m_Shihutatimer = 0;
@@ -577,8 +643,8 @@ void Player::Shihuta()
 
 void Player::RelationHuman()
 {
-	Human* m_human = FindGO<Human>(L"Human");
 	if (m_human == nullptr) {
+		m_human = FindGO<Human>(L"Human");
 		return;
 	}
 	CVector3 pos = m_human->GetPosition() - m_position;
@@ -598,6 +664,32 @@ void Player::RelationHuman()
 	}
 }
 
+void Player::RelationMerchant()
+{
+	if (m_merchant == nullptr) {
+		m_merchant = FindGO<Merchant>();
+		return;
+	}
+	CVector3 pos = m_merchant->GetPosition() - m_position;
+	if (pos.Length() <= 300.0f && m_state == enState_Idle) {
+		if (Pad(0).GetDown(enButtonB)) {
+			if (m_merchant->GetTalk()) {
+
+			}
+			else {
+				m_merchant->SetTalk();
+				m_stop = true;
+			}
+		}
+		else if (Pad(0).GetDown(enButtonA)) {
+			if (m_merchant->GetTalk()) {
+				m_merchant->OffTalk();
+				m_stop = false;
+			}
+		}
+	}
+}
+
 void Player::OutTarget()
 {
 	std::vector<CVector3> enemyList;
@@ -611,6 +703,7 @@ void Player::OutTarget()
 		return true;
 	});
 	if (enemynumber == 0) {
+		m_gamecamera->OffTage();
 		return;
 	}
 	target = m_position - enemyList[0];
@@ -622,10 +715,15 @@ void Player::OutTarget()
 		}
 	}
 	m_target = target;
+	m_gamecamera->SetTarget(m_target);
+	m_gamecamera->SetTage();
 }
 
 void Player::PostRender()
 {
+	if (m_transscene) {
+		return;
+	}
 	wchar_t output[256];
 	swprintf_s(output, L"Lv   %d\nExp  %d\nNexp %d\nHP   %d\nPP   %d\nAtk  %d\nMatk %d\nWpn  %s\nMgc  %s\nMPC  %d\nMgg  %d\nWLv  %d\n", m_Level, m_Exp, m_NextExp, m_HP, m_PP, m_Attack, m_Mattack, m_SwordName, m_MagicName, m_PPCost, int(m_Mattack*m_DamageRate),m_playerstatus->GetWeaponLv(m_SwordId));
 	//swprintf_s(output, L"x   %f\ny   %f\nz  %f\nw   %f\n", m_swordqRot.x, m_swordqRot.y, m_swordqRot.z, m_swordqRot.w);
@@ -635,6 +733,7 @@ void Player::PostRender()
 		{ 1.0f, 1.0f, 1.0f, 1.0f },
 		DirectX::SpriteEffects_None,
 		0.4f);*/
+	//ゲームオーバー表示
 	if (m_state == enState_GameOver && !m_skinModelRender->GetAnimCon().IsPlaying()) {
 		if (!m_displaysprite) {
 			m_sprite2.Init(L"Resource/sprite/gameover.dds");
@@ -644,8 +743,9 @@ void Player::PostRender()
 			0.0f,
 			{ 1.0f, 1.0f, 1.0f, 1.0f },
 			DirectX::SpriteEffects_None,
-			0.5f);
+			1.0f);
 	}
+	//ゲームクリア表示
 	else if (m_state == enState_GameClear && !m_skinModelRender->GetAnimCon().IsPlaying()) {
 		if (!m_displaysprite) {
 			m_sprite2.Init(L"Resource/sprite/clear.dds");
@@ -655,6 +755,6 @@ void Player::PostRender()
 			0.0f,
 			{ 1.0f, 1.0f, 1.0f, 1.0f },
 			DirectX::SpriteEffects_None,
-			0.5f);
+			1.0f);
 	}
 }
