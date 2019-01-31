@@ -118,6 +118,10 @@ bool Stage1::Start()
 	m_fade->StartFadeIn();
 	MainSound* ms = FindGO<MainSound>();
 	ms->SetBGM(2);
+	//SE
+	SuicideObj::CSE* se = NewGO<SuicideObj::CSE>(L"Asset/sound/unityChan/start.wav");
+	se->Play(); //Ä¶(Ä¶‚ªI‚í‚é‚Æíœ‚³‚ê‚Ü‚·)
+	se->SetVolume(2.6f);
 	return true;
 }
 

@@ -247,13 +247,25 @@ void Player::Animation()
 void Player::ClearVoice()
 {
 	//SE
-	SuicideObj::CSE* se = NewGO<SuicideObj::CSE>(L"Asset/sound/unityChan/clear.wav");
-	se->Play(); //再生(再生が終わると削除されます)
-	se->SetVolume(2.6f);
-	//3D再生
-	se->SetPos(m_position);//音の位置
-	se->SetDistance(200.0f);//音が聞こえる範囲
-	se->Play(true); //第一引数をtrue
+	if (m_state == enState_GameClear) {
+		SuicideObj::CSE* se = NewGO<SuicideObj::CSE>(L"Asset/sound/unityChan/clear.wav");
+		se->Play(); //再生(再生が終わると削除されます)
+		se->SetVolume(2.6f);
+		//3D再生
+		se->SetPos(m_position);//音の位置
+		se->SetDistance(200.0f);//音が聞こえる範囲
+		se->Play(true); //第一引数をtrue
+	}
+	else {
+		//SE
+		SuicideObj::CSE* se = NewGO<SuicideObj::CSE>(L"Asset/sound/unityChan/gameover.wav");
+		se->Play(); //再生(再生が終わると削除されます)
+		se->SetVolume(2.6f);
+		//3D再生
+		se->SetPos(m_position);//音の位置
+		se->SetDistance(200.0f);//音が聞こえる範囲
+		se->Play(true); //第一引数をtrue
+	}
 }
 
 void Player::AnimationController()
@@ -326,6 +338,10 @@ void Player::AnimationController()
 	case enState_GameOver:
 		m_skinModelRender->GetAnimCon().Play(enAnimationClip_KneelDown, 0.2f);
 		m_sword->SetScale({ 0.001f,0.001f,0.001f });
+		if (!m_clear_over_voice) {
+			ClearVoice();
+			m_clear_over_voice = true;
+		}
 		if (m_skinModelRender->GetAnimCon().IsPlaying()) {
 		}
 		else {
@@ -501,6 +517,14 @@ void Player::OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventName)
 		GameObj::Suicider::CEffekseer* effect = new GameObj::Suicider::CEffekseer;
 		effect->Play(L"Asset/effect/efk/magic_cast01.efk", 1.0f, m_position, CQuaternion::Identity(), { 12.0f,12.0f,12.0f });
 		effect->SetSpeed(2.0f);
+		//SE
+		SuicideObj::CSE* se = NewGO<SuicideObj::CSE>(L"Asset/sound/unityChan/aria.wav");
+		se->Play(); //再生(再生が終わると削除されます)
+		se->SetVolume(2.6f);
+		//3D再生
+		se->SetPos(m_position);//音の位置
+		se->SetDistance(200.0f);//音が聞こえる範囲
+		se->Play(true); //第一引数をtrue
 	}
 	//魔法を発生させる
 	else if (wcscmp(eventName, L"aria") == 0) {
