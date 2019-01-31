@@ -65,6 +65,9 @@ void Player::unityChan()
 	m_skinModelRender->GetAnimCon().AddAnimationEventListener([&](const wchar_t* clipName, const wchar_t* eventName) {
 		OnAnimationEvent(clipName, eventName);
 	});
+	//m_targetsprite.Init(L"Resource/sprite/target.dds");
+	m_targetsprite.Init(L"Resource/sprite/target.dds");
+	//m_targetsprite.Init(L"Resource/sprite/MokoTitle.dds");
 }
 
 void Player::cagliostro()
@@ -143,7 +146,7 @@ void Player::Update()
 	//PlayerStatusクラスのメンバ変数をプレイヤーのメンバ変数に反映
 	Status();
 	LevelUp();
-	//OutTarget();
+	OutTarget();
 	m_PPtimer += m_frame * GetDeltaTimeSec();
 	m_timer2 += m_frame * GetDeltaTimeSec();
 }
@@ -217,6 +220,14 @@ void Player::Animation()
 	if (m_damage) {
 		m_state = enState_Damage;
 		m_damage = false;
+		//SE
+		SuicideObj::CSE* se = NewGO<SuicideObj::CSE>(L"Asset/sound/unityChan/bad.wav");
+		se->Play(); //再生(再生が終わると削除されます)
+		se->SetVolume(2.6f);
+		//3D再生
+		se->SetPos(m_position);//音の位置
+		se->SetDistance(200.0f);//音が聞こえる範囲
+		se->Play(true); //第一引数をtrue
 	}
 	//Xボタンを押したら
 	else if (Pad(0).GetDown(enButtonX) && m_timer>=15) {
@@ -530,7 +541,7 @@ void Player::OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventName)
 	else if (wcscmp(eventName, L"aria") == 0) {
 		ShotMagic* shotmagic = new ShotMagic;
 		shotmagic->SetPosition(m_position);
-		shotmagic->SetDirectionPlayer(m_playerheikou);
+		shotmagic->SetDirectionPlayer(m_attacktarget);
 		shotmagic->SetId(m_MagicId);
 		shotmagic->SetDamage(m_Mattack, m_DamageRate);
 		shotmagic->SetName(L"ShotMagic");
@@ -694,35 +705,65 @@ void Player::OutTarget()
 {
 	std::vector<CVector3> enemyList;
 	int enemynumber = 0;
-	CVector3 target;
+	float degreemum;
 	QueryGOs<IEnemy>(L"Enemy", [&](IEnemy* enemy)
 	{
-		CVector3 pos = enemy->GetCollisionPosition();
-		enemyList.push_back(pos);
+		CVector3 pos = m_position - enemy->GetCollisionPosition();
+		if (pos.LengthSq() >= 1800.0f * 1800.0f) {
+			return true;
+		}
+		enemyList.push_back(enemy->GetCollisionPosition());
 		enemynumber++;
 		return true;
 	});
 	if (enemynumber == 0) {
-		m_gamecamera->OffTage();
+		m_targetdisplay = false;
 		return;
 	}
-	target = m_position - enemyList[0];
+	CVector3 pos = m_position - enemyList[0];
+	pos.y = 0.0f;
+	pos.Normalize();
+	degreemum = atan2f(pos.x - m_playerheikou.x, pos.z - m_playerheikou.z);
+	m_target = enemyList[0];
 	for (int i = 0; i < enemynumber; i++) {
-		CVector3 pos = m_position - enemyList[enemynumber];
-		
-		if (target.Length() > pos.Length()) {
-			target = pos;
+		CVector3 pos = m_position - enemyList[i];
+		pos.y = 0.0f;
+		pos.Normalize();
+		float degree = atan2f(pos.x - m_playerheikou.x, pos.z - m_playerheikou.z);
+		if (fabs(degreemum) >= fabs(degree)) {
+			degreemum = degree;
+			m_target = enemyList[i];
 		}
 	}
-	m_target = target;
-	m_gamecamera->SetTarget(m_target);
-	m_gamecamera->SetTage();
+	if (fabs(degreemum) <= M_PI / 4) {
+		m_targetdisplay = true;
+	}
+	else {
+		m_targetdisplay = false;
+	}
 }
 
 void Player::PostRender()
 {
 	if (m_transscene) {
 		return;
+	}
+	if (m_targetdisplay) {
+		CVector3 pos = m_gamecamera->GetCamera()->CalcScreenPosFromWorldPos(m_target);
+		if (0.0f <= pos.x && pos.x <= 1.0f && 0.0f <= pos.y && pos.y <= 1.0f && 0.0f <= pos.z && pos.z <= 1.0f) {
+			CVector3 scpos = pos;
+			m_targetsprite.Draw(scpos, { 0.2f,0.2f }, { 0.5f,0.5f },
+				0.0f,
+				{ 1.0f, 1.0f, 1.0f, 1.0f },
+				DirectX::SpriteEffects_None,
+				1.0f);
+			CVector3 pos = m_target - m_position;
+			pos.Normalize();
+			m_attacktarget = pos;
+		}
+	}
+	else {
+		m_attacktarget = m_playerheikou;
 	}
 	wchar_t output[256];
 	swprintf_s(output, L"Lv   %d\nExp  %d\nNexp %d\nHP   %d\nPP   %d\nAtk  %d\nMatk %d\nWpn  %s\nMgc  %s\nMPC  %d\nMgg  %d\nWLv  %d\n", m_Level, m_Exp, m_NextExp, m_HP, m_PP, m_Attack, m_Mattack, m_SwordName, m_MagicName, m_PPCost, int(m_Mattack*m_DamageRate),m_playerstatus->GetWeaponLv(m_SwordId));

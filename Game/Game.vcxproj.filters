@@ -52,6 +52,9 @@
     <ImageContentTask Include="Asset\sprite\gameover.png">
       <Filter>Asset\sprite</Filter>
     </ImageContentTask>
+    <ImageContentTask Include="Asset\sprite\target.png">
+      <Filter>Asset\sprite</Filter>
+    </ImageContentTask>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Boss.cpp" />

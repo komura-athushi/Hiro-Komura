@@ -120,6 +120,7 @@ private:
 	bool m_cagliostro = false;
 	GameObj::CSkinModelRender* m_skinModelRender = nullptr;		//スキンモデルレンダラー
 	CSprite m_sprite2;											//ゲームクリアとかゲームオーバーの
+	CSprite m_targetsprite;
 	bool m_displaysprite = false;
     SuicideObj::CCollisionObj* m_collision;                     //丸いコリジョン
 	CFont m_font;                                               //文字表示クラス
@@ -139,6 +140,7 @@ private:
 	float m_timer = 0.0f;                                            //攻撃のクールタイム
 	float m_timer2 = 0.0f;                                           //ダメージのクールタイム
 	CVector3 m_target = CVector3::Zero();
+	CVector3 m_attacktarget = CVector3::Zero();
 	bool m_ontarget = false;									//ターゲット表示するかどうか
 	bool m_gameover = false;                                    //ゲームオーバーかどうか
 	bool m_gameclear = false;									//ゲームクリアかどうか
@@ -207,6 +209,7 @@ private:
 	float m_Shihutatimer = 0.0f;								//シフタのかかっている時間
 	float m_Shihutatime = 360*10.0f;							//シフタのかかる時間を制限
 	const float m_AttackMultiply = 1.3f;						//シフタがかかった時の攻撃力を上げる倍率
+	bool m_targetdisplay = false;
 	static const float m_frame;
 	bool m_clear_over_voice = false;
 };
