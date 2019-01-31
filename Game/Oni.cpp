@@ -38,7 +38,7 @@ bool Oni::Start()
 	});
 	m_skinModelRender->SetScale(m_scale);
 	m_skinModelRender->SetPos(m_position);
-	CQuaternion rot;
+	CQuaternion rot = CQuaternion::Identity();
 	CVector3 pos = m_position;
 	pos.y += 55.0f;
 	m_staticobject.CreateCapsule(pos, rot, 40.0f, 50.0f);

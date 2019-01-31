@@ -44,8 +44,8 @@ public:
 private:
 	GameObj::CSkinModelRender* m_skinModelRender = nullptr;		//スキンモデルレンダラー。
 	PhysicsStaticObject m_staticobject;                         //静的オブジェクト
-	CVector3 m_oldpos = { 30.0f,100.0f,1500.0f };               //ボスの初期位置
-	CVector3 m_position = { 30.0f,100.0f,1500.0f };				//ボスの座標
+	CVector3 m_oldpos = { 0.0f,0.0f,0.0f };						//ボスの初期位置
+	CVector3 m_position = { 0.0f,0.0f,0.0f };					//ボスの座標
 	CVector3 m_scale = { 1.5f,1.5f,1.5f };						//ボスのスケール
 	CVector3 m_movespeed = { 0.0f,  0.0f,  0.0f };				//移動速度
 	CVector3 m_parallel = { 0.0f,0.0f,0.0f };					//ユニティちゃんの向きと平行なベクトル
@@ -65,8 +65,8 @@ private:
 	int m_atk3cooltime = 300;									//攻撃3が終わった後のクールタイム
 	int m_posttiming = 30;										//攻撃が来る前の注意のタイミング
 	int m_atktype = 0;											//攻撃の種類
-	float m_r = 80.0f;                                          //コリジョンの半径
-	float m_collisionheight = 50.0f;                            //コリジョンをm_positionからどれだけ上にあげるか
+	float m_r = 150.0f;                                         //コリジョンの半径
+	float m_collisionheight = 270.0f;                           //コリジョンをm_positionからどれだけ上にあげるか
 	//Bossの色々なステータス
 	static const int m_MaxHP = 900;                             //最大HP
 	static const int m_Attack1 = 20;							//攻撃力1

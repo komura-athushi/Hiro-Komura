@@ -10,7 +10,7 @@
 const int Boss::m_dropChances[Weapon::m_HighestRarity] = { 0,0,0,100,0,0,0 };
 const int Boss::m_dropmaterialChances[Material::m_HighestRarity] = { 0.0f,100.0f,0.0f };
 //ƒ{ƒX‚Å‚·
-Boss::Boss() : IEnemy(m_MaxHP, m_Attack, m_EXP, m_dropChances,m_dropmaterialChances)
+Boss::Boss() : IEnemy(m_MaxHP, m_Attack, m_EXP, m_dropChances, m_dropmaterialChances, m_meseta)
 {
 
 }
@@ -28,10 +28,10 @@ bool Boss::Start()
 	m_skinModelRender->Init(L"Resource/modelData/boss.cmo");
 	m_skinModelRender->SetScale(m_scale);
 	m_skinModelRender->SetPos(m_position);
-	CQuaternion rot;
+	CQuaternion rot = CQuaternion::Identity();
 	CVector3 pos = m_position;
-	pos.y += 55.0f;
-	m_staticobject.CreateCapsule(pos, rot, 40.0f, 50.0f);
+	pos.y += 500.0f;
+	m_staticobject.CreateSphere(pos, rot, 150.0f);
 
 	return true;
 }
@@ -237,7 +237,7 @@ void Boss::Update()
 	QueryGOs<BossAttack>(L"bossattack", [&](BossAttack* bullet)->bool {
 		CVector3 diff = bullet->GetPosition() - m_player->GetPosition();
 		if (diff.Length() < 130.0f) {  //‹——£‚ªˆê’èˆÈ‰º‚É‚È‚Á‚½‚çB
-			DeleteGO(bullet);
+			delete bullet;
 			if (m_atktype == 1) {
 				m_player->Damage(m_Attack1);
 			}
