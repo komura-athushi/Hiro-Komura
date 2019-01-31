@@ -9,7 +9,7 @@
 //cppでエネミーのレア度ごとのドロップ率を設定
 const int Boss::m_dropChances[Weapon::m_HighestRarity] = { 0,0,0,100,0,0,0 };
 const int Boss::m_dropmaterialChances[Material::m_HighestRarity] = { 0.0f,100.0f,0.0f };
-//ボス（見た目はスケルトン）です
+//ボスです
 Boss::Boss() : IEnemy(m_MaxHP, m_Attack, m_EXP, m_dropChances,m_dropmaterialChances)
 {
 
@@ -42,16 +42,16 @@ void Boss::Attack()
 	//プレイヤーの座標を取得
 	CVector3 m_playerposition = m_player->GetPosition();
 	m_playerposition.y += 100.0f;
-	//プレイヤーと敵の距離
+	//プレイヤーとボスの距離
 	CVector3 pos = m_player->GetPosition() - m_position;
 
-	if(m_HP >= 850) {
+	if(m_HP >= 600) {
 		if (m_timer >= m_cooltime) {
 			BossAttack* bossattack = new BossAttack;
 			bossattack->SetName(L"bossattack");
 			bossattack->SetNumber(1);
 			m_atktype = 1;
-			//弾丸の座標にエネミーの座標を代入する。
+			//弾丸の座標にボスの座標を代入する。
 			CVector3 l_pos = m_position;
 			l_pos.y += 70.0f;
 			bossattack->SetPosition(l_pos);
@@ -65,14 +65,14 @@ void Boss::Attack()
 			m_timer = 0;
 		}
 	}
-	else if(m_HP >= 800) {
+	else if(m_HP >= 300) {
 		if (m_timer >= m_cooltime) {
 			BossAttack* bossattack = new BossAttack;
 			bossattack->SetName(L"bossattack");
 			bossattack->SetNumber(2);
 			m_atktype = 2;
 
-			//弾丸の座標にエネミーの座標を代入する。
+			//弾丸の座標にボスの座標を代入する。
 			CVector3 l_pos = m_position;
 			l_pos.y += 200.0f;
 			bossattack->SetPosition(l_pos);
@@ -96,7 +96,7 @@ void Boss::Attack()
 				bossattack->SetNumber(3);
 				m_atktype = 3;
 
-				//弾丸の座標にエネミーの座標を代入する。
+				//弾丸の座標にボスの座標を代入する。
 				CVector3 l_pos = m_position;
 				l_pos.y += 200.0f;
 				bossattack->SetPosition(l_pos);
@@ -117,6 +117,7 @@ void Boss::Attack()
 		}
 	}
 } 
+//使わなそう
 void Boss::Chase()
 {
 	m_movespeed = { 0.0f,0.0f,0.0f };
@@ -124,13 +125,13 @@ void Boss::Chase()
 	CVector3 m_playerposition = m_player->GetPosition();
 	//プレイヤーと敵の距離
 	CVector3 pos = m_player->GetPosition() - m_position;
-	//敵の初期位置と現在位置の距離
+	//ボスの初期位置と現在位置の距離
 	CVector3 oldpos = m_oldpos - m_position;
 	//接触したら攻撃
 	if (pos.Length() < 100.0f) {
 		Attack();
 	}
-	//もしプレイヤーと鬼の距離が近くなったら
+	//もしプレイヤーとボスの距離が近くなったら
 	else if (pos.Length() < 1000.0f) {
 		//近づいてくる
 		CVector3 EnemyPos = m_playerposition - m_position;
@@ -220,6 +221,7 @@ void Boss::PostRender()
 void Boss::Update()
 {
 	m_timer++;
+	m_movespeed = m_player->GetPosition() - m_position;
 	Turn();
 	Attack();
 	//Damage();
