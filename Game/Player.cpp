@@ -764,7 +764,9 @@ void Player::PostRender()
 				{ 1.0f, 1.0f, 1.0f, 1.0f },
 				DirectX::SpriteEffects_None,
 				1.0f);
-			CVector3 pos = m_target - m_position;
+			CVector3 pos = m_position;
+			pos.y += 60.0f;
+			pos = m_target - pos;
 			pos.Normalize();
 			m_attacktarget = pos;
 		}
