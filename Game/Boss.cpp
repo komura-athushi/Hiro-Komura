@@ -10,7 +10,7 @@
 const int Boss::m_dropChances[Weapon::m_HighestRarity] = { 0,0,0,100,0,0,0 };
 const int Boss::m_dropmaterialChances[Material::m_HighestRarity] = { 0.0f,100.0f,0.0f };
 //É{ÉXÇ≈Ç∑
-Boss::Boss() : IEnemy(m_MaxHP, m_Attack, m_EXP, m_dropChances,m_dropmaterialChances)
+Boss::Boss() : IEnemy(m_MaxHP, m_Attack, m_EXP, m_dropChances,m_dropmaterialChances,m_meseta)
 {
 
 }

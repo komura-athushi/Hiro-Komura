@@ -86,6 +86,7 @@
     <ClCompile Include="Fade.cpp" />
     <ClCompile Include="Merchant.cpp" />
     <ClCompile Include="MainSound.cpp" />
+    <ClCompile Include="BossAttack.cpp" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Asset\modelData\Sword\AncientWarriorBlade.FBX">
@@ -169,6 +170,12 @@
     <MeshContentTask Include="Asset\modelData\zunko\zunko.FBX">
       <Filter>Asset\modelData</Filter>
     </MeshContentTask>
+    <MeshContentTask Include="Asset\modelData\boss\bullet2.FBX">
+      <Filter>Asset\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Asset\modelData\boss\bullet3.FBX">
+      <Filter>Asset\modelData</Filter>
+    </MeshContentTask>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Boss.h" />
@@ -199,6 +206,7 @@
     <ClInclude Include="Fade.h" />
     <ClInclude Include="Merchant.h" />
     <ClInclude Include="MainSound.h" />
+    <ClInclude Include="BossAttack.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Asset">

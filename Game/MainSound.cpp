@@ -13,6 +13,8 @@ MainSound::~MainSound()
 
 bool MainSound::Start()
 {
+	//マスターボリュームを設定
+	SetMasterVolume(0.0f);
 	m_bgm = NewGO<SuicideObj::CBGM>(L"Asset/sound/bgm/title.wav");
 	m_bgm->Play(false, true); //ループで再生(第二引数)
 	return true;

@@ -149,13 +149,13 @@ private:
 	static const int m_modelnumber1 = 1;
 	const CVector3 m_scale1 = { 2.0f,2.0f,2.0f };
 	const float m_collisionscale1 = 90.0f;
-	const float m_multiplyspeed1 = 15.0f*60.0f;
+	const float m_multiplyspeed1 = 25.0f*60.0f;
 	//イルグラ
 	const float m_deletetime2 = 60.0f;
 	static const int m_modelnumber2 = 3;
 	const CVector3 m_scale2 = { 1.0f,1.0f,1.0f };
 	const float m_collisionscale2 = 50.0f;
- 	const float m_multiplyspeed2 = 25.0f*60.0f;
+ 	const float m_multiplyspeed2 = 35.0f*60.0f;
 	static const int m_time2 = 18;
 	//ザンバース
 	const float m_deletetime3 = 60.0f;

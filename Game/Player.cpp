@@ -205,7 +205,7 @@ void Player::Turn()
 	auto moveSpeedXZ = m_movespeed;
 	moveSpeedXZ.y = 0.0f;
 	moveSpeedXZ.Normalize();
-	moveSpeedXZ.y = 0;
+	moveSpeedXZ.y = 0.0f;
 	if (moveSpeedXZ.LengthSq() < 0.5f) {
 		return;
 	}
@@ -429,7 +429,11 @@ void Player::AnimationController()
 			}
 		}
 		//キャラクターの向き関係
-		Turn();
+		//Turn();
+		float degree = atan2f(m_attacktarget.x, m_attacktarget.z);
+		CQuaternion qRot;
+		qRot.SetRotation(CVector3::AxisY(), degree);
+		m_skinModelRender->SetRot(qRot);
 		break;
 	}
 }
@@ -720,27 +724,30 @@ void Player::OutTarget()
 		m_targetdisplay = false;
 		return;
 	}
-	CVector3 pos = m_position - enemyList[0];
+	CVector3 pos = enemyList[0] - m_position;
 	pos.y = 0.0f;
 	pos.Normalize();
-	degreemum = atan2f(pos.x - m_playerheikou.x, pos.z - m_playerheikou.z);
+	float degreep = atan2f(m_playerheikou.x, m_playerheikou.z);
+	float degree = atan2f(pos.x, pos.z);
+	degreemum = degreep - degree;
 	m_target = enemyList[0];
 	for (int i = 0; i < enemynumber; i++) {
-		CVector3 pos = m_position - enemyList[i];
+		CVector3 pos = enemyList[i] - m_position;
 		pos.y = 0.0f;
 		pos.Normalize();
-		float degree = atan2f(pos.x - m_playerheikou.x, pos.z - m_playerheikou.z);
-		if (fabs(degreemum) >= fabs(degree)) {
-			degreemum = degree;
+		float degree = atan2f(pos.x, pos.z);
+		if (fabs(degreemum) >= fabs(degreep - degree)) {
+			degreemum = degreep - degree;
 			m_target = enemyList[i];
 		}
 	}
-	if (fabs(degreemum) <= M_PI / 4) {
+	if (fabs(degreemum) <= M_PI / 3) {
 		m_targetdisplay = true;
 	}
 	else {
 		m_targetdisplay = false;
 	}
+	//m_targetdisplay = true;
 }
 
 void Player::PostRender()
@@ -760,6 +767,9 @@ void Player::PostRender()
 			CVector3 pos = m_target - m_position;
 			pos.Normalize();
 			m_attacktarget = pos;
+		}
+		else {
+			m_attacktarget = m_playerheikou;
 		}
 	}
 	else {
