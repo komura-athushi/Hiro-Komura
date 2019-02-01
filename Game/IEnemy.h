@@ -37,6 +37,8 @@ public:
 	void Damage(const int& attack,int number=0);
 	//ドロップするアイテムの処理
 	void Drop();
+	//文字表示
+	void PostRender()override;
 	//エネミーのHPが0を切ったかどうか
 	bool GetDeath()
 	{
@@ -57,8 +59,6 @@ public:
 	{
 		return m_collisionposition;
 	}
-	//文字表示
-	void PostRender()override;
 protected:
 	SuicideObj::CCollisionObj* m_collision;                   //丸いコリジョン
 	CVector3 m_position;									  //座標
@@ -72,12 +72,12 @@ protected:
 	int m_Attack;                                             //攻撃力
 	int m_damagecount;										  //受けたダメージ
 	int m_Exp;                                                //経験値
-	float m_timer = 0.0f;                                          //当たり判定にクールタイム
-	float m_timer1 = 0.0f;										  //フォイエの当たり判定のクールタイム
-	float m_timer2 = 0.0f;										  //イルグランツの
-	float m_timer3 = 0.0f;									      //ザンバースの
-	float m_timer5 = 0.0f;										  //マジスフィの
-	float m_fonttimer = 0.0f;									  //文字表示のタイマー
+	float m_timer = 0.0f;                                     //当たり判定にクールタイム
+	float m_timer1 = 0.0f;									  //フォイエの当たり判定のクールタイム
+	float m_timer2 = 0.0f;									  //イルグランツの
+	float m_timer3 = 0.0f;									  //ザンバースの
+	float m_timer5 = 0.0f;									  //マジスフィの
+	float m_fonttimer = 0.0f;								  //文字表示のタイマー
 	bool m_damage = false;                                    //ダメージを受けたかどうか
 	bool m_death = false;                                     //HPが0以下になったかどうか
 	bool m_displayfont = false;								  //ダメ表示するかどうか

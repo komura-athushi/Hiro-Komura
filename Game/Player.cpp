@@ -10,6 +10,8 @@
 #include "Human.h"
 #include "Merchant.h"
 #include "Effekseer.h"
+const float Player::m_voicevolume = 3.5f;
+const float Player::m_lvupvollume = 2.0f;
 const float Player::m_frame = 40.0f;
 Player::Player()
 {
@@ -261,7 +263,7 @@ void Player::ClearVoice()
 	if (m_state == enState_GameClear) {
 		SuicideObj::CSE* se = NewGO<SuicideObj::CSE>(L"Asset/sound/unityChan/clear.wav");
 		se->Play(); //再生(再生が終わると削除されます)
-		se->SetVolume(2.6f);
+		se->SetVolume(m_voicevolume);
 		//3D再生
 		se->SetPos(m_position);//音の位置
 		se->SetDistance(200.0f);//音が聞こえる範囲
@@ -271,7 +273,7 @@ void Player::ClearVoice()
 		//SE
 		SuicideObj::CSE* se = NewGO<SuicideObj::CSE>(L"Asset/sound/unityChan/gameover.wav");
 		se->Play(); //再生(再生が終わると削除されます)
-		se->SetVolume(2.6f);
+		se->SetVolume(m_voicevolume);
 		//3D再生
 		se->SetPos(m_position);//音の位置
 		se->SetDistance(200.0f);//音が聞こえる範囲
@@ -499,7 +501,7 @@ void Player::OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventName)
 		//SE
 		SuicideObj::CSE* se = NewGO<SuicideObj::CSE>(L"Asset/sound/unityChan/attack.wav");
 		se->Play(); //再生(再生が終わると削除されます)
-		se->SetVolume(2.6f);
+		se->SetVolume(m_voicevolume);
 		//3D再生
 		se->SetPos(m_position);//音の位置
 		se->SetDistance(200.0f);//音が聞こえる範囲
@@ -535,7 +537,7 @@ void Player::OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventName)
 		//SE
 		SuicideObj::CSE* se = NewGO<SuicideObj::CSE>(L"Asset/sound/unityChan/aria.wav");
 		se->Play(); //再生(再生が終わると削除されます)
-		se->SetVolume(2.6f);
+		se->SetVolume(m_voicevolume);
 		//3D再生
 		se->SetPos(m_position);//音の位置
 		se->SetDistance(200.0f);//音が聞こえる範囲
@@ -638,6 +640,14 @@ void Player::LevelUp()
 		effect->Play(L"Asset/effect/lvup/lvup.efk", 1.0f, pos, CQuaternion::Identity(), { 20.0f,20.0f,20.0f });
 		effect->SetSpeed(1.5f);
 		m_playerstatus->OffLevelUp();
+		//SE
+		SuicideObj::CSE* se = NewGO<SuicideObj::CSE>(L"Asset/sound/se/lvup.wav");
+		se->Play(); //再生(再生が終わると削除されます)
+		se->SetVolume(m_lvupvollume);
+		//3D再生
+		se->SetPos(m_position);//音の位置
+		se->SetDistance(200.0f);//音が聞こえる範囲
+		se->Play(true); //第一引数をtrue
 	}
 }
 
@@ -712,6 +722,9 @@ void Player::OutTarget()
 	float degreemum;
 	QueryGOs<IEnemy>(L"Enemy", [&](IEnemy* enemy)
 	{
+		if (enemy->GetDeath()) {
+			return true;
+		}
 		CVector3 pos = m_position - enemy->GetCollisionPosition();
 		if (pos.LengthSq() >= 1800.0f * 1800.0f) {
 			return true;
@@ -729,6 +742,15 @@ void Player::OutTarget()
 	pos.Normalize();
 	float degreep = atan2f(m_playerheikou.x, m_playerheikou.z);
 	float degree = atan2f(pos.x, pos.z);
+	if (M_PI <= (degreep - degree)) {
+		degreemum = degreep - degree - M_PI * 2;
+	}
+	else if(-M_PI >= (degreep - degree)){
+		degreemum = degreep - degree + M_PI * 2;
+	}
+	else {
+		degreemum = degreep - degree;
+	}
 	degreemum = degreep - degree;
 	m_target = enemyList[0];
 	for (int i = 0; i < enemynumber; i++) {
@@ -736,8 +758,18 @@ void Player::OutTarget()
 		pos.y = 0.0f;
 		pos.Normalize();
 		float degree = atan2f(pos.x, pos.z);
-		if (fabs(degreemum) >= fabs(degreep - degree)) {
-			degreemum = degreep - degree;
+		float degreef;
+		if (M_PI <= (degreep - degree)) {
+			degreef = degreep - degree - M_PI * 2;
+		}
+		else if (-M_PI >= (degreep - degree)) {
+			degreef = degreep - degree + M_PI * 2;
+		}
+		else {
+			degreef = degreep - degree;
+		}
+		if (fabs(degreemum) >= fabs(degreef)) {
+			degreemum = degreef;
 			m_target = enemyList[i];
 		}
 	}

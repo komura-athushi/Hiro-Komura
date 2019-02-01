@@ -212,5 +212,7 @@ private:
 	bool m_targetdisplay = false;
 	static const float m_frame;
 	bool m_clear_over_voice = false;
+	static const float m_voicevolume;
+	static const float m_lvupvollume;
 };
 
