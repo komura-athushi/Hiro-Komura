@@ -60,7 +60,6 @@
     <ClCompile Include="DropMaterial.cpp" />
     <ClCompile Include="GameData.cpp" />
     <ClCompile Include="House.cpp" />
-    <ClCompile Include="Human.cpp" />
     <ClCompile Include="IEnemy.cpp" />
     <ClCompile Include="Magic.cpp" />
     <ClCompile Include="Material.cpp" />
@@ -83,6 +82,11 @@
     <ClCompile Include="Fade.cpp" />
     <ClCompile Include="Merchant.cpp" />
     <ClCompile Include="MainSound.cpp" />
+    <ClCompile Include="BossAttack.cpp" />
+    <ClCompile Include="Boss2.cpp" />
+    <ClCompile Include="Human.cpp">
+      <Filter>Asset\modelData</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Asset\modelData\Sword\AncientWarriorBlade.FBX">
@@ -166,6 +170,15 @@
     <MeshContentTask Include="Asset\modelData\zunko\zunko.FBX">
       <Filter>Asset\modelData</Filter>
     </MeshContentTask>
+    <MeshContentTask Include="Asset\modelData\boss2\DarkDragon.FBX">
+      <Filter>Asset\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Asset\modelData\boss\bullet2.FBX">
+      <Filter>Asset\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Asset\modelData\boss\bullet3.FBX">
+      <Filter>Asset\modelData</Filter>
+    </MeshContentTask>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Boss.h" />
@@ -196,6 +209,8 @@
     <ClInclude Include="Fade.h" />
     <ClInclude Include="Merchant.h" />
     <ClInclude Include="MainSound.h" />
+    <ClInclude Include="BossAttack.h" />
+    <ClInclude Include="Boss2.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Asset">

@@ -6,23 +6,25 @@
 class Stage1;
 class Player;
 class BossAttack;
-class Boss : public IEnemy
+class Boss2 : public IEnemy
 {
 public:
-	Boss();
-	~Boss();
+	Boss2();
+	~Boss2();
 	bool Start() override;
 	void Update() override;
 	void Attack();       										//攻撃
+	void Chase();												//追跡
 	void Damage();												//ダメージを受けた時のアクション
 	void Turn();												//キャラクターの向きを計算
+	void Dead();												//エネミーが死んだときの処理
 	//文字表示
 	void PostRender()override;
 	void SetPlayer(Player* player)								//プレイヤーのポイントをセット
 	{
 		m_player = player;
 	}
-	void SetBossAttack(BossAttack* bossattack)					//BossAttackのポイントをセット
+	void SetBossAttack(BossAttack* bossattack)								//BossAttackのポイントをセット
 	{
 		m_bossattack = bossattack;
 	}
@@ -43,7 +45,7 @@ private:
 	PhysicsStaticObject m_staticobject;                         //静的オブジェクト
 	CVector3 m_oldpos = { 0.0f,0.0f,0.0f };						//ボスの初期位置
 	CVector3 m_position = { 0.0f,0.0f,0.0f };					//ボスの座標
-	CVector3 m_scale = { 1.5f,1.5f,1.5f };						//ボスのスケール
+	CVector3 m_scale = { 5.0f,5.0f,5.0f };						//ボスのスケール
 	CVector3 m_movespeed = { 0.0f,  0.0f,  0.0f };				//移動速度
 	CVector3 m_parallel = { 0.0f,0.0f,0.0f };					//ユニティちゃんの向きと平行なベクトル
 	Player* m_player;											//プレイヤークラスのポインタ

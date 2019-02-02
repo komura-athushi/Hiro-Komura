@@ -7,6 +7,7 @@
 #include "PlayerStatus.h"
 #include "Oni.h"
 #include "Boss.h"
+#include "Boss2.h"
 #include "DropItem.h"
 #include "DropMaterial.h"
 #include "IEnemy.h"
@@ -27,6 +28,16 @@ Stage1::~Stage1()
 	QueryGOs<Oni>(L"Enemy", [&](Oni* oni)
 	{
 		delete oni;
+		return true;
+	});
+	QueryGOs<Boss>(L"Boss", [&](Boss* boss)
+	{
+		delete boss;
+		return true;
+	});
+	QueryGOs<Boss2>(L"Boss2", [&](Boss2* boss2)
+	{
+		delete boss2;
 		return true;
 	});
 	QueryGOs<DropItem>(L"DropItem", [&](DropItem* dropitem)
@@ -96,21 +107,40 @@ bool Stage1::Start()
 			//フックした場合はtrueを返す。
 			return true;
 		}
+		//else if (objData.EqualObjectName(L"boss") == true) {
+		//	////ボス
+		//	////プレイヤーのインスタンスを生成する。
+		//	//Boss* boss = new Boss;
+		//	//boss->SetPosition(objData.position);
+		//	//boss->SetOldPosition(objData.position);
+		//	//boss->SetName(L"Boss");
+		//	//boss->SetPlayer(m_player);
+		//	//boss->SetStage1(this);
+		//	////フックした場合はtrueを返す。
+		//	return true;
+		//}
 		else if (objData.EqualObjectName(L"boss") == true) {
-			//スケルトン
-			//プレイヤーのインスタンスを生成する。
-			//Starオブジェクト。
-			Boss* boss = new Boss;
-			boss->SetPosition(objData.position);
-			boss->SetOldPosition(objData.position);
-			boss->SetName(L"Enemy");
-			boss->SetPlayer(m_player);
-			boss->SetStage1(this);
+			////ボス2
+			////プレイヤーのインスタンスを生成する。
+			//Boss2* boss2 = new Boss2;
+			//boss2->SetPosition(objData.position);
+			//boss2->SetOldPosition(objData.position);
+			//boss2->SetName(L"Boss2");
+			//boss2->SetPlayer(m_player);
+			//boss2->SetStage1(this);
 			//フックした場合はtrueを返す。
 			return true;
 		}
 		return false;
 	});
+	//仮ここから
+	//ボス2
+			//プレイヤーのインスタンスを生成する。
+	Boss2* boss2 = new Boss2;
+	boss2->SetName(L"Boss2");
+	boss2->SetPlayer(m_player);
+	boss2->SetStage1(this);
+	//ここまで
 	m_gamecamera = new GameCamera;
 	m_gamecamera->SetPlayer(m_player);
 	m_player->SetCamera(m_gamecamera);

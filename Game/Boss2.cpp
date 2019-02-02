@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "Boss.h"
+#include "Boss2.h"
 #define _USE_MATH_DEFINES //M_PI 円周率呼び出し
 #include <math.h> 
 #include "Stage1.h"
@@ -7,25 +7,25 @@
 #include "BossAttack.h"
 #include "GameCamera.h"
 //cppでエネミーのレア度ごとのドロップ率を設定
-const int Boss::m_dropChances[Weapon::m_HighestRarity] = { 0,0,0,100,0,0,0 };
-const int Boss::m_dropmaterialChances[Material::m_HighestRarity] = { 0.0f,100.0f,0.0f };
-//ボスです
-Boss::Boss() : IEnemy(m_MaxHP, m_Attack, m_EXP, m_dropChances, m_dropmaterialChances, m_meseta)
+const int Boss2::m_dropChances[Weapon::m_HighestRarity] = { 0,0,0,100,0,0,0 };
+const int Boss2::m_dropmaterialChances[Material::m_HighestRarity] = { 0.0f,100.0f,0.0f };
+//ボス2です
+Boss2::Boss2() : IEnemy(m_MaxHP, m_Attack, m_EXP, m_dropChances, m_dropmaterialChances, m_meseta)
 {
 
 }
 
-Boss::~Boss()
+Boss2::~Boss2()
 {
 	delete m_skinModelRender;
 }
 
-bool Boss::Start()
+bool Boss2::Start()
 {
 	IEnemy::CCollision({ m_position }, m_collisionheight, m_r);
 	//ボスのスキンモデルレンダーを表示
 	m_skinModelRender = new GameObj::CSkinModelRender;
-	m_skinModelRender->Init(L"Resource/modelData/boss.cmo");
+	m_skinModelRender->Init(L"Resource/modelData/DarkDragon.cmo");
 	m_skinModelRender->SetScale(m_scale);
 	m_skinModelRender->SetPos(m_position);
 	CQuaternion rot = CQuaternion::Identity();
@@ -37,7 +37,7 @@ bool Boss::Start()
 }
 
 
-void Boss::Attack()
+void Boss2::Attack()
 {
 	//プレイヤーの座標を取得
 	CVector3 m_playerposition = m_player->GetPosition();
@@ -45,7 +45,7 @@ void Boss::Attack()
 	//プレイヤーとボスの距離
 	CVector3 pos = m_player->GetPosition() - m_position;
 
-	if(m_HP >= 600) {
+	if (m_HP >= 600) {
 		if (m_timer >= m_cooltime) {
 			BossAttack* bossattack = new BossAttack;
 			bossattack->SetName(L"bossattack");
@@ -60,12 +60,12 @@ void Boss::Attack()
 			bulletPos = bulletPos * 30.0f;
 			//弾のスピードを変える
 			bossattack->SetMoveSpeed(bulletPos);
-			
+
 			//タイマーをリセット。
 			m_timer = 0;
 		}
 	}
-	else if(m_HP >= 300) {
+	else if (m_HP >= 300) {
 		if (m_timer >= m_cooltime) {
 			BossAttack* bossattack = new BossAttack;
 			bossattack->SetName(L"bossattack");
@@ -116,10 +116,48 @@ void Boss::Attack()
 			}
 		}
 	}
-} 
+}
+
+void Boss2::Chase()
+{
+	m_movespeed = { 0.0f,0.0f,0.0f };
+	//プレイヤーの座標を取得
+	CVector3 m_playerposition = m_player->GetPosition();
+	//プレイヤーと敵の距離
+	CVector3 pos = m_player->GetPosition() - m_position;
+	//ボスの初期位置と現在位置の距離
+	CVector3 oldpos = m_oldpos - m_position;
+	//接触したら攻撃
+	if (pos.Length() < 100.0f) {
+		Attack();
+	}
+	//もしプレイヤーとボスの距離が近くなったら
+	else if (pos.Length() < 1000.0f) {
+		//近づいてくる
+		CVector3 EnemyPos = m_playerposition - m_position;
+		EnemyPos.Normalize();
+		m_movespeed = EnemyPos * 5.0f;
+		m_movespeed.y = 0.0f;
+		m_position += m_movespeed;
+	}
+
+	else if (pos.Length() > 1000.0f) {
+		//初期位置に帰る
+		CVector3 EnemyOldPos = m_oldpos - m_position;
+		EnemyOldPos.Normalize();
+		m_movespeed = EnemyOldPos * 5.0f;
+		m_movespeed.y = 0.0f;
+		//敵の初期位置と現在位置の距離がほぼ0だったら止まる
+		if (oldpos.Length() < 50.0f) {
+			m_movespeed = { 0.0f,0.0f,0.0f };
+		}
+		m_position += m_movespeed;
+	}
+	m_skinModelRender->SetPos(m_position);
+}
 
 //IEnemyにいれる
-void Boss::Turn()
+void Boss2::Turn()
 {
 	CVector3 rotation = { 0.0f,0.0f,0.0f };
 	//自機の角度の差分
@@ -140,7 +178,7 @@ void Boss::Turn()
 	m_skinModelRender->SetRot(m_rotation);
 }
 
-void Boss::Damage()
+void Boss2::Damage()
 {
 	//プレイヤーと弾の当たり判定
 	QueryGOs<BossAttack>(L"bossattack", [&](BossAttack* bullet)->bool {
@@ -162,7 +200,7 @@ void Boss::Damage()
 	});
 }
 
-void Boss::PostRender()
+void Boss2::PostRender()
 {
 	GameCamera* gc = FindGO<GameCamera>();
 	//もしFindGOでカメラを見つけられたら
@@ -197,7 +235,7 @@ void Boss::PostRender()
 	}
 }
 
-void Boss::Update()
+void Boss2::Update()
 {
 	m_timer++;
 	m_movespeed = m_player->GetPosition() - m_position;
@@ -211,6 +249,7 @@ void Boss::Update()
 		IEnemy::SetCCollision(m_position, m_collisionheight);
 	}
 	Damage();
+
 	//死んだら消す
 	if (m_death) {
 		delete this;
