@@ -112,9 +112,18 @@ public:
 	}
 	//プレイヤーを停止させる
 	void SetStop()
-
 	{
 		m_stop = true;
+	}
+	//剣の座標を取得
+	CVector3 GetSwordPosition() const
+	{
+		return m_swordposition;
+	}
+	//剣の回転を取得
+	CQuaternion GetSwordRot() const
+	{
+		return m_swordrot;
 	}
 private:
 	bool m_cagliostro = false;
@@ -132,13 +141,16 @@ private:
 	int m_bonecenter;                                           //centerの番号
 	CVector3 m_savemovespeed;                                   //m_movespeedを記憶しておく
 	Sword* m_sword;                                             //Swordクラスのポインタ
-	GameCamera* m_gamecamera;                                   //カメラのポインタ
+	GameCamera* m_gamecamera = nullptr;                         //カメラのポインタ
 	CVector3 m_movespeed;                                       //移動速度
 	CVector3 m_position = {0.0f,100.0f,00.0f};                  //ユニティちゃんの座標
 	CVector3 m_playerheikou = { 1.0f,0.0f,0.0f };               //プレイヤーと平行なベクトル
 	CVector3 m_scale = { 1.0f,1.0f,1.0f };                      //大きさ
-	float m_timer = 0.0f;                                            //攻撃のクールタイム
-	float m_timer2 = 0.0f;                                           //ダメージのクールタイム
+	CVector3 m_swordposition = CVector3::Zero();				//剣の座標
+	CQuaternion m_swordrot = CQuaternion::Identity();			//剣の回転
+	float m_timer = 0.0f;                                       //攻撃のクールタイマー
+	const int m_attacktime = 10;								//攻撃のクールタイム
+	float m_timer2 = 0.0f;                                      //ダメージのクールタイム
 	CVector3 m_target = CVector3::Zero();
 	CVector3 m_attacktarget = CVector3::Zero();
 	bool m_ontarget = false;									//ターゲット表示するかどうか
@@ -207,12 +219,14 @@ private:
 	bool m_Shihuta = false;										//シフタをかけるならtrue
 	int m_ShihutaAttack = 0;									//シフタにかかっているときにシフタ前の攻撃力を保存
 	float m_Shihutatimer = 0.0f;								//シフタのかかっている時間
-	float m_Shihutatime = 360*10.0f;							//シフタのかかる時間を制限
+	float m_Shihutatime = 360 * 10.0f;							//シフタのかかる時間を制限
 	const float m_AttackMultiply = 1.3f;						//シフタがかかった時の攻撃力を上げる倍率
 	bool m_targetdisplay = false;
-	static const float m_frame;
+	const float m_frame = 40;
 	bool m_clear_over_voice = false;
-	static const float m_voicevolume;
-	static const float m_lvupvollume;
+	const float m_voicevolume = 3.5f;
+	const float m_lvupvollume = 2.0f;
+	const float m_distancetarget = 1400.0f * 1400.0f;
+	const float m_degreemultiply = 0.4f;
 };
 

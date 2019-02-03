@@ -138,8 +138,8 @@ void IEnemy::PostRender()
 
 void IEnemy::Drop()
 {
-	int rad = rand() % 100;
-	int rpos = rand() % 10 + 30;
+	int rad = rand() % 100+1;
+	int rpos = rand() % 30 + 10;
 	//•Ší‚Ìƒhƒƒbƒv
 	for (int i = 0; i < Weapon::m_HighestRarity; i++) {
 		if (m_dropChances[i] >= rad) {

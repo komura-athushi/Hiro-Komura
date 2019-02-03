@@ -77,6 +77,7 @@ bool Stage1::Start()
 			//プレイヤーのインスタンスを生成する。
 			m_player = new Player;
 			m_player->SetPosition(objData.position);
+			m_player->SetRotation(objData.rotation);
 			m_player->SetName(L"Player");
 			//フックした場合はtrueを返す。
 			return true;
@@ -97,7 +98,7 @@ bool Stage1::Start()
 			return true;
 		}
 		else if (objData.EqualObjectName(L"boss") == true) {
-			/*//スケルトン
+			//スケルトン
 			//プレイヤーのインスタンスを生成する。
 			//Starオブジェクト。
 			Boss* boss = new Boss;
@@ -106,7 +107,6 @@ bool Stage1::Start()
 			boss->SetName(L"Enemy");
 			boss->SetPlayer(m_player);
 			boss->SetStage1(this);
-			*/
 			//フックした場合はtrueを返す。
 			return true;
 		}

@@ -10,9 +10,6 @@
 #include "Human.h"
 #include "Merchant.h"
 #include "Effekseer.h"
-const float Player::m_voicevolume = 3.5f;
-const float Player::m_lvupvollume = 2.0f;
-const float Player::m_frame = 40.0f;
 Player::Player()
 {
 }
@@ -174,14 +171,20 @@ void Player::Move()
 	}
 	stickL.x = -stickL.x;
 	//左スティック
-	//スティックの左右入力の処理
 	m_movespeed.z = 0.0f;
 	m_movespeed.x = 0.0f;
-	m_movespeed.z = +sin(m_radian)*stickL.x * m_multiply;
+	CVector3 frontxz = m_gamecamera->GetFront();
+	CVector3 rightxz = m_gamecamera->GetRight();
+	frontxz *= stickL.y;
+	rightxz *= stickL.x;
+	m_movespeed += frontxz * m_multiply;
+	m_movespeed += rightxz * m_multiply;
+	//スティックの左右入力の処理
+	/*m_movespeed.z = +sin(m_radian)*stickL.x * m_multiply;
 	m_movespeed.x = -cos(m_radian)*stickL.x * m_multiply;
 	//スティックの上下入力の処理
 	m_movespeed.z += cos(m_radian)*stickL.y * m_multiply;
-	m_movespeed.x += sin(m_radian)*stickL.y * m_multiply;
+	m_movespeed.x += sin(m_radian)*stickL.y * m_multiply;*/
 	//重力
 	m_movespeed.y -= 800.0f *GetDeltaTimeSec();
 	//キャラクターコントローラーを使用して、座標を更新。
@@ -232,14 +235,14 @@ void Player::Animation()
 		se->Play(true); //第一引数をtrue
 	}
 	//Xボタンを押したら
-	else if (Pad(0).GetDown(enButtonX) && m_timer>=15) {
+	else if (Pad(0).GetDown(enButtonX) && m_timer >= m_attacktime) {
 		if (m_state != enState_Attack) {
 			m_state = enState_Attack;
 			m_timer = 0;
 		}
 	}
 	//Yボタンを押したら
-	else if (Pad(0).GetButton(enButtonY) && m_timer >= 15) {
+	else if (Pad(0).GetButton(enButtonY) && m_timer >= m_attacktime) {
 		if (m_state != enState_Aria) {
 			if (m_PP >= m_PPCost) {
 				m_state = enState_Aria;
@@ -469,8 +472,8 @@ void Player::Kougeki()
 	if (m_state == enState_Attack) {
 		CVector3 pos = m_skinModelRender->GetBonePos(m_bonehand);
 		CQuaternion qRot = m_skinModelRender->GetBoneRot(m_bonehand);
-		m_sword->SetRot(qRot);
-		m_sword->SetPosition(pos);
+		m_swordrot = qRot;
+	    m_swordposition = pos;
 	}
 	//攻撃していないときは、武器をunityChanの背中に移動させる
 	else {
@@ -488,9 +491,9 @@ void Player::Kougeki()
 		qRot2.Multiply(pos2);
 		pos2 *= 70.0f;
 		pos += pos2;
-		m_sword->SetPosition(pos);
+		m_swordposition = pos;
 		CQuaternion qRot3 = m_skinModelRender->GetBoneRot(m_bonecenter);
-		m_sword->SetRot(qRot3);
+		m_swordrot = qRot3;
 	}
 }
 
@@ -717,78 +720,83 @@ void Player::RelationMerchant()
 
 void Player::OutTarget()
 {
+	//エネミーの座標とプレイヤーとエネミーの距離を記憶する配列です
 	std::vector<CVector3> enemyList;
+	std::vector<float> distanceList;
+	//各可変長配列の長さです
 	int enemynumber = 0;
-	float degreemum;
+	//計算して出た暫定的に一番小さい角度を記憶する変数です
+	float degreemum= M_PI * 2;
 	QueryGOs<IEnemy>(L"Enemy", [&](IEnemy* enemy)
 	{
+		//エネミーが死んでいたら処理を終了します
 		if (enemy->GetDeath()) {
 			return true;
 		}
 		CVector3 pos = m_position - enemy->GetCollisionPosition();
-		if (pos.LengthSq() >= 1800.0f * 1800.0f) {
+		//プレイヤーとエネミーの距離が一定外だったら処理を終了します
+		if (pos.LengthSq() >= m_distancetarget) {
 			return true;
 		}
+		//エネミーの座標とプレイヤーとエネミーの距離を配列に記憶します
 		enemyList.push_back(enemy->GetCollisionPosition());
+		distanceList.push_back(pos.LengthSq());
+		//配列の長さを加算します
 		enemynumber++;
 		return true;
 	});
+	//配列の長さが0つまり、配列に何も記憶されていない場合、処理を終了します
 	if (enemynumber == 0) {
 		m_targetdisplay = false;
 		return;
 	}
-	CVector3 pos = enemyList[0] - m_position;
-	pos.y = 0.0f;
-	pos.Normalize();
+	//プレイヤーの向いている角度を計算します
 	float degreep = atan2f(m_playerheikou.x, m_playerheikou.z);
-	float degree = atan2f(pos.x, pos.z);
-	if (M_PI <= (degreep - degree)) {
-		degreemum = degreep - degree - M_PI * 2;
-	}
-	else if(-M_PI >= (degreep - degree)){
-		degreemum = degreep - degree + M_PI * 2;
-	}
-	else {
-		degreemum = degreep - degree;
-	}
-	degreemum = degreep - degree;
-	m_target = enemyList[0];
+	//配列の長さの分だけ計算します
 	for (int i = 0; i < enemynumber; i++) {
+		//プレイヤーとエネミーを結ぶベクトルを出します
 		CVector3 pos = enemyList[i] - m_position;
+		//y座標、すなわち高さを0にします
 		pos.y = 0.0f;
+		//ベクトルを正規化します
 		pos.Normalize();
+		//プレイヤーとエネミーを結ぶベクトルの角度を計算します
 		float degree = atan2f(pos.x, pos.z);
-		float degreef;
+		//ここら辺のif文要らない可能性が微レ存、「プレイヤーの向いてる角度」と「プレイヤーとエネミーを結ぶベクトルの角度」の差を計算します
 		if (M_PI <= (degreep - degree)) {
-			degreef = degreep - degree - M_PI * 2;
+			degree = degreep - degree - M_PI * 2;
 		}
 		else if (-M_PI >= (degreep - degree)) {
-			degreef = degreep - degree + M_PI * 2;
+			degree = degreep - degree + M_PI * 2;
 		}
 		else {
-			degreef = degreep - degree;
+			degree = degreep - degree;
 		}
-		if (fabs(degreemum) >= fabs(degreef)) {
-			degreemum = degreef;
+		//求めた角度にプレイヤーとエネミーの距離に応じて補正をかけます、距離が長いほど補正は大きいです(値が大きくなります)
+		degree = degree + degree * (distanceList[i] / m_distancetarget) * m_degreemultiply;
+		//求めた値を比較していき、一番小さい値を決めていきます
+		if (fabs(degreemum) >= fabs(degree)) {
+			degreemum = degree;
+			//エネミーの座標を記憶します
 			m_target = enemyList[i];
 		}
 	}
+	//求めた一番小さい値が一定値より小さい場合、ターゲッティングをオンにします
 	if (fabs(degreemum) <= M_PI / 3) {
 		m_targetdisplay = true;
 	}
+	//逆に一定値より大きい場合、ターゲッティングをオフにします
 	else {
 		m_targetdisplay = false;
 	}
-	//m_targetdisplay = true;
 }
 
 void Player::PostRender()
 {
-	if (m_transscene) {
-		return;
-	}
+	//ターゲッティングがオンであればターゲットの画像を表示します
 	if (m_targetdisplay) {
 		CVector3 pos = m_gamecamera->GetCamera()->CalcScreenPosFromWorldPos(m_target);
+		//エネミーの座標が画面外であれば画像は表示しません
 		if (0.0f <= pos.x && pos.x <= 1.0f && 0.0f <= pos.y && pos.y <= 1.0f && 0.0f <= pos.z && pos.z <= 1.0f) {
 			CVector3 scpos = pos;
 			m_targetsprite.Draw(scpos, { 0.2f,0.2f }, { 0.5f,0.5f },
@@ -813,11 +821,6 @@ void Player::PostRender()
 	swprintf_s(output, L"Lv   %d\nExp  %d\nNexp %d\nHP   %d\nPP   %d\nAtk  %d\nMatk %d\nWpn  %s\nMgc  %s\nMPC  %d\nMgg  %d\nWLv  %d\n", m_Level, m_Exp, m_NextExp, m_HP, m_PP, m_Attack, m_Mattack, m_SwordName, m_MagicName, m_PPCost, int(m_Mattack*m_DamageRate),m_playerstatus->GetWeaponLv(m_SwordId));
 	//swprintf_s(output, L"x   %f\ny   %f\nz  %f\nw   %f\n", m_swordqRot.x, m_swordqRot.y, m_swordqRot.z, m_swordqRot.w);
 	m_font.DrawScreenPos(output, { 700.0f,100.0f }, CVector4(200.0f, 00.0f, 100.0f, 1.0f));
-	/*m_sprite.DrawScreenPos(CVector2::Zero(), CVector2::One(), CVector2::Zero(),
-		0.0f,
-		{ 1.0f, 1.0f, 1.0f, 1.0f },
-		DirectX::SpriteEffects_None,
-		0.4f);*/
 	//ゲームオーバー表示
 	if (m_state == enState_GameOver && !m_skinModelRender->GetAnimCon().IsPlaying()) {
 		if (!m_displaysprite) {

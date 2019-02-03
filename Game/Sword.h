@@ -1,4 +1,5 @@
 #pragma once
+class Player;
 //プレイヤーが装備している武器のデータです
 class Sword:public IGameObject
 {
@@ -29,6 +30,7 @@ public:
 	}
 private:
 	GameObj::CSkinModelRender* m_skinModelRender = nullptr;		//スキンモデルレンダラー。
+	Player* m_player;											//プレイヤークラスのポインタ
 	CVector3 m_position = { 0.0f,0.0f,0.0f };                   //座標
 	CVector3 m_scale = { 1.0f,1.0f,1.0f };                      //大きさ
 	CQuaternion m_qRot;                                         //クォータニオン

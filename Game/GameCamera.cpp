@@ -55,8 +55,8 @@ void GameCamera::cagliostro()
 	CVector2 stickR;
 	stickR = Pad(0).GetStick(R);
 	stickR.x = -stickR.x;
-	float m_sdegreexz = -stickR.x * 2.0f*60.0f*GetDeltaTimeSec();
-	float m_sdegreey = -stickR.y * 2.0f*60.0f*GetDeltaTimeSec();
+	float m_sdegreexz = -stickR.x * 2.0f * 60.0f * GetDeltaTimeSec();
+	float m_sdegreey = -stickR.y * 2.0f * 60.0f * GetDeltaTimeSec();
 	//‰ñ“]“x‰ÁŽZ
 	m_degreexz += m_sdegreexz;
 	m_degreey += m_sdegreey;
@@ -157,5 +157,12 @@ void GameCamera::Hutu()
 	//m_target -= toPos;
 	/*m_target.y = m_playerposition.y;
 	m_target.y += 140.0f;*/
+	m_front = m_target - m_position;
+	m_front.y = 0.0f;
+	m_front.Normalize();
+	m_right = m_front;
+	CQuaternion rot;
+	rot.SetRotationDeg(CVector3::AxisY(), -90.0f);
+	rot.Multiply(m_right);
 }
 
