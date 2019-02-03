@@ -228,6 +228,6 @@ private:
 	const float m_voicevolume = 3.5f;
 	const float m_lvupvollume = 2.0f;
 	const float m_distancetarget = 1400.0f * 1400.0f;
-	const float m_degreemultiply = 0.4f;
+	const float m_degreemultiply = 0.3f;
 };
 
