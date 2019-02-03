@@ -237,7 +237,7 @@ void Boss::Update()
 	QueryGOs<BossAttack>(L"bossattack", [&](BossAttack* bullet)->bool {
 		CVector3 diff = bullet->GetPosition() - m_player->GetPosition();
 		if (diff.Length() < 130.0f) {  //‹——£‚ªˆê’èˆÈ‰º‚É‚È‚Á‚½‚çB
-			DeleteGO(bullet);
+		    delete bullet;
 			if (m_atktype == 1) {
 				m_player->Damage(m_Attack1);
 			}
