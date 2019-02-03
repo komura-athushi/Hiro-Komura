@@ -29,6 +29,11 @@ Stage1::~Stage1()
 		delete oni;
 		return true;
 	});
+	QueryGOs<Boss>(L"Enemy", [&](Boss* boss)
+	{
+		delete boss;
+		return true;
+	});
 	QueryGOs<DropItem>(L"DropItem", [&](DropItem* dropitem)
 	{
 		delete dropitem;

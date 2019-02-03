@@ -132,7 +132,7 @@ void Player::Update()
 	m_charaCon.SetPosition(m_position);
 	m_skinModelRender->SetPos(m_position);
 	m_collision->SetPosition(m_position + CVector3::AxisY()*m_collisionUp);
-	if (m_PPtimer >= 50) {
+	if (m_PPtimer >= m_PPtime) {
 		if (m_PP < m_MaxPP) {
 			m_PP++;
 			m_PPtimer = 0.0f;
@@ -228,7 +228,7 @@ void Player::Animation()
 		//SE
 		SuicideObj::CSE* se = NewGO<SuicideObj::CSE>(L"Asset/sound/unityChan/bad.wav");
 		se->Play(); //Ä¶(Ä¶‚ªI‚í‚é‚Æíœ‚³‚ê‚Ü‚·)
-		se->SetVolume(2.6f);
+		se->SetVolume(m_voicevolume);
 		//3DÄ¶
 		se->SetPos(m_position);//‰¹‚ÌˆÊ’u
 		se->SetDistance(200.0f);//‰¹‚ª•·‚±‚¦‚é”ÍˆÍ

@@ -149,7 +149,7 @@ private:
 	CVector3 m_swordposition = CVector3::Zero();				//剣の座標
 	CQuaternion m_swordrot = CQuaternion::Identity();			//剣の回転
 	float m_timer = 0.0f;                                       //攻撃のクールタイマー
-	const int m_attacktime = 10;								//攻撃のクールタイム
+	const int m_attacktime = 5;								    //攻撃のクールタイム
 	float m_timer2 = 0.0f;                                      //ダメージのクールタイム
 	CVector3 m_target = CVector3::Zero();
 	CVector3 m_attacktarget = CVector3::Zero();
@@ -215,11 +215,12 @@ private:
 	bool m_damage = false;                                      //ダメージを受けた！
 	bool m_isbutton = false;                                    //武器切り替えの時に使うやつ
 	float m_PPtimer = 0.0f;										//PP自動回復のクールタイム
-	static const int m_AttackRecoveryPP= 5;					    //エネミーに攻撃したときに回復するPPの回復量
+	int m_PPtime = 40;											//PP自動回復のタイム
+	static const int m_AttackRecoveryPP = 5;					//エネミーに攻撃したときに回復するPPの回復量
 	bool m_Shihuta = false;										//シフタをかけるならtrue
 	int m_ShihutaAttack = 0;									//シフタにかかっているときにシフタ前の攻撃力を保存
 	float m_Shihutatimer = 0.0f;								//シフタのかかっている時間
-	float m_Shihutatime = 360 * 10.0f;							//シフタのかかる時間を制限
+	float m_Shihutatime = 360;							        //シフタのかかる時間を制限
 	const float m_AttackMultiply = 1.3f;						//シフタがかかった時の攻撃力を上げる倍率
 	bool m_targetdisplay = false;
 	const float m_frame = 40;

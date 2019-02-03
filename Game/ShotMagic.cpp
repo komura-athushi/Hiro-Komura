@@ -145,15 +145,17 @@ bool ShotMagic::Start()
 				 ShotMagic* shotmagic = FindGO<ShotMagic>(L"ShotMagic");
 				 CVector3 pos = shotmagic->GetPosition(number);
 				 shotmagic->DeleteMagicModel(number);
-				 GameObj::CSkinModelRender* skinModelRender = new GameObj::CSkinModelRender;
+				 GameObj::Suicider::CEffekseer* effect = new GameObj::Suicider::CEffekseer;
+				 effect->Play(L"Asset/effect/explosion/explosion.efk", 1.0f, pos, CQuaternion::Identity(), scl * 12);
+				 /*GameObj::CSkinModelRender* skinModelRender = new GameObj::CSkinModelRender;
 				 skinModelRender->Init(L"Resource/modelData/Magic_Sample.cmo");
 				 skinModelRender->SetScale(m_scale * m_multiply5);
-				 skinModelRender->SetPos(pos);
+				 skinModelRender->SetPos(pos);*/
 				 //攻撃判定の発生
 				 SuicideObj::CCollisionObj* attackCol = NewGO<SuicideObj::CCollisionObj>();
 				 attackCol->CreateSphere(pos, CQuaternion::Identity(), scale *m_multiply5);
 				 //寿命を設定
-				 attackCol->SetTimer(10);
+				 attackCol->SetTimer(30);
 				 attackCol->SetCallback([&](SuicideObj::CCollisionObj::SCallbackParam& param) {
 					 //衝突した判定の名前が"IEnemy"ならm_Attack分だけダメージ与える
 					 if (param.EqualName(L"IEnemy")) {
