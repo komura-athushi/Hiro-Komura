@@ -5,7 +5,7 @@
 #include "Stage1.h"
 #include "Player.h"
 //cppでエネミーのレア度ごとのドロップ率を設定
-const int Oni::m_dropChances[Weapon::m_HighestRarity] = { 0,10,0,0,0,0,0 };
+const int Oni::m_dropChances[Weapon::m_HighestRarity] = { 0,100,0,0,0,0,0 };
 const int Oni::m_dropmaterialChances[Material::m_HighestRarity] = { 100.0f,0.0f,0.0f };
 //鬼（見た目はスケルトン）です
 Oni::Oni():IEnemy(m_MaxHP,m_Attack,m_EXP,m_dropChances,m_dropmaterialChances,m_meseta)
@@ -58,11 +58,11 @@ void Oni::Chase()
 	//敵の初期位置と現在位置の距離
 	CVector3 oldpos = m_oldpos - m_position;
 	//接触したら攻撃
-	if (pos.Length() < 100.0f) {
+	if (pos.LengthSq() < 100.0f*100.0f) {
 	m_state = enState_Attack;
 	}
 	//もしプレイヤーと鬼の距離が近くなったら
-	else if (pos.Length() < 1000.0f) {
+	else if (pos.LengthSq() < 1000.0f*1000.0f) {
 		//近づいてくる
 		CVector3 EnemyPos = m_playerposition - m_position;
 		EnemyPos.Normalize();
@@ -71,7 +71,7 @@ void Oni::Chase()
 		m_position += m_movespeed;
 	}
 	
-	else if(pos.Length() > 1000.0f){
+	else if(pos.LengthSq() > 1000.0f*1000.0f){
 		//初期位置に帰る
 		CVector3 EnemyOldPos = m_oldpos - m_position;
 		EnemyOldPos.Normalize();

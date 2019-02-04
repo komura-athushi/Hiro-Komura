@@ -54,17 +54,29 @@ public:
 	{
 		m_tage = false;
 	}
+	//カメラの前方のベクトルを取得
+	CVector3 GetFront() const
+	{
+		return m_front;
+	}
+	//カメラの右のベクトルを取得
+	CVector3 GetRight() const
+	{
+		return m_right;
+	}
 private:
 	GameObj::PerspectiveCamera* m_camera;                  //3Dカメラのインスタンス
 	CVector3 m_position = { 0.0f,200.0f,400.0f};           //カメラの座標
 	CVector3 m_target;                                     //カメラの注視点
-	float m_degreexz=0.0f, m_degreey=0.0f;                 //角度
+	float m_degreexz = -90.0f, m_degreey = 0.0f;             //角度
 	float m_radianx = 0.0f, m_radiany = 0.0f;              //角度をラジアン単位に直したやつ
-	 float m_r = 160.0f;								   //キャラクターとカメラの距離
+	float m_r = 160.0f;								       //キャラクターとカメラの距離
 	const CVector3 m_axisY={ 0.0f,1.0f,0.0f };             //Y方向のベクトル   
 	CVector3 m_playerposition;                             //プレイヤーの座標
 	Player* m_player;                                      //プレイヤークラスのポインタ
 	float m_topos = 80.0f;
 	bool m_tage = false;
+	CVector3 m_front = CVector3::Zero();
+	CVector3 m_right = CVector3::Zero();
 };
 

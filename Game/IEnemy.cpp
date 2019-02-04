@@ -44,7 +44,7 @@ void IEnemy::CCollision(const CVector3& pos,const float& l,const float& r)
 void IEnemy::SetCCollision(const CVector3& pos,const float& l)
 {
 	if (m_displayfont) {
-		m_fonttimer += m_frame*GetDeltaTimeSec();
+		m_fonttimer += m_frame * GetDeltaTimeSec();
 		if (m_fonttimer >= 20) {
 			m_fonttimer = 0;
 			m_displayfont = false;
@@ -126,7 +126,10 @@ void IEnemy::PostRender()
 	if (!m_displayfont) {
 		return;
 	}
-	if (m_gamecamera != nullptr) {
+	if (m_gamecamera == nullptr) {
+		m_gamecamera = FindGO<GameCamera>();
+	}
+	else {
 	    wchar_t output[256];
 	    //swprintf_s(output, L"HP   %d\natk  %d\nドロップ  %d\n", m_HP,m_Attack,m_dropChances[1]);
 	    swprintf_s(output, L"%d\n", m_damagecount);
@@ -138,8 +141,8 @@ void IEnemy::PostRender()
 
 void IEnemy::Drop()
 {
-	int rad = rand() % 100;
-	int rpos = rand() % 10 + 30;
+	int rad = rand() % 100+1;
+	int rpos = rand() % 30 + 10;
 	//武器のドロップ
 	for (int i = 0; i < Weapon::m_HighestRarity; i++) {
 		if (m_dropChances[i] >= rad) {

@@ -112,14 +112,24 @@ public:
 	}
 	//プレイヤーを停止させる
 	void SetStop()
-
 	{
 		m_stop = true;
+	}
+	//剣の座標を取得
+	CVector3 GetSwordPosition() const
+	{
+		return m_swordposition;
+	}
+	//剣の回転を取得
+	CQuaternion GetSwordRot() const
+	{
+		return m_swordrot;
 	}
 private:
 	bool m_cagliostro = false;
 	GameObj::CSkinModelRender* m_skinModelRender = nullptr;		//スキンモデルレンダラー
 	CSprite m_sprite2;											//ゲームクリアとかゲームオーバーの
+	CSprite m_targetsprite;
 	bool m_displaysprite = false;
     SuicideObj::CCollisionObj* m_collision;                     //丸いコリジョン
 	CFont m_font;                                               //文字表示クラス
@@ -131,14 +141,18 @@ private:
 	int m_bonecenter;                                           //centerの番号
 	CVector3 m_savemovespeed;                                   //m_movespeedを記憶しておく
 	Sword* m_sword;                                             //Swordクラスのポインタ
-	GameCamera* m_gamecamera;                                   //カメラのポインタ
+	GameCamera* m_gamecamera = nullptr;                         //カメラのポインタ
 	CVector3 m_movespeed;                                       //移動速度
 	CVector3 m_position = {0.0f,100.0f,00.0f};                  //ユニティちゃんの座標
 	CVector3 m_playerheikou = { 1.0f,0.0f,0.0f };               //プレイヤーと平行なベクトル
 	CVector3 m_scale = { 1.0f,1.0f,1.0f };                      //大きさ
-	float m_timer = 0.0f;                                            //攻撃のクールタイム
-	float m_timer2 = 0.0f;                                           //ダメージのクールタイム
+	CVector3 m_swordposition = CVector3::Zero();				//剣の座標
+	CQuaternion m_swordrot = CQuaternion::Identity();			//剣の回転
+	float m_timer = 0.0f;                                       //攻撃のクールタイマー
+	const int m_attacktime = 5;								    //攻撃のクールタイム
+	float m_timer2 = 0.0f;                                      //ダメージのクールタイム
 	CVector3 m_target = CVector3::Zero();
+	CVector3 m_attacktarget = CVector3::Zero();
 	bool m_ontarget = false;									//ターゲット表示するかどうか
 	bool m_gameover = false;                                    //ゲームオーバーかどうか
 	bool m_gameclear = false;									//ゲームクリアかどうか
@@ -201,13 +215,19 @@ private:
 	bool m_damage = false;                                      //ダメージを受けた！
 	bool m_isbutton = false;                                    //武器切り替えの時に使うやつ
 	float m_PPtimer = 0.0f;										//PP自動回復のクールタイム
-	static const int m_AttackRecoveryPP= 5;					    //エネミーに攻撃したときに回復するPPの回復量
+	int m_PPtime = 40;											//PP自動回復のタイム
+	static const int m_AttackRecoveryPP = 5;					//エネミーに攻撃したときに回復するPPの回復量
 	bool m_Shihuta = false;										//シフタをかけるならtrue
 	int m_ShihutaAttack = 0;									//シフタにかかっているときにシフタ前の攻撃力を保存
 	float m_Shihutatimer = 0.0f;								//シフタのかかっている時間
-	float m_Shihutatime = 360*10.0f;							//シフタのかかる時間を制限
+	float m_Shihutatime = 360;							        //シフタのかかる時間を制限
 	const float m_AttackMultiply = 1.3f;						//シフタがかかった時の攻撃力を上げる倍率
-	static const float m_frame;
-	bool m_clear_over_voice = false;
+	bool m_targetdisplay = false;								//ターゲッティング状態かどうか
+	const float m_frame = 40.0f;								//40fps
+	bool m_clear_over_voice = false;							//ゲームオーバーあるいはゲームクリアのボイスを発生させたかどうか
+	const float m_voicevolume = 3.5f;							//ボイスの音量
+	const float m_lvupvollume = 2.0f;							//レベルアップのSEの音量
+	const float m_distancetarget = 1400.0f * 1400.0f;			//ターゲットが有効な距離
+	const float m_degreemultiply = 0.2f;						//ターゲットの距離補正
 };
 

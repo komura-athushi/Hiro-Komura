@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "Sword.h"
-
+#include "Player.h"
 Sword::Sword()
 {
 }
@@ -18,6 +18,7 @@ bool Sword::Start()
 	m_skinModelRender->SetPos(m_position);
 	m_skinModelRender->SetScale(m_scale);
 	m_skinModelRender->SetRot(m_qRot);
+	m_player = FindGO<Player>(L"Player");
 	return true;
 }
 
@@ -28,12 +29,13 @@ void Sword::Update()
 		m_delete = false;
 	}
 	if (m_skinModelRender) {
-		m_skinModelRender->SetPos(m_position);
-		m_skinModelRender->SetRot(m_qRot);
+		m_skinModelRender->SetPos(m_player->GetSwordPosition());
+		m_skinModelRender->SetRot(m_player->GetSwordRot());
 		m_skinModelRender->SetScale(m_scale);
 	}
 	if (!m_delete) {
-		delete m_skinModelRender; m_skinModelRender = nullptr;
+		delete m_skinModelRender; 
+		m_skinModelRender = nullptr;
 		m_delete = true;
 		m_switch = true;
 	}
@@ -70,5 +72,9 @@ void Sword::Update()
 			break;
 		}
 		m_switch = false;
+		//ƒvƒŒƒCƒ„[‘¤‚ÅŒvŽZ‚µ‚½À•W‚Æ‰ñ“]‚ð”½‰f‚³‚¹‚Ü‚·
+		m_skinModelRender->SetPos(m_player->GetSwordPosition());
+		m_skinModelRender->SetRot(m_player->GetSwordRot());
+		m_skinModelRender->SetScale(m_scale);
 	}
 }
