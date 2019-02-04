@@ -77,6 +77,7 @@ protected:
 	float m_timer2 = 0.0f;									  //イルグランツの
 	float m_timer3 = 0.0f;									  //ザンバースの
 	float m_timer5 = 0.0f;									  //マジスフィの
+	float m_timer7 = 0.0f;									  //覇王斬の		
 	float m_fonttimer = 0.0f;								  //文字表示のタイマー
 	bool m_damage = false;                                    //ダメージを受けたかどうか
 	bool m_death = false;                                     //HPが0以下になったかどうか

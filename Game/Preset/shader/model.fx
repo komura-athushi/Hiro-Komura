@@ -32,6 +32,9 @@ cbuffer VSPSCb : register(b0){
 	float4x4 mWorld_old;
 	float4x4 mView_old;
 	float4x4 mProj_old;
+
+	float4 depthBias;
+	//float depthBiasScaleFromNearToFar;
 };
 
 //マテリアルパラメーター
@@ -109,19 +112,19 @@ PSInput VSMain( VSInputNmTxVcTangent In )
 #if MOTIONBLUR
 		float4 oldpos = mul(mWorld_old, In.Position);
 
-		if (distance(posW, oldpos.xyz) > 0.0f) {
+		if (distance(posW - mView[3].xyz, oldpos.xyz - mView_old[3].xyz) > 0.0f) {
 			psInput.isWorldMove = true;
 		}
 
 		oldpos = mul(mView_old, oldpos);
 		oldpos = mul(mProj_old, oldpos);
-
-		if (oldpos.z < 0.0f) {
-			psInput.lastPos = pos;
-		}
-		else {
+		
+		//if (oldpos.z < 0.0f) {
+		//	psInput.lastPos = pos;
+		//}
+		//else {
 			psInput.lastPos = oldpos;
-		}
+		//}
 #endif
 
 	return psInput;
@@ -199,19 +202,20 @@ PSInput VSMainSkin( VSInputNmTxWeights In )
 			oldpos = mul(oldskinning, In.Position);
 		}
 
-		if (distance(posW, oldpos.xyz) > 0.0f) {
+		if (distance(posW - mView[3].xyz, oldpos.xyz - mView_old[3].xyz) > 0.0f) {
+			//距離じゃなくて差異で
 			psInput.isWorldMove = true;
 		}
 
 		oldpos = mul(mView_old, oldpos);
 		oldpos = mul(mProj_old, oldpos);
 
-		if (oldpos.z < 0.0f) {
-			psInput.lastPos = pos;
-		}
-		else {
+		//if (oldpos.z < 0.0f) {
+		//	psInput.lastPos = pos;
+		//}
+		//else {
 			psInput.lastPos = oldpos;
-		}
+		//}
 #endif
 
     return psInput;
@@ -281,25 +285,29 @@ PSOutput_RenderGBuffer PSMain_RenderGBuffer(PSInput In)
 	Out.normal = In.Normal;
 
 	//ビュー座標
-	Out.viewpos = float4(In.Viewpos, In.curPos.z / In.curPos.w);// In.curPos.z);
+	Out.viewpos = float4(In.Viewpos, In.curPos.z / In.curPos.w + depthBias.x);
 
 	//ライティング用パラメーター
 	Out.lightingParam = emissive;
 
 	//速度
 #if MOTIONBLUR
-		float2	current = In.curPos.xy / In.curPos.w;
-		float2	last = In.lastPos.xy / In.lastPos.w;
+		//In.lastPos.w = 1.0f;
+		//In.lastPos = mul(mView_old, In.lastPos);
+		//In.lastPos = mul(mProj_old, In.lastPos);
 
-		if (In.curPos.z < 0.0f || In.lastPos.z < 0.0f) {
+		float3	current = In.curPos.xyz / In.curPos.w;
+		float3	last = In.lastPos.xyz / In.lastPos.w;
+
+		if (current.z < 0.0f || current.z > 1.0f || last.z < 0.0f || last.z > 1.0f) {
 			current *= 0.0f; last *= 0.0f;
 		}
 
 		current.xy *= float2(0.5f, -0.5f); current.xy += 0.5f;
 		last.xy *= float2(0.5f, -0.5f); last.xy += 0.5f;
 
-		Out.velocity.z = min(In.curPos.z, In.lastPos.z);
-		Out.velocity.w = max(In.curPos.z, In.lastPos.z);
+		Out.velocity.z = min(In.curPos.z, In.lastPos.z) + depthBias.y;
+		Out.velocity.w = max(In.curPos.z, In.lastPos.z) + depthBias.y;
 
 		if (In.isWorldMove) {
 			Out.velocity.xy = current.xy - last.xy;
@@ -308,14 +316,14 @@ PSOutput_RenderGBuffer PSMain_RenderGBuffer(PSInput In)
 		}
 		else {
 			Out.velocityPS.xy = current.xy - last.xy;
-			Out.velocityPS.z = min(In.curPos.z, In.lastPos.z);
-			Out.velocityPS.w = max(In.curPos.z, In.lastPos.z);
+			Out.velocityPS.z = min(In.curPos.z, In.lastPos.z) + depthBias.y;
+			Out.velocityPS.w = max(In.curPos.z, In.lastPos.z) + depthBias.y;
 		}
 #else
-		Out.velocity.z = In.curPos.z;
-		Out.velocity.w = In.curPos.z;
-		Out.velocityPS.z = In.curPos.z;
-		Out.velocityPS.w = In.curPos.z;
+		Out.velocity.z = In.curPos.z + depthBias.y;
+		Out.velocity.w = In.curPos.z + depthBias.y;
+		Out.velocityPS.z = In.curPos.z + depthBias.y;
+		Out.velocityPS.w = In.curPos.z + depthBias.y;
 #endif
 
 	return Out;
@@ -334,6 +342,5 @@ float4 PSMain_RenderZ(ZPSInput In) : SV_Target0
 		discard;
 	}
 
-	float z = In.posInProj.z / In.posInProj.w;
-	return z;
+	return In.posInProj.z / In.posInProj.w + depthBias.x;
 }

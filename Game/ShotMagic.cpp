@@ -45,6 +45,11 @@ bool ShotMagic::Start()
 	case 5:
 		MagicSphere();
 		break;
+	case 6:
+		Resta();
+		break;
+	case 7:
+		Haou();
 	}
 	return true;
 }
@@ -67,6 +72,7 @@ bool ShotMagic::Start()
 		 break;
 	 case 5:
 		 MagicSphereUpdate();
+		 break;
 	 }
 	 int i = 0;
 	 //MagciModel構造体の可変長配列にアクセスします
@@ -123,8 +129,14 @@ bool ShotMagic::Start()
 	 case 4:
 		 effect->Play(L"Asset/effect/powerup/powerup.efk", 1.0f, pos, CQuaternion::Identity(), scl * 12);
 		 break;
-	 default:
+	 case 5:
 		 effect->Play(L"Asset/effect/efk/magic_proj01.efk", 1.0f, pos, CQuaternion::Identity(), scl * 12);
+		 break;
+	 case 6:
+		 effect->Play(L"Asset/effect/resta/resta.efk", 1.0f, pos, CQuaternion::Identity(), scl * 12);
+		 break;
+	 case 7:
+		 effect->Play(L"Asset/effect/haou/haou.efk", 1.0f, pos, CQuaternion::Identity(), scl * 12);
 		 break;
 	 }
 	 CVector3 topos = m_movespeed;
@@ -272,6 +284,30 @@ bool ShotMagic::Start()
  void ShotMagic::MagicSphereUpdate()
  {
 
+ }
+
+ void ShotMagic::Resta()
+ {
+	 m_deletetime = m_deletetime6;
+	 m_modelnumber = m_modelnumber6;
+	 m_scale = m_scale6;
+	 m_position = m_position; //+CVector3::AxisY()*60.0f;
+	 m_movespeed = m_directionplayer * m_multiplyspeed6;
+	 SetCollisionModel(m_position, m_collisionscale6, m_id, m_scale);
+	 m_damage /= m_modelnumber;
+	 Player* player = FindGO<Player>(L"Player");
+	 player->Resta(m_damage);
+ }
+
+ void ShotMagic::Haou()
+ {
+	 m_deletetime = m_deletetime7;
+	 m_modelnumber = m_modelnumber7;
+	 m_scale = m_scale7;
+	 m_position = m_position;
+	 m_movespeed = m_directionplayer * m_multiplyspeed7;
+	 SetCollisionModel(m_position, m_collisionscale1, m_id, m_scale);
+	 m_damage /= m_modelnumber;
  }
 
  void ShotMagic::DeleteMagicModel(const int& number)

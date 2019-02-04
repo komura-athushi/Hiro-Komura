@@ -64,6 +64,7 @@ void IEnemy::SetCCollision(const CVector3& pos,const float& l)
 	m_timer2 += m_frame * GetDeltaTimeSec();
 	m_timer3 += m_frame * GetDeltaTimeSec();
 	m_timer5 += m_frame * GetDeltaTimeSec();
+	m_timer7 += m_frame * GetDeltaTimeSec();
 }
 
 void IEnemy::Damage(const int& attack,int number)
@@ -103,13 +104,21 @@ void IEnemy::Damage(const int& attack,int number)
 	case 4:							//シフタ(ダメージ無し)
 		break;
 	case 5:							
-		if (m_timer5 >= 20) {		//マジスフィ
+		if (m_timer5 >= 70) {		//マジスフィ
 			m_HP -= attack;
 			m_timer5 = 0;
 			m_damage = true;
 		}
 		break;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
-		                                                                                    
+	case 6:
+		break;						//レスタ(ダメージ無し)
+	case 7:
+		if (m_timer7 >= 70) {		//マジスフィ
+			m_HP -= attack;
+			m_timer7 = 0;
+			m_damage = true;
+		}
+		break;
 	}
 	if (m_HP <= 0) {
 		m_death = true;

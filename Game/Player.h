@@ -51,6 +51,8 @@ public:
 	void MagicStatus();
 	//シフタをかける
 	void Shihuta();
+	//レスタをかける
+	void Resta(const int& volume);
 	//プレイヤーがダメージを受けた時の処理
 	void Damage(const int& attack);
 	//村人関係
@@ -129,8 +131,8 @@ private:
 	bool m_cagliostro = false;
 	GameObj::CSkinModelRender* m_skinModelRender = nullptr;		//スキンモデルレンダラー
 	CSprite m_sprite2;											//ゲームクリアとかゲームオーバーの
-	CSprite m_targetsprite;
-	bool m_displaysprite = false;
+	CSprite m_targetsprite;										//ターゲットのスプライト
+	bool m_displaysprite = false;								
     SuicideObj::CCollisionObj* m_collision;                     //丸いコリジョン
 	CFont m_font;                                               //文字表示クラス
 	Bone* m_bone;                                               //骨
@@ -220,7 +222,7 @@ private:
 	bool m_Shihuta = false;										//シフタをかけるならtrue
 	int m_ShihutaAttack = 0;									//シフタにかかっているときにシフタ前の攻撃力を保存
 	float m_Shihutatimer = 0.0f;								//シフタのかかっている時間
-	float m_Shihutatime = 360;							        //シフタのかかる時間を制限
+	float m_Shihutatime = 360.0f * 10.0f;						//シフタのかかる時間を制限
 	const float m_AttackMultiply = 1.3f;						//シフタがかかった時の攻撃力を上げる倍率
 	bool m_targetdisplay = false;								//ターゲッティング状態かどうか
 	const float m_frame = 40.0f;								//40fps
