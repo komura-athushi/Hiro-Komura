@@ -61,16 +61,16 @@ void Player::unityChan()
 	pos.z += 10.0f;
 	m_sword->SetPosition(pos);
 	m_sword->SetSwordId(m_SwordId);
+	//アニメーションイベントのコールバック関数を設定
 	m_skinModelRender->GetAnimCon().AddAnimationEventListener([&](const wchar_t* clipName, const wchar_t* eventName) {
 		OnAnimationEvent(clipName, eventName);
 	});
-	//m_targetsprite.Init(L"Resource/sprite/target.dds");
 	m_targetsprite.Init(L"Resource/sprite/target.dds");
-	//m_targetsprite.Init(L"Resource/sprite/MokoTitle.dds");
 }
 
 void Player::cagliostro()
 {
+	//カリオストロちゃんモードのときはカリオストロのモデルをロード
 	m_skinModelRender = new GameObj::CSkinModelRender;
 	m_skinModelRender->Init(L"Resource/modelData/cagliostro.cmo");
 	m_scale = {1.0f, 1.0f, 1.0f};
@@ -97,8 +97,11 @@ bool Player::Start()
 	m_collision->SetClass(this);
 	//プレイヤーステータスクラスのポインタを検索検索ぅ～
 	m_playerstatus = FindGO<PlayerStatus>(L"PlayerStatus");
+	//ステータス
 	Status();
+	//武器のステータス
 	WeaponStatus();
+	//魔法
 	MagicStatus();
 	if (m_cagliostro) {
 		cagliostro();
@@ -114,6 +117,7 @@ void Player::Update()
 	if (m_cagliostro) {
 	}
 	else {
+		//停止状態なら回転だけ
 		if (m_stop) {
 			Turn();
 		}
@@ -131,7 +135,8 @@ void Player::Update()
 	}
 	m_charaCon.SetPosition(m_position);
 	m_skinModelRender->SetPos(m_position);
-	m_collision->SetPosition(m_position + CVector3::AxisY()*m_collisionUp);
+	m_collision->SetPosition(m_position + CVector3::AxisY() * m_collisionUp);
+	//一定時間経過したらppを自動回復
 	if (m_PPtimer >= m_PPtime) {
 		if (m_PP < m_MaxPP) {
 			m_PP++;
@@ -145,6 +150,7 @@ void Player::Update()
 	//PlayerStatusクラスのメンバ変数をプレイヤーのメンバ変数に反映
 	Status();
 	LevelUp();
+	//オートターゲッティング
 	OutTarget();
 	m_PPtimer += m_frame * GetDeltaTimeSec();
 	m_timer2 += m_frame * GetDeltaTimeSec();
@@ -173,10 +179,13 @@ void Player::Move()
 	//左スティック
 	m_movespeed.z = 0.0f;
 	m_movespeed.x = 0.0f;
+	//カメラの前方と右方向のベクトルを取得
 	CVector3 frontxz = m_gamecamera->GetFront();
 	CVector3 rightxz = m_gamecamera->GetRight();
+	//上記のベクトルをスティックの入力量に応じて乗算
 	frontxz *= stickL.y;
 	rightxz *= stickL.x;
+	//計算したベクトルを移動速度に加算
 	m_movespeed += frontxz * m_multiply;
 	m_movespeed += rightxz * m_multiply;
 	//スティックの左右入力の処理
@@ -211,10 +220,12 @@ void Player::Turn()
 	moveSpeedXZ.y = 0.0f;
 	moveSpeedXZ.Normalize();
 	moveSpeedXZ.y = 0.0f;
+	//移動速度が一定以下、つまり入力がない場合、処理を終了
 	if (moveSpeedXZ.LengthSq() < 0.5f) {
 		return;
 	}
 	m_playerheikou = moveSpeedXZ;
+	//移動速度のベクトルから角度を求めて、その分キャラクターを回転させる
 	m_rotation.SetRotation({0.0f,1.0f,0.0f}, atan2f(moveSpeedXZ.x, moveSpeedXZ.z));
 	m_skinModelRender->SetRot(m_rotation);
 }
@@ -234,14 +245,14 @@ void Player::Animation()
 		se->SetDistance(200.0f);//音が聞こえる範囲
 		se->Play(true); //第一引数をtrue
 	}
-	//Xボタンを押したら
+	//Xボタンを押したら、通常攻撃
 	else if (Pad(0).GetDown(enButtonX) && m_timer >= m_attacktime) {
 		if (m_state != enState_Attack) {
 			m_state = enState_Attack;
 			m_timer = 0;
 		}
 	}
-	//Yボタンを押したら
+	//Yボタンを押したら、テクニック発動
 	else if (Pad(0).GetButton(enButtonY) && m_timer >= m_attacktime) {
 		if (m_state != enState_Aria) {
 			if (m_PP >= m_PPCost) {
@@ -251,9 +262,11 @@ void Player::Animation()
 			}
 		}
 	}
+	//LT押したらゲームオーバー
 	if (m_HP <= 0 || Pad(0).GetButton(enButtonLT)) {
 		m_state = enState_GameOver;
 	}
+	//LB1押したらゲームクリア
 	else if (Pad(0).GetButton(enButtonLB1)) {
 		m_state = enState_GameClear;
 	}
@@ -286,19 +299,23 @@ void Player::ClearVoice()
 
 void Player::AnimationController()
 {
-	m_skinModelRender->GetAnimCon().SetSpeed(1.0f*60.0f*GetDeltaTimeSec());
+	//アニメーションの再生速度を可変フレームに対応させる
+	m_skinModelRender->GetAnimCon().SetSpeed(1.0f * 60.0f * GetDeltaTimeSec());
 	//ステート分岐によってアニメーションを再生させる
 	switch (m_state) {
 	case enState_Run:
 	case enState_Idle:
+		//	一定速度以上なら走りモーション
 		if (m_movespeed.LengthSq() > 300.0f * 300.0f) {
 			//走りモーション。
 			m_skinModelRender->GetAnimCon().Play(enAnimationClip_run, 0.2f);
 		}
+		//一定速度以上かつ、一定速度以下なら歩きモーション
 		else if (m_movespeed.LengthSq() > 40.0f * 40.0f) {
 			//歩きモーション。
 			m_skinModelRender->GetAnimCon().Play(enAnimationClip_walk, 0.2f);
 		}
+		//一定速度以下なら待機モーション
 		else {
 			//待機モーション
 			m_skinModelRender->GetAnimCon().Play(enAnimationClip_idle, 0.2f);
@@ -309,6 +326,7 @@ void Player::AnimationController()
 		else if (m_movespeed.LengthSq() < 40.0f * 40.0f) {
 			m_state = enState_Idle;
 		}
+		//移動
 		Move();
 		//キャラクターの向き関係
 		Turn();
@@ -333,8 +351,10 @@ void Player::AnimationController()
 		break;
 	case enState_GameClear:
 		m_skinModelRender->GetAnimCon().Play(enAnimationClip_Clear, 0.2f);
+		//クリアモーションの時には剣は見えなくする
 		m_sword->SetScale({ 0.001f,0.001f,0.001f });
 		if (!m_clear_over_voice) {
+			//クリアボイス
 			ClearVoice();
 			m_clear_over_voice = true;
 		}
@@ -355,6 +375,7 @@ void Player::AnimationController()
 		m_skinModelRender->GetAnimCon().Play(enAnimationClip_KneelDown, 0.2f);
 		m_sword->SetScale({ 0.001f,0.001f,0.001f });
 		if (!m_clear_over_voice) {
+			//ゲームオーバーボイス
 			ClearVoice();
 			m_clear_over_voice = true;
 		}
@@ -373,6 +394,7 @@ void Player::AnimationController()
 		break;
 	case enState_Jump:
 		m_skinModelRender->GetAnimCon().Play(enAnimationClip_jump, 0.2f);
+		//ジャンプが終わったら
 		if (!m_charaCon.IsJump()) {
 			if (m_movespeed.LengthSq() < 40.0f * 40.0f) {
 				//入力がなくなった。
@@ -390,7 +412,7 @@ void Player::AnimationController()
 	case enState_Attack:
 		if (m_skinModelRender->GetAnimCon().IsPlaying() || m_isjump==true) {
 			m_skinModelRender->GetAnimCon().Play(enAnimationClip_attack, 0.2f);
-			m_skinModelRender->GetAnimCon().SetSpeed(7.0f*60.0f*GetDeltaTimeSec());
+			m_skinModelRender->GetAnimCon().SetSpeed(7.0f * 60.0f * GetDeltaTimeSec());
 			Animation();
 			m_isjump = false;
 			m_timer = 0;
@@ -415,7 +437,7 @@ void Player::AnimationController()
 	case enState_Aria:
 		if (m_skinModelRender->GetAnimCon().IsPlaying() || m_isjump == true) {
 			m_skinModelRender->GetAnimCon().Play(enAnimationClip_aria, 0.2f);
-			m_skinModelRender->GetAnimCon().SetSpeed(1.0f*60.0f*GetDeltaTimeSec());
+			m_skinModelRender->GetAnimCon().SetSpeed(1.0f * 60.0f * GetDeltaTimeSec());
 			Animation();
 			m_isjump = false;
 			m_timer = 0;
@@ -435,6 +457,7 @@ void Player::AnimationController()
 		}
 		//キャラクターの向き関係
 		//Turn();
+		//ターゲット座標に応じてキャラクターを回転させる
 		float degree = atan2f(m_attacktarget.x, m_attacktarget.z);
 		CQuaternion qRot;
 		qRot.SetRotation(CVector3::AxisY(), degree);
@@ -470,6 +493,7 @@ void Player::Kougeki()
 {
 	//攻撃しているときは武器の位置をunityChanの手に移動させる
 	if (m_state == enState_Attack) {
+		//手のボーンの座標と回転を剣に反映させる
 		CVector3 pos = m_skinModelRender->GetBonePos(m_bonehand);
 		CQuaternion qRot = m_skinModelRender->GetBoneRot(m_bonehand);
 		m_swordrot = qRot;
@@ -477,6 +501,7 @@ void Player::Kougeki()
 	}
 	//攻撃していないときは、武器をunityChanの背中に移動させる
 	else {
+		//ここら辺なにやってたっけ
 		CVector3 pos = m_playerheikou;
 		CQuaternion qRot;
 		qRot.SetRotation({0.0f,1.0f,0.0f}, -90.0f);
@@ -500,7 +525,7 @@ void Player::Kougeki()
 void Player::OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventName)
 {
 	(void)clipName;
-	if (wcscmp(eventName,L"attack")==0) {
+	if (wcscmp(eventName,L"attack") == 0) {
 		//SE
 		SuicideObj::CSE* se = NewGO<SuicideObj::CSE>(L"Asset/sound/unityChan/attack.wav");
 		se->Play(); //再生(再生が終わると削除されます)
@@ -534,6 +559,7 @@ void Player::OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventName)
 	}
 	//呪文詠唱スタート！
 	else if (wcscmp(eventName, L"aria_start") == 0) {
+		//呪文詠唱のエフェクトを発生させる
 		GameObj::Suicider::CEffekseer* effect = new GameObj::Suicider::CEffekseer;
 		effect->Play(L"Asset/effect/efk/magic_cast01.efk", 1.0f, m_position, CQuaternion::Identity(), { 12.0f,12.0f,12.0f });
 		effect->SetSpeed(2.0f);
@@ -636,6 +662,7 @@ void Player::RecoveryPP()
 
 void Player::LevelUp()
 {
+	//レベルアップ時にエフェクトとSEを発生させる
 	if (m_playerstatus->GetLevelUp()) {
 		GameObj::Suicider::CEffekseer* effect = new GameObj::Suicider::CEffekseer;
 		CVector3 pos = m_position;
@@ -658,7 +685,8 @@ void Player::Shihuta()
 {
 	if (m_Shihuta) {
 		m_Attack = (int)(m_ShihutaAttack * m_AttackMultiply);
-		m_Shihutatimer += 40.0f * GetDeltaTimeSec();
+		m_Shihutatimer += m_frame * GetDeltaTimeSec();
+		//一定時間経過でシフタ状態をオフにする
 		if (m_Shihutatimer >= m_Shihutatime) {
 			m_Shihuta = false;
 			m_Shihutatimer = 0;
@@ -677,7 +705,7 @@ void Player::RelationHuman()
 	}
 	CVector3 pos = m_human->GetPosition() - m_position;
 	//待機状態かつ距離が一定以内の時にBボタンを押すと話せる
-	if (pos.Length() <= 300.0f && m_state==enState_Idle) {
+	if (pos.LengthSq() <= 300.0f * 300.0f && m_state==enState_Idle) {
 		if (Pad(0).GetDown(enButtonB)) {
 			if (m_human->GetTalk() && m_human->isLevelUpTown()) {
 				m_human->SetLevelUpTown();
@@ -699,7 +727,7 @@ void Player::RelationMerchant()
 		return;
 	}
 	CVector3 pos = m_merchant->GetPosition() - m_position;
-	if (pos.Length() <= 300.0f && m_state == enState_Idle) {
+	if (pos.LengthSq() <= 300.0f * 300.0f && m_state == enState_Idle) {
 		if (Pad(0).GetDown(enButtonB)) {
 			if (m_merchant->GetTalk()) {
 
@@ -796,7 +824,7 @@ void Player::PostRender()
 	//ターゲッティングがオンであればターゲットの画像を表示します
 	if (m_targetdisplay) {
 		CVector3 pos = m_gamecamera->GetCamera()->CalcScreenPosFromWorldPos(m_target);
-		//エネミーの座標が画面外であれば画像は表示しません
+		//エネミーの座標が画面外であれば画像は表示しません、該当の座標にターゲットの座標を表示します
 		if (0.0f <= pos.x && pos.x <= 1.0f && 0.0f <= pos.y && pos.y <= 1.0f && 0.0f <= pos.z && pos.z <= 1.0f) {
 			CVector3 scpos = pos;
 			m_targetsprite.Draw(scpos, { 0.2f,0.2f }, { 0.5f,0.5f },

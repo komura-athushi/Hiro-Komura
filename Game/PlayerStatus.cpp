@@ -59,8 +59,8 @@ void PlayerStatus::PlusExp(const int& exp)
 	//レベルごとに必要な累計経験値がプレイヤーの累計経験値より大きくなるまでループ
 	while (m_LevelExp <= m_Exp) {
 		ep -= m_NextExp;
-		m_Level+=1;
-		m_NextExp = (int)((1 + (float)(m_Level*m_Level * 0.1f)) * 50);
+		m_Level += 1;
+		m_NextExp = (int)((1 + (float)(m_Level * m_Level * 0.1f)) * 60);
 		m_LevelExp += m_NextExp;
 		m_Power += 5 + rand() % 3;
 		m_Attack = m_Power + m_SwordAttack;

@@ -147,10 +147,7 @@ bool ShotMagic::Start()
 				 shotmagic->DeleteMagicModel(number);
 				 GameObj::Suicider::CEffekseer* effect = new GameObj::Suicider::CEffekseer;
 				 effect->Play(L"Asset/effect/explosion/explosion.efk", 1.0f, pos, CQuaternion::Identity(), scl * 12);
-				 /*GameObj::CSkinModelRender* skinModelRender = new GameObj::CSkinModelRender;
-				 skinModelRender->Init(L"Resource/modelData/Magic_Sample.cmo");
-				 skinModelRender->SetScale(m_scale * m_multiply5);
-				 skinModelRender->SetPos(pos);*/
+			
 				 //UŒ‚”»’è‚Ì”­¶
 				 SuicideObj::CCollisionObj* attackCol = NewGO<SuicideObj::CCollisionObj>();
 				 attackCol->CreateSphere(pos, CQuaternion::Identity(), scale *m_multiply5);

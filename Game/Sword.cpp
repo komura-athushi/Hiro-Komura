@@ -72,6 +72,7 @@ void Sword::Update()
 			break;
 		}
 		m_switch = false;
+		//ƒvƒŒƒCƒ„[‘¤‚ÅŒvŽZ‚µ‚½À•W‚Æ‰ñ“]‚ð”½‰f‚³‚¹‚Ü‚·
 		m_skinModelRender->SetPos(m_player->GetSwordPosition());
 		m_skinModelRender->SetRot(m_player->GetSwordRot());
 		m_skinModelRender->SetScale(m_scale);
