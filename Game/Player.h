@@ -223,7 +223,7 @@ private:
 	float m_Shihutatime = 360;							        //シフタのかかる時間を制限
 	const float m_AttackMultiply = 1.3f;						//シフタがかかった時の攻撃力を上げる倍率
 	bool m_targetdisplay = false;
-	const float m_frame = 40;
+	const float m_frame = 40.0f;
 	bool m_clear_over_voice = false;
 	const float m_voicevolume = 3.5f;
 	const float m_lvupvollume = 2.0f;

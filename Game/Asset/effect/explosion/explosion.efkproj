@@ -70,7 +70,7 @@
           </Easing>
         </ScalingValues>
         <RendererCommonValues>
-          <ColorTexture>../../../../../../Effekseer132/Effekseer132/Sample/00_Basic/Texture/Particle02.png</ColorTexture>
+          <ColorTexture>Particle02.png</ColorTexture>
           <AlphaBlend>2</AlphaBlend>
         </RendererCommonValues>
         <Name>レーザーコア</Name>
@@ -130,7 +130,7 @@
           </Easing>
         </ScalingValues>
         <RendererCommonValues>
-          <ColorTexture>../../../../../../Effekseer132/Effekseer132/Sample/00_Basic/Texture/Particle02.png</ColorTexture>
+          <ColorTexture>Particle02.png</ColorTexture>
           <AlphaBlend>2</AlphaBlend>
         </RendererCommonValues>
         <DrawingValues>
@@ -247,7 +247,7 @@
           </Sphere>
         </GenerationLocationValues>
         <RendererCommonValues>
-          <ColorTexture>../../../../../../Effekseer132/Effekseer132/Sample/00_Basic/Texture/Particle02.png</ColorTexture>
+          <ColorTexture>Particle02.png</ColorTexture>
           <AlphaBlend>2</AlphaBlend>
         </RendererCommonValues>
         <DrawingValues>
@@ -272,6 +272,6 @@
   <ToolVersion>1.32</ToolVersion>
   <Version>3</Version>
   <StartFrame>0</StartFrame>
-  <EndFrame>40</EndFrame>
+  <EndFrame>45</EndFrame>
   <IsLoop>True</IsLoop>
 </EffekseerProject>
