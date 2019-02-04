@@ -256,14 +256,18 @@ void Player::Animation()
 	else if (Pad(0).GetButton(enButtonY) && m_timer >= m_attacktime) {
 		if (m_state != enState_Aria) {
 			if (m_PP >= m_PPCost) {
-				if (m_MagicId == 7) {
+				if (m_MagicId == 7) {                                                    
 					if (m_targetdisplay) {
+						m_playerheikou = m_attacktarget;
 						m_state = enState_Aria;
 						m_timer = 0;
 						m_PP -= m_PPCost;
 					}
 				}
 				else {
+					if (m_targetdisplay) {
+						m_playerheikou = m_attacktarget;
+					}
 					m_state = enState_Aria;
 					m_timer = 0;
 					m_PP -= m_PPCost;
@@ -849,7 +853,8 @@ void Player::PostRender()
 	//ターゲッティングがオンであればターゲットの画像を表示します
 	if (m_targetdisplay) {
 		CVector3 pos = m_gamecamera->GetCamera()->CalcScreenPosFromWorldPos(m_target);
-		//エネミーの座標が画面外であれば画像は表示しません、該当の座標にターゲットの座標を表示します
+		//エネミーの座標が画面外であれば画像は表示しません
+		//該当の座標にターゲットの座標を表示します
 		if (0.0f <= pos.x && pos.x <= 1.0f && 0.0f <= pos.y && pos.y <= 1.0f && 0.0f <= pos.z && pos.z <= 1.0f) {
 			CVector3 scpos = pos;
 			m_targetsprite.Draw(scpos, { 0.2f,0.2f }, { 0.5f,0.5f },

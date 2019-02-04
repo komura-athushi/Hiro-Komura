@@ -224,12 +224,13 @@ private:
 	float m_Shihutatimer = 0.0f;								//シフタのかかっている時間
 	float m_Shihutatime = 360.0f * 10.0f;						//シフタのかかる時間を制限
 	const float m_AttackMultiply = 1.3f;						//シフタがかかった時の攻撃力を上げる倍率
-	bool m_targetdisplay = false;								//ターゲッティング状態かどうか
 	const float m_frame = 40.0f;								//40fps
 	bool m_clear_over_voice = false;							//ゲームオーバーあるいはゲームクリアのボイスを発生させたかどうか
 	const float m_voicevolume = 3.5f;							//ボイスの音量
 	const float m_lvupvollume = 2.0f;							//レベルアップのSEの音量
+	bool m_targetdisplay = false;								//ターゲッティング状態かどうか
 	const float m_distancetarget = 1400.0f * 1400.0f;			//ターゲットが有効な距離
 	const float m_degreemultiply = 0.2f;						//ターゲットの距離補正
+	
 };
 

@@ -153,12 +153,19 @@ public:
 		return m_havemeseta;
 	}
 	//引数より所持メセタが多いかどうかを返す
-	bool isManyMeseta(const int& meseta) {
+	bool isManyMeseta(const int& meseta) 
+	{
 		return m_havemeseta >= meseta;
 	}
 	//引数分のメセタをプレイヤーのメセタに加算
-	void AddMeseta(const int& meseta) {
+	void AddMeseta(const int& meseta) 
+	{
 		m_havemeseta += meseta;
+	}
+	//PP消費無しモード！
+	void PPLimited()
+	{
+		m_PPlimited = true;
 	}
 private:  
 	int m_Level = 1;                                        //レベル
@@ -197,4 +204,5 @@ private:
 	GameData* m_gamedata;                                 //GameDataクラスのポインタ
 	Weapon* m_weapon;									  //Weaponクラスのポインタ
 	Magic* m_magic;										  //Magicクラスのポインタ
+	bool m_PPlimited = false;
 };

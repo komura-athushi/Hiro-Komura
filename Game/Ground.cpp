@@ -11,12 +11,13 @@ Ground::~Ground()
 	delete m_skinModelRender;
 	delete m_skinModelRender2;
 }
+
 bool Ground::Start()
 {
 	m_skinModelRender = new GameObj::CSkinModelRender;
 	m_skinModelRender2 = new GameObj::CSkinModelRender;
 	m_skinModelRender2->Init(L"Resource/modelData/sky.cmo");
-	m_scale = { 200.0f,200.0f,200.0f };
+	m_scale = { 300.0f,300.0f,300.0f };
 	m_skinModelRender2->SetPos(m_position);
 	m_skinModelRender2->SetScale(m_scale);
 	m_skinModelRender2->SetIsShadowCaster(false);
