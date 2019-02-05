@@ -67,7 +67,7 @@ private:
 	float m_radian = 0;                                         //上記をラジアン単位に直したもの
 	CQuaternion m_rotation;                                     //クォータニオン
 	Stage1* m_stage1;
-	int m_timer=0;												//攻撃のクールタイムのためにフレーム数を数える
+	int m_timer = 0;												//攻撃のクールタイムのためにフレーム数を数える
 	const float m_r = 70.0f;                                    //コリジョンの半径
 	const float m_attackr = 90.0f;                              //攻撃したときに発生させるコリジョンの半径
 	const float m_collisionheight = 50.0f;                      //コリジョンをm_positionからどれだけ上にあげるか

@@ -10,6 +10,7 @@
 #include "Human.h"
 #include "Merchant.h"
 #include "Effekseer.h"
+#include "Morugan.h"
 Player::Player()
 {
 }
@@ -66,6 +67,8 @@ void Player::unityChan()
 		OnAnimationEvent(clipName, eventName);
 	});
 	m_targetsprite.Init(L"Resource/sprite/target.dds");
+	m_hp.Init(L"Resource/sprite/hpgage.dds");
+	m_hpframe.Init(L"Resource/sprite/hpgage_frame.dds");
 }
 
 void Player::cagliostro()
@@ -458,14 +461,27 @@ void Player::AnimationController()
 		else {
 			//アニメーションの再生が終わったら、アニメーション分岐
 			m_timer += m_frame * GetDeltaTimeSec();
-			if (m_timer >= 20) {
-				if (m_movespeed.LengthSq() > 40.0f * 40.0f) {
-					m_state = enState_Run;
+			if (m_MagicId == 8) {
+				if (m_timer >= m_morugantime) {
+					if (m_movespeed.LengthSq() > 40.0f * 40.0f) {
+						m_state = enState_Run;
+					}
+					else if (m_movespeed.LengthSq() < 40.0f * 40.0f) {
+						m_state = enState_Idle;
+					}
+					m_timer = 0;
 				}
-				else if (m_movespeed.LengthSq() < 40.0f * 40.0f) {
-					m_state = enState_Idle;
+			}
+			else {
+				if (m_timer >= 20) {
+					if (m_movespeed.LengthSq() > 40.0f * 40.0f) {
+						m_state = enState_Run;
+					}
+					else if (m_movespeed.LengthSq() < 40.0f * 40.0f) {
+						m_state = enState_Idle;
+					}
+					m_timer = 0;
 				}
-				m_timer = 0;
 			}
 		}
 		//キャラクターの向き関係
@@ -590,17 +606,25 @@ void Player::OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventName)
 	}
 	//魔法を発生させる
 	else if (wcscmp(eventName, L"aria") == 0) {
-		ShotMagic* shotmagic = new ShotMagic;
-		if (m_MagicId == 7) {
-			shotmagic->SetPosition(m_target);
+		if (m_MagicId == 8) {
+			Morugan* morugan = new Morugan;
+			morugan->SetDamage(m_Mattack, m_DamageRate);
+			morugan->SetPosition(m_position + CVector3::AxisY() * m_height);
+			morugan->SetRotation(m_rotation);
 		}
 		else {
-			shotmagic->SetPosition(m_position);
+			ShotMagic* shotmagic = new ShotMagic;
+			if (m_MagicId == 7) {
+				shotmagic->SetPosition(m_target);
+			}
+			else {
+				shotmagic->SetPosition(m_position);
+			}
+			shotmagic->SetDirectionPlayer(m_attacktarget);
+			shotmagic->SetId(m_MagicId);
+			shotmagic->SetDamage(m_Mattack, m_DamageRate);
+			shotmagic->SetName(L"ShotMagic");
 		}
-		shotmagic->SetDirectionPlayer(m_attacktarget);
-		shotmagic->SetId(m_MagicId);
-		shotmagic->SetDamage(m_Mattack, m_DamageRate);
-		shotmagic->SetName(L"ShotMagic");
 	}
 }
 
@@ -640,8 +664,12 @@ void Player::MagicStatus()
 
 void Player::SwitchWeapon()
 {
+	if (m_state == enState_Aria || m_state == enState_Attack || m_state == enState_Damage || m_state == enState_GameClear ||
+		m_state == enState_GameOver) {
+		return;
+	}
 	if (!Pad(0).GetButton(enButtonLeft) && !Pad(0).GetButton(enButtonRight)) {
-		m_isbutton=true;
+		m_isbutton = true;
 	}
 	//直前にボタンを押していないときにだけ、入力を有効にする
 	if (m_isbutton) {
@@ -687,7 +715,7 @@ void Player::LevelUp()
 	if (m_playerstatus->GetLevelUp()) {
 		GameObj::Suicider::CEffekseer* effect = new GameObj::Suicider::CEffekseer;
 		CVector3 pos = m_position;
-		pos.y += m_height;
+		pos.y += m_lvheight;
 		effect->Play(L"Asset/effect/lvup/lvup.efk", 1.0f, pos, CQuaternion::Identity(), { 20.0f,20.0f,20.0f });
 		effect->SetSpeed(1.5f);
 		m_playerstatus->OffLevelUp();
@@ -904,4 +932,18 @@ void Player::PostRender()
 			DirectX::SpriteEffects_None,
 			1.0f);
 	}
+	//hpのHUD関係
+	float hpRate = (float)m_HP / m_MaxHP;
+	float offsetX = (hpRate - 1.0f) / 2;
+	m_spriteposition.x = m_protspriteposition.x + offsetX;
+	/*m_hp.DrawScreenPos({200.0f,200.0f}, CVector2::One(), CVector2::Zero(),
+		0.0f,
+		{ 1.0f, 1.0f, 1.0f, 1.0f },
+		DirectX::SpriteEffects_None,
+		0.9f);
+	m_hpframe.DrawScreenPos({200.0f,200.0f}, CVector2::One(), CVector2::Zero(),
+		0.0f,
+		{ 1.0f, 1.0f, 1.0f, 1.0f },
+		DirectX::SpriteEffects_None,
+		1.0f);*/
 }

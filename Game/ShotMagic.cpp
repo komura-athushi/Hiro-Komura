@@ -137,6 +137,7 @@ bool ShotMagic::Start()
 		 break;
 	 case 7:
 		 effect->Play(L"Asset/effect/haou/haou.efk", 1.0f, pos, CQuaternion::Identity(), scl * 12);
+		 //effect->Play(L"Asset/effect/yu.efk", 1.0f, pos, CQuaternion::Identity(), scl * 12);
 		 break;
 	 }
 	 CVector3 topos = m_movespeed;

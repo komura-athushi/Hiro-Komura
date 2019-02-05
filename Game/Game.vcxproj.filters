@@ -55,6 +55,8 @@
     <ImageContentTask Include="Asset\sprite\target.png">
       <Filter>Asset\sprite</Filter>
     </ImageContentTask>
+    <ImageContentTask Include="Asset\sprite\hp\hpgage.png" />
+    <ImageContentTask Include="Asset\sprite\hp\hpgage_frame.png" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Boss.cpp" />
@@ -87,6 +89,7 @@
     <ClCompile Include="Merchant.cpp" />
     <ClCompile Include="MainSound.cpp" />
     <ClCompile Include="BossAttack.cpp" />
+    <ClCompile Include="Morugan.cpp" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Asset\modelData\Sword\AncientWarriorBlade.FBX">
@@ -207,6 +210,7 @@
     <ClInclude Include="Merchant.h" />
     <ClInclude Include="MainSound.h" />
     <ClInclude Include="BossAttack.h" />
+    <ClInclude Include="Morugan.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Asset">
