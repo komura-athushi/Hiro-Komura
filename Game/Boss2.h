@@ -44,8 +44,8 @@ private:
 	GameObj::CSkinModelRender* m_skinModelRender = nullptr;		//スキンモデルレンダラー。
 	PhysicsStaticObject m_staticobject;                         //静的オブジェクト
 	CVector3 m_oldpos = { 0.0f,0.0f,0.0f };						//ボスの初期位置
-	CVector3 m_position = { 100.0f,500.0f,100.0f };					//ボスの座標
-	CVector3 m_scale = { 5.0f,5.0f,5.0f };						//ボスのスケール
+	CVector3 m_position = { 1000.0f,200.0f,-1000.0f };				//ボスの座標
+	CVector3 m_scale = { 300.0f,300.0f,300.0f };				//ボスのスケール
 	CVector3 m_movespeed = { 0.0f,  0.0f,  0.0f };				//移動速度
 	CVector3 m_parallel = { 0.0f,0.0f,0.0f };					//ユニティちゃんの向きと平行なベクトル
 	Player* m_player;											//プレイヤークラスのポインタ
