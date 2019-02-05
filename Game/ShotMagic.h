@@ -54,6 +54,10 @@ public:
 	//マジックスフィア
 	void MagicSphere();
 	void MagicSphereUpdate();
+	//レスタ
+	void Resta();
+	//覇王斬
+	void Haou();
 	//魔法の番号を取得
 	int GetId() const
 	{
@@ -116,7 +120,6 @@ public:
 	}
 	//該当の番号のMagicModelの配列の色々を削除
 	void DeleteMagicModel(const int& number);
-
 private:
 	int m_id;											//魔法の番号
 	const wchar_t* m_name;								//魔法の名前
@@ -149,7 +152,7 @@ private:
 	static const int m_modelnumber1 = 1;
 	const CVector3 m_scale1 = { 2.0f,2.0f,2.0f };
 	const float m_collisionscale1 = 90.0f;
-	const float m_multiplyspeed1 = 25.0f*60.0f;
+	const float m_multiplyspeed1 = 25.0f * 60.0f;
 	//イルグラ
 	const float m_deletetime2 = 60.0f;
 	static const int m_modelnumber2 = 3;
@@ -178,5 +181,17 @@ private:
 	const float m_collisionscale5 = 28.0f;
 	const float m_multiplyspeed5 = 20.0f*60.0f;
 	const float m_multiply5 = 6.0f;
+	//レスタ
+	const float m_deletetime6 = 60.0f;
+	const int m_modelnumber6 = 1;
+	const CVector3 m_scale6 = { 3.0f,3.0f,3.0f };
+	const float m_collisionscale6 = 0.0f;
+	const float m_multiplyspeed6 = 0.0f;
+	//覇王斬
+	const float m_deletetime7 = 50.0f;
+	static const int m_modelnumber7 = 1;
+	const CVector3 m_scale7 = { 2.0f,2.0f,2.0f };
+	const float m_collisionscale7 = 90.0f;
+	const float m_multiplyspeed7 = 0.0f;
 };
 

@@ -26,6 +26,6 @@ private:
 	CQuaternion m_rotation;                                     //クオンテーション
 	PhysicsStaticObject m_staticobject;                         //静的オブジェクト
 	PhysicsStaticObject m_staticobject2;                        //静的オブジェクト
-	int m_stage = 0;                                            //ステージ情報
+	int m_stage = 0;                //ステージ情報
 };
 

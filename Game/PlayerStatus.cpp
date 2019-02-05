@@ -48,6 +48,7 @@ void PlayerStatus::Update()
 			//m_gamedata->SetClear(i);
 		}
 		//PlusExp(1000000000);
+		m_MaxPP = 1000000000;
 	}
 }
 

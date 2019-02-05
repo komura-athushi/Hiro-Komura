@@ -256,9 +256,22 @@ void Player::Animation()
 	else if (Pad(0).GetButton(enButtonY) && m_timer >= m_attacktime) {
 		if (m_state != enState_Aria) {
 			if (m_PP >= m_PPCost) {
-				m_state = enState_Aria;
-				m_timer = 0;
-				m_PP -= m_PPCost;
+				if (m_MagicId == 7) {                                                    
+					if (m_targetdisplay) {
+						m_playerheikou = m_attacktarget;
+						m_state = enState_Aria;
+						m_timer = 0;
+						m_PP -= m_PPCost;
+					}
+				}
+				else {
+					if (m_targetdisplay) {
+						m_playerheikou = m_attacktarget;
+					}
+					m_state = enState_Aria;
+					m_timer = 0;
+					m_PP -= m_PPCost;
+				}
 			}
 		}
 	}
@@ -502,12 +515,14 @@ void Player::Kougeki()
 	//攻撃していないときは、武器をunityChanの背中に移動させる
 	else {
 		//ここら辺なにやってたっけ
+		//プレイヤーの後方のベクトルを取得し、プレイヤーの後方に武器の座標を設定する
 		CVector3 pos = m_playerheikou;
 		CQuaternion qRot;
 		qRot.SetRotation({0.0f,1.0f,0.0f}, -90.0f);
 		pos.Normalize();
 		pos *= 10.0f;
 		pos = m_position - pos;
+		//y座標を加算する
 		pos.y += 70.0f;
 		CQuaternion qRot2;
 		qRot2.SetRotation({ 0.0f,1.0f,0.0f }, -90.0f);
@@ -517,6 +532,7 @@ void Player::Kougeki()
 		pos2 *= 70.0f;
 		pos += pos2;
 		m_swordposition = pos;
+		//プレイヤーのどっかのボーンの回転を剣の回転に反映
 		CQuaternion qRot3 = m_skinModelRender->GetBoneRot(m_bonecenter);
 		m_swordrot = qRot3;
 	}
@@ -575,7 +591,12 @@ void Player::OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventName)
 	//魔法を発生させる
 	else if (wcscmp(eventName, L"aria") == 0) {
 		ShotMagic* shotmagic = new ShotMagic;
-		shotmagic->SetPosition(m_position);
+		if (m_MagicId == 7) {
+			shotmagic->SetPosition(m_target);
+		}
+		else {
+			shotmagic->SetPosition(m_position);
+		}
 		shotmagic->SetDirectionPlayer(m_attacktarget);
 		shotmagic->SetId(m_MagicId);
 		shotmagic->SetDamage(m_Mattack, m_DamageRate);
@@ -694,6 +715,14 @@ void Player::Shihuta()
 	}
 	else {
 		m_Attack = m_ShihutaAttack;
+	}
+}
+
+void Player::Resta(const int& volume)
+{
+	m_HP += volume;
+	if (m_HP > m_MaxHP) {
+		m_HP = m_MaxHP;
 	}
 }
 
@@ -824,7 +853,8 @@ void Player::PostRender()
 	//ターゲッティングがオンであればターゲットの画像を表示します
 	if (m_targetdisplay) {
 		CVector3 pos = m_gamecamera->GetCamera()->CalcScreenPosFromWorldPos(m_target);
-		//エネミーの座標が画面外であれば画像は表示しません、該当の座標にターゲットの座標を表示します
+		//エネミーの座標が画面外であれば画像は表示しません
+		//該当の座標にターゲットの座標を表示します
 		if (0.0f <= pos.x && pos.x <= 1.0f && 0.0f <= pos.y && pos.y <= 1.0f && 0.0f <= pos.z && pos.z <= 1.0f) {
 			CVector3 scpos = pos;
 			m_targetsprite.Draw(scpos, { 0.2f,0.2f }, { 0.5f,0.5f },
@@ -840,6 +870,7 @@ void Player::PostRender()
 		}
 		else {
 			m_attacktarget = m_playerheikou;
+			m_targetdisplay = false;
 		}
 	}
 	else {
