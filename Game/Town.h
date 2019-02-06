@@ -7,8 +7,10 @@ class Merchant;
 class Stone;
 class House;
 class Stage1_Teleport;
+class Stage2_Teleport;
 class PlayerStatus;
 class Fade;
+class GameData;
 //拠点となる町です
 class Town:public IGameObject
 {
@@ -33,9 +35,11 @@ private:
 	Player* m_player;                                  //プレイヤークラスのポインタ
 	Human* m_human;									   //ヒューマンクラスのポインタ
 	Merchant* m_merchant;							   //マーチャントクラスのポインタ
-	Stage1_Teleport* m_stage1_teleport;                //ステージ1に遷移するためのクラスのポインタ
+	Stage1_Teleport* m_stage1_teleport = nullptr;                //ステージ1に遷移するためのクラスのポインタ
+	Stage2_Teleport* m_stage2_teleport = nullptr;				   //ステージ2に遷移するためのクラスのポインタ
 	Level m_level;                                     //レベルデザインのためのクラス
 	PlayerStatus* m_playerstatus;                      //プレイヤーステータスクラスのポインタ
+	GameData* m_gamedata;
 	ShadowMapHandler* m_shadowMap;					   //シャドウマップ
 	//各オブジェクトの可変長配列
 	std::vector<Stone*> m_stoneList;                   //Stoneクラスのポインタを格納するための可変長配列
@@ -48,6 +52,7 @@ private:
 		enTown,
 		enCga,
 		enSt1,
+		enSt2,
 	};
 	State m_state;
 };

@@ -6,7 +6,7 @@ class PlayerStatus;
 class Oni;
 class Boss;
 class Fade;
-//ステージ1に関係するものを生成したり、管理したりするクラスです
+//ステージに関係するものを生成したり、管理したりするクラスです
 class Game:public IGameObject
 {
 public:
@@ -14,6 +14,11 @@ public:
 	~Game();
 	bool Start();
 	void Update();
+	//ステージの番号を設定
+	void SetStageNumber(const int& number)
+	{
+		m_stagenumber = number;
+	}
 private:
 	Ground* m_ground;                                  //Groundクラスのポインタ
 	GameCamera* m_gamecamera;                          //GameCameraクラスのポインタ
@@ -29,5 +34,6 @@ private:
 	Fade* m_fade;
 	//trueなら画面切り替えする
 	bool m_isWaitFadeout = false;
+	int m_stagenumber;
 };
 

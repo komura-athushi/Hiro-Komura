@@ -6,6 +6,7 @@
 #include "Stone.h"
 #include "House.h"
 #include "Stage1_Teleport.h"
+#include "Stage2_Teleport.h"
 #include "Game.h"
 #include "PlayerStatus.h"
 #include "Cagliostro_view.h"
@@ -30,6 +31,9 @@ Town::~Town()
 	delete m_lig;
 	delete m_shadowMap;
 	delete m_stage1_teleport;
+	if (m_stage2_teleport != nullptr) {
+		delete m_stage2_teleport;
+	}
 	for (auto& stone : m_stoneList) {
 		delete stone;
 	}
@@ -40,6 +44,7 @@ Town::~Town()
 
 bool Town::Start()
 {
+	m_gamedata = FindGO<GameData>(L"GameData");
 	//ディレクションライトを設定
 	m_lig = new GameObj::CDirectionLight;
 	m_color = { 1.0f,-1.0f,1.0f };
@@ -79,8 +84,14 @@ void Town::Update()
 			//m_stateによって次のモードを分岐させる
 			if (m_state == enSt1) {
 				Game* game = new Game;
+				game->SetStageNumber(1);
 				delete this;
 			}
+			else if (m_state == enSt2) {
+				Game* game = new Game;
+				game->SetStageNumber(2);
+				delete this;
+ 			}
 			else if (m_state == enCga) {
 				Cagliostro_view* cag = new Cagliostro_view;
 				delete this;
@@ -99,6 +110,15 @@ void Town::Update()
 			m_state = enSt1;
 			m_isWaitFadeout = true;
 			m_fade->StartFadeOut();
+		}
+		else if (m_gamedata->GetTownLevel() >= 1 && m_stage2_teleport != nullptr) {
+			CVector3 pos = m_player->GetPosition() - m_stage2_teleport->GetPosition();
+			//距離が一定以下ならステージ1に遷移する
+			if (pos.Length() <= 100.0f) {
+				m_state = enSt2;
+				m_isWaitFadeout = true;
+				m_fade->StartFadeOut();
+			}
 		}
 		//拠点に居る時にSTARTボタンを押すとカリオストロちゃん☆モードに遷移する
 		else if (Pad(0).GetDown(enButtonStart)) {
@@ -119,9 +139,8 @@ void Town::BuildLevel()
 {
 	//レベルを構築する。
 	const wchar_t* levelname=nullptr;
-	GameData* gamedata = FindGO<GameData>(L"GameData");
 	//街のレベルにより読み込むレベルファイルを決定する
-	switch (gamedata->GetTownLevel()) {
+	switch (m_gamedata->GetTownLevel()) {
 	case 0:
 		levelname = L"Asset/level/town00.tkl";
 		break;
@@ -165,6 +184,13 @@ void Town::BuildLevel()
 			//Starオブジェクト。
 			m_stage1_teleport = new Stage1_Teleport;
 			m_stage1_teleport->SetPosition(objData.position);
+			//フックしたのでtrueを返す。
+			return true;
+		}
+		else if (objData.EqualObjectName(L"stage2_teleport") == true) {
+			//Starオブジェクト。
+			m_stage2_teleport = new Stage2_Teleport;
+			m_stage2_teleport->SetPosition(objData.position);
 			//フックしたのでtrueを返す。
 			return true;
 		}

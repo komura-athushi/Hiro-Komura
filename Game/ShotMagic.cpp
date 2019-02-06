@@ -93,6 +93,7 @@ bool ShotMagic::Start()
 				 //ƒ‚ƒfƒ‹‚ÆƒRƒŠƒWƒ‡ƒ“‚ð“®‚©‚µ‚Ü‚·
 				 mgml.s_position = mgml.s_effect->GetPos() + m_movespeed*GetDeltaTimeSec();
 				 mgml.s_effect->SetPos(mgml.s_position);
+				 mgml.s_effect->SetSpeed(m_frame * GetDeltaTimeSec());
 				 mgml.s_collision->SetPosition(mgml.s_position);
 				 mgml.s_timer += 60.0f*GetDeltaTimeSec();
 			 }

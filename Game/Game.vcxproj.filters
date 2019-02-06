@@ -90,6 +90,7 @@
     <ClCompile Include="BossAttack.cpp" />
     <ClCompile Include="Morugan.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="Stage2_Teleport.cpp" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Asset\modelData\Sword\AncientWarriorBlade.FBX">
@@ -179,6 +180,9 @@
     <MeshContentTask Include="Asset\modelData\boss\bullet3.FBX">
       <Filter>Asset\modelData</Filter>
     </MeshContentTask>
+    <MeshContentTask Include="Asset\modelData\stage2_teleport\stage2_teleport.FBX">
+      <Filter>Asset\modelData</Filter>
+    </MeshContentTask>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Boss.h" />
@@ -211,6 +215,7 @@
     <ClInclude Include="BossAttack.h" />
     <ClInclude Include="Morugan.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="Stage2_Teleport.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Asset">
