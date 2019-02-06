@@ -29,6 +29,10 @@ private:
 	const CVector3 m_scale = { 7.0f,7.0f,7.0f };
 	int m_damage = 0;
 	const float m_frame = 40.0f;
+	const float m_length = 1400.0f;								//ƒ‚ƒ‹ƒKƒ“‚Ì’·‚³
+	const float m_time = 140.0f;								//ƒr[ƒ€”­¶‚ÌŠÔ
+ 	float m_timer = 0.0f;
 	Player* m_player;
+	const float m_r = 20.0f;									//‚¦‚ñ‚¿‚¤‚Ì”¼Œa
 };
 

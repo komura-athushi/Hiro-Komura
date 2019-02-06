@@ -642,6 +642,7 @@ void Player::Damage(const int& attack)
 		}
 		m_damage = true;
 		m_timer2 = 0;
+		m_state = enState_Damage;
 	}
 }
 
@@ -847,7 +848,8 @@ void Player::OutTarget()
 		pos.Normalize();
 		//プレイヤーとエネミーを結ぶベクトルの角度を計算します
 		float degree = atan2f(pos.x, pos.z);
-		//ここら辺のif文要らない可能性が微レ存、「プレイヤーの向いてる角度」と「プレイヤーとエネミーを結ぶベクトルの角度」の差を計算します
+		//ここら辺のif文要らない可能性が微レ存、「プレイヤーの正面のベクトルの角度」と
+		//「プレイヤーとエネミーを結ぶベクトルの角度」の差を計算します
 		if (M_PI <= (degreep - degree)) {
 			degree = degreep - degree - M_PI * 2;
 		}
@@ -880,6 +882,7 @@ void Player::PostRender()
 {
 	//ターゲッティングがオンであればターゲットの画像を表示します
 	if (m_targetdisplay) {
+		//該当のワールド座標を2D座標を変換します)
 		CVector3 pos = m_gamecamera->GetCamera()->CalcScreenPosFromWorldPos(m_target);
 		//エネミーの座標が画面外であれば画像は表示しません
 		//該当の座標にターゲットの座標を表示します

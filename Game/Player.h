@@ -142,6 +142,11 @@ public:
 	{
 		return m_attacktarget;
 	}
+	//プレイヤーの正面のベクトルを取得
+	CVector3 GetFront() const
+	{
+		return m_playerheikou;
+	}
 private:
 	bool m_cagliostro = false;
 	GameObj::CSkinModelRender* m_skinModelRender = nullptr;		//スキンモデルレンダラー
