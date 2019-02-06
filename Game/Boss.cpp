@@ -2,7 +2,7 @@
 #include "Boss.h"
 #define _USE_MATH_DEFINES //M_PI ‰~ü—¦ŒÄ‚Ño‚µ
 #include <math.h> 
-#include "Stage1.h"
+
 #include "Player.h"
 #include "BossAttack.h"
 #include "GameCamera.h"
@@ -35,7 +35,6 @@ bool Boss::Start()
 
 	return true;
 }
-
 
 void Boss::Attack()
 {

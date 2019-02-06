@@ -263,5 +263,6 @@ private:
 	CVector2 m_spriteposition = { 0.0f ,0.0f };
 	const float m_morugantime = 300.0f;
 	const float m_height = 60.0f;
+	bool m_aria = false;										//ô•¶‰r¥’†‚©‚Ç‚¤‚©
 };
 

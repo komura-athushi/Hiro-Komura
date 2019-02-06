@@ -199,7 +199,7 @@
           </Circle>
         </GenerationLocationValues>
         <RendererCommonValues>
-          <ColorTexture>../../../../../../Effekseer132/Effekseer132/Sample/01_AndrewFM01/Texture/orb_colored.png</ColorTexture>
+          <ColorTexture>orb_colored.png</ColorTexture>
           <AlphaBlend>2</AlphaBlend>
           <FadeOutType>1</FadeOutType>
           <FadeOut>
@@ -298,7 +298,7 @@
           </Circle>
         </GenerationLocationValues>
         <RendererCommonValues>
-          <ColorTexture>../../../../../../Effekseer132/Effekseer132/Sample/01_AndrewFM01/Texture/orb_colored.png</ColorTexture>
+          <ColorTexture>orb_colored.png</ColorTexture>
           <AlphaBlend>2</AlphaBlend>
           <FadeOutType>1</FadeOutType>
           <FadeOut>
@@ -326,7 +326,7 @@
               </Life>
             </CommonValues>
             <RendererCommonValues>
-              <ColorTexture>../../../../../../Effekseer132/Effekseer132/Sample/01_AndrewFM01/Texture/LaserMain02.png</ColorTexture>
+              <ColorTexture>LaserMain02.png</ColorTexture>
               <AlphaBlend>2</AlphaBlend>
               <FadeOutType>1</FadeOutType>
               <FadeOut>
@@ -379,7 +379,7 @@
           </SinglePVA>
         </ScalingValues>
         <RendererCommonValues>
-          <ColorTexture>../../../../../../Effekseer132/Effekseer132/Sample/01_AndrewFM01/Texture/Shock_wave004.png</ColorTexture>
+          <ColorTexture>Shock_wave004.png</ColorTexture>
           <AlphaBlend>2</AlphaBlend>
           <Filter>0</Filter>
           <FadeOutType>1</FadeOutType>
@@ -390,6 +390,9 @@
         <DrawingValues>
           <Sprite>
             <Billboard>2</Billboard>
+            <ColorAll_Fixed>
+              <G>0</G>
+            </ColorAll_Fixed>
           </Sprite>
         </DrawingValues>
         <Name>Shockwave</Name>
@@ -426,7 +429,7 @@
           </SinglePVA>
         </ScalingValues>
         <RendererCommonValues>
-          <ColorTexture>../../../../../../Effekseer132/Effekseer132/Sample/01_AndrewFM01/Texture/Shock_wave004.png</ColorTexture>
+          <ColorTexture>Shock_wave004.png</ColorTexture>
           <AlphaBlend>2</AlphaBlend>
           <Filter>0</Filter>
           <FadeOutType>1</FadeOutType>
@@ -437,6 +440,9 @@
         <DrawingValues>
           <Sprite>
             <Billboard>2</Billboard>
+            <ColorAll_Fixed>
+              <G>0</G>
+            </ColorAll_Fixed>
           </Sprite>
         </DrawingValues>
         <Name>Shockwave</Name>
@@ -463,7 +469,7 @@
           </Fixed>
         </ScalingValues>
         <RendererCommonValues>
-          <ColorTexture>../../../../../../Effekseer132/Effekseer132/Sample/01_AndrewFM01/Texture/aurora01.png</ColorTexture>
+          <ColorTexture>aurora01.png</ColorTexture>
           <AlphaBlend>2</AlphaBlend>
           <UV>3</UV>
           <UVScroll>
@@ -544,7 +550,7 @@
           </Fixed>
         </ScalingValues>
         <RendererCommonValues>
-          <ColorTexture>../../../../../../Effekseer132/Effekseer132/Sample/01_AndrewFM01/Texture/aurora01.png</ColorTexture>
+          <ColorTexture>aurora01.png</ColorTexture>
           <AlphaBlend>2</AlphaBlend>
           <UV>3</UV>
           <UVScroll>
@@ -625,7 +631,7 @@
           </Fixed>
         </ScalingValues>
         <RendererCommonValues>
-          <ColorTexture>../../../../../../Effekseer132/Effekseer132/Sample/01_AndrewFM01/Texture/aurora01.png</ColorTexture>
+          <ColorTexture>aurora01.png</ColorTexture>
           <AlphaBlend>2</AlphaBlend>
           <UV>3</UV>
           <UVScroll>
@@ -705,7 +711,7 @@
           </Fixed>
         </LocationValues>
         <RendererCommonValues>
-          <ColorTexture>../../../../../../Effekseer132/Effekseer132/Sample/01_AndrewFM01/Texture/Shock_wave_ring001.png</ColorTexture>
+          <ColorTexture>Shock_wave_ring001.png</ColorTexture>
           <AlphaBlend>2</AlphaBlend>
           <Filter>0</Filter>
           <UV>3</UV>
@@ -745,6 +751,9 @@
                 <X>1.5</X>
               </Location>
             </Inner_Fixed>
+            <OuterColor_Fixed>
+              <G>0</G>
+            </OuterColor_Fixed>
             <CenterColor_Fixed>
               <R>253</R>
               <G>0</G>
@@ -783,7 +792,7 @@
           </Fixed>
         </LocationValues>
         <RendererCommonValues>
-          <ColorTexture>../../../../../../Effekseer132/Effekseer132/Sample/01_AndrewFM01/Texture/Shock_wave_ring002.png</ColorTexture>
+          <ColorTexture>Shock_wave_ring002.png</ColorTexture>
           <AlphaBlend>2</AlphaBlend>
           <Filter>0</Filter>
           <UV>3</UV>
@@ -818,6 +827,9 @@
                 <Y>-7</Y>
               </Location>
             </Outer_Fixed>
+            <OuterColor_Fixed>
+              <G>0</G>
+            </OuterColor_Fixed>
             <CenterColor_Fixed>
               <R>253</R>
               <G>0</G>
@@ -825,6 +837,9 @@
               <A>0</A>
             </CenterColor_Fixed>
             <InnerColor_Fixed>
+              <R>138</R>
+              <G>0</G>
+              <B>138</B>
               <A>255</A>
             </InnerColor_Fixed>
           </Ring>

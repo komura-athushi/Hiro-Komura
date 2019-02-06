@@ -16,16 +16,16 @@ bool Morugan::Start()
 {
     m_effect = new GameObj::Suicider::CEffekseer;
 	m_effect->Play(L"Asset/effect/morugan/morugan.efk", 1.0f, m_position, m_rotation, m_scale);
-	m_effect->SetSpeed(m_frame * GetDeltaTimeSec());
 	m_player = FindGO<Player>(L"Player");
+	CQuaternion qRot;
+	qRot.SetRotation(CVector3::AxisY(), atan2f(-m_player->GetFront().x, -m_player->GetFront().z));
+	m_effect->SetRot(qRot);
+	m_effect->SetSpeed(m_frame * GetDeltaTimeSec());
 	return true;
 }
 
 void Morugan::Update()
 {
-	CQuaternion qRot;
-	qRot.SetRotation(CVector3::AxisY(), atan2f(-m_player->GetFront().x, -m_player->GetFront().z));
-	m_effect->SetRot(qRot);
 	m_effect->SetSpeed(m_frame * GetDeltaTimeSec());
 	if (m_timer >= m_time) {
 		//Aベクトル(単位ベクトル)、モルガンの正面のベクトル

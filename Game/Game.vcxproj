@@ -249,7 +249,7 @@
     <ClCompile Include="Oni.cpp" />
     <ClCompile Include="PlayerStatus.cpp" />
     <ClCompile Include="ShotMagic.cpp" />
-    <ClCompile Include="Stage1.cpp" />
+    <ClCompile Include="Game.cpp" />
     <ClCompile Include="Stage1_Teleport.cpp" />
     <ClCompile Include="Stone.cpp" />
     <ClCompile Include="Sword.cpp" />
@@ -286,7 +286,7 @@
     <ClInclude Include="Oni.h" />
     <ClInclude Include="PlayerStatus.h" />
     <ClInclude Include="ShotMagic.h" />
-    <ClInclude Include="Stage1.h" />
+    <ClInclude Include="Game.h" />
     <ClInclude Include="Stage1_Teleport.h" />
     <ClInclude Include="Stone.h" />
     <ClInclude Include="Sword.h" />

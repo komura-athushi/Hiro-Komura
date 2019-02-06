@@ -235,21 +235,8 @@ void Player::Turn()
 
 void Player::Animation()
 {
-	//ダメージを受けたら
-	if (m_damage) {
-		m_state = enState_Damage;
-		m_damage = false;
-		//SE
-		SuicideObj::CSE* se = NewGO<SuicideObj::CSE>(L"Asset/sound/unityChan/bad.wav");
-		se->Play(); //再生(再生が終わると削除されます)
-		se->SetVolume(m_voicevolume);
-		//3D再生
-		se->SetPos(m_position);//音の位置
-		se->SetDistance(200.0f);//音が聞こえる範囲
-		se->Play(true); //第一引数をtrue
-	}
 	//Xボタンを押したら、通常攻撃
-	else if (Pad(0).GetDown(enButtonX) && m_timer >= m_attacktime) {
+	if (Pad(0).GetDown(enButtonX) && m_timer >= m_attacktime) {
 		if (m_state != enState_Attack) {
 			m_state = enState_Attack;
 			m_timer = 0;
@@ -283,7 +270,7 @@ void Player::Animation()
 		m_state = enState_GameOver;
 	}
 	//LB1押したらゲームクリア
-	else if (Pad(0).GetButton(enButtonLB1)) {
+	else if (Pad(0).GetButton(enButtonRT)) {
 		m_state = enState_GameClear;
 	}
 	m_timer += m_frame * GetDeltaTimeSec();
@@ -349,8 +336,10 @@ void Player::AnimationController()
 		Animation();
 		break;
 	case enState_Damage:
-		if (m_skinModelRender->GetAnimCon().IsPlaying()) {
+		if (m_skinModelRender->GetAnimCon().IsPlaying() || m_isjump || m_aria) {
 			m_skinModelRender->GetAnimCon().Play(enAnimationClip_damage, 0.2f);
+			m_aria = false;
+			m_isjump = false;
 		}
 		else {
 			//アニメーションの再生が終わったら、再びアニメーション分岐
@@ -457,6 +446,7 @@ void Player::AnimationController()
 			Animation();
 			m_isjump = false;
 			m_timer = 0;
+			m_aria = true;
 		}
 		else {
 			//アニメーションの再生が終わったら、アニメーション分岐
@@ -470,6 +460,7 @@ void Player::AnimationController()
 						m_state = enState_Idle;
 					}
 					m_timer = 0;
+					m_aria = false;
 				}
 			}
 			else {
@@ -481,6 +472,7 @@ void Player::AnimationController()
 						m_state = enState_Idle;
 					}
 					m_timer = 0;
+					m_aria = false;
 				}
 			}
 		}
@@ -640,6 +632,14 @@ void Player::Damage(const int& attack)
 		if (m_HP < 0) {
 			m_HP = 0;
 		}
+		//SE
+		SuicideObj::CSE* se = NewGO<SuicideObj::CSE>(L"Asset/sound/unityChan/bad.wav");
+		se->Play(); //再生(再生が終わると削除されます)
+		se->SetVolume(m_voicevolume);
+		//3D再生
+		se->SetPos(m_position);//音の位置
+		se->SetDistance(200.0f);//音が聞こえる範囲
+		se->Play(true); //第一引数をtrue
 		m_damage = true;
 		m_timer2 = 0;
 		m_state = enState_Damage;
@@ -669,13 +669,13 @@ void Player::SwitchWeapon()
 		m_state == enState_GameOver) {
 		return;
 	}
-	if (!Pad(0).GetButton(enButtonLeft) && !Pad(0).GetButton(enButtonRight)) {
+	if (!Pad(0).GetButton(enButtonLB1) && !Pad(0).GetButton(enButtonRB1)) {
 		m_isbutton = true;
 	}
 	//直前にボタンを押していないときにだけ、入力を有効にする
 	if (m_isbutton) {
 		//左ボタン
-		if (Pad(0).GetButton(enButtonLeft)) {
+		if (Pad(0).GetButton(enButtonLB1)) {
 			m_isbutton = false;
 			//武器の切り替えが有効であったならば武器のステータスを反映させる
 			if (m_playerstatus->GetWeapon(m_SwordId - 1)) {
@@ -687,7 +687,7 @@ void Player::SwitchWeapon()
 			}
 		}
 		//右ボタン
-		if (Pad(0).GetButton(enButtonRight)) {
+		if (Pad(0).GetButton(enButtonRB1)) {
 			m_isbutton = false;
 			//武器の切り替えが有効であったならば武器のステータスを反映させる
 			if (m_playerstatus->GetWeapon(m_SwordId + 1)) {

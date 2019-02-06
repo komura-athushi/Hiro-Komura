@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "Title.h"
 #include "Town.h"
-#include "Stage1.h"
+#include "Game.h"
 #include "PlayerStatus.h"
 #include "Fade.h"
 #include <time.h>

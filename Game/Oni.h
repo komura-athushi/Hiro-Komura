@@ -3,7 +3,7 @@
 #include "IEnemy.h"
 #include "DemolisherWeapon/physics/PhysicsStaticObject.h"
 class Player;
-class Stage1;
+class Game;
 class Oni : public IEnemy
 {
 public:
@@ -28,9 +28,9 @@ public:
 	{
 		m_position = pos;
 	}
-	void SetStage1(Stage1* stage1)
+	void SetGame(Game* game)
 	{
-		m_stage1 = stage1;
+		m_game = game;
 	}
 	void SetOldPosition(const CVector3& pos)
 	{
@@ -66,7 +66,7 @@ private:
 	float m_degree = 180.0f;                                    //ユニティちゃんの向いてる角度
 	float m_radian = 0;                                         //上記をラジアン単位に直したもの
 	CQuaternion m_rotation;                                     //クォータニオン
-	Stage1* m_stage1;
+	Game* m_game;
 	int m_timer = 0;												//攻撃のクールタイムのためにフレーム数を数える
 	const float m_r = 70.0f;                                    //コリジョンの半径
 	const float m_attackr = 90.0f;                              //攻撃したときに発生させるコリジョンの半径

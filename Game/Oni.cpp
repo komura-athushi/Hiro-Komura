@@ -2,7 +2,7 @@
 #include "Oni.h"
 #define _USE_MATH_DEFINES //M_PI 円周率呼び出し
 #include <math.h> 
-#include "Stage1.h"
+#include "Game.h"
 #include "Player.h"
 //cppでエネミーのレア度ごとのドロップ率を設定
 const int Oni::m_dropChances[Weapon::m_HighestRarity] = { 0,40,0,0,0,0,0 };

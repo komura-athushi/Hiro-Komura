@@ -6,7 +6,7 @@
 #include "Stone.h"
 #include "House.h"
 #include "Stage1_Teleport.h"
-#include "Stage1.h"
+#include "Game.h"
 #include "PlayerStatus.h"
 #include "Cagliostro_view.h"
 #include "Human.h"
@@ -78,7 +78,7 @@ void Town::Update()
 		if (!m_fade->IsFade()) {
 			//m_state‚É‚æ‚Á‚ÄŸ‚Ìƒ‚[ƒh‚ğ•ªŠò‚³‚¹‚é
 			if (m_state == enSt1) {
-				Stage1* stage1 = new Stage1;
+				Game* game = new Game;
 				delete this;
 			}
 			else if (m_state == enCga) {
