@@ -30,7 +30,7 @@ public:
 	{
 		m_position = pos;
 	}
-	void SetStage1(Stage1* stage1)
+	void SetStage1(Game* stage1)
 	{
 		m_stage1 = stage1;
 	}
@@ -54,7 +54,7 @@ private:
 	float m_degree = 180.0f;                                    //ユニティちゃんの向いてる角度
 	float m_radian = 0;                                         //上記をラジアン単位に直したもの
 	CQuaternion m_rotation;
-	Stage1* m_stage1;
+	Game* m_stage1;
 	int m_timer = 0;											//攻撃のクールタイムのためにフレーム数を数える
 	int m_atk3timer = 0;										//攻撃3のクールタイムのためにフレーム数を数える
 	int m_atk3count = 0;
