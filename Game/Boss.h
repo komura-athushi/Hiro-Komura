@@ -3,7 +3,7 @@
 #include "Material.h"
 #include "IEnemy.h"
 #include "DemolisherWeapon/physics/PhysicsStaticObject.h"
-class Stage1;
+class Game;
 class Player;
 class BossAttack;
 class Boss : public IEnemy
