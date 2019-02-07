@@ -139,7 +139,7 @@ void Boss2::AnimationController()
 	}
 }
 
-
+//try
 void Boss2::Chase()
 {
 	m_movespeed = { 0.0f,0.0f,0.0f };
