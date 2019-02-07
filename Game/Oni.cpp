@@ -45,9 +45,6 @@ bool Oni::Start()
 	return true;
 }
 
-void Oni::Attack()
-{
-}
 void Oni::Chase()
 {
 	m_movespeed = { 0.0f,0.0f,0.0f };
@@ -59,7 +56,7 @@ void Oni::Chase()
 	CVector3 oldpos = m_oldpos - m_position;
 	//ÚG‚µ‚½‚çUŒ‚
 	if (pos.LengthSq() < 100.0f*100.0f) {
-	m_state = enState_Attack;
+		m_state = enState_Attack;
 	}
 	//‚à‚µƒvƒŒƒCƒ„[‚Æ‹S‚Ì‹——£‚ª‹ß‚­‚È‚Á‚½‚ç
 	else if (pos.LengthSq() < 1000.0f*1000.0f) {

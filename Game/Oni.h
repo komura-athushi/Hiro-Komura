@@ -11,7 +11,6 @@ public:
 	~Oni();
 	bool Start() override;
 	void Update() override;
-	void Attack();       										//攻撃
 	void Chase();												//追跡
 	void AnimationController();									//アニメーションの再生
 	void Damage();												//ダメージを受けた時のアクション

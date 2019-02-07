@@ -51,7 +51,6 @@ bool Boss2::Start()
 	return true;
 }
 
-
 void Boss2::Attack()
 {
 	//プレイヤーの座標を取得
@@ -59,31 +58,28 @@ void Boss2::Attack()
 	m_playerposition.y += 100.0f;
 	//プレイヤーとドラゴンの距離
 	CVector3 pos = m_player->GetPosition() - m_position;
-	//プレイヤーがChase圏内だっ^kら
-	if (pos.Length() < 1000.0f) {
-		//ブレス
-		if (pos.Length() >= 500.0f) {
-			if (m_timer >= m_cooltime) {
-				m_state = enState_Attack2;
-				//タイマーをリセット。
-				m_timer = 0;
-			}
+	//ファイヤーブレス
+	if (pos.LengthSq() > 500.0f*500.0f) {
+	if (m_timer >= m_cooltime) {
+			m_state = enState_Attack2;
+			//タイマーをリセット。
+			m_timer = 0;
 		}
-		//プレス
-		else if (pos.Length() >= 300.0f) {
-			if (m_timer >= m_cooltime) {
-				m_state = enState_Attack3;
-				//タイマーをリセット。
-				m_timer = 0;
-			}
+	}
+	//プレス
+	else if (pos.LengthSq() > 300.0f*300.0f) {
+		if (m_timer >= m_cooltime) {
+			m_state = enState_Attack3;
+			//タイマーをリセット。
+			m_timer = 0;
 		}
-		//ひっかき
-		else {
-			if (m_timer >= m_cooltime) {
-				m_state = enState_Attack1;
-				//タイマーをリセット。
-				m_timer = 0;
-			}
+	}
+	//ひっかき
+	else {
+		if (m_timer >= m_cooltime) {
+			m_state = enState_Attack1;
+			//タイマーをリセット。
+			m_timer = 0;
 		}
 	}
 }
@@ -120,7 +116,7 @@ void Boss2::AnimationController()
 		Turn();
 		break;
 	case enState_Attack3:
-		m_skinModelRender->GetAnimCon().Play(enAnimationClip_attack1, 0.2f);
+		m_skinModelRender->GetAnimCon().Play(enAnimationClip_attack3, 0.2f);
 		if (!m_skinModelRender->GetAnimCon().IsPlaying()) {
 			m_state = enState_Idle_Run;
 		}
@@ -151,32 +147,31 @@ void Boss2::Chase()
 	CVector3 pos = m_player->GetPosition() - m_position;
 	//ボスの初期位置と現在位置の距離
 	CVector3 oldpos = m_oldpos - m_position;
-	//接触したら攻撃
-	/*if (pos.Length() < 100.0f) {
-		Attack();
-	}*/
 	//もしプレイヤーとボスの距離が近くなったら
-	//else
-	if (pos.Length() < 1000.0f) {
-		//近づいてくる
-		CVector3 EnemyPos = m_playerposition - m_position;
-		EnemyPos.Normalize();
-		m_movespeed = EnemyPos * m_enemyspeed;
-		m_movespeed.y = 0.0f;
-		m_position += m_movespeed;
-	}
-
-	else if (pos.Length() > 1000.0f) {
-		//初期位置に帰る
-		CVector3 EnemyOldPos = m_oldpos - m_position;
-		EnemyOldPos.Normalize();
-		m_movespeed = EnemyOldPos * m_enemyspeed;
-		m_movespeed.y = 0.0f;
-		//敵の初期位置と現在位置の距離がほぼ0だったら止まる
-		if (oldpos.Length() < 50.0f) {
-			m_movespeed = { 0.0f,0.0f,0.0f };
+	if (pos.LengthSq() < 1000.0f*1000.0f) {
+		//範囲内に入ったら攻撃
+		Attack();
+		//もしアニメーションが再生されていなかったら
+		if (!m_skinModelRender->GetAnimCon().IsPlaying()) {
+			//近づいてくる
+			CVector3 EnemyPos = m_playerposition - m_position;
+			EnemyPos.Normalize();
+			m_movespeed = EnemyPos * m_enemyspeed;
+			m_movespeed.y = 0.0f;
+			m_position += m_movespeed;
 		}
-		m_position += m_movespeed;
+		else if (pos.Length() > 1000.0f) {
+			//初期位置に帰る
+			CVector3 EnemyOldPos = m_oldpos - m_position;
+			EnemyOldPos.Normalize();
+			m_movespeed = EnemyOldPos * m_enemyspeed;
+			m_movespeed.y = 0.0f;
+			//敵の初期位置と現在位置の距離がほぼ0だったら止まる
+			if (oldpos.Length() < 50.0f) {
+				m_movespeed = { 0.0f,0.0f,0.0f };
+			}
+			m_position += m_movespeed;
+		}
 	}
 	m_skinModelRender->SetPos(m_position);
 }
