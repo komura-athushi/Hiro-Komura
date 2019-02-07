@@ -98,8 +98,9 @@ void Boss2::AnimationController()
 			//待機モーション
 			m_skinModelRender->GetAnimCon().Play(enAnimationClip_idle, 0.2f);
 		}
-		Chase();
 		Turn();
+		Chase();
+		Attack();
 		break;
 	case enState_Attack1:
 		m_skinModelRender->GetAnimCon().Play(enAnimationClip_attack1, 0.2f);
@@ -149,8 +150,6 @@ void Boss2::Chase()
 	CVector3 oldpos = m_oldpos - m_position;
 	//もしプレイヤーとボスの距離が近くなったら
 	if (pos.LengthSq() < 1000.0f*1000.0f) {
-		//範囲内に入ったら攻撃
-		Attack();
 		//もしアニメーションが再生されていなかったら
 		if (!m_skinModelRender->GetAnimCon().IsPlaying()) {
 			//近づいてくる
