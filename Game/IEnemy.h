@@ -59,8 +59,14 @@ public:
 	{
 		return m_collisionposition;
 	}
+	//コリジョンの半径を取得
+	float GetRadius() const
+	{
+		return m_r;
+	}
 protected:
 	SuicideObj::CCollisionObj* m_collision;                   //丸いコリジョン
+	float m_r;												  //コリジョンの半径
 	CVector3 m_position;									  //座標
 	CVector3 m_collisionposition;
 	CVector3 m_fontposition;
@@ -77,7 +83,8 @@ protected:
 	float m_timer2 = 0.0f;									  //イルグランツの
 	float m_timer3 = 0.0f;									  //ザンバースの
 	float m_timer5 = 0.0f;									  //マジスフィの
-	float m_timer7 = 0.0f;									  //覇王斬の		
+	float m_timer7 = 0.0f;									  //覇王斬の
+	float m_timer8 = 0.0f;									  //モルガンの	
 	float m_fonttimer = 0.0f;								  //文字表示のタイマー
 	bool m_damage = false;                                    //ダメージを受けたかどうか
 	bool m_death = false;                                     //HPが0以下になったかどうか

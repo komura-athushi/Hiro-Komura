@@ -136,6 +136,7 @@ private:
 	int m_modelcount = 0;								//生成したモデルの数
 	int m_timer = 0;									//複数のモデルとコリジョンを時間差ありで生成する場合のクールタイム
 	int m_timer1 = 0;
+	const float m_frame = 40.0f;
 	//スキンモデル、コリジョン、タイマー、削除したかどうか
 	struct MagicModel {
 		GameObj::Suicider::CEffekseer* s_effect;		//エフェクト

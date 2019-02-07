@@ -31,7 +31,7 @@ bool GameData::Start()
 	m_magiclist.push_back(Magic(5 , L"マジックスフィア"		    , 2.3f, 60));
 	m_magiclist.push_back(Magic(6 , L"レスタ"                   , 0.6f, 40));
 	m_magiclist.push_back(Magic(7 , L"覇王斬"                   , 2.0f, 60));
-	m_magiclist.push_back(Magic(8 , L"マジックスフィア"         , 2.3f, 60));
+	m_magiclist.push_back(Magic(8 , L"約束された勝利の剣"       , 2.3f, 60));
 	//Materialクラスのインスタンスを生成
 	m_materiallist.push_back(Material(L"木"					, 1));
 	m_materiallist.push_back(Material(L"石"					, 2));

@@ -2,11 +2,11 @@
 #include "Oni.h"
 #define _USE_MATH_DEFINES //M_PI 円周率呼び出し
 #include <math.h> 
-#include "Stage1.h"
+#include "Game.h"
 #include "Player.h"
 //cppでエネミーのレア度ごとのドロップ率を設定
-const int Oni::m_dropChances[Weapon::m_HighestRarity] = { 0,100,0,0,0,0,0 };
-const int Oni::m_dropmaterialChances[Material::m_HighestRarity] = { 100.0f,0.0f,0.0f };
+const int Oni::m_dropChances[Weapon::m_HighestRarity] = { 0,40,0,0,0,0,0 };
+const int Oni::m_dropmaterialChances[Material::m_HighestRarity] = { 70.0f,0.0f,0.0f };
 //鬼（見た目はスケルトン）です
 Oni::Oni():IEnemy(m_MaxHP,m_Attack,m_EXP,m_dropChances,m_dropmaterialChances,m_meseta)
 {

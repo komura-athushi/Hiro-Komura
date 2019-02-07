@@ -77,6 +77,11 @@ public:
 	{
 		m_rotation = qRot;
 	}
+	//プレイヤーの回転を取得
+	CQuaternion GetRot() const
+	{
+		return m_rotation;
+	}
 	//プレイヤーの座標を取得
 	CVector3 GetPosition() const
 	{
@@ -127,12 +132,28 @@ public:
 	{
 		return m_swordrot;
 	}
+	//プレイヤーが呪文詠唱中か取得
+	bool GetAria() const
+	{
+		return m_state == enState_Aria;
+	}
+	//呪文詠唱時のプレイヤーの向きを取得
+	CVector3 GetAttack() const
+	{
+		return m_attacktarget;
+	}
+	//プレイヤーの正面のベクトルを取得
+	CVector3 GetFront() const
+	{
+		return m_playerheikou;
+	}
 private:
 	bool m_cagliostro = false;
 	GameObj::CSkinModelRender* m_skinModelRender = nullptr;		//スキンモデルレンダラー
 	CSprite m_sprite2;											//ゲームクリアとかゲームオーバーの
 	CSprite m_targetsprite;										//ターゲットのスプライト
-	bool m_displaysprite = false;								
+	CSprite m_hp, m_hpframe;									//HP関係のテクスチャ
+	bool m_displaysprite = false;								//
     SuicideObj::CCollisionObj* m_collision;                     //丸いコリジョン
 	CFont m_font;                                               //文字表示クラス
 	Bone* m_bone;                                               //骨
@@ -168,7 +189,7 @@ private:
 	const float m_multiply = 400.0f;                            //ユニティちゃんの移動速度を調整する
 	CQuaternion m_rotation;                                     //クォータニオン
 	CCharacterController m_charaCon;                            //キャラクターの当たり判定とか移動とか
-	const float m_height = 20.0f;								//レベルアップ時のエフェクト出す時にy座標に加算するやつ
+	const float m_lvheight = 20.0f;								//レベルアップ時のエフェクト出す時にy座標に加算するやつ
 	const float m_r = 40.0f;                                    //コリジョンの半径
 	const float m_collisionUp = 50.0f;                          //コリジョンの座標のyを加算
 	//アニメーション関係
@@ -230,7 +251,18 @@ private:
 	const float m_lvupvollume = 2.0f;							//レベルアップのSEの音量
 	bool m_targetdisplay = false;								//ターゲッティング状態かどうか
 	const float m_distancetarget = 1400.0f * 1400.0f;			//ターゲットが有効な距離
-	const float m_degreemultiply = 0.2f;						//ターゲットの距離補正
-	
+	const float m_degreemultiply = 0.3f;						//ターゲットの距離補正
+	//ライフ表示の初期の横の長さ
+	const float m_side = 384.0f;
+	//ライフ表示の初期の縦の長さ
+	const float m_length = 64.0f;
+	//ライフの後ろのやつの長さ
+	const float m_side2 = 512.0f;
+	const float m_length2 = 128.0f;
+	const CVector2 m_protspriteposition = { 0.0f,0.0f };
+	CVector2 m_spriteposition = { 0.0f ,0.0f };
+	const float m_morugantime = 300.0f;
+	const float m_height = 60.0f;
+	bool m_aria = false;										//呪文詠唱中かどうか
 };
 

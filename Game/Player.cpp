@@ -10,6 +10,7 @@
 #include "Human.h"
 #include "Merchant.h"
 #include "Effekseer.h"
+#include "Morugan.h"
 Player::Player()
 {
 }
@@ -66,6 +67,8 @@ void Player::unityChan()
 		OnAnimationEvent(clipName, eventName);
 	});
 	m_targetsprite.Init(L"Resource/sprite/target.dds");
+	m_hp.Init(L"Resource/sprite/hpgage.dds");
+	m_hpframe.Init(L"Resource/sprite/hpgage_frame.dds");
 }
 
 void Player::cagliostro()
@@ -232,21 +235,8 @@ void Player::Turn()
 
 void Player::Animation()
 {
-	//ダメージを受けたら
-	if (m_damage) {
-		m_state = enState_Damage;
-		m_damage = false;
-		//SE
-		SuicideObj::CSE* se = NewGO<SuicideObj::CSE>(L"Asset/sound/unityChan/bad.wav");
-		se->Play(); //再生(再生が終わると削除されます)
-		se->SetVolume(m_voicevolume);
-		//3D再生
-		se->SetPos(m_position);//音の位置
-		se->SetDistance(200.0f);//音が聞こえる範囲
-		se->Play(true); //第一引数をtrue
-	}
 	//Xボタンを押したら、通常攻撃
-	else if (Pad(0).GetDown(enButtonX) && m_timer >= m_attacktime) {
+	if (Pad(0).GetDown(enButtonX) && m_timer >= m_attacktime) {
 		if (m_state != enState_Attack) {
 			m_state = enState_Attack;
 			m_timer = 0;
@@ -280,7 +270,7 @@ void Player::Animation()
 		m_state = enState_GameOver;
 	}
 	//LB1押したらゲームクリア
-	else if (Pad(0).GetButton(enButtonLB1)) {
+	else if (Pad(0).GetButton(enButtonRT)) {
 		m_state = enState_GameClear;
 	}
 	m_timer += m_frame * GetDeltaTimeSec();
@@ -346,8 +336,10 @@ void Player::AnimationController()
 		Animation();
 		break;
 	case enState_Damage:
-		if (m_skinModelRender->GetAnimCon().IsPlaying()) {
+		if (m_skinModelRender->GetAnimCon().IsPlaying() || m_isjump || m_aria) {
 			m_skinModelRender->GetAnimCon().Play(enAnimationClip_damage, 0.2f);
+			m_aria = false;
+			m_isjump = false;
 		}
 		else {
 			//アニメーションの再生が終わったら、再びアニメーション分岐
@@ -454,18 +446,34 @@ void Player::AnimationController()
 			Animation();
 			m_isjump = false;
 			m_timer = 0;
+			m_aria = true;
 		}
 		else {
 			//アニメーションの再生が終わったら、アニメーション分岐
 			m_timer += m_frame * GetDeltaTimeSec();
-			if (m_timer >= 20) {
-				if (m_movespeed.LengthSq() > 40.0f * 40.0f) {
-					m_state = enState_Run;
+			if (m_MagicId == 8) {
+				if (m_timer >= m_morugantime) {
+					if (m_movespeed.LengthSq() > 40.0f * 40.0f) {
+						m_state = enState_Run;
+					}
+					else if (m_movespeed.LengthSq() < 40.0f * 40.0f) {
+						m_state = enState_Idle;
+					}
+					m_timer = 0;
+					m_aria = false;
 				}
-				else if (m_movespeed.LengthSq() < 40.0f * 40.0f) {
-					m_state = enState_Idle;
+			}
+			else {
+				if (m_timer >= 20) {
+					if (m_movespeed.LengthSq() > 40.0f * 40.0f) {
+						m_state = enState_Run;
+					}
+					else if (m_movespeed.LengthSq() < 40.0f * 40.0f) {
+						m_state = enState_Idle;
+					}
+					m_timer = 0;
+					m_aria = false;
 				}
-				m_timer = 0;
 			}
 		}
 		//キャラクターの向き関係
@@ -590,17 +598,25 @@ void Player::OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventName)
 	}
 	//魔法を発生させる
 	else if (wcscmp(eventName, L"aria") == 0) {
-		ShotMagic* shotmagic = new ShotMagic;
-		if (m_MagicId == 7) {
-			shotmagic->SetPosition(m_target);
+		if (m_MagicId == 8) {
+			Morugan* morugan = new Morugan;
+			morugan->SetDamage(m_Mattack, m_DamageRate);
+			morugan->SetPosition(m_position + CVector3::AxisY() * m_height);
+			morugan->SetRotation(m_rotation);
 		}
 		else {
-			shotmagic->SetPosition(m_position);
+			ShotMagic* shotmagic = new ShotMagic;
+			if (m_MagicId == 7) {
+				shotmagic->SetPosition(m_target);
+			}
+			else {
+				shotmagic->SetPosition(m_position);
+			}
+			shotmagic->SetDirectionPlayer(m_attacktarget);
+			shotmagic->SetId(m_MagicId);
+			shotmagic->SetDamage(m_Mattack, m_DamageRate);
+			shotmagic->SetName(L"ShotMagic");
 		}
-		shotmagic->SetDirectionPlayer(m_attacktarget);
-		shotmagic->SetId(m_MagicId);
-		shotmagic->SetDamage(m_Mattack, m_DamageRate);
-		shotmagic->SetName(L"ShotMagic");
 	}
 }
 
@@ -616,8 +632,17 @@ void Player::Damage(const int& attack)
 		if (m_HP < 0) {
 			m_HP = 0;
 		}
+		//SE
+		SuicideObj::CSE* se = NewGO<SuicideObj::CSE>(L"Asset/sound/unityChan/bad.wav");
+		se->Play(); //再生(再生が終わると削除されます)
+		se->SetVolume(m_voicevolume);
+		//3D再生
+		se->SetPos(m_position);//音の位置
+		se->SetDistance(200.0f);//音が聞こえる範囲
+		se->Play(true); //第一引数をtrue
 		m_damage = true;
 		m_timer2 = 0;
+		m_state = enState_Damage;
 	}
 }
 
@@ -640,13 +665,17 @@ void Player::MagicStatus()
 
 void Player::SwitchWeapon()
 {
-	if (!Pad(0).GetButton(enButtonLeft) && !Pad(0).GetButton(enButtonRight)) {
-		m_isbutton=true;
+	if (m_state == enState_Aria || m_state == enState_Attack || m_state == enState_Damage || m_state == enState_GameClear ||
+		m_state == enState_GameOver) {
+		return;
+	}
+	if (!Pad(0).GetButton(enButtonLB1) && !Pad(0).GetButton(enButtonRB1)) {
+		m_isbutton = true;
 	}
 	//直前にボタンを押していないときにだけ、入力を有効にする
 	if (m_isbutton) {
 		//左ボタン
-		if (Pad(0).GetButton(enButtonLeft)) {
+		if (Pad(0).GetButton(enButtonLB1)) {
 			m_isbutton = false;
 			//武器の切り替えが有効であったならば武器のステータスを反映させる
 			if (m_playerstatus->GetWeapon(m_SwordId - 1)) {
@@ -658,7 +687,7 @@ void Player::SwitchWeapon()
 			}
 		}
 		//右ボタン
-		if (Pad(0).GetButton(enButtonRight)) {
+		if (Pad(0).GetButton(enButtonRB1)) {
 			m_isbutton = false;
 			//武器の切り替えが有効であったならば武器のステータスを反映させる
 			if (m_playerstatus->GetWeapon(m_SwordId + 1)) {
@@ -687,7 +716,7 @@ void Player::LevelUp()
 	if (m_playerstatus->GetLevelUp()) {
 		GameObj::Suicider::CEffekseer* effect = new GameObj::Suicider::CEffekseer;
 		CVector3 pos = m_position;
-		pos.y += m_height;
+		pos.y += m_lvheight;
 		effect->Play(L"Asset/effect/lvup/lvup.efk", 1.0f, pos, CQuaternion::Identity(), { 20.0f,20.0f,20.0f });
 		effect->SetSpeed(1.5f);
 		m_playerstatus->OffLevelUp();
@@ -819,7 +848,8 @@ void Player::OutTarget()
 		pos.Normalize();
 		//プレイヤーとエネミーを結ぶベクトルの角度を計算します
 		float degree = atan2f(pos.x, pos.z);
-		//ここら辺のif文要らない可能性が微レ存、「プレイヤーの向いてる角度」と「プレイヤーとエネミーを結ぶベクトルの角度」の差を計算します
+		//ここら辺のif文要らない可能性が微レ存、「プレイヤーの正面のベクトルの角度」と
+		//「プレイヤーとエネミーを結ぶベクトルの角度」の差を計算します
 		if (M_PI <= (degreep - degree)) {
 			degree = degreep - degree - M_PI * 2;
 		}
@@ -852,6 +882,7 @@ void Player::PostRender()
 {
 	//ターゲッティングがオンであればターゲットの画像を表示します
 	if (m_targetdisplay) {
+		//該当のワールド座標を2D座標を変換します)
 		CVector3 pos = m_gamecamera->GetCamera()->CalcScreenPosFromWorldPos(m_target);
 		//エネミーの座標が画面外であれば画像は表示しません
 		//該当の座標にターゲットの座標を表示します
@@ -904,4 +935,18 @@ void Player::PostRender()
 			DirectX::SpriteEffects_None,
 			1.0f);
 	}
+	//hpのHUD関係
+	float hpRate = (float)m_HP / m_MaxHP;
+	float offsetX = (hpRate - 1.0f) / 2;
+	m_spriteposition.x = m_protspriteposition.x + offsetX;
+	/*m_hp.DrawScreenPos({200.0f,200.0f}, CVector2::One(), CVector2::Zero(),
+		0.0f,
+		{ 1.0f, 1.0f, 1.0f, 1.0f },
+		DirectX::SpriteEffects_None,
+		0.9f);
+	m_hpframe.DrawScreenPos({200.0f,200.0f}, CVector2::One(), CVector2::Zero(),
+		0.0f,
+		{ 1.0f, 1.0f, 1.0f, 1.0f },
+		DirectX::SpriteEffects_None,
+		1.0f);*/
 }

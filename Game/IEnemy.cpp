@@ -33,6 +33,7 @@ void IEnemy::CCollision(const CVector3& pos,const float& l,const float& r)
 	m_collision = new SuicideObj::CCollisionObj;
 	//形状の作成
 	m_collision->CreateSphere(pos + CVector3::AxisY()*l, CQuaternion::Identity(),r);
+	m_r = r;
 	//寿命を設定
 	m_collision->SetTimer(enNoTimer);//enNoTimerで寿命なし
 	//名前を設定
@@ -65,6 +66,7 @@ void IEnemy::SetCCollision(const CVector3& pos,const float& l)
 	m_timer3 += m_frame * GetDeltaTimeSec();
 	m_timer5 += m_frame * GetDeltaTimeSec();
 	m_timer7 += m_frame * GetDeltaTimeSec();
+	m_timer8 += m_frame * GetDeltaTimeSec();
 }
 
 void IEnemy::Damage(const int& attack,int number)
@@ -113,9 +115,16 @@ void IEnemy::Damage(const int& attack,int number)
 	case 6:
 		break;						//レスタ(ダメージ無し)
 	case 7:
-		if (m_timer7 >= 70) {		//マジスフィ
+		if (m_timer7 >= 70) {		//覇王斬
 			m_HP -= attack;
 			m_timer7 = 0;
+			m_damage = true;
+		}
+		break;
+	case 8:
+		if (m_timer8 >= 100) {		//モルガン
+			m_HP -= attack;
+			m_timer8 = 0;
 			m_damage = true;
 		}
 		break;

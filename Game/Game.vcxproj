@@ -246,11 +246,13 @@
     <ClCompile Include="MainSound.cpp" />
     <ClCompile Include="Material.cpp" />
     <ClCompile Include="Merchant.cpp" />
+    <ClCompile Include="Morugan.cpp" />
     <ClCompile Include="Oni.cpp" />
     <ClCompile Include="PlayerStatus.cpp" />
     <ClCompile Include="ShotMagic.cpp" />
-    <ClCompile Include="Stage1.cpp" />
+    <ClCompile Include="Game.cpp" />
     <ClCompile Include="Stage1_Teleport.cpp" />
+    <ClCompile Include="Stage2_Teleport.cpp" />
     <ClCompile Include="Stone.cpp" />
     <ClCompile Include="Sword.cpp" />
     <ClCompile Include="Town.cpp" />
@@ -283,11 +285,13 @@
     <ClInclude Include="MainSound.h" />
     <ClInclude Include="Material.h" />
     <ClInclude Include="Merchant.h" />
+    <ClInclude Include="Morugan.h" />
     <ClInclude Include="Oni.h" />
     <ClInclude Include="PlayerStatus.h" />
     <ClInclude Include="ShotMagic.h" />
-    <ClInclude Include="Stage1.h" />
+    <ClInclude Include="Game.h" />
     <ClInclude Include="Stage1_Teleport.h" />
+    <ClInclude Include="Stage2_Teleport.h" />
     <ClInclude Include="Stone.h" />
     <ClInclude Include="Sword.h" />
     <ClInclude Include="Town.h" />
@@ -317,6 +321,7 @@
     <MeshContentTask Include="Asset\modelData\skydome.FBX" />
     <MeshContentTask Include="Asset\modelData\stage1_ground.FBX" />
     <MeshContentTask Include="Asset\modelData\stage1_teleport.FBX" />
+    <MeshContentTask Include="Asset\modelData\stage2_teleport\stage2_teleport.FBX" />
     <MeshContentTask Include="Asset\modelData\stone.FBX" />
     <MeshContentTask Include="Asset\modelData\Sword\AncientWarriorBlade.FBX" />
     <MeshContentTask Include="Asset\modelData\Sword\BattleReadyBlade.FBX" />
@@ -367,6 +372,10 @@
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Asset\sprite\target.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Asset\sprite\hp\hpgage.png" />
+    <ImageContentTask Include="Asset\sprite\hp\hpgage_frame.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

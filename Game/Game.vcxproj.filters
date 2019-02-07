@@ -52,6 +52,14 @@
     <ImageContentTask Include="Asset\sprite\gameover.png">
       <Filter>Asset\sprite</Filter>
     </ImageContentTask>
+<<<<<<< HEAD
+=======
+    <ImageContentTask Include="Asset\sprite\target.png">
+      <Filter>Asset\sprite</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Asset\sprite\hp\hpgage.png" />
+    <ImageContentTask Include="Asset\sprite\hp\hpgage_frame.png" />
+>>>>>>> af3399ae24e2b03fa578322d252b7713ba2f823b
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Boss.cpp" />
@@ -66,7 +74,6 @@
     <ClCompile Include="Oni.cpp" />
     <ClCompile Include="PlayerStatus.cpp" />
     <ClCompile Include="ShotMagic.cpp" />
-    <ClCompile Include="Stage1.cpp" />
     <ClCompile Include="Stage1_Teleport.cpp" />
     <ClCompile Include="Stone.cpp" />
     <ClCompile Include="Sword.cpp" />
@@ -83,10 +90,16 @@
     <ClCompile Include="Merchant.cpp" />
     <ClCompile Include="MainSound.cpp" />
     <ClCompile Include="BossAttack.cpp" />
+<<<<<<< HEAD
     <ClCompile Include="Boss2.cpp" />
     <ClCompile Include="Human.cpp">
       <Filter>Asset\modelData</Filter>
     </ClCompile>
+=======
+    <ClCompile Include="Morugan.cpp" />
+    <ClCompile Include="Game.cpp" />
+    <ClCompile Include="Stage2_Teleport.cpp" />
+>>>>>>> af3399ae24e2b03fa578322d252b7713ba2f823b
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Asset\modelData\Sword\AncientWarriorBlade.FBX">
@@ -179,6 +192,9 @@
     <MeshContentTask Include="Asset\modelData\boss\bullet3.FBX">
       <Filter>Asset\modelData</Filter>
     </MeshContentTask>
+    <MeshContentTask Include="Asset\modelData\stage2_teleport\stage2_teleport.FBX">
+      <Filter>Asset\modelData</Filter>
+    </MeshContentTask>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Boss.h" />
@@ -194,7 +210,6 @@
     <ClInclude Include="Oni.h" />
     <ClInclude Include="PlayerStatus.h" />
     <ClInclude Include="ShotMagic.h" />
-    <ClInclude Include="Stage1.h" />
     <ClInclude Include="Stage1_Teleport.h" />
     <ClInclude Include="Stone.h" />
     <ClInclude Include="Sword.h" />
@@ -210,7 +225,13 @@
     <ClInclude Include="Merchant.h" />
     <ClInclude Include="MainSound.h" />
     <ClInclude Include="BossAttack.h" />
+<<<<<<< HEAD
     <ClInclude Include="Boss2.h" />
+=======
+    <ClInclude Include="Morugan.h" />
+    <ClInclude Include="Game.h" />
+    <ClInclude Include="Stage2_Teleport.h" />
+>>>>>>> af3399ae24e2b03fa578322d252b7713ba2f823b
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Asset">
