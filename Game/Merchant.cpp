@@ -66,6 +66,8 @@ void Merchant::Turn()
 void Merchant::PostRender()
 {
 	if (!m_talk) {
+		m_button = false;
+		m_swordid = m_playerstatus->GetSwordId();
 		return;
 	}
 	//武器のアイコン表示
@@ -74,16 +76,69 @@ void Merchant::PostRender()
 	swprintf_s(output, L"どの武器を強化しますか？\n");
 	m_font.DrawScreenPos(output, { 00.0f,00.0f }, CVector4::White());
 	for (int i = 0; i < GameData::enWeapon_num; i++) {
-		if (m_playerstatus->GetisHaveWeapon(i)) {
+		if (m_playerstatus->GetisHaveWeapon(i) ) {
 			m_sprite[i].DrawScreenPos(pos, m_aiconscale);
+			m_spriteposition[i] = pos;
+			wchar_t output[30];
+			if (m_playerstatus->GetEuipment(i).GetLv() != 5) {
+				swprintf_s(output, L"武器Lv %d  強化費用 %dメセタ\n", m_playerstatus->GetEuipment(i).GetLv(), m_playerstatus->GetEuipment(i).GetCost());
+			}
+			else {
+				swprintf_s(output, L"武器Lv %d\n", m_playerstatus->GetEuipment(i).GetLv());
+			}
+			m_spriteposition[i].x += 100.0f;
+			m_spritefont[i].DrawScreenPos(output, m_spriteposition[i], CVector4::White());
+			if (m_swordid == i) {
+				m_cursor.DrawScreenPos(pos, m_aiconscale, CVector2::Zero(),
+					0.0f,
+					CVector4::White(),
+					DirectX::SpriteEffects_None,
+					0.4f);
+			}
+			pos.y += 70.0f;
 		}
-		if (m_playerstatus->GetSwordId() == i) {
-			m_cursor.DrawScreenPos(pos, m_aiconscale, CVector2::Zero(),
-				0.0f,
-				CVector4::White(),
-				DirectX::SpriteEffects_None,
-				0.4f);
+	}
+	int number = m_swordid;
+	if (Pad(0).GetButton(enButtonUp) && m_button) {
+		number--;
+		m_button = false;
+	}
+	else if (Pad(0).GetButton(enButtonDown) && m_button) {
+		number++;
+		m_button = false;
+	}
+	else {
+		if (!Pad(0).GetButton(enButtonUp) && !Pad(0).GetButton(enButtonDown) && !Pad(0).GetButton(enButtonB)) {
+			m_button = true;
 		}
-		pos.y += 64.0f;
+	}
+	//上ボタン
+	if (m_swordid > number) {
+		for (int i = number; i >= 0; i--) {
+			if (m_playerstatus->GetisHaveWeapon(i)) {
+				m_swordid = i;
+				break;
+			}
+		}
+	}
+	//下ボタン
+	else if (m_swordid < number) {
+		for (int i = number; i < GameData::enWeapon_num; i++) {
+			if (m_playerstatus->GetisHaveWeapon(i)) {
+				m_swordid = i;
+				break;
+			}
+		}
+	}
+	if (Pad(0).GetButton(enButtonB) && m_button) {
+		if (m_playerstatus->GetEuipment(m_swordid).GetLv() == 5) {
+			return;
+		}
+		else {
+			m_playerstatus->WeaponStrengthen(m_swordid);
+			m_player->WeaponStatus();
+			m_player->MagicStatus();
+		}
+		m_button = false;
 	}
 }

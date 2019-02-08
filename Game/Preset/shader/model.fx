@@ -122,12 +122,7 @@ PSInput VSMain( VSInputNmTxVcTangent In )
 		oldpos = mul(mView_old, oldpos);
 		oldpos = mul(mProj_old, oldpos);
 		
-		if (oldpos.z < 0.0f) {
-			psInput.lastPos = pos;
-		}
-		else {
-			psInput.lastPos = oldpos;
-		}
+		psInput.lastPos = oldpos;
 #endif
 
 	return psInput;
@@ -214,13 +209,8 @@ PSInput VSMainSkin( VSInputNmTxWeights In )
 
 		oldpos = mul(mView_old, oldpos);
 		oldpos = mul(mProj_old, oldpos);
-
-		if (oldpos.z < 0.0f){
-			psInput.lastPos = pos;
-		}
-		else {
-			psInput.lastPos = oldpos;
-		}
+			
+		psInput.lastPos = oldpos;
 #endif
 
     return psInput;
@@ -290,7 +280,7 @@ PSOutput_RenderGBuffer PSMain_RenderGBuffer(PSInput In)
 	Out.normal = In.Normal;
 
 	//ビュー座標
-	Out.viewpos = float4(In.Viewpos, In.curPos.z / In.curPos.w + depthBias.x);
+	Out.viewpos = float4(In.Viewpos.x, In.Viewpos.y, In.Viewpos.z + depthBias.y, In.curPos.z / In.curPos.w + depthBias.x);
 
 	//ライティング用パラメーター
 	Out.lightingParam = emissive;
@@ -299,10 +289,15 @@ PSOutput_RenderGBuffer PSMain_RenderGBuffer(PSInput In)
 #if MOTIONBLUR
 
 		float3	current = In.curPos.xyz / In.curPos.w;
-		float3	last = In.lastPos.xyz / In.lastPos.w;
+		float3	last = In.lastPos.xyz / In.lastPos.w;		
 
-		if (In.lastPos.z < 0.0f) {// || last.z < 0.0f || last.z > 1.0f) {			
-			current *= 0.0f; last *= 0.0f;
+		if (last.z < 0.0f || last.z > 1.0f) {
+			Out.velocity.z = In.curPos.z + depthBias.y;
+			Out.velocity.w = In.curPos.z + depthBias.y;
+			Out.velocityPS.z = -1.0f;
+			Out.velocityPS.w = -1.0f;
+			return Out;
+			//discard; 
 		}
 
 		current.xy *= float2(0.5f, -0.5f); current.xy += 0.5f;
@@ -313,19 +308,21 @@ PSOutput_RenderGBuffer PSMain_RenderGBuffer(PSInput In)
 
 		if (In.isWorldMove) {
 			Out.velocity.xy = current.xy - last.xy;
+
 			Out.velocityPS.z = -1.0f;
 			Out.velocityPS.w = -1.0f;
 		}
 		else {
 			Out.velocityPS.xy = current.xy - last.xy;
+			
 			Out.velocityPS.z = min(In.curPos.z, In.lastPos.z) + depthBias.y;
 			Out.velocityPS.w = max(In.curPos.z, In.lastPos.z) + depthBias.y;
 		}
 #else
 		Out.velocity.z = In.curPos.z + depthBias.y;
 		Out.velocity.w = In.curPos.z + depthBias.y;
-		Out.velocityPS.z = In.curPos.z + depthBias.y;
-		Out.velocityPS.w = In.curPos.z + depthBias.y;
+		Out.velocityPS.z = -1.0f;// In.curPos.z + depthBias.y;
+		Out.velocityPS.w = -1.0f;// In.curPos.z + depthBias.y;
 #endif
 
 	return Out;
