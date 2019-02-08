@@ -13,7 +13,7 @@
 #include "Morugan.h"
 Player::Player()
 {
-}
+} 
 
 Player::~Player()
 {

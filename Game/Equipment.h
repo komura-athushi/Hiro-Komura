@@ -13,6 +13,8 @@ public:
 	void SetWeaponStatus();
 	//魔法のステータスを設定
 	void SetMagicStatus();
+	//武器を強化する
+	void Strengthen();
 	//武器の番号を取得
 	int GetId() const
 	{
@@ -68,6 +70,11 @@ public:
 	{
 		return m_meseta;
 	}
+	//強化コスト(メセタ)を取得
+	int GetCost() const
+	{
+		return (m_weaponextend + 1) * m_meseta * m_costmultiply;
+	}
 private:
 	int m_SwordMattack = 0;                               //武器の魔法攻撃力                          
 	int m_SwordAttack = 0;                                //武器の攻撃力
@@ -79,9 +86,11 @@ private:
 	float m_DamageRate;									  //魔法のダメージ倍率
 	int m_PPCost;                                         //魔法を放つのに必要なPP
 	int m_weaponextend = 0;                               //武器エクステンドレベル
-	int m_meseta = 0;
+	int m_meseta = 0;									  //売却時に獲得できるメセタの額
 	GameData* m_gamedata;                                 //GameDataクラスのポインタ
 	Weapon* m_weapon;									  //Weaponクラスのポインタ
-	Magic* m_magic;										  //Magicクラスのポインタ		  
+	Magic* m_magic;										  //Magicクラスのポインタ
+	static const float m_multiply;						  //強化時のステータスの上昇倍率
+	static const float m_costmultiply;					  //強化費用の上昇倍率
 };
 

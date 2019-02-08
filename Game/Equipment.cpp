@@ -5,6 +5,8 @@
 //{
 //	
 //}
+const float Equipment::m_multiply = 1.3f;
+const float Equipment::m_costmultiply = 1.2f;
 Equipment::Equipment(const int& number):m_SwordId(number)
 {
 	//GameDataクラスを経由して各ステータスを取得する
@@ -37,4 +39,9 @@ void Equipment::SetMagicStatus()
 	m_PPCost = m_magic->GetPPCost();
 }
 
-
+void Equipment::Strengthen()
+{
+	m_weaponextend++;
+	m_SwordAttack *= m_multiply;
+	m_SwordMattack *= m_multiply;
+}

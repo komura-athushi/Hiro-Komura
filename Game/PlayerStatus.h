@@ -32,6 +32,8 @@ public:
 	void SetWeapon(const int& number);
 	//文字表示
 	void PostRender()override;
+	//該当の武器の強化費用より所持メセタが多い場合、武器の強化を実行します
+	void WeaponStrengthen(const int& number);
 	//GameDataクラスのインスタンスのポインタを設定
 	void SetGameData(GameData* gamedata)
 	{
@@ -166,6 +168,11 @@ public:
 	void PPLimited()
 	{
 		m_PPlimited = true;
+	}
+	//該当のEquipmentクラスのインスタンスにアクセス
+	Equipment GetEuipment(const int& number) const
+	{
+		return m_weaponinventorylist[number].s_equipment;
 	}
 private:  
 	int m_Level = 1;                                        //レベル

@@ -49,6 +49,7 @@ void PlayerStatus::Update()
 		}
 		//PlusExp(1000000000);
 		m_MaxPP = 1000000000;
+		m_havemeseta = 10000000;
 	}
 }
 
@@ -165,6 +166,18 @@ void PlayerStatus::PostRender()
 					0.9f);
 			}
 			pos.x += 64.0f;
+		}
+	}
+}
+
+void PlayerStatus::WeaponStrengthen(const int& number)
+{
+	if (m_havemeseta >= m_weaponinventorylist[number].s_equipment.GetCost()) {
+		m_havemeseta -= m_weaponinventorylist[number].s_equipment.GetCost();
+		m_weaponinventorylist[number].s_equipment.Strengthen();
+		if (m_SwordId == number) {
+			SetWeaponStatus();
+			SetMagicStatus();
 		}
 	}
 }
