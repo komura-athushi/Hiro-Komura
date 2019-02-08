@@ -30,12 +30,12 @@ Game::~Game()
 		delete oni;
 		return true;
 	});
-	QueryGOs<Boss>(L"Boss", [&](Boss* boss)
+	QueryGOs<Boss>(L"Enemy", [&](Boss* boss)
 	{
 		delete boss;
 		return true;
 	});
-	QueryGOs<Boss2>(L"Boss2", [&](Boss2* boss2)
+	QueryGOs<Boss2>(L"Enemy", [&](Boss2* boss2)
 	{
 		delete boss2;
 		return true;
@@ -106,18 +106,18 @@ bool Game::Start()
 			//フックした場合はtrueを返す。
 			return true;
 		}
-		//else if (objData.EqualObjectName(L"boss") == true) {
-		//	////ボス
-		//	////プレイヤーのインスタンスを生成する。
-		//	//Boss* boss = new Boss;
-		//	//boss->SetPosition(objData.position);
-		//	//boss->SetOldPosition(objData.position);
-		//	//boss->SetName(L"Boss");
-		//	//boss->SetPlayer(m_player);
-		//	//boss->SetStage1(this);
-		//	////フックした場合はtrueを返す。
-		//	return true;
-		//}
+		else if (objData.EqualObjectName(L"boss") == true) {
+			//ボス
+			//プレイヤーのインスタンスを生成する。
+			Boss* boss = new Boss;
+			boss->SetPosition(objData.position);
+			boss->SetOldPosition(objData.position);
+			boss->SetName(L"Enemy");
+			boss->SetPlayer(m_player);
+			boss->SetStage1(this);
+			//フックした場合はtrueを返す。
+			return true;
+		}
 		else if (objData.EqualObjectName(L"boss") == true) {
 			////ボス2
 			////プレイヤーのインスタンスを生成する。
@@ -136,7 +136,7 @@ bool Game::Start()
 	//ボス2
 			//プレイヤーのインスタンスを生成する。
 	Boss2* boss2 = new Boss2;
-	boss2->SetName(L"Boss2");
+	boss2->SetName(L"Enemy");
 	boss2->SetPlayer(m_player);
 	//ここまで
 	m_gamecamera = new GameCamera;

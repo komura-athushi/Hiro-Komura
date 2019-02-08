@@ -7,7 +7,6 @@ class GameCamera;
 class IEnemy : public IGameObject
 {
 public:
-
 	/*!
 	* @brief	IEnemyのコンストラクタ
 	* int h     HPを設定
