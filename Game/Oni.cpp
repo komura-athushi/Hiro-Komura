@@ -201,7 +201,7 @@ void Oni::OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventName)
 		attackCol->SetCallback([&](SuicideObj::CCollisionObj::SCallbackParam& param) {
 			//衝突した判定の名前が"IEnemy"ならm_Attack分だけダメージ与える
 			if (param.EqualName(L"Player")) {
-				Player* player = param.GetClass<Player>();//相手の判定に設定されているCEnemyのポインタを取得
+				Player* player = param.GetClass<Player>();
 				player->Damage(m_Attack);
 			}
 		}

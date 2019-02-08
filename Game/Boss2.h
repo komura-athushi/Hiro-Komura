@@ -21,6 +21,8 @@ public:
 	void Dead();												//ドラゴンが死んだときの処理
 	//文字表示
 	void PostRender()override;
+	//アニメーションイベント
+	void OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventName);
 	void SetPlayer(Player* player)								//プレイヤーのポイントをセット
 	{
 		m_player = player;
@@ -71,6 +73,7 @@ private:
 	//スケールは300.0f
 	CVector3 m_scale = { 100.0f,100.0f,100.0f };				//ドラゴンのスケール
 	CVector3 m_movespeed = { 0.0f,  0.0f,  0.0f };				//移動速度
+	CVector3 m_heikou = { 0.0f,0.0f,0.0f };                     //ドラゴンの向いている方向に平行なベクトル
 	float m_enemyspeed = 2.5f;									//ドラゴンの移動の倍率
 	CVector3 m_parallel = { 0.0f,0.0f,0.0f };					//ユニティちゃんの向きと平行なベクトル
 	Player* m_player;											//プレイヤークラスのポインタ
@@ -90,7 +93,8 @@ private:
 	int m_posttiming = 30;										//攻撃が来る前の注意のタイミング
 	int m_atktype = 0;											//攻撃の種類
 	float m_r = 150.0f;                                         //コリジョンの半径
-	float m_collisionheight = 270.0f;                           //コリジョンをm_positionからどれだけ上にあげるか
+	const float m_attackr = 90.0f;                              //攻撃したときに発生させるコリジョンの半径
+	float m_collisionheight = 70.0f;                           //コリジョンをm_positionからどれだけ上にあげるか
 	//Bossの色々なステータス
 	static const int m_MaxHP = 900;                             //最大HP
 	static const int m_Attack1 = 20;							//攻撃力1

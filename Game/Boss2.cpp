@@ -41,12 +41,15 @@ bool Boss2::Start()
 	//ドラゴンのスキンモデルレンダーを表示
 	m_skinModelRender = new GameObj::CSkinModelRender;
 	m_skinModelRender->Init(L"Resource/modelData/DarkDragon.cmo", m_animClip, enAnimationClip_num);
+	m_skinModelRender->GetAnimCon().AddAnimationEventListener([&](const wchar_t* clipName, const wchar_t* eventName) {
+		OnAnimationEvent(clipName, eventName);
+	});
 	m_skinModelRender->SetScale(m_scale);
 	m_skinModelRender->SetPos(m_position);
 	CQuaternion rot = CQuaternion::Identity();
 	CVector3 pos = m_position;
 	pos.y += 500.0f;
-	m_staticobject.CreateSphere(pos, rot, 150.0f);
+	m_staticobject.CreateSphere(pos, rot, 0.0f);
 
 	return true;
 }
@@ -61,7 +64,7 @@ void Boss2::Attack()
 	//ファイヤーブレス
 	if (pos.LengthSq() > 500.0f*500.0f) {
 	if (m_timer >= m_cooltime) {
-			m_state = enState_Attack2;
+			m_state = enState_Attack1;
 			//タイマーをリセット。
 			m_timer = 0;
 		}
@@ -69,7 +72,7 @@ void Boss2::Attack()
 	//プレス
 	else if (pos.LengthSq() > 300.0f*300.0f) {
 		if (m_timer >= m_cooltime) {
-			m_state = enState_Attack3;
+			m_state = enState_Attack2;
 			//タイマーをリセット。
 			m_timer = 0;
 		}
@@ -77,7 +80,7 @@ void Boss2::Attack()
 	//ひっかき
 	else {
 		if (m_timer >= m_cooltime) {
-			m_state = enState_Attack1;
+			m_state = enState_Attack3;
 			//タイマーをリセット。
 			m_timer = 0;
 		}
@@ -100,7 +103,7 @@ void Boss2::AnimationController()
 		}
 		Turn();
 		Chase();
-		Attack();
+		//Attack();
 		break;
 	case enState_Attack1:
 		m_skinModelRender->GetAnimCon().Play(enAnimationClip_attack1, 0.2f);
@@ -160,7 +163,7 @@ void Boss2::Chase()
 			m_movespeed.y = 0.0f;
 			m_position += m_movespeed;
 		}
-		else if (pos.Length() > 1000.0f) {
+		else if (pos.LengthSq() > 1000.0f*1000.0f) {
 			//初期位置に帰る
 			CVector3 EnemyOldPos = m_oldpos - m_position;
 			EnemyOldPos.Normalize();
@@ -247,6 +250,32 @@ void Boss2::PostRender()
 		}
 	}
 }
+
+void Boss2::OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventName)
+{
+	(void)clipName;
+	if (wcscmp(eventName, L"attack1") == 0) {
+		//攻撃判定の発生
+		SuicideObj::CCollisionObj* attackCol = NewGO<SuicideObj::CCollisionObj>();
+		//形状の作成
+		CVector3 atkpos = m_position;
+		atkpos.z += 50.0f;
+		CVector3 pos = atkpos + CVector3::AxisY()*m_collisionheight;
+		pos += m_parallel * 130.0f;
+		attackCol->CreateSphere(pos, CQuaternion::Identity(), m_attackr);
+		//寿命を設定
+		attackCol->SetTimer(3);//15フレーム後削除される
+		attackCol->SetCallback([&](SuicideObj::CCollisionObj::SCallbackParam& param) {
+			//衝突した判定の名前が"Player"ならm_Attack1分だけダメージ与える
+			if (param.EqualName(L"Player")) {
+				Player* player = param.GetClass<Player>();
+				player->Damage(m_Attack1);
+			}
+		}
+		);
+	}
+}
+
 
 void Boss2::Update()
 {
