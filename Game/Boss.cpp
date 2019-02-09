@@ -212,6 +212,9 @@ void Boss::Update()
 	Damage();
 	//€‚ñ‚¾‚çÁ‚·
 	if (m_death) {
-		delete this;
+		m_deathtimer += 40.0f * GetDeltaTimeSec();
+		if (m_deathtimer = 10) {
+			delete this;
+		}
 	}
 }

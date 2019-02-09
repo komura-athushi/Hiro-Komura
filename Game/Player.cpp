@@ -806,11 +806,37 @@ void Player::RelationMerchant()
 
 void Player::OutTarget()
 {
+	if (Pad(0).GetDown(enButtonRSB)) {
+		if (m_targetlock) {
+			m_targetlock = false;
+		}
+		else {
+			m_targetlock = true;
+		}
+	}
+ 	if (m_targetlock && m_targetdisplay) {
+		if (!m_enemy->GetDeath()) {
+			CVector3 pos = m_enemy->GetCollisionPosition() - m_position;
+			if (pos.LengthSq() >= m_distancetarget) {
+				m_targetdisplay = false;
+			}
+			else {
+				m_target = m_enemy->GetCollisionPosition();
+				m_targetdisplay = true;
+				return;
+			}
+		}
+		else {
+			m_targetdisplay = false;
+		}
+	}
 	//エネミーの座標とプレイヤーとエネミーの距離を記憶する配列です
 	std::vector<CVector3> enemyList;
 	std::vector<float> distanceList;
 	//各可変長配列の長さです
 	int enemynumber = 0;
+	//プレイヤーの向いている角度を計算します
+	float degreep = atan2f(m_playerheikou.x, m_playerheikou.z);
 	//計算して出た暫定的に一番小さい角度を記憶する変数です
 	float degreemum= M_PI * 2;
 	QueryGOs<IEnemy>(L"Enemy", [&](IEnemy* enemy)
@@ -824,30 +850,14 @@ void Player::OutTarget()
 		if (pos.LengthSq() >= m_distancetarget) {
 			return true;
 		}
-		//エネミーの座標とプレイヤーとエネミーの距離を配列に記憶します
-		enemyList.push_back(enemy->GetCollisionPosition());
-		distanceList.push_back(pos.LengthSq());
-		//配列の長さを加算します
-		enemynumber++;
-		return true;
-	});
-	//配列の長さが0つまり、配列に何も記憶されていない場合、処理を終了します
-	if (enemynumber == 0) {
-		m_targetdisplay = false;
-		return;
-	}
-	//プレイヤーの向いている角度を計算します
-	float degreep = atan2f(m_playerheikou.x, m_playerheikou.z);
-	//配列の長さの分だけ計算します
-	for (int i = 0; i < enemynumber; i++) {
 		//プレイヤーとエネミーを結ぶベクトルを出します
-		CVector3 pos = enemyList[i] - m_position;
+		CVector3 pos2 = enemy->GetCollisionPosition() - m_position;
 		//y座標、すなわち高さを0にします
-		pos.y = 0.0f;
+		pos2.y = 0.0f;
 		//ベクトルを正規化します
-		pos.Normalize();
+		pos2.Normalize();
 		//プレイヤーとエネミーを結ぶベクトルの角度を計算します
-		float degree = atan2f(pos.x, pos.z);
+		float degree = atan2f(pos2.x, pos2.z);
 		//ここら辺のif文要らない可能性が微レ存、「プレイヤーの正面のベクトルの角度」と
 		//「プレイヤーとエネミーを結ぶベクトルの角度」の差を計算します
 		if (M_PI <= (degreep - degree)) {
@@ -860,14 +870,30 @@ void Player::OutTarget()
 			degree = degreep - degree;
 		}
 		//求めた角度にプレイヤーとエネミーの距離に応じて補正をかけます、距離が長いほど補正は大きいです(値が大きくなります)
-		degree = degree + degree * (distanceList[i] / m_distancetarget) * m_degreemultiply;
+		degree = degree + degree * (pos.LengthSq() / m_distancetarget) * m_degreemultiply;
 		//求めた値を比較していき、一番小さい値を決めていきます
 		if (fabs(degreemum) >= fabs(degree)) {
 			degreemum = degree;
 			//エネミーの座標を記憶します
-			m_target = enemyList[i];
-		}
+			m_target = enemy->GetCollisionPosition();
+			m_enemy = enemy;
+ 		}
+		//エネミーの座標とプレイヤーとエネミーの距離を配列に記憶します
+		//enemyList.push_back(enemy->GetCollisionPosition());
+		//distanceList.push_back(pos.LengthSq());
+		//配列の長さを加算します
+		enemynumber++;
+		return true;
+	});
+	//配列の長さが0つまり、配列に何も記憶されていない場合、処理を終了します
+	if (enemynumber == 0) {
+		m_enemy = nullptr;
+		m_targetdisplay = false;
+		return;
 	}
+	//配列の長さの分だけ計算します
+	//for (int i = 0; i < enemynumber; i++) {
+	//}
 	//求めた一番小さい値が一定値より小さい場合、ターゲッティングをオンにします
 	if (fabs(degreemum) <= M_PI / 3) {
 		m_targetdisplay = true;
@@ -875,6 +901,7 @@ void Player::OutTarget()
 	//逆に一定値より大きい場合、ターゲッティングをオフにします
 	else {
 		m_targetdisplay = false;
+		m_enemy = nullptr;
 	}
 }
 

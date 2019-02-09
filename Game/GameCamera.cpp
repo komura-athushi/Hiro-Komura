@@ -131,30 +131,42 @@ void GameCamera::unityChan()
 // 普通視点の処理 カメラの座標を移動させる、カメラの注視点をリセット
 void GameCamera::Hutu()
 {
-
-	if (!m_tage) {
+	if (m_player->GetisTarget() && m_player->GetisTargetLock()) {
+		m_target = m_player->GetTarget();
+		CVector3 pos = m_target - m_player->GetPosition();
+		float r = pos.Length() + 200.0f;
+		pos.y = 0.0f;
+		pos.Normalize();
+		m_position = m_target - pos * r;
+		m_position.y = m_player->GetPosition().y + 200.0f;
+		CVector3 pos2 = m_position-m_player->GetPosition();
+		m_degreexz = atan2f(pos2.x, pos2.z);
+		m_degreexz *= 180 / M_PI;
+		//m_degreexz += -90;
+	}
+	else {
 		//注視点を設定する
 		m_target = { 0.0f,0.0f,0.0f };
 		m_target.y += 140.0f;
 		m_target += m_player->GetPosition();
+		//Y軸周りに回転させる。
+		CQuaternion qRot;
+		qRot.SetRotation(m_axisY, m_radianx);
+		//これがプレイヤーとカメラを結ぶベクトルです
+		CVector3 toPos = { 0.0f, 0.0f, 1.0f };
+		qRot.Multiply(toPos);
+		//上下の回転。
+		//まずは回す軸を計算する。
+		CVector3 rotAxis;
+		rotAxis.Cross(toPos, m_axisY);
+		//ベクトルを正規化する。
+		rotAxis.Normalize();
+		qRot.SetRotation(rotAxis, m_radiany);
+		qRot.Multiply(toPos);
+		toPos *= m_r;
+		m_position = m_target + toPos;
+		toPos *= 2;
 	}
-	//Y軸周りに回転させる。
-	CQuaternion qRot;
-	qRot.SetRotation(m_axisY, m_radianx);
-	//これがプレイヤーとカメラを結ぶベクトルです
-	CVector3 toPos = { 0.0f, 0.0f, 1.0f };
-	qRot.Multiply(toPos);
-	//上下の回転。
-	//まずは回す軸を計算する。
-	CVector3 rotAxis;
-	rotAxis.Cross(toPos, m_axisY);
-	//ベクトルを正規化する。
-	rotAxis.Normalize();
-	qRot.SetRotation(rotAxis, m_radiany);
-	qRot.Multiply(toPos);
-	toPos *= m_r;
-	m_position = m_target + toPos;
-	toPos *= 2;
 	//m_target -= toPos;
 	/*m_target.y = m_playerposition.y;
 	m_target.y += 140.0f;*/
