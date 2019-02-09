@@ -131,6 +131,7 @@ void GameCamera::unityChan()
 // 普通視点の処理 カメラの座標を移動させる、カメラの注視点をリセット
 void GameCamera::Hutu()
 {
+
 	if (!m_tage) {
 		//注視点を設定する
 		m_target = { 0.0f,0.0f,0.0f };
