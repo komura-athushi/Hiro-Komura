@@ -819,15 +819,17 @@ void Player::OutTarget()
 			CVector3 pos = m_enemy->GetCollisionPosition() - m_position;
 			if (pos.LengthSq() >= m_distancetarget) {
 				m_targetdisplay = false;
+				m_targetlock = false;
 			}
 			else {
-				m_target = m_enemy->GetCollisionPosition();
+				m_target = m_enemy->GetCollisionPosition();	
 				m_targetdisplay = true;
 				return;
 			}
 		}
 		else {
 			m_targetdisplay = false;
+			m_targetlock = false;
 		}
 	}
 	//エネミーの座標とプレイヤーとエネミーの距離を記憶する配列です

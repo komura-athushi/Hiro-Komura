@@ -59,6 +59,7 @@ private:
 	CVector3 m_position = { 0.0f,200.0f,400.0f};           //カメラの座標
 	CVector3 m_target;                                     //カメラの注視点
 	float m_degreexz = -90.0f, m_degreey = 0.0f;             //角度
+	float m_targetdegreexz = 0.0f, m_targetdegreey = 0.0f;	
 	float m_radianx = 0.0f, m_radiany = 0.0f;              //角度をラジアン単位に直したやつ
 	float m_r = 160.0f;								       //キャラクターとカメラの距離
 	float m_tr;
@@ -68,5 +69,7 @@ private:
 	float m_topos = 80.0f;
 	CVector3 m_front = CVector3::Zero();
 	CVector3 m_right = CVector3::Zero();
+	float m_timer = 0.0f;								  //時間経過で変動させる変数、ロック時は1、非ロック時は0にする
+	CVector3 m_locktarget = CVector3::Zero();
 };
 
