@@ -67,6 +67,7 @@ void Player::unityChan()
 		OnAnimationEvent(clipName, eventName);
 	});
 	m_targetsprite.Init(L"Resource/sprite/target.dds");
+	m_locktargetsprite.Init(L"Resource/sprite/locktarget.dds");
 	m_hp.Init(L"Resource/sprite/hpgage.dds");
 	m_hpframe.Init(L"Resource/sprite/hpgage_frame.dds");
 }
@@ -917,11 +918,20 @@ void Player::PostRender()
 		//該当の座標にターゲットの座標を表示します
 		if (0.0f <= pos.x && pos.x <= 1.0f && 0.0f <= pos.y && pos.y <= 1.0f && 0.0f <= pos.z && pos.z <= 1.0f) {
 			CVector3 scpos = pos;
-			m_targetsprite.Draw(scpos, { 0.2f,0.2f }, { 0.5f,0.5f },
-				0.0f,
-				{ 1.0f, 1.0f, 1.0f, 1.0f },
-				DirectX::SpriteEffects_None,
-				1.0f);
+			if (m_targetlock) {
+				m_locktargetsprite.Draw(scpos, { 0.2f,0.2f }, { 0.5f,0.5f },
+					0.0f,
+					{ 1.0f, 1.0f, 1.0f, 1.0f },
+					DirectX::SpriteEffects_None,
+					1.0f);
+			}
+			else {
+				m_targetsprite.Draw(scpos, { 0.2f,0.2f }, { 0.5f,0.5f },
+					0.0f,
+					{ 1.0f, 1.0f, 1.0f, 1.0f },
+					DirectX::SpriteEffects_None,
+					1.0f);
+			}
 			CVector3 pos = m_position;
 			pos.y += 60.0f;
 			pos = m_target - pos;

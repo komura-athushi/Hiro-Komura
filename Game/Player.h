@@ -168,6 +168,7 @@ private:
 	GameObj::CSkinModelRender* m_skinModelRender = nullptr;		//スキンモデルレンダラー
 	CSprite m_sprite2;											//ゲームクリアとかゲームオーバーの
 	CSprite m_targetsprite;										//ターゲットのスプライト
+	CSprite m_locktargetsprite;
 	CSprite m_hp, m_hpframe;									//HP関係のテクスチャ
 	bool m_displaysprite = false;								//
     SuicideObj::CCollisionObj* m_collision;                     //丸いコリジョン

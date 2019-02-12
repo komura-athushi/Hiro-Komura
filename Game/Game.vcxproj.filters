@@ -61,6 +61,9 @@
     <ImageContentTask Include="Asset\sprite\Weapon\sword.png">
       <Filter>Asset\sprite</Filter>
     </ImageContentTask>
+    <ImageContentTask Include="Asset\sprite\locktarget.png">
+      <Filter>Asset\sprite</Filter>
+    </ImageContentTask>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Boss.cpp" />

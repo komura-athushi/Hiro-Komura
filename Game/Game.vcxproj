@@ -377,6 +377,9 @@
     <ImageContentTask Include="Asset\sprite\hp\hpgage.png" />
     <ImageContentTask Include="Asset\sprite\hp\hpgage_frame.png" />
   </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Asset\sprite\locktarget.png" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="$(VCTargetsPath)\BuildCustomizations\ImageContentTask.targets" />
