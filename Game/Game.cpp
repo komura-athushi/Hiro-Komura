@@ -119,18 +119,6 @@ bool Game::Start()
 			//フックした場合はtrueを返す。
 			return true;
 		}
-		else if (objData.EqualObjectName(L"boss") == true) {
-			////ボス2
-			////プレイヤーのインスタンスを生成する。
-			//Boss2* boss2 = new Boss2;
-			//boss2->SetPosition(objData.position);
-			//boss2->SetOldPosition(objData.position);
-			//boss2->SetName(L"Boss2");
-			//boss2->SetPlayer(m_player);
-			//boss2->SetStage1(this);
-			//フックした場合はtrueを返す。
-			return true;
-		}
 		return false;
 	});
 	//仮ここから

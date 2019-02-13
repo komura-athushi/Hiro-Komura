@@ -7,12 +7,16 @@
 const float IEnemy::m_frame = 40.0f; 
 IEnemy::IEnemy(const int& h,const int& a,const int& e,const int dropchances[Weapon::m_HighestRarity],const int dropmaterialchances[Material::m_HighestRarity],const int& meseta):m_HP(h),m_Attack(a),m_Exp(e),m_dropmeseta(meseta)
 {
-	/*for (int i = 0; i < Weapon::m_HighestRarity; i++) {
+	for (int i = 0; i < Weapon::m_HighestRarity; i++) {
 		m_dropChances[i] = *dropchances;
 		dropchances++;
-	}*/
-	memcpy(m_dropChances, dropchances, sizeof(dropchances));
-	memcpy(m_dropmaterialChances, dropmaterialchances, sizeof(dropmaterialchances));
+	}
+	for (int i = 0; i < Material::m_HighestRarity; i++) {
+		m_dropmaterialChances[i] = *dropmaterialchances;
+		dropchances++;
+	}
+	//memcpy(m_dropChances, dropchances, sizeof(dropchances));
+	//memcpy(m_dropmaterialChances, dropmaterialchances, sizeof(dropmaterialchances));
 	m_gamecamera = FindGO<GameCamera>();
 }
 

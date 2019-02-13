@@ -13,7 +13,7 @@ bool GameData::Start()
 {
 	//コンストラクタを使って各データクラスの生成および、各ステータスの設定をします
 	//Weaponクラスのインスタンスを生成
-	m_weaponlist.push_back(Weapon(0 , L"もこうスラッシュ"		, 1, 10, 20, 0,  100));
+	m_weaponlist.push_back(Weapon(0 , L"もこうスラッシュ"		, 1, 25, 25, 0,  100));
 	m_weaponlist.push_back(Weapon(1 , L"ファイアソード"			, 2, 30, 40, 1,  500));
 	m_weaponlist.push_back(Weapon(2 , L"アイスソード"			, 2, 30, 40, 2,  500));
 	m_weaponlist.push_back(Weapon(3 , L"ウィンドソード"			, 2, 30, 40, 3,  500));

@@ -5,7 +5,7 @@
 //{
 //	
 //}
-const float Equipment::m_multiply = 1.3f;
+const float Equipment::m_multiply = 1.15f;
 const float Equipment::m_costmultiply = 1.2f;
 Equipment::Equipment(const int& number):m_SwordId(number)
 {

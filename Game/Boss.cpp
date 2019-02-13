@@ -2,19 +2,17 @@
 #include "Boss.h"
 #define _USE_MATH_DEFINES //M_PI 円周率呼び出し
 #include <math.h> 
-
 #include "Player.h"
 #include "BossAttack.h"
 #include "GameCamera.h"
 //cppでエネミーのレア度ごとのドロップ率を設定
-const int Boss::m_dropChances[Weapon::m_HighestRarity] = { 0,0,0,100,0,0,0 };
+const int Boss::m_dropChances[Weapon::m_HighestRarity] = { 0,0,100,0,0,0,0 };
 const int Boss::m_dropmaterialChances[Material::m_HighestRarity] = { 0.0f,100.0f,0.0f };
 //ボスです
 Boss::Boss() : IEnemy(m_MaxHP, m_Attack, m_EXP, m_dropChances, m_dropmaterialChances, m_meseta)
 {
 
 }
-
 Boss::~Boss()
 {
 	delete m_skinModelRender;
@@ -22,7 +20,7 @@ Boss::~Boss()
 
 bool Boss::Start()
 {
-	IEnemy::CCollision({ m_position }, m_collisionheight, m_r);
+	IEnemy::CCollision(m_position , m_collisionheight, m_r);
 	//ボスのスキンモデルレンダーを表示
 	m_skinModelRender = new GameObj::CSkinModelRender;
 	m_skinModelRender->Init(L"Resource/modelData/boss.cmo");
@@ -198,18 +196,18 @@ void Boss::PostRender()
 
 void Boss::Update()
 {
-	m_timer++;
-	m_movespeed = m_player->GetPosition() - m_position;
-	Turn();
-	Attack();
 	if (!IEnemy::m_death) {
+		m_timer++;
+		m_movespeed = m_player->GetPosition() - m_position;
+		Turn();
+		Attack();
 		CQuaternion rot;
 		CVector3 pos = m_position;
-		pos.y += 55.0f;
+		pos.y += 270.0f;
 		m_staticobject.SetPositionAndRotation(pos, rot);
 		IEnemy::SetCCollision(m_position, m_collisionheight);
+		Damage();
 	}
-	Damage();
 	//死んだら消す
 	if (m_death) {
 		m_deathtimer += 40.0f * GetDeltaTimeSec();
