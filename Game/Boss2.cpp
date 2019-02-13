@@ -49,7 +49,7 @@ bool Boss2::Start()
 	CQuaternion rot = CQuaternion::Identity();
 	CVector3 pos = m_position;
 	pos.y += 500.0f;
-	m_staticobject.CreateSphere(pos, rot, 0.0f);
+	m_staticobject.CreateSphere(pos, rot, 150.0f);
 
 	return true;
 }
@@ -61,26 +61,27 @@ void Boss2::Attack()
 	m_playerposition.y += 100.0f;
 	//プレイヤーとドラゴンの距離
 	CVector3 pos = m_player->GetPosition() - m_position;
-	//ファイヤーブレス
-	if (pos.LengthSq() > 500.0f*500.0f) {
-	if (m_timer >= m_cooltime) {
-			m_state = enState_Attack1;
+	
+	//ひっかき
+	if(pos.LengthSq() < 100.0f*100.0f){
+		if (m_timer >= m_cooltime) {
+			m_state = enState_Attack3;
 			//タイマーをリセット。
 			m_timer = 0;
 		}
 	}
 	//プレス
-	else if (pos.LengthSq() > 300.0f*300.0f) {
+	else if (pos.LengthSq() < 300.0f*300.0f) {
 		if (m_timer >= m_cooltime) {
 			m_state = enState_Attack2;
 			//タイマーをリセット。
 			m_timer = 0;
 		}
 	}
-	//ひっかき
+	//ファイヤーブレス
 	else {
 		if (m_timer >= m_cooltime) {
-			m_state = enState_Attack3;
+			m_state = enState_Attack1;
 			//タイマーをリセット。
 			m_timer = 0;
 		}
@@ -93,7 +94,7 @@ void Boss2::AnimationController()
 	//ステート分岐によってアニメーションを再生させる
 	switch (m_state) {
 	case enState_Idle_Run:
-		if (m_movespeed.LengthSq() > 1.0f) {
+		if (m_movespeed.LengthSq() > 1.0f*1.0f) {
 			//走りモーション。
 			m_skinModelRender->GetAnimCon().Play(enAnimationClip_run, 0.2f);
 		}
@@ -101,8 +102,8 @@ void Boss2::AnimationController()
 			//待機モーション
 			m_skinModelRender->GetAnimCon().Play(enAnimationClip_idle, 0.2f);
 		}
-		Turn();
 		Chase();
+		Turn();
 		//Attack();
 		break;
 	case enState_Attack1:
@@ -150,32 +151,35 @@ void Boss2::Chase()
 	CVector3 m_playerposition = m_player->GetPosition();
 	//プレイヤーと敵の距離
 	CVector3 pos = m_player->GetPosition() - m_position;
-	//ボスの初期位置と現在位置の距離
+	//敵の初期位置と現在位置の距離
 	CVector3 oldpos = m_oldpos - m_position;
-	//もしプレイヤーとボスの距離が近くなったら
-	if (pos.LengthSq() < 1000.0f*1000.0f) {
-		//もしアニメーションが再生されていなかったら
-		if (!m_skinModelRender->GetAnimCon().IsPlaying()) {
-			//近づいてくる
-			CVector3 EnemyPos = m_playerposition - m_position;
-			EnemyPos.Normalize();
-			m_movespeed = EnemyPos * m_enemyspeed;
-			m_movespeed.y = 0.0f;
-			m_position += m_movespeed;
-		}
-		else if (pos.LengthSq() > 1000.0f*1000.0f) {
-			//初期位置に帰る
-			CVector3 EnemyOldPos = m_oldpos - m_position;
-			EnemyOldPos.Normalize();
-			m_movespeed = EnemyOldPos * m_enemyspeed;
-			m_movespeed.y = 0.0f;
-			//敵の初期位置と現在位置の距離がほぼ0だったら止まる
-			if (oldpos.Length() < 50.0f) {
-				m_movespeed = { 0.0f,0.0f,0.0f };
-			}
-			m_position += m_movespeed;
-		}
+	//攻撃
+	if (pos.LengthSq() < 500.0f*500.0f) {
+		Attack();
 	}
+	//もしプレイヤーと鬼の距離が近くなったら
+	if (pos.LengthSq() < 1000.0f*1000.0f) {
+		//近づいてくる
+		CVector3 EnemyPos = m_playerposition - m_position;
+		EnemyPos.Normalize();
+		m_movespeed = EnemyPos * 2.5f;
+		m_movespeed.y = 0.0f;
+		m_position += m_movespeed;
+	}
+
+	else if (pos.LengthSq() > 1000.0f*1000.0f) {
+		//初期位置に帰る
+		CVector3 EnemyOldPos = m_oldpos - m_position;
+		EnemyOldPos.Normalize();
+		m_movespeed = EnemyOldPos * 5.0f;
+		m_movespeed.y = 0.0f;
+		//敵の初期位置と現在位置の距離がほぼ0だったら止まる
+		if (oldpos.Length() < 50.0f) {
+			m_movespeed = { 0.0f,0.0f,0.0f };
+		}
+		m_position += m_movespeed;
+	}
+
 	m_skinModelRender->SetPos(m_position);
 }
 
@@ -261,10 +265,48 @@ void Boss2::OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventName)
 		CVector3 atkpos = m_position;
 		atkpos.z += 50.0f;
 		CVector3 pos = atkpos + CVector3::AxisY()*m_collisionheight;
-		pos += m_parallel * 130.0f;
+		pos += m_parallel * 180.0f;
 		attackCol->CreateSphere(pos, CQuaternion::Identity(), m_attackr);
 		//寿命を設定
-		attackCol->SetTimer(3);//15フレーム後削除される
+		attackCol->SetTimer(60);//フレーム後削除される
+		attackCol->SetCallback([&](SuicideObj::CCollisionObj::SCallbackParam& param) {
+			//衝突した判定の名前が"Player"ならm_Attack1分だけダメージ与える
+			if (param.EqualName(L"Player")) {
+				Player* player = param.GetClass<Player>();
+				player->Damage(m_Attack1);
+			}
+		}
+		);
+	}if (wcscmp(eventName, L"attack1") == 0) {
+		//攻撃判定の発生
+		SuicideObj::CCollisionObj* attackCol = NewGO<SuicideObj::CCollisionObj>();
+		//形状の作成
+		CVector3 atkpos = m_position;
+		atkpos.z += 50.0f;
+		CVector3 pos = atkpos + CVector3::AxisY()*m_collisionheight;
+		pos += m_parallel * 180.0f;
+		attackCol->CreateSphere(pos, CQuaternion::Identity(), m_attackr);
+		//寿命を設定
+		attackCol->SetTimer(60);//フレーム後削除される
+		attackCol->SetCallback([&](SuicideObj::CCollisionObj::SCallbackParam& param) {
+			//衝突した判定の名前が"Player"ならm_Attack1分だけダメージ与える
+			if (param.EqualName(L"Player")) {
+				Player* player = param.GetClass<Player>();
+				player->Damage(m_Attack1);
+			}
+		}
+		);
+	}else if (wcscmp(eventName, L"attack2") == 0) {
+		//攻撃判定の発生
+		SuicideObj::CCollisionObj* attackCol = NewGO<SuicideObj::CCollisionObj>();
+		//形状の作成
+		CVector3 atkpos = m_position;
+		atkpos.z += 50.0f;
+		CVector3 pos = atkpos + CVector3::AxisY()*m_collisionheight;
+		pos += m_parallel * 180.0f;
+		attackCol->CreateSphere(pos, CQuaternion::Identity(), m_attackr);
+		//寿命を設定
+		attackCol->SetTimer(60);//フレーム後削除される
 		attackCol->SetCallback([&](SuicideObj::CCollisionObj::SCallbackParam& param) {
 			//衝突した判定の名前が"Player"ならm_Attack1分だけダメージ与える
 			if (param.EqualName(L"Player")) {
