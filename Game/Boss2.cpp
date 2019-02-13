@@ -277,41 +277,19 @@ void Boss2::OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventName)
 			}
 		}
 		);
-	}if (wcscmp(eventName, L"attack1") == 0) {
+	}else if (wcscmp(eventName, L"attack3") == 0) {
 		//攻撃判定の発生
 		SuicideObj::CCollisionObj* attackCol = NewGO<SuicideObj::CCollisionObj>();
 		//形状の作成
 		CVector3 atkpos = m_position;
-		atkpos.z += 50.0f;
-		CVector3 pos = atkpos + CVector3::AxisY()*m_collisionheight;
-		pos += m_parallel * 180.0f;
-		attackCol->CreateSphere(pos, CQuaternion::Identity(), m_attackr);
+		attackCol->CreateSphere(atkpos, CQuaternion::Identity(), m_attack3r);
 		//寿命を設定
 		attackCol->SetTimer(60);//フレーム後削除される
 		attackCol->SetCallback([&](SuicideObj::CCollisionObj::SCallbackParam& param) {
 			//衝突した判定の名前が"Player"ならm_Attack1分だけダメージ与える
 			if (param.EqualName(L"Player")) {
 				Player* player = param.GetClass<Player>();
-				player->Damage(m_Attack1);
-			}
-		}
-		);
-	}else if (wcscmp(eventName, L"attack2") == 0) {
-		//攻撃判定の発生
-		SuicideObj::CCollisionObj* attackCol = NewGO<SuicideObj::CCollisionObj>();
-		//形状の作成
-		CVector3 atkpos = m_position;
-		atkpos.z += 50.0f;
-		CVector3 pos = atkpos + CVector3::AxisY()*m_collisionheight;
-		pos += m_parallel * 180.0f;
-		attackCol->CreateSphere(pos, CQuaternion::Identity(), m_attackr);
-		//寿命を設定
-		attackCol->SetTimer(60);//フレーム後削除される
-		attackCol->SetCallback([&](SuicideObj::CCollisionObj::SCallbackParam& param) {
-			//衝突した判定の名前が"Player"ならm_Attack1分だけダメージ与える
-			if (param.EqualName(L"Player")) {
-				Player* player = param.GetClass<Player>();
-				player->Damage(m_Attack1);
+				player->Damage(m_Attack3);
 			}
 		}
 		);
