@@ -5,6 +5,7 @@ class GameCamera;
 class PlayerStatus;
 class Human;
 class Merchant;
+class IEnemy;
 //プレイヤーです
 class Player:public IGameObject
 {
@@ -147,11 +148,27 @@ public:
 	{
 		return m_playerheikou;
 	}
+	//プレイヤーがターゲット状態かどうかを取得
+	bool GetisTarget() const
+	{
+		return m_targetdisplay;
+	}
+	//ターゲットの座標を取得
+	CVector3 GetTarget() const
+	{
+		return m_target;
+	}
+	//ターゲットロック中かどうかを取得
+	bool GetisTargetLock() const
+	{
+		return m_targetlock;
+	}
 private:
 	bool m_cagliostro = false;
 	GameObj::CSkinModelRender* m_skinModelRender = nullptr;		//スキンモデルレンダラー
 	CSprite m_sprite2;											//ゲームクリアとかゲームオーバーの
 	CSprite m_targetsprite;										//ターゲットのスプライト
+	CSprite m_locktargetsprite;
 	CSprite m_hp, m_hpframe;									//HP関係のテクスチャ
 	bool m_displaysprite = false;								//
     SuicideObj::CCollisionObj* m_collision;                     //丸いコリジョン
@@ -264,5 +281,8 @@ private:
 	const float m_morugantime = 300.0f;
 	const float m_height = 60.0f;
 	bool m_aria = false;										//呪文詠唱中かどうか
+	IEnemy* m_enemy = nullptr;
+	bool m_targetlock = false;									//ターゲットロック中かどうか
+
 };
 

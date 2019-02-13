@@ -22,7 +22,7 @@ Boss2::~Boss2()
 
 bool Boss2::Start()
 {
-	IEnemy::CCollision({ m_position }, m_collisionheight, m_r);
+	IEnemy::CCollision(m_position, m_collisionheight, m_r);
 	//アニメーション
 	m_animClip[enAnimationClip_idle].Load(L"Asset/animData/boss2/boss2_idle.tka");
 	m_animClip[enAnimationClip_run].Load(L"Asset/animData/boss2/boss2_run.tka");
@@ -50,7 +50,6 @@ bool Boss2::Start()
 	CVector3 pos = m_position;
 	pos.y += 500.0f;
 	m_staticobject.CreateSphere(pos, rot, 150.0f);
-
 	return true;
 }
 
@@ -301,7 +300,7 @@ void Boss2::Update()
 {
 	m_timer++;
 	AnimationController();
-	//Attack();
+	Attack();
 	if (!IEnemy::m_death) {
 		CQuaternion rot;
 		CVector3 pos = m_position;
