@@ -14,6 +14,7 @@
 #include "GameData.h"
 #include "Fade.h"
 #include "MainSound.h"
+#include "Teleport.h"
 Game::Game()
 {
 }
@@ -48,6 +49,11 @@ Game::~Game()
 	QueryGOs<DropMaterial>(L"DropMaterial", [&](DropMaterial* dropmaterial)
 	{
 		delete dropmaterial;
+		return true;
+	});
+	QueryGOs<Teleport>(L"Teleport", [&](Teleport* tl)
+	{
+		delete tl;
 		return true;
 	});
 }
@@ -160,7 +166,7 @@ void Game::Update()
 		if (m_player->GetTransScene()) {
 			if (m_player->GetGameClear()) {
 				GameData* gamedata = FindGO<GameData>(L"GameData");
-				gamedata->SetClear(0);
+				gamedata->SetClear(m_stagenumber-1);
 			}
 			m_isWaitFadeout = true;
 			m_fade->StartFadeOut();

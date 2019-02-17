@@ -19,6 +19,11 @@ public:
 	{
 		m_stagenumber = number;
 	}
+	//ゲームクリア！！
+	void SetGameClear()
+	{
+		m_isgameclear = true;
+	}
 private:
 	Ground* m_ground;                                  //Groundクラスのポインタ
 	GameCamera* m_gamecamera;                          //GameCameraクラスのポインタ
@@ -35,5 +40,6 @@ private:
 	//trueなら画面切り替えする
 	bool m_isWaitFadeout = false;
 	int m_stagenumber;
+	bool m_isgameclear = false;
 };
 

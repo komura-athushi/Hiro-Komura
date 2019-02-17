@@ -60,6 +60,7 @@ void Morugan::Update()
 		});
 	}
 	m_timer += m_frame * GetDeltaTimeSec();
+	//プレイヤーが詠唱中でないなら自身を削除する
 	if (!m_player->GetAria()) {
 		delete this;
 	}

@@ -2,6 +2,7 @@
 #include "PlayerStatus.h"
 #include "Weapon.h"
 #include "Magic.h"
+#include "Player.h"
 PlayerStatus::PlayerStatus()
 {
 }
@@ -47,9 +48,14 @@ void PlayerStatus::Update()
 		for (int i = 0; i < m_gamedata->m_stagenumber; i++) {
 			//m_gamedata->SetClear(i);
 		}
-		//PlusExp(1000000000);
 		m_MaxPP = 1000000000;
 		m_havemeseta = 10000000;
+		Player* player = FindGO<Player>(L"Player");
+		if (player != nullptr) {
+			player->SetPP(m_MaxPP);
+		}
+		//PlusExp(1000000000);
+		
 	}
 }
 

@@ -19,13 +19,13 @@ public:
 	~Town();
 	bool Start();
 	void Update();
+	//レベル構築
+	void BuildLevel();
 	//街を発展
 	void DevelopTown()
 	{
 		m_developtown = true;
 	}
-	//レベル構築
-	void BuildLevel();
 private:
 	bool m_developtown = false;						   //街を発展させるかどうか
 	Ground* m_ground;                                  //Groundクラスのポインタ

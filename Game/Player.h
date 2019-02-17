@@ -123,6 +123,11 @@ public:
 	{
 		m_stop = true;
 	}
+	//プレイヤーを動かす
+	void SetMove()
+	{
+		m_stop = false;
+	}
 	//剣の座標を取得
 	CVector3 GetSwordPosition() const
 	{
@@ -162,6 +167,17 @@ public:
 	bool GetisTargetLock() const
 	{
 		return m_targetlock;
+	}
+	//PPを設定
+	void SetPP(const int& pp) 
+	{
+		m_MaxPP = pp;
+		m_PP = pp;
+	}
+	//ゲームクリア！！
+	void SetGameClear()
+	{
+		m_state = enState_GameClear;
 	}
 private:
 	bool m_cagliostro = false;

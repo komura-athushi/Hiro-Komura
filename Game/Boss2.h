@@ -94,7 +94,7 @@ private:
 	int m_atktype = 0;											//攻撃の種類
 	float m_r = 150.0f;                                         //コリジョンの半径
 	const float m_attackr = 90.0f;                              //攻撃したときに発生させるコリジョンの半径
-	const float m_attack3r = 400.0f;                            //攻撃したときに発生させるコリジョンの半径
+	const float m_attack3r = 300.0f;                            //攻撃したときに発生させるコリジョンの半径
 	float m_collisionheight = 70.0f;							//コリジョンをm_positionからどれだけ上にあげるか
 	//Bossの色々なステータス
 	static const int m_MaxHP = 900;                             //最大HP

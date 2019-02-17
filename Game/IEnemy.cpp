@@ -13,7 +13,7 @@ IEnemy::IEnemy(const int& h,const int& a,const int& e,const int dropchances[Weap
 	}
 	for (int i = 0; i < Material::m_HighestRarity; i++) {
 		m_dropmaterialChances[i] = *dropmaterialchances;
-		dropchances++;
+		dropmaterialchances++;
 	}
 	//memcpy(m_dropChances, dropchances, sizeof(dropchances));
 	//memcpy(m_dropmaterialChances, dropmaterialchances, sizeof(dropmaterialchances));
@@ -75,6 +75,7 @@ void IEnemy::SetCCollision(const CVector3& pos,const float& l)
 
 void IEnemy::Damage(const int& attack,int number)
 {
+	int HP = m_HP;
 	switch (number) {
 	case 0:
 		if (m_timer >= 15) {		//’ÊíUŒ‚
@@ -132,6 +133,16 @@ void IEnemy::Damage(const int& attack,int number)
 			m_damage = true;
 		}
 		break;
+	}
+	if (HP != m_HP) {
+		//SE
+		SuicideObj::CSE* se = NewGO<SuicideObj::CSE>(L"Asset/sound/se/damage.wav");
+		se->Play(); //Ä¶(Ä¶‚ªI‚í‚é‚Æíœ‚³‚ê‚Ü‚·)
+		se->SetVolume(m_sevolume);
+		//3DÄ¶
+		se->SetPos(m_position);//‰¹‚ÌˆÊ’u
+		se->SetDistance(500.0f);//‰¹‚ª•·‚±‚¦‚é”ÍˆÍ
+		se->Play(true); //‘æˆêˆø”‚ğtrue
 	}
 	if (m_HP <= 0) {
 		m_death = true;

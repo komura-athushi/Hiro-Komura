@@ -6,6 +6,7 @@
 #include "Player.h"
 #include "BossAttack.h"
 #include "GameCamera.h"
+#include "Teleport.h"
 //cppでエネミーのレア度ごとのドロップ率を設定
 const int Boss2::m_dropChances[Weapon::m_HighestRarity] = { 0,0,0,100,0,0,0 };
 const int Boss2::m_dropmaterialChances[Material::m_HighestRarity] = { 0,0,100 };
@@ -18,6 +19,9 @@ Boss2::Boss2() : IEnemy(m_MaxHP, m_Attack, m_EXP, m_dropChances, m_dropmaterialC
 Boss2::~Boss2()
 {
 	delete m_skinModelRender;
+	Teleport* tl = new Teleport;
+	tl->SetPosition(m_position);
+	tl->SetName(L"Teleport");
 }
 
 bool Boss2::Start()
@@ -49,7 +53,7 @@ bool Boss2::Start()
 	CQuaternion rot = CQuaternion::Identity();
 	CVector3 pos = m_position;
 	pos.y += 500.0f;
-	m_staticobject.CreateSphere(pos, rot, 150.0f);
+	//m_staticobject.CreateSphere(pos, rot, 150.0f);
 	return true;
 }
 
@@ -276,14 +280,17 @@ void Boss2::OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventName)
 			}
 		}
 		);
-	}else if (wcscmp(eventName, L"attack3") == 0) {
+	}
+	
+	else if (wcscmp(eventName, L"attack3") == 0) {
 		//攻撃判定の発生
 		SuicideObj::CCollisionObj* attackCol = NewGO<SuicideObj::CCollisionObj>();
 		//形状の作成
 		CVector3 atkpos = m_position;
+		atkpos.y -= 150.0f;
 		attackCol->CreateSphere(atkpos, CQuaternion::Identity(), m_attack3r);
 		//寿命を設定
-		attackCol->SetTimer(60);//フレーム後削除される
+		attackCol->SetTimer(5);//フレーム後削除される
 		attackCol->SetCallback([&](SuicideObj::CCollisionObj::SCallbackParam& param) {
 			//衝突した判定の名前が"Player"ならm_Attack1分だけダメージ与える
 			if (param.EqualName(L"Player")) {
@@ -305,7 +312,7 @@ void Boss2::Update()
 		CQuaternion rot;
 		CVector3 pos = m_position;
 		pos.y += 55.0f;
-		m_staticobject.SetPositionAndRotation(pos, rot);
+		//m_staticobject.SetPositionAndRotation(pos, rot);
 		IEnemy::SetCCollision(m_position, m_collisionheight);
 	}
 	Damage();

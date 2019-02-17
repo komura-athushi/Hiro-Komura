@@ -592,6 +592,17 @@ void Player::OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventName)
 		SuicideObj::CSE* se = NewGO<SuicideObj::CSE>(L"Asset/sound/unityChan/aria.wav");
 		se->Play(); //再生(再生が終わると削除されます)
 		se->SetVolume(m_voicevolume);
+		int i = 0;
+		if (i == 0) {
+			//SE
+			SuicideObj::CSE* se = NewGO<SuicideObj::CSE>(L"Asset/sound/se/aria.wav");
+			se->Play(); //再生(再生が終わると削除されます)
+			se->SetVolume(m_lvupvollume);
+			//3D再生
+			se->SetPos(m_position);//音の位置
+			se->SetDistance(200.0f);//音が聞こえる範囲
+			se->Play(true); //第一引数をtrue
+		}
 		//3D再生
 		se->SetPos(m_position);//音の位置
 		se->SetDistance(200.0f);//音が聞こえる範囲
@@ -641,6 +652,15 @@ void Player::Damage(const int& attack)
 		se->SetPos(m_position);//音の位置
 		se->SetDistance(200.0f);//音が聞こえる範囲
 		se->Play(true); //第一引数をtrue
+		if (0 == 0) {
+			SuicideObj::CSE* se = NewGO<SuicideObj::CSE>(L"Asset/sound/se/hidamage.wav");
+			se->Play(); //再生(再生が終わると削除されます)
+			se->SetVolume(m_lvupvollume+1.2f);
+			//3D再生
+			se->SetPos(m_position);//音の位置
+			se->SetDistance(500.0f);//音が聞こえる範囲
+			se->Play(true); //第一引数をtrue
+		}
 		m_damage = true;
 		m_timer2 = 0;
 		m_state = enState_Damage;
@@ -682,6 +702,14 @@ void Player::SwitchWeapon()
 			if (m_playerstatus->GetWeapon(m_SwordId - 1)) {
 				WeaponStatus();
 				MagicStatus();
+				//SE
+				SuicideObj::CSE* se = NewGO<SuicideObj::CSE>(L"Asset/sound/se/swtich.wav");
+				se->Play(); //再生(再生が終わると削除されます)
+				se->SetVolume(m_voicevolume);
+				//3D再生
+				se->SetPos(m_position);//音の位置
+				se->SetDistance(200.0f);//音が聞こえる範囲
+				se->Play(true); //第一引数をtrue
 			}
 			else {
 				return;
@@ -694,6 +722,14 @@ void Player::SwitchWeapon()
 			if (m_playerstatus->GetWeapon(m_SwordId + 1)) {
 				WeaponStatus();
 				MagicStatus();
+				//SE
+				SuicideObj::CSE* se = NewGO<SuicideObj::CSE>(L"Asset/sound/se/swtich.wav");
+				se->Play(); //再生(再生が終わると削除されます)
+				se->SetVolume(m_voicevolume);
+				//3D再生
+				se->SetPos(m_position);//音の位置
+				se->SetDistance(200.0f);//音が聞こえる範囲
+				se->Play(true); //第一引数をtrue
 			}
 			else {
 				return;

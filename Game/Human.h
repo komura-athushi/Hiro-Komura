@@ -77,5 +77,6 @@ private:
 	Player* m_player;
 	PlayerStatus* m_playerstatus;
 	GameData* m_gamedata;
+	bool m_istalk = true;
 };
 

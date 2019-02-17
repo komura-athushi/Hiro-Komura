@@ -138,7 +138,7 @@ void Town::Update()
 void Town::BuildLevel()
 {
 	//レベルを構築する。
-	const wchar_t* levelname=nullptr;
+	const wchar_t* levelname = nullptr;
 	//街のレベルにより読み込むレベルファイルを決定する
 	switch (m_gamedata->GetTownLevel()) {
 	case 0:
