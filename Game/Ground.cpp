@@ -32,6 +32,9 @@ bool Ground::Start()
 		else if (gamedata->GetTownLevel() == 1) {
 			m_skinModelRender->Init(L"Resource/modelData/ground2.cmo");
 		}
+		else if (gamedata->GetTownLevel() == 2) {
+			m_skinModelRender->Init(L"Resource/modelData/ground3.cmo");
+		}
 		break;
 	case 1:
 		m_skinModelRender->Init(L"Resource/modelData/stage1_ground.cmo");

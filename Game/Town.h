@@ -8,6 +8,7 @@ class Stone;
 class House;
 class Stage1_Teleport;
 class Stage2_Teleport;
+class Stage3_Teleport;
 class PlayerStatus;
 class Fade;
 class GameData;
@@ -37,6 +38,7 @@ private:
 	Merchant* m_merchant;							   //マーチャントクラスのポインタ
 	Stage1_Teleport* m_stage1_teleport = nullptr;                //ステージ1に遷移するためのクラスのポインタ
 	Stage2_Teleport* m_stage2_teleport = nullptr;				   //ステージ2に遷移するためのクラスのポインタ
+	Stage3_Teleport* m_stage3_teleport = nullptr;
 	Level m_level;                                     //レベルデザインのためのクラス
 	PlayerStatus* m_playerstatus;                      //プレイヤーステータスクラスのポインタ
 	GameData* m_gamedata;
@@ -53,6 +55,7 @@ private:
 		enCga,
 		enSt1,
 		enSt2,
+		enSt3,
 	};
 	State m_state;
 };

@@ -42,6 +42,10 @@ void MainSound::Update()
 			m_bgm = NewGO<SuicideObj::CBGM>(L"Asset/sound/bgm/stage2.wav");
 			m_bgm->Play(false, true); //ループで再生(第二引数)
 			break;
+		case 4:
+			m_bgm = NewGO<SuicideObj::CBGM>(L"Asset/sound/bgm/stage3.wav");
+			m_bgm->Play(false, true); //ループで再生(第二引数)
+			break;
 		}
 		m_state1 = m_state2;
 	}

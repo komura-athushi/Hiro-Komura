@@ -96,6 +96,6 @@ private:
 	std::vector<Material> m_materiallist;				//Materialクラスの可変長配列
 	std::vector<Equipment> m_equipmentlist;				//Equipmentクラスの可変長配列
 	bool m_stage[3] = { false,false,false };			//各ステージをクリアしたかどうか
-	int m_townlevel = 1;								//街の発展レベル
+	int m_townlevel = 0;								//街の発展レベル
 };
 

@@ -146,6 +146,9 @@ bool Game::Start()
 	else if (m_stagenumber == 2) {
 		ms->SetBGM(3);
 	}
+	else if (m_stagenumber == 3) {
+		ms->SetBGM(4);
+	}
 	//SE
 	SuicideObj::CSE* se = NewGO<SuicideObj::CSE>(L"Asset/sound/unityChan/start.wav");
 	se->Play(); //Ä¶(Ä¶‚ªI‚í‚é‚Æíœ‚³‚ê‚Ü‚·)

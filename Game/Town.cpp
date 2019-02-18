@@ -7,6 +7,7 @@
 #include "House.h"
 #include "Stage1_Teleport.h"
 #include "Stage2_Teleport.h"
+#include "Stage3_Teleport.h"
 #include "Game.h"
 #include "PlayerStatus.h"
 #include "Cagliostro_view.h"
@@ -33,6 +34,9 @@ Town::~Town()
 	delete m_stage1_teleport;
 	if (m_stage2_teleport != nullptr) {
 		delete m_stage2_teleport;
+	}
+	if (m_stage3_teleport != nullptr) {
+		delete m_stage3_teleport;
 	}
 	for (auto& stone : m_stoneList) {
 		delete stone;
@@ -92,6 +96,11 @@ void Town::Update()
 				game->SetStageNumber(2);
 				delete this;
  			}
+			else if (m_state == enSt3) {
+				Game* game = new Game;
+				game->SetStageNumber(3);
+				delete this;
+			}
 			else if (m_state == enCga) {
 				Cagliostro_view* cag = new Cagliostro_view;
 				delete this;
@@ -105,20 +114,31 @@ void Town::Update()
 	else {
 		//プレイヤーとステージ1に遷移するオブジェクトの距離を計算
 		CVector3 pos = m_player->GetPosition() - m_stage1_teleport->GetPosition();
+		CVector3 pos2 = {1000.0f,1000.0f,1000.0f};
+		CVector3 pos3 = { 1000.0f,1000.0f,1000.0f };
+		if (m_gamedata->GetTownLevel() >= 1 && m_stage2_teleport != nullptr) {
+			pos2 = m_player->GetPosition() - m_stage2_teleport->GetPosition();
+		}
+		if (m_gamedata->GetTownLevel() >= 2 && m_stage3_teleport != nullptr) {
+			pos3 = m_player->GetPosition() - m_stage3_teleport->GetPosition();
+		}
 		//距離が一定以下ならステージ1に遷移する
-		if (pos.Length() <= 100.0f) {
+		if (pos.LengthSq() <= 100.0f*100.0f) {
 			m_state = enSt1;
 			m_isWaitFadeout = true;
 			m_fade->StartFadeOut();
 		}
-		else if (m_gamedata->GetTownLevel() >= 1 && m_stage2_teleport != nullptr) {
-			CVector3 pos = m_player->GetPosition() - m_stage2_teleport->GetPosition();
-			//距離が一定以下ならステージ1に遷移する
-			if (pos.Length() <= 100.0f) {
-				m_state = enSt2;
-				m_isWaitFadeout = true;
-				m_fade->StartFadeOut();
-			}
+		//距離が一定以下ならステージ1に遷移する
+		else if (pos2.LengthSq() <= 100.0f*100.0f) {
+			m_state = enSt2;
+			m_isWaitFadeout = true;
+			m_fade->StartFadeOut();
+		}
+		//距離が一定以下ならステージ1に遷移する
+		else if (pos3.LengthSq() <= 100.0f*100.0f) {
+			m_state = enSt3;
+			m_isWaitFadeout = true;
+			m_fade->StartFadeOut();
 		}
 		//拠点に居る時にSTARTボタンを押すとカリオストロちゃん☆モードに遷移する
 		else if (Pad(0).GetDown(enButtonStart)) {
@@ -147,6 +167,9 @@ void Town::BuildLevel()
 	case 1:
 		levelname = L"Asset/level/town01.tkl";
 		break;
+	case 2:
+		levelname = L"Asset/level/town02.tkl";
+		break;
 	}
 	m_level.Init(levelname, [&](LevelObjectData& objData) {
 		if (objData.EqualObjectName(L"ground") == true) {
@@ -156,6 +179,12 @@ void Town::BuildLevel()
 			return true;
 		}
 		else if (objData.EqualObjectName(L"ground2") == true) {
+			m_ground = new Ground;
+			m_ground->SetStage(0);
+			m_ground->SetPosition(objData.position);
+			return true;
+		}
+		else if (objData.EqualObjectName(L"ground3") == true) {
 			m_ground = new Ground;
 			m_ground->SetStage(0);
 			m_ground->SetPosition(objData.position);
@@ -191,6 +220,13 @@ void Town::BuildLevel()
 			//Starオブジェクト。
 			m_stage2_teleport = new Stage2_Teleport;
 			m_stage2_teleport->SetPosition(objData.position);
+			//フックしたのでtrueを返す。
+			return true;
+		}
+		else if (objData.EqualObjectName(L"stage3_teleport") == true) {
+			//Starオブジェクト。
+			m_stage3_teleport = new Stage3_Teleport;
+			m_stage3_teleport->SetPosition(objData.position);
 			//フックしたのでtrueを返す。
 			return true;
 		}
