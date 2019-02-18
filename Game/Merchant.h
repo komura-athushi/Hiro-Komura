@@ -52,10 +52,11 @@ private:
 	CQuaternion m_rotation = CQuaternion::Identity();
 	CQuaternion m_protrotation = CQuaternion::Identity();
 	CFont m_font;                                               //文字表示クラス
-	CFont m_spritefont[GameData::enWeapon_num];					//文字表示
+	std::vector<CFont*> m_spritefont;					            //文字表示
 	bool m_talk = false;
 	CSprite m_sprite[GameData::enWeapon_num];                   //画像表示クラス
 	CSprite m_cursor;
+	std::vector<CSprite*> m_spritelist;				            //画像の配列
 	//アニメーション関係
 	enum EnAnimationClip {
 		enAnimationClip_idle,
@@ -72,5 +73,6 @@ private:
 	PlayerStatus* m_playerstatus;
 	int m_swordid;
 	bool m_button = false;
+	int m_equipmentnumber = 0;
 };
 

@@ -29,7 +29,7 @@ public:
 	//経験値を加算
 	void PlusExp(const int& exp);
 	//指定の番号の武器をプレイヤーに所持させる
-	void SetWeapon(const int& number);
+	void SetWeapon(Equipment* number);
 	//文字表示
 	void PostRender()override;
 	//該当の武器の強化費用より所持メセタが多い場合、武器の強化を実行します
@@ -134,20 +134,10 @@ public:
 	{
 		m_havemateriallist[number] -= amount;
 	}
-	//引数の武器の所持状況を取得
-	bool GetisHaveWeapon(const int& number) const 
-	{
-		return m_weaponinventorylist[number].s_ishave;
-	}
-    //現在装備中の武器強化素材の所持状況を返す
-	int GetWeaponMaterial(const int& number)
-	{
-		return m_weaponinventorylist[number].s_material;
-	}
 	//現在装備中の武器の強化レベルを取得
 	int GetWeaponLv(const int& number)
 	{
-		return m_weaponinventorylist[number].s_equipment.GetLv();
+		return m_equipmentlist[number]->GetLv();
 	}
 	//所持中のメセタの額を取得
 	int GetHaveMeseta() const
@@ -172,7 +162,22 @@ public:
 	//該当のEquipmentクラスのインスタンスにアクセス
 	Equipment GetEuipment(const int& number) const
 	{
-		return m_weaponinventorylist[number].s_equipment;
+		return *m_equipmentlist[number];
+	}
+	//所持武器の個数
+	int GetEquipmentNumber() const
+	{
+		return m_equipmentlist.size();
+	}
+	//画像の読み込むフォルダの名前
+	const wchar_t* GetSpriteName(const int& number) const
+	{
+		return m_spritenamelist[number];
+	}
+	//配列の添え字の武器の番号を取得
+	int GetWeaponNumber(const int& number) const
+	{
+		return m_equipmentlist[number]->GetId();
 	}
 private:  
 	int m_Level = 1;                                        //レベル
@@ -197,16 +202,12 @@ private:
 	bool m_levelup = false;
 	CFont m_font;                                         //文字表示クラス
 	CSprite m_cursor;									  //武器のカーソル
-	CSprite m_sprite[GameData::enWeapon_num];             //画像表示クラス
 	CVector3 m_scale = { 0.1f,0.1f,0.1f };				  //画像の大きさ
 	CVector2 m_position = { 350.0f,670.0f };			  //画像の位置
-	struct WeaponInventory {							  //所持している武器の状況を表す構造体
-		Equipment s_equipment;
-		bool s_ishave = false;
-		int s_material = 0;
-	};
-	std::vector<WeaponInventory> m_weaponinventorylist;   //WeaponInventory構造体の配列
-	int m_havemateriallist[GameData::enMaterial_num] = { 0,0,0 };		//プレイヤーの各素材の所持状況
+	std::vector<Equipment*> m_equipmentlist;              //Equipment構造体の配列
+	std::vector<CSprite*> m_spritelist;				      //画像の配列
+	std::vector<const wchar_t*> m_spritenamelist;		  //画像の名前
+	int m_havemateriallist[GameData::enMaterial_num] = { 0,0,0 };      //プレイヤーの各素材の所持状況
 	int m_havemeseta = 0;								  //所持しているメセタの額
 	GameData* m_gamedata;                                 //GameDataクラスのポインタ
 	Weapon* m_weapon;									  //Weaponクラスのポインタ

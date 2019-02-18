@@ -686,6 +686,7 @@ void Player::MagicStatus()
 
 void Player::SwitchWeapon()
 {
+	//特定のアニメーション再生時は武器の切り替えをしません
 	if (m_state == enState_Aria || m_state == enState_Attack || m_state == enState_Damage || m_state == enState_GameClear ||
 		m_state == enState_GameOver) {
 		return;
@@ -822,6 +823,7 @@ void Player::RelationMerchant()
 		return;
 	}
 	CVector3 pos = m_merchant->GetPosition() - m_position;
+	//プレイヤーとの距離が一定以内なら話せます
 	if (pos.LengthSq() <= 300.0f * 300.0f && m_state == enState_Idle) {
 		if (Pad(0).GetDown(enButtonB)) {
 			if (m_merchant->GetTalk()) {
@@ -843,6 +845,7 @@ void Player::RelationMerchant()
 
 void Player::OutTarget()
 {
+	//RSBボタンでターゲットをロックします
 	if (Pad(0).GetDown(enButtonRSB)) {
 		if (m_targetlock) {
 			m_targetlock = false;
@@ -851,6 +854,7 @@ void Player::OutTarget()
 			m_targetlock = true;
 		}
 	}
+	//ターゲットロック中であれば、ロックしたエネミーの座標をターゲットの座標とします
  	if (m_targetlock && m_targetdisplay) {
 		if (!m_enemy->GetDeath()) {
 			CVector3 pos = m_enemy->GetCollisionPosition() - m_position;
@@ -996,7 +1000,7 @@ void Player::PostRender()
 			0.0f,
 			{ 1.0f, 1.0f, 1.0f, 1.0f },
 			DirectX::SpriteEffects_None,
-			1.0f);
+			0.7f);
 	}
 	//ゲームクリア表示
 	else if (m_state == enState_GameClear && !m_skinModelRender->GetAnimCon().IsPlaying()) {
@@ -1008,7 +1012,7 @@ void Player::PostRender()
 			0.0f,
 			{ 1.0f, 1.0f, 1.0f, 1.0f },
 			DirectX::SpriteEffects_None,
-			1.0f);
+			0.7f);
 	}
 	//hpのHUD関係
 	float hpRate = (float)m_HP / m_MaxHP;
