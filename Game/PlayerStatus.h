@@ -135,9 +135,9 @@ public:
 		m_havemateriallist[number] -= amount;
 	}
 	//Œ»İ‘•”õ’†‚Ì•Ší‚Ì‹­‰»ƒŒƒxƒ‹‚ğæ“¾
-	int GetWeaponLv(const int& number)
+	int GetWeaponLv()
 	{
-		return m_equipmentlist[number]->GetLv();
+		return m_equipmentlist[m_SwordId]->GetLv();
 	}
 	//Š’†‚ÌƒƒZƒ^‚ÌŠz‚ğæ“¾
 	int GetHaveMeseta() const

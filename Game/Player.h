@@ -263,6 +263,7 @@ private:
     int m_Attack;                                               //攻撃力
 	int m_Mattack;                                              //魔法攻撃力
 	int m_SwordId;                                              //装備中の武器の番号
+	int m_WeaponNumber;
 	const wchar_t* m_SwordName;                                 //装備中の武器の名前
 	int m_MagicId;                                              //使える魔法の番号
 	const wchar_t* m_MagicName;						            //魔法の名前

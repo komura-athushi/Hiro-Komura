@@ -61,7 +61,7 @@ void Player::unityChan()
 	pos.x -= 70.0f;
 	pos.z += 10.0f;
 	m_sword->SetPosition(pos);
-	m_sword->SetSwordId(m_SwordId);
+	m_sword->SetSwordId(m_WeaponNumber);
 	//アニメーションイベントのコールバック関数を設定
 	m_skinModelRender->GetAnimCon().AddAnimationEventListener([&](const wchar_t* clipName, const wchar_t* eventName) {
 		OnAnimationEvent(clipName, eventName);
@@ -673,6 +673,7 @@ void Player::WeaponStatus()
 	m_Attack = m_playerstatus->GetAttack();
 	m_ShihutaAttack = m_Attack;
 	m_SwordId = m_playerstatus->GetSwordId();
+	m_WeaponNumber = m_playerstatus->GetWeaponNumber(m_SwordId);
 	m_SwordName = m_playerstatus->GetSwordName();
 	m_MagicId = m_playerstatus->GetMagicId();
 }
@@ -737,7 +738,8 @@ void Player::SwitchWeapon()
 			}
 		}
 	}
-	m_sword->SetSwordId(m_SwordId);
+	m_WeaponNumber = m_playerstatus->GetWeaponNumber(m_SwordId);
+	m_sword->SetSwordId(m_WeaponNumber);
 }
 
 void Player::RecoveryPP()
@@ -987,7 +989,7 @@ void Player::PostRender()
 		m_attacktarget = m_playerheikou;
 	}
 	wchar_t output[256];
-	swprintf_s(output, L"Lv   %d\nExp  %d\nNexp %d\nHP   %d\nPP   %d\nAtk  %d\nMatk %d\nWpn  %s\nMgc  %s\nMPC  %d\nMgg  %d\nWLv  %d\n", m_Level, m_Exp, m_NextExp, m_HP, m_PP, m_Attack, m_Mattack, m_SwordName, m_MagicName, m_PPCost, int(m_Mattack*m_DamageRate),m_playerstatus->GetWeaponLv(m_SwordId));
+	swprintf_s(output, L"Lv   %d\nExp  %d\nNexp %d\nHP   %d\nPP   %d\nAtk  %d\nMatk %d\nWpn  %s\nMgc  %s\nMPC  %d\nMgg  %d\nWLv  %d\n", m_Level, m_Exp, m_NextExp, m_HP, m_PP, m_Attack, m_Mattack, m_SwordName, m_MagicName, m_PPCost, int(m_Mattack*m_DamageRate),m_playerstatus->GetWeaponLv());
 	//swprintf_s(output, L"x   %f\ny   %f\nz  %f\nw   %f\n", m_swordqRot.x, m_swordqRot.y, m_swordqRot.z, m_swordqRot.w);
 	m_font.DrawScreenPos(output, { 700.0f,100.0f }, CVector4(200.0f, 00.0f, 100.0f, 1.0f));
 	//ゲームオーバー表示
