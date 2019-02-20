@@ -69,6 +69,7 @@ void Player::unityChan()
 	m_targetsprite.Init(L"Resource/sprite/target.dds");
 	m_locktargetsprite.Init(L"Resource/sprite/locktarget.dds");
 	m_hp.Init(L"Resource/sprite/hpgage.dds");
+	m_statussprite.Init(L"Resource/sprite/status.dds");
 	m_hpframe.Init(L"Resource/sprite/hpgage_frame.dds");
 }
 
@@ -273,6 +274,15 @@ void Player::Animation()
 	//LB1押したらゲームクリア
 	else if (Pad(0).GetButton(enButtonRT)) {
 		m_state = enState_GameClear;
+	}
+	if (Pad(0).GetDown(enButtonStart)) {
+		if (!m_displaystatus) {
+			m_displaystatus = true;
+		}
+		else {
+			m_displaystatus = false;
+		}
+		int a = 0;
 	}
 	m_timer += m_frame * GetDeltaTimeSec();
 }
@@ -952,6 +962,7 @@ void Player::OutTarget()
 
 void Player::PostRender()
 {
+	
 	//ターゲッティングがオンであればターゲットの画像を表示します
 	if (m_targetdisplay) {
 		//該当のワールド座標を2D座標を変換します)
@@ -988,10 +999,18 @@ void Player::PostRender()
 	else {
 		m_attacktarget = m_playerheikou;
 	}
-	wchar_t output[256];
-	swprintf_s(output, L"Lv   %d\nExp  %d\nNexp %d\nHP   %d\nPP   %d\nAtk  %d\nMatk %d\nWpn  %s\nMgc  %s\nMPC  %d\nMgg  %d\nWLv  %d\n", m_Level, m_Exp, m_NextExp, m_HP, m_PP, m_Attack, m_Mattack, m_SwordName, m_MagicName, m_PPCost, int(m_Mattack*m_DamageRate),m_playerstatus->GetWeaponLv());
-	//swprintf_s(output, L"x   %f\ny   %f\nz  %f\nw   %f\n", m_swordqRot.x, m_swordqRot.y, m_swordqRot.z, m_swordqRot.w);
-	m_font.DrawScreenPos(output, { 700.0f,100.0f }, CVector4(200.0f, 00.0f, 100.0f, 1.0f));
+	//ステータス表示
+	if (m_displaystatus) {
+		wchar_t output[256];
+		swprintf_s(output, L"STATUS \nLv   %d\nExp  %d\nNexp %d\nHP   %d\nPP   %d\nAtk  %d\nMatk %d\nWpn  %s\nMgc  %s\nMPC  %d\nMgg  %d\nWLv  %d\n", m_Level, m_Exp, m_NextExp, m_HP, m_PP, m_Attack, m_Mattack, m_SwordName, m_MagicName, m_PPCost, int(m_Mattack*m_DamageRate), m_playerstatus->GetWeaponLv());
+		//swprintf_s(output, L"x   %f\ny   %f\nz  %f\nw   %f\n", m_swordqRot.x, m_swordqRot.y, m_swordqRot.z, m_swordqRot.w);
+		m_font.DrawScreenPos(output, { 700.0f,100.0f }, CVector4::White(), {0.7f,0.7f});
+		m_statussprite.DrawScreenPos({ 700.0f,100.0f }, {0.4f,0.75f}, CVector2::Zero(),
+			0.0f,
+			{ 1.0f, 1.0f, 1.0f, 1.0f },
+			DirectX::SpriteEffects_None,
+			1.0f);
+	}
 	//ゲームオーバー表示
 	if (m_state == enState_GameOver && !m_skinModelRender->GetAnimCon().IsPlaying()) {
 		if (!m_displaysprite) {

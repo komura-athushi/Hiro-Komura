@@ -18,7 +18,7 @@ bool GameCamera::Start()
 	m_camera = FindGO<GameObj::PerspectiveCamera>(L"Camera");
 	m_camera->SetPos(m_position);
 	m_camera->SetNear(1.0f);
-	m_camera->SetFar(200000.0f);
+	m_camera->SetFar(300000.0f);
 	SetMainCamera(m_camera);
 	return true;
 }

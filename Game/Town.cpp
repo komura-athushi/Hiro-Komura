@@ -140,12 +140,12 @@ void Town::Update()
 			m_isWaitFadeout = true;
 			m_fade->StartFadeOut();
 		}
-		//拠点に居る時にSTARTボタンを押すとカリオストロちゃん☆モードに遷移する
+		/*//拠点に居る時にSTARTボタンを押すとカリオストロちゃん☆モードに遷移する
 		else if (Pad(0).GetDown(enButtonStart)) {
 			m_state = enCga;
 			m_isWaitFadeout = true;
 			m_fade->StartFadeOut();
-		}
+		}*/
 		//街を再構築
 		else if (m_developtown) {
 			m_state = enTown;

@@ -36,7 +36,7 @@ public:
 	void Turn();
 	//キャラクターのアニメーションを再生
 	void AnimationController();
-	//特殊なキャラクターのアニメーションを決める
+	//特殊なキャラクターのアニメーションとかその他もろもろ
 	void Animation();
 	//キャラクターの移動を計算
 	void Move();
@@ -186,6 +186,7 @@ private:
 	CSprite m_targetsprite;										//ターゲットのスプライト
 	CSprite m_locktargetsprite;
 	CSprite m_hp, m_hpframe;									//HP関係のテクスチャ
+	CSprite m_statussprite;
 	bool m_displaysprite = false;								//
     SuicideObj::CCollisionObj* m_collision;                     //丸いコリジョン
 	CFont m_font;                                               //文字表示クラス
@@ -300,6 +301,6 @@ private:
 	bool m_aria = false;										//呪文詠唱中かどうか
 	IEnemy* m_enemy = nullptr;
 	bool m_targetlock = false;									//ターゲットロック中かどうか
-
+	bool m_displaystatus = false;
 };
 
