@@ -11,6 +11,7 @@
 #include "Merchant.h"
 #include "Effekseer.h"
 #include "Morugan.h"
+#include "Town.h"
 Player::Player()
 {
 } 
@@ -68,9 +69,13 @@ void Player::unityChan()
 	});
 	m_targetsprite.Init(L"Resource/sprite/target.dds");
 	m_locktargetsprite.Init(L"Resource/sprite/locktarget.dds");
-	m_hp.Init(L"Resource/sprite/hpgage.dds");
 	m_statussprite.Init(L"Resource/sprite/status.dds");
-	m_hpframe.Init(L"Resource/sprite/hpgage_frame.dds");
+	m_hpframe.Init(L"Resource/sprite/hpframe.dds");
+	m_hpgage.Init(L"Resource/sprite/hpgage.dds");
+	m_ppframe.Init(L"Resource/sprite/ppframe.dds");
+	m_ppgage.Init(L"Resource/sprite/ppgage.dds");
+	m_hud.Init(L"Resource/sprite/hud.dds");
+	m_logo.Init(L"Resource/sprite/logo.dds");
 }
 
 void Player::cagliostro()
@@ -102,6 +107,7 @@ bool Player::Start()
 	m_collision->SetClass(this);
 	//プレイヤーステータスクラスのポインタを検索検索ぅ～
 	m_playerstatus = FindGO<PlayerStatus>(L"PlayerStatus");
+	m_town = FindGO<Town>();
 	//ステータス
 	Status();
 	//武器のステータス
@@ -267,13 +273,15 @@ void Player::Animation()
 			}
 		}
 	}
-	//LT押したらゲームオーバー
-	if (m_HP <= 0 || Pad(0).GetButton(enButtonLT)) {
-		m_state = enState_GameOver;
-	}
-	//LB1押したらゲームクリア
-	else if (Pad(0).GetButton(enButtonRT)) {
-		m_state = enState_GameClear;
+	if (m_town == nullptr) {
+		//LT押したらゲームオーバー
+		if (m_HP <= 0 || Pad(0).GetButton(enButtonLT)) {
+			m_state = enState_GameOver;
+		}
+		//LB1押したらゲームクリア
+		else if (Pad(0).GetButton(enButtonRT)) {
+			m_state = enState_GameClear;
+		}
 	}
 	if (Pad(0).GetDown(enButtonStart)) {
 		if (!m_displaystatus) {
@@ -1049,4 +1057,67 @@ void Player::PostRender()
 		{ 1.0f, 1.0f, 1.0f, 1.0f },
 		DirectX::SpriteEffects_None,
 		1.0f);*/
+	m_hud.DrawScreenPos({ 5.0f,595.0f }, CVector2::One(), CVector2::Zero(),
+		0.0f,
+		{ 1.0f, 1.0f, 1.0f, 0.7f },
+		DirectX::SpriteEffects_None,
+		1.0f);
+	m_logo.DrawScreenPos({ 30.0f,640.0f }, {0.4f,0.4f}, CVector2::Zero(),
+		0.0f,
+		{ 1.0f, 1.0f, 1.0f, 1.0f },
+		DirectX::SpriteEffects_None,
+		0.9f);
+	if (true) {
+		wchar_t output[50];
+		swprintf_s(output, L"unityChan\n");
+		m_name.DrawScreenPos(output, { 165.0f,600.0f }, CVector4::White(), { 0.6f,0.6f });
+	}
+	if (true) {
+		wchar_t output[50];
+		swprintf_s(output, L"Lv  %d\n", m_Level);
+		m_lvf.DrawScreenPos(output, { 20.0f,600.0f }, CVector4::White(), { 0.7f,0.7f });
+	}
+	if (true) {
+		m_hpf.DrawScreenPos(L"HP", { 140.0f,643.0f }, CVector4::White(), { 0.4f,0.4f });
+		wchar_t output[10];
+		swprintf_s(output, L"%d", m_HP);
+		m_hpf.DrawScreenPos(output, { 180.0f,635.0f }, CVector4::White(), { 0.6f,0.6f });
+		wchar_t output2[10];
+		swprintf_s(output2, L"/ %d\n", m_MaxHP);
+		m_hpf.DrawScreenPos(output2, { 235.0f,635.0f }, CVector4::White(), { 0.6f,0.6f });
+		m_hpframe.DrawScreenPos({140.0f,662.0f}, CVector2::One(), CVector2::Zero(),
+			0.0f,
+			{ 1.0f, 1.0f, 1.0f, 1.0f },
+			DirectX::SpriteEffects_None,
+			0.9f);
+		m_hpgage.DrawScreenPos({ 140.0f,662.0f }, {(float)m_HP/m_MaxHP,1.0f}, CVector2::Zero(),
+			0.0f,
+			{ 1.0f, 1.0f, 1.0f, 1.0f },
+			DirectX::SpriteEffects_None,
+			0.8f);
+	}
+	if (true) {
+		m_ppf.DrawScreenPos(L"PP", { 140.0f,682.0f }, CVector4::White(), { 0.4f,0.4f });
+		wchar_t output[10];
+		swprintf_s(output, L"%d", m_PP);
+		m_ppf.DrawScreenPos(output, { 180.0f,674.0f }, CVector4::White(), { 0.6f,0.6f });
+		wchar_t output2[10];
+		swprintf_s(output2, L"/ %d\n", m_MaxHP);
+		m_ppf.DrawScreenPos(output2, { 235.0f,674.0f }, CVector4::White(), { 0.6f,0.6f });
+		m_ppframe.DrawScreenPos({ 140.0f,701.0f }, CVector2::One(), CVector2::Zero(),
+			0.0f,
+			{ 1.0f, 1.0f, 1.0f, 1.0f },
+			DirectX::SpriteEffects_None,
+			0.9f);
+		m_ppgage.DrawScreenPos({ 140.0f,701.0f }, { (float)m_PP / m_MaxPP,1.0f }, CVector2::Zero(),
+			0.0f,
+			{ 1.0f, 1.0f, 1.0f, 1.0f },
+			DirectX::SpriteEffects_None,
+			0.8f);
+	}
+	/*if (true) {
+		wchar_t output[50];
+		swprintf_s(output, L"Lv  %d\n", m_Level);
+		m_ppf.DrawScreenPos(output, { 20.0f,600.0f }, { 225.0f,225.0f,225.0f,1.0f }, { 0.7f,0.7f });
+	}*/
 }

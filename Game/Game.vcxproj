@@ -370,18 +370,11 @@
     <ImageContentTask Include="Asset\sprite\loading.png" />
   </ItemGroup>
   <ItemGroup>
-    <ImageContentTask Include="Asset\sprite\HP_waku.png" />
-  </ItemGroup>
-  <ItemGroup>
     <ImageContentTask Include="Asset\sprite\clear.png" />
     <ImageContentTask Include="Asset\sprite\gameover.png" />
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Asset\sprite\target.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <ImageContentTask Include="Asset\sprite\hp\hpgage.png" />
-    <ImageContentTask Include="Asset\sprite\hp\hpgage_frame.png" />
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Asset\sprite\locktarget.png" />
@@ -391,6 +384,22 @@
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Asset\sprite\status.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Asset\sprite\hud.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Asset\sprite\logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Asset\sprite\hpframe.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Asset\sprite\hpgage.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Asset\sprite\ppframe.png" />
+    <ImageContentTask Include="Asset\sprite\ppgage.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

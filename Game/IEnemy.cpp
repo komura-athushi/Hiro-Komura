@@ -111,7 +111,7 @@ void IEnemy::Damage(const int& attack,int number)
 	case 4:							//シフタ(ダメージ無し)
 		break;
 	case 5:							
-		if (m_timer5 >= 70) {		//マジスフィ
+		if (m_timer5 >= 50) {		//マジスフィ
 			m_HP -= attack;
 			m_timer5 = 0;
 			m_damage = true;
@@ -120,7 +120,7 @@ void IEnemy::Damage(const int& attack,int number)
 	case 6:
 		break;						//レスタ(ダメージ無し)
 	case 7:
-		if (m_timer7 >= 70) {		//覇王斬
+		if (m_timer7 >= 50) {		//覇王斬
 			m_HP -= attack;
 			m_timer7 = 0;
 			m_damage = true;

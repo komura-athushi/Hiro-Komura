@@ -6,6 +6,7 @@ class PlayerStatus;
 class Human;
 class Merchant;
 class IEnemy;
+class Town;
 //プレイヤーです
 class Player:public IGameObject
 {
@@ -185,7 +186,10 @@ private:
 	CSprite m_sprite2;											//ゲームクリアとかゲームオーバーの
 	CSprite m_targetsprite;										//ターゲットのスプライト
 	CSprite m_locktargetsprite;
-	CSprite m_hp, m_hpframe;									//HP関係のテクスチャ
+	CSprite m_hud ,m_hpframe ,m_hpgage ,m_ppframe ,m_ppgage;	//HUD関係のテクスチャ
+	CFont m_lvf, m_hpf, m_ppf;
+	CFont m_name;
+	CSprite m_logo;
 	CSprite m_statussprite;
 	bool m_displaysprite = false;								//
     SuicideObj::CCollisionObj* m_collision;                     //丸いコリジョン
@@ -199,6 +203,7 @@ private:
 	CVector3 m_savemovespeed;                                   //m_movespeedを記憶しておく
 	Sword* m_sword;                                             //Swordクラスのポインタ
 	GameCamera* m_gamecamera = nullptr;                         //カメラのポインタ
+	Town* m_town = nullptr;
 	CVector3 m_movespeed;                                       //移動速度
 	CVector3 m_position = {0.0f,100.0f,00.0f};                  //ユニティちゃんの座標
 	CVector3 m_playerheikou = { 1.0f,0.0f,0.0f };               //プレイヤーと平行なベクトル
