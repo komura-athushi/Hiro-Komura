@@ -1098,7 +1098,7 @@ void Player::PostRender()
 	}
 	if (true) {
 		m_ppf.DrawScreenPos(L"PP", { 140.0f,682.0f }, CVector4::White(), { 0.4f,0.4f });
-		wchar_t output[10];
+		wchar_t output[30];
 		swprintf_s(output, L"%d", m_PP);
 		m_ppf.DrawScreenPos(output, { 180.0f,674.0f }, CVector4::White(), { 0.6f,0.6f });
 		wchar_t output2[10];
