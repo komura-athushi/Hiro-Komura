@@ -70,6 +70,8 @@ void Player::unityChan()
 	m_targetsprite.Init(L"Resource/sprite/target.dds");
 	m_locktargetsprite.Init(L"Resource/sprite/locktarget.dds");
 	m_statussprite.Init(L"Resource/sprite/status.dds");
+	m_weaponstatussprite.Init(L"Resource/sprite/weaponstatus.dds");
+	m_inventorystatussprite.Init(L"Resource/sprite/inventorystatus.dds");
 	m_hpframe.Init(L"Resource/sprite/hpframe.dds");
 	m_hpgage.Init(L"Resource/sprite/hpgage.dds");
 	m_ppframe.Init(L"Resource/sprite/ppframe.dds");
@@ -1010,10 +1012,26 @@ void Player::PostRender()
 	//ステータス表示
 	if (m_displaystatus) {
 		wchar_t output[256];
-		swprintf_s(output, L"STATUS \nLv   %d\nExp  %d\nNexp %d\nHP   %d\nPP   %d\nAtk  %d\nMatk %d\nWpn  %s\nMgc  %s\nMPC  %d\nMgg  %d\nWLv  %d\n", m_Level, m_Exp, m_NextExp, m_HP, m_PP, m_Attack, m_Mattack, m_SwordName, m_MagicName, m_PPCost, int(m_Mattack*m_DamageRate), m_playerstatus->GetWeaponLv());
+		swprintf_s(output, L"unityChan\nLv. %d\nHP        %d\nPP        %d\n力        %d\n賢さ      %d\n打撃力    %d\n法撃力    %d\nEx        %d\nNex       %d\n",m_Level,m_MaxHP,m_MaxPP,m_playerstatus->GetPower(),m_playerstatus->GetClever(),m_Attack,m_Mattack,m_Exp,m_NextExp);
 		//swprintf_s(output, L"x   %f\ny   %f\nz  %f\nw   %f\n", m_swordqRot.x, m_swordqRot.y, m_swordqRot.z, m_swordqRot.w);
-		m_font.DrawScreenPos(output, { 700.0f,100.0f }, CVector4::White(), {0.7f,0.7f});
-		m_statussprite.DrawScreenPos({ 700.0f,100.0f }, {0.4f,0.75f}, CVector2::Zero(),
+		m_font.DrawScreenPos(output, { 705.0f,60.0f }, CVector4::White(), {1.0f,1.0f});
+		m_statussprite.DrawScreenPos({ 700.0f,50.0f }, {1.0f,1.0f}, CVector2::Zero(),
+			0.0f,
+			{ 1.0f, 1.0f, 1.0f, 1.0f },
+			DirectX::SpriteEffects_None,
+			1.0f);
+		wchar_t output2[256];
+		swprintf_s(output2, L"武器\n武器Lv  %d\n武器名  %ls\n打撃力  %d\n法撃力  %d\n魔法    %ls\n",m_playerstatus->GetWeaponLv(),m_SwordName,m_playerstatus->GetWeaponAttack(),m_playerstatus->GetWeaponMattack(),m_MagicName);
+		m_font.DrawScreenPos(output2, { 230.0f,60.0f }, CVector4::White(), { 0.7f,0.7f });
+		m_weaponstatussprite.DrawScreenPos({ 227.0f,50.0f }, { 1.0f,1.0f }, CVector2::Zero(),
+			0.0f,
+			{ 1.0f, 1.0f, 1.0f, 1.0f },
+			DirectX::SpriteEffects_None,
+			1.0f);
+		wchar_t output3[256];
+		swprintf_s(output3, L"インベントリ\n木        %d\n石        %d\nレンガ    %d\nメセタ    %dM\n",m_playerstatus->GetMaterial(0), m_playerstatus->GetMaterial(1), m_playerstatus->GetMaterial(2), m_playerstatus->GetHaveMeseta());
+		m_font.DrawScreenPos(output3, { 445.0f,255.0f }, CVector4::White(), { 0.7f,0.7f });
+		m_inventorystatussprite.DrawScreenPos({ 442.0f,245.0f }, { 1.0f,1.0f }, CVector2::Zero(),
 			0.0f,
 			{ 1.0f, 1.0f, 1.0f, 1.0f },
 			DirectX::SpriteEffects_None,
@@ -1047,16 +1065,6 @@ void Player::PostRender()
 	float hpRate = (float)m_HP / m_MaxHP;
 	float offsetX = (hpRate - 1.0f) / 2;
 	m_spriteposition.x = m_protspriteposition.x + offsetX;
-	/*m_hp.DrawScreenPos({200.0f,200.0f}, CVector2::One(), CVector2::Zero(),
-		0.0f,
-		{ 1.0f, 1.0f, 1.0f, 1.0f },
-		DirectX::SpriteEffects_None,
-		0.9f);
-	m_hpframe.DrawScreenPos({200.0f,200.0f}, CVector2::One(), CVector2::Zero(),
-		0.0f,
-		{ 1.0f, 1.0f, 1.0f, 1.0f },
-		DirectX::SpriteEffects_None,
-		1.0f);*/
 	m_hud.DrawScreenPos({ 5.0f,595.0f }, CVector2::One(), CVector2::Zero(),
 		0.0f,
 		{ 1.0f, 1.0f, 1.0f, 0.7f },
@@ -1115,9 +1123,4 @@ void Player::PostRender()
 			DirectX::SpriteEffects_None,
 			0.8f);
 	}
-	/*if (true) {
-		wchar_t output[50];
-		swprintf_s(output, L"Lv  %d\n", m_Level);
-		m_ppf.DrawScreenPos(output, { 20.0f,600.0f }, { 225.0f,225.0f,225.0f,1.0f }, { 0.7f,0.7f });
-	}*/
 }

@@ -401,6 +401,12 @@
     <ImageContentTask Include="Asset\sprite\ppframe.png" />
     <ImageContentTask Include="Asset\sprite\ppgage.png" />
   </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Asset\sprite\weaponstatus.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Asset\sprite\inventorystatus.png" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="$(VCTargetsPath)\BuildCustomizations\ImageContentTask.targets" />

@@ -179,6 +179,26 @@ public:
 	{
 		return m_equipmentlist[number]->GetId();
 	}
+	//プレイヤーの力を取得
+	int GetPower() const
+	{
+		return m_Power;
+	}
+	//プレイヤーの賢さを取得
+	int GetClever() const
+	{
+		return m_Clever;
+	}
+	//武器の打撃力を取得
+	int GetWeaponAttack() const
+	{
+		return m_SwordAttack;
+	}
+	//武器の法撃力を取得
+	int GetWeaponMattack() const
+	{
+		return m_SwordMattack;
+	}
 private:  
 	int m_Level = 1;                                        //レベル
 	int m_Exp = 0;                                          //経験値

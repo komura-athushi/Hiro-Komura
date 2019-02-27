@@ -79,6 +79,12 @@
     <ImageContentTask Include="Asset\sprite\ppframe.png">
       <Filter>Asset\sprite</Filter>
     </ImageContentTask>
+    <ImageContentTask Include="Asset\sprite\weaponstatus.png">
+      <Filter>Asset\sprite</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Asset\sprite\inventorystatus.png">
+      <Filter>Asset\sprite</Filter>
+    </ImageContentTask>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Boss.cpp" />

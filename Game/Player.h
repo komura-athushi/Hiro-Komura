@@ -190,7 +190,7 @@ private:
 	CFont m_lvf, m_hpf, m_ppf;
 	CFont m_name;
 	CSprite m_logo;
-	CSprite m_statussprite;
+	CSprite m_statussprite,m_weaponstatussprite,m_inventorystatussprite;
 	bool m_displaysprite = false;								//
     SuicideObj::CCollisionObj* m_collision;                     //丸いコリジョン
 	CFont m_font;                                               //文字表示クラス
