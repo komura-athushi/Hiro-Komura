@@ -152,7 +152,7 @@ void PlayerStatus::SetWeapon(Equipment* number)
 void PlayerStatus::PostRender()
 {
 	//ステを文字表示
-	wchar_t output[256];
+	/*wchar_t output[256];
 	swprintf_s(output, L"木   %d\n石   %d\nレンガ  %d\nメセタ  %d\n", m_havemateriallist[0], m_havemateriallist[1], m_havemateriallist[2],m_havemeseta);
 	//swprintf_s(output, L"x   %f\ny   %f\nz  %f\nw   %f\n", m_swordqRot.x, m_swordqRot.y, m_swordqRot.z, m_swordqRot.w);
 	m_font.DrawScreenPos(output, { 00.0f,200.0f }, CVector4::White(),
@@ -161,7 +161,7 @@ void PlayerStatus::PostRender()
 		0.0f,
 		DirectX::SpriteEffects_None,
 		1.0f
-	);
+	);*/
 	//武器のアイコン表示
 	CVector2 pos = m_position;
 	for (int i = 0; i < m_equipmentlist.size(); i++) {

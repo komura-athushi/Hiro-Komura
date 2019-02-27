@@ -154,11 +154,6 @@ public:
 	{
 		m_havemeseta += meseta;
 	}
-	//PP消費無しモード！
-	void PPLimited()
-	{
-		m_PPlimited = true;
-	}
 	//該当のEquipmentクラスのインスタンスにアクセス
 	Equipment GetEuipment(const int& number) const
 	{
@@ -232,5 +227,4 @@ private:
 	GameData* m_gamedata;                                 //GameDataクラスのポインタ
 	Weapon* m_weapon;									  //Weaponクラスのポインタ
 	Magic* m_magic;										  //Magicクラスのポインタ
-	bool m_PPlimited = false;
 };

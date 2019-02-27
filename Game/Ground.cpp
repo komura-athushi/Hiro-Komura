@@ -9,7 +9,7 @@ Ground::Ground()
 Ground::~Ground()
 {
 	delete m_skinModelRender;
-	delete m_skinModelRender2;
+	//delete m_skinModelRender2;
 }
 
 bool Ground::Start()

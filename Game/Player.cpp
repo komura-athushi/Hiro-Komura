@@ -972,7 +972,6 @@ void Player::OutTarget()
 
 void Player::PostRender()
 {
-	
 	//ターゲッティングがオンであればターゲットの画像を表示します
 	if (m_targetdisplay) {
 		//該当のワールド座標を2D座標を変換します)
