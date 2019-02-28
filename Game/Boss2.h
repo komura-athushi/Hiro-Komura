@@ -100,15 +100,14 @@ private:
 	int m_posttiming = 30;										//攻撃が来る前の注意のタイミング
 	int m_atktype = 0;											//攻撃の種類
 	float m_r = 150.0f;                                         //コリジョンの半径
-	const float m_attackr = 90.0f;                              //攻撃したときに発生させるコリジョンの半径
-	const float m_attack3r = 300.0f;                            //攻撃したときに発生させるコリジョンの半径
+	const float m_attackr = 90.0f;                              //ひっかきしたときに発生させるコリジョンの半径
+	const float m_attack2r = 300.0f;                            //プレスしたときに発生させるコリジョンの半径
 	float m_collisionheight = 70.0f;							//コリジョンをm_positionからどれだけ上にあげるか
 	int m_bonehead;                                             //頭のboneの番号
 	//Bossの色々なステータス
 	static const int m_MaxHP = 900;                             //最大HP
 	static const int m_Attack1 = 20;							//ひっかきの攻撃力
 	static const int m_Attack2 = 30;							//プレスの攻撃力
-	static const int m_Attack3 = 40;							//ファイヤーの攻撃力
 	static const int m_EXP = 500;                               //経験値
 	static const int m_dropChances[];				            //ドラゴンのドロップするアイテム、[1]が10ならレア度1が10%でドロップするみたいな
 	static const int m_dropmaterialChances[];

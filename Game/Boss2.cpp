@@ -217,16 +217,6 @@ void Boss2::Damage()
 		m_state = enState_Damage;
 		IEnemy::m_damage = false;
 	}
-	//ファイヤー
-	//プレイヤーと弾の当たり判定
-	QueryGOs<Boss2_Fire>(L"bossfire", [&](Boss2_Fire* fire)->bool {
-		CVector3 diff = fire->GetPosition() - m_player->GetPosition();
-		if (diff.Length() < 130.0f) {  //距離が一定以下になったら。
-			delete fire;
-			m_player->Damage(m_Attack3);
-		}
-		return true;
-	});
 }
 
 void Boss2::Dead()
@@ -301,7 +291,7 @@ void Boss2::OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventName)
 		//形状の作成
 		CVector3 atkpos = m_position;
 		atkpos.y -= 150.0f;
-		attackCol->CreateSphere(atkpos, CQuaternion::Identity(), m_attack3r);
+		attackCol->CreateSphere(atkpos, CQuaternion::Identity(), m_attack2r);
 		//寿命を設定
 		attackCol->SetTimer(5);//フレーム後削除される
 		attackCol->SetCallback([&](SuicideObj::CCollisionObj::SCallbackParam& param) {
@@ -327,26 +317,9 @@ void Boss2::OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventName)
 		m_fire->SetPosition(b_pos);
 		CVector3 bulletPos = m_playerposition - b_pos;
 		bulletPos.Normalize();
-		bulletPos = bulletPos * 0.0f;
+		bulletPos = bulletPos * 20.0f;
 		//弾のスピードを変える
 		m_fire->SetMoveSpeed(bulletPos);
-		
-		////攻撃判定の発生
-		//SuicideObj::CCollisionObj* attackCol = NewGO<SuicideObj::CCollisionObj>();
-		////形状の作成
-		//CVector3 atkpos = m_position;
-		//atkpos.y -= 150.0f;
-		//attackCol->CreateSphere(atkpos, CQuaternion::Identity(), m_attack3r);
-		////寿命を設定
-		//attackCol->SetTimer(5);//フレーム後削除される
-		//attackCol->SetCallback([&](SuicideObj::CCollisionObj::SCallbackParam& param) {
-		//	//衝突した判定の名前が"Player"ならm_Attack分だけダメージ与える
-		//	if (param.EqualName(L"Player")) {
-		//		Player* player = param.GetClass<Player>();
-		//		player->Damage(m_Attack3);
-		//	}
-		//}
-		//);
 	}
 }
 
