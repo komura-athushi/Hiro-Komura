@@ -23,15 +23,13 @@ StructuredBuffer<SDirectionLight> directionLight : register(t100);
 StructuredBuffer<SPointLight> pointLightList : register(t101);
 
 //シャドウマップ系
-#define SHADOWMAP_NUM 8
-static const uint SHADOW_MAX_WIDTH = 4096 / 2;
-static const uint SHADOW_MAX_HEIGHT = 4096 / 2;
-
+#include"ShadowMapHeader.h"
 cbuffer ShadowCb : register(b1) {
 	float4x4 ViewProjInv;
 	float4x4 mLVP[SHADOWMAP_NUM];
-	float4 shadowDir[SHADOWMAP_NUM];//wはバイアス
-	float4 enableShadowMap[SHADOWMAP_NUM];//x:シャドウマップ有効か？ y:PCSS有効 z:widthサイズ w:heightサイズ
+	float4 shadowDir[SHADOWMAP_NUM];//xyz:方向 w:バイアス
+	float4 enableShadowMap[SHADOWMAP_NUM];//x:シャドウマップ有効か？ y:PCSS有効 z:解像度(横) w:解像度(縦)
+	float4 cascadeArea[SHADOWMAP_NUM];//x:カスケード距離(Near) y:カスケード距離(Far) z:4000.0f/Width(平行投影カメラ) w:4000.0f/Height(平行投影カメラ)
 
 	int boolAO;//AOを有効にするか
 };
@@ -133,9 +131,6 @@ static const float2 PCSSSampleMap[] = {
 //シャドウマップの判定
 inline float ShadowMapFunc(uint usemapnum, float4 worldpos) {
 
-	//Zからワールド座標を出す
-	//float4 worldpos = float4(CalcWorldPosFromUVZ(In.uv, viewpos.w, ViewProjInv), 1.0f);
-
 	//座標算出
 	float4 lLViewPosition = mul(mLVP[usemapnum], worldpos);
 	lLViewPosition.xyz /= lLViewPosition.w;
@@ -149,14 +144,8 @@ inline float ShadowMapFunc(uint usemapnum, float4 worldpos) {
 	float2 scale = float2( enableShadowMap[usemapnum].z / SHADOW_MAX_WIDTH, enableShadowMap[usemapnum].w / SHADOW_MAX_HEIGHT);
 	lLViewPosition.xy *= scale;
 	
-	// 最大深度傾斜を求める.
-	//float  maxDepthSlope = max(abs(ddx(lLViewPosition.z)), abs(ddy(lLViewPosition.z)));
-	
-	//float  shadowBias = shadowDir[usemapnum].w*0.1f + shadowDir[usemapnum].w*4.0f * maxDepthSlope;
-	//shadowBias = min(shadowBias, shadowDir[usemapnum].w*4.0f);
-	
 	//バイアス
-	lLViewPosition.z -= shadowDir[usemapnum].w;// shadowBias;
+	lLViewPosition.z -= shadowDir[usemapnum].w;
 
 	//PCSS無効
 	if (!enableShadowMap[usemapnum].y) {
@@ -171,17 +160,13 @@ inline float ShadowMapFunc(uint usemapnum, float4 worldpos) {
 	float avg_blocker_z = 0.0f;
 	[unroll]
 	for (uint i = 0; i < 25; i++) {
-	//for (float y = -0.00276f; y <= 0.00276f; y += 0.00138f) {
-	//[unroll]
-	//for (float x = -0.00276f; x <= 0.00276f; x += 0.00138f) {
 
-		blocker_z = shadowMaps.Sample(NoFillteringSampler, float3(lLViewPosition.xy + blockerSampleMap[i] * scale, usemapnum));
+		blocker_z = shadowMaps.Sample(NoFillteringSampler, float3(lLViewPosition.xy + blockerSampleMap[i] * scale * float2(cascadeArea[usemapnum].z, cascadeArea[usemapnum].w), usemapnum));
 
 		if (blocker_z < lLViewPosition.z) {
 			avg_blocker_z += blocker_z;
 			cnt++;
 		}
-	//}
 	}
 	if (cnt == 0) {
 		return 0.0f;
@@ -200,14 +185,10 @@ inline float ShadowMapFunc(uint usemapnum, float4 worldpos) {
 	cnt = 0;
 	[unroll]
 	for (uint i = 0; i < 49; i++) {
-	//for (float y = -0.00138f; y <= 0.00138f; y += 0.00046f){//1.0/720.0
-	//[unroll]
-	//for (float x = -0.00138f; x <= 0.00138f; x += 0.00046f){
-
-		kekka += 1.0f - shadowMaps.SampleCmpLevelZero(shadowSamplerComparisonState, float3(PCSSSampleMap[i] * maxCnt * scale + lLViewPosition.xy, usemapnum), lLViewPosition.z);
+	
+		kekka += 1.0f - shadowMaps.SampleCmpLevelZero(shadowSamplerComparisonState, float3(PCSSSampleMap[i] * maxCnt * scale * float2(cascadeArea[usemapnum].z, cascadeArea[usemapnum].w) + lLViewPosition.xy, usemapnum), lLViewPosition.z);
 
 		cnt++;
-	//}
 	}
 
 	kekka /= cnt;
@@ -251,16 +232,18 @@ float3 CalcWorldPosFromUVZ(float2 uv, float zInScreen)//, float4x4 mViewProjInv)
 	return worldPos.xyz;
 }
 
+static const float PI = 3.14f;
+
 //スペキュラ
 float3 NormalizedPhong(float3 specular, float power, float3 viewDir, float3 normal, float3 lightDir)
 {
 	float3 R = -viewDir + (2.0f * dot(normal, viewDir) * normal);
-	return specular * pow(max(dot(lightDir, R), 0.0f), power) * ((power + 1.0f) / (2.0 * 3.14));
+	return specular * pow(max(dot(lightDir, R), 0.0f), power) * ((power + 1.0f) / (2.0f * PI));
 }
 //ディフューズ
 float3 Lambert(float3 diffuse, float3 lightDir, float3 normal)
 {
-	return max(diffuse * dot(normal, lightDir), 0.0f);
+	return max(diffuse * dot(normal, lightDir), 0.0f)* (1.0f / PI);
 }
 
 float4 PSMain(PSDefferdInput In) : SV_Target0
@@ -286,9 +269,23 @@ float4 PSMain(PSDefferdInput In) : SV_Target0
 	HideInShadow hideInShadow = (HideInShadow)0;
 	[unroll]
 	for (int i = 0; i < SHADOWMAP_NUM; i++) {
-		if (enableShadowMap[i].x){
+		if (enableShadowMap[i].x && viewpos.z > cascadeArea[i].x && viewpos.z < cascadeArea[i].y){
 			hideInShadow.flag[i] = ShadowMapFunc(i, float4(worldpos, 1.0f));
 		}
+		/*if (!enableShadowMap[i].y && viewpos.z > cascadeArea[i].x && viewpos.z < cascadeArea[i].y) {
+			if (i == 0) {
+				albedo = float4(1, 0, 0, 1);
+			}
+			if (i == 1) {
+				albedo = float4(0, 1, 0, 1);
+			}
+			if (i == 2) {
+				albedo = float4(0, 0, 1, 1);
+			}
+			if (i == 3) {
+				albedo = float4(0, 0, 0, 1);
+			}
+		}*/
 	}
 
 	//ライティング

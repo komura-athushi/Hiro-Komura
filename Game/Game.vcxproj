@@ -232,6 +232,7 @@
   <ItemGroup>
     <ClCompile Include="Boss.cpp" />
     <ClCompile Include="Boss2.cpp" />
+    <ClCompile Include="Boss2_Fire.cpp" />
     <ClCompile Include="BossAttack.cpp" />
     <ClCompile Include="Cagliostro_view.cpp" />
     <ClCompile Include="DropItem.cpp" />
@@ -271,6 +272,7 @@
   <ItemGroup>
     <ClInclude Include="Boss.h" />
     <ClInclude Include="Boss2.h" />
+    <ClInclude Include="Boss2_Fire.h" />
     <ClInclude Include="BossAttack.h" />
     <ClInclude Include="Cagliostro_view.h" />
     <ClInclude Include="DropItem.h" />

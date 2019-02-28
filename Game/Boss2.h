@@ -6,6 +6,7 @@
 class Stage1;
 class Player;
 class BossAttack;
+class Boss2_Fire;
 class Boss2 : public IEnemy
 {
 public:
@@ -23,6 +24,7 @@ public:
 	void PostRender()override;
 	//アニメーションイベント
 	void OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventName);
+
 	void SetPlayer(Player* player)								//プレイヤーのポイントをセット
 	{
 		m_player = player;
@@ -43,6 +45,10 @@ public:
 	{
 		m_oldpos = pos;
 	}
+	bool GetCount() const
+	{
+		return m_fireend;
+	}
 private:
 	GameObj::CSkinModelRender* m_skinModelRender = nullptr;		//スキンモデルレンダラー。
 	PhysicsStaticObject m_staticobject;                         //静的オブジェクト
@@ -50,9 +56,9 @@ private:
 	enum EnAnimationClip {
 		enAnimationClip_idle,
 		enAnimationClip_run,
-		enAnimationClip_attack1,
-		enAnimationClip_attack2,
-		enAnimationClip_attack3,
+		enAnimationClip_hikkaki,
+		enAnimationClip_fire,
+		enAnimationClip_press,
 		enAnimationClip_damage,
 		enAnimationClip_death,
 		enAnimationClip_num,
@@ -60,9 +66,9 @@ private:
 	//アニメーション分岐
 	enum EnState {
 		enState_Idle_Run,
-		enState_Attack1,
-		enState_Attack2,
-		enState_Attack3,
+		enState_Hikkaki,
+		enState_Fire,
+		enState_Press,
 		enState_Damage,
 		enState_Dead,
 	};
@@ -70,7 +76,7 @@ private:
 	AnimationClip m_animClip[enAnimationClip_num];
 	CVector3 m_oldpos = { 1000.0f,0.0f,-1000.0f };				//ドラゴンの初期位置
 	CVector3 m_position = { 1000.0f,0.0f,-1000.0f };			//ドラゴンの座標
-	//スケールは300.0f
+	//スケールは100.0f
 	CVector3 m_scale = { 100.0f,100.0f,100.0f };				//ドラゴンのスケール
 	CVector3 m_movespeed = { 0.0f,  0.0f,  0.0f };				//移動速度
 	CVector3 m_heikou = { 0.0f,0.0f,0.0f };                     //ドラゴンの向いている方向に平行なベクトル
@@ -78,6 +84,7 @@ private:
 	CVector3 m_parallel = { 0.0f,0.0f,0.0f };					//ユニティちゃんの向きと平行なベクトル
 	Player* m_player;											//プレイヤークラスのポインタ
 	BossAttack* m_bossattack;									//BossAttackクラスのポインタ
+	Boss2_Fire* m_fire;											//Boss2_Fireクラスのポインタ
 	CFont m_font;												//文字表示クラス
 	bool m_disp = false;										//ダメ表示するかどうか
 	//自機の角度　初期は180度
@@ -94,17 +101,20 @@ private:
 	int m_atktype = 0;											//攻撃の種類
 	float m_r = 150.0f;                                         //コリジョンの半径
 	const float m_attackr = 90.0f;                              //攻撃したときに発生させるコリジョンの半径
-	const float m_attack3r = 400.0f;                            //攻撃したときに発生させるコリジョンの半径
+	const float m_attack3r = 300.0f;                            //攻撃したときに発生させるコリジョンの半径
 	float m_collisionheight = 70.0f;							//コリジョンをm_positionからどれだけ上にあげるか
+	int m_bonehead;                                             //頭のboneの番号
 	//Bossの色々なステータス
 	static const int m_MaxHP = 900;                             //最大HP
-	static const int m_Attack1 = 20;							//攻撃力1
-	static const int m_Attack2 = 30;							//攻撃力2
-	static const int m_Attack3 = 40;							//攻撃力3
+	static const int m_Attack1 = 20;							//ひっかきの攻撃力
+	static const int m_Attack2 = 30;							//プレスの攻撃力
+	static const int m_Attack3 = 40;							//ファイヤーの攻撃力
 	static const int m_EXP = 500;                               //経験値
 	static const int m_dropChances[];				            //ドラゴンのドロップするアイテム、[1]が10ならレア度1が10%でドロップするみたいな
 	static const int m_dropmaterialChances[];
 	static const int m_meseta = 500;
 	bool m_gekiha = false;                                      //deleteするかどうか
+	//ファイヤー関連
+	bool m_fireend=false;										//ファイヤーが終わったかどうか
 };
 

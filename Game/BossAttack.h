@@ -24,11 +24,7 @@ public:
 	{
 		return m_position;
 	}
-	//弾の速度を取得
-	CVector3 GetMoveSpeed() const
-	{
-		return m_moveSpeed;
-	}
+	//攻撃のナンバーを取得
 	void SetNumber(const int& number)
 	{
 		m_number = number;

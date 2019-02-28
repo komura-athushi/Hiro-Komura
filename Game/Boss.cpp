@@ -41,8 +41,6 @@ void Boss::Attack()
 	//プレイヤーの座標を取得
 	CVector3 m_playerposition = m_player->GetPosition();
 	m_playerposition.y += 100.0f;
-	//プレイヤーとボスの距離
-	CVector3 pos = m_player->GetPosition() - m_position;
 
 	if(m_HP >= 600) {
 		if (m_timer >= m_cooltime) {
