@@ -24,8 +24,8 @@ bool Boss2_Fire::Start()
 	 attackCol = NewGO<SuicideObj::CCollisionObj>();
 	//形状の作成
 	attackCol->CreateSphere(m_position, CQuaternion::Identity(), m_attack3r);
-	//寿命を設定
-	attackCol->SetTimer(150);//フレーム後削除される
+	////寿命を設定
+	//attackCol->SetTimer(150);//フレーム後削除される
 	attackCol->SetCallback([&](SuicideObj::CCollisionObj::SCallbackParam& param) {
 		//衝突した判定の名前が"Player"ならm_Attack3分だけダメージ与える
 		if (param.EqualName(L"Player")) {
