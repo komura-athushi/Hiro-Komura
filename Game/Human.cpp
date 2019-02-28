@@ -95,6 +95,9 @@ void Human::AnimationController()
 
 void Human::PostRender()
 {
+	if (!m_istalk) {
+		return;
+	}
 	if (!m_ontalk) {
 		return;
 	}

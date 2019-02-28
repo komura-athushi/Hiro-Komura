@@ -164,21 +164,21 @@ void PlayerStatus::PostRender()
 	);*/
 	//武器のアイコン表示
 	CVector2 pos = m_position;
+	pos.x -= m_SwordId * 64.0f;
 	for (int i = 0; i < m_equipmentlist.size(); i++) {
 		m_spritelist[i]->DrawScreenPos(pos, m_scale, CVector2::Zero(),
 			0.0f,
 			CVector4::White(),
 			DirectX::SpriteEffects_None,
 			1.0f);
-		if (m_SwordId == i) {
-			m_cursor.DrawScreenPos(pos, m_scale, CVector2::Zero(),
-				0.0f,
-				CVector4::White(),
-				DirectX::SpriteEffects_None,
-				0.9f);
-		}
 		pos.x += 64.0f;
 	}
+	m_cursor.DrawScreenPos(m_position, m_scale, CVector2::Zero(),
+		0.0f,
+		CVector4::White(),
+		DirectX::SpriteEffects_None,
+		0.9f);
+
 }
 
 void PlayerStatus::WeaponStrengthen(const int& number)

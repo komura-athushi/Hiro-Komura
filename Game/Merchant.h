@@ -46,13 +46,13 @@ private:
 	
 	GameObj::CSkinModelRender* m_skinModelRender = nullptr;		//スキンモデルレンダラー。
 	CVector3 m_position = CVector3::Zero();
-	CVector2 m_aiconposition = { 350.0f,50.0f };			  //画像の位置;
+	CVector2 m_aiconposition = { 350.0f,50.0f+70.0f*4 };	    //画像の位置;
 	CVector3 m_aiconscale = { 0.15f,0.15f,0.15f };
 	CVector3 m_scale = { 0.8f,0.8f,0.8f };
 	CQuaternion m_rotation = CQuaternion::Identity();
 	CQuaternion m_protrotation = CQuaternion::Identity();
 	CFont m_font;                                               //文字表示クラス
-	std::vector<CFont*> m_spritefont;					            //文字表示
+	std::vector<CFont*> m_spritefont;					        //文字表示
 	bool m_talk = false;
 	CSprite m_sprite[GameData::enWeapon_num];                   //画像表示クラス
 	CSprite m_cursor;

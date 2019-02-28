@@ -71,11 +71,12 @@ void Merchant::PostRender()
 		m_swordid = m_playerstatus->GetSwordId();
 		return;
 	}
-	//武器のアイコン表示
-	CVector2 pos = m_aiconposition;
 	wchar_t output[256];
 	swprintf_s(output, L"どの武器を強化しますか？\n");
 	m_font.DrawScreenPos(output, { 00.0f,00.0f }, CVector4::White());
+	//武器のアイコン表示
+	CVector2 pos = m_aiconposition;
+	pos.y -= m_swordid * 70.0f;
 	for (int i = 0; i < m_playerstatus->GetEquipmentNumber(); i++) {
 			m_spritelist[i]->DrawScreenPos(pos, m_aiconscale);
 			wchar_t output[30];
@@ -88,15 +89,14 @@ void Merchant::PostRender()
 			CVector2 pos2 = pos;
 			pos2.x += 100.0f;
 			m_spritefont[i]->DrawScreenPos(output, pos2, CVector4::White());
-			if (m_swordid == i) {
-				m_cursor.DrawScreenPos(pos, m_aiconscale, CVector2::Zero(),
-					0.0f,
-					CVector4::White(),
-					DirectX::SpriteEffects_None,
-					0.4f);
-			}
 			pos.y += 70.0f;
 	}
+	m_cursor.DrawScreenPos(m_aiconposition, m_aiconscale, CVector2::Zero(),
+		0.0f,
+		CVector4::White(),
+		DirectX::SpriteEffects_None,
+		0.4f);
+
 	int number = m_swordid;
 	if (Pad(0).GetButton(enButtonUp) && m_button) {
 		number--;
@@ -119,7 +119,7 @@ void Merchant::PostRender()
 	}
 	//下ボタン
 	else if (m_swordid < number) {
-		if (m_swordid != m_playerstatus->GetEquipmentNumber()) {
+		if (m_swordid != m_playerstatus->GetEquipmentNumber()-1) {
 			m_swordid = number;
 		}
 	}
