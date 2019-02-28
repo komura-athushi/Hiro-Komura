@@ -59,6 +59,26 @@ public:
 	{
 		m_townlevel++;
 	}
+	//ゲームをクリアしたかどうか
+	bool GetisGameClear()
+	{
+		return m_isgameclear;
+	}
+	//ゲームクリア！
+	void SetGameClear()
+	{
+		m_isgameclear = true;
+	}
+	//ゲームが一旦終わったかどうか
+	bool GetisGameEnd()
+	{
+		return m_isgameend;
+	}
+	//ゲームを一旦終わる
+	void SetGameEnd()
+	{
+		m_isgameend = true;
+	}
 	enum EnWeapon {
 		enWeapon_Sword,									//ソード
 		enWeapon_FireSword,								//ファイアソード
@@ -97,5 +117,7 @@ private:
 	std::vector<Equipment> m_equipmentlist;				//Equipmentクラスの可変長配列
 	bool m_stage[3] = { false,false,false };			//各ステージをクリアしたかどうか
 	int m_townlevel = 0;								//街の発展レベル
+	bool m_isgameclear = false;							//ゲームをクリアしたかどうか
+	bool m_isgameend = false;							//ゲームが一旦終わったかどうか
 };
 

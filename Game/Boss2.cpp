@@ -7,6 +7,7 @@
 #include "BossAttack.h"
 #include "GameCamera.h"
 #include "Boss2_Fire.h"
+#include "Teleport.h"
 //cppでエネミーのレア度ごとのドロップ率を設定
 const int Boss2::m_dropChances[Weapon::m_HighestRarity] = { 0,0,0,100,0,0,0 };
 const int Boss2::m_dropmaterialChances[Material::m_HighestRarity] = { 0.0f,100.0f,0.0f };
@@ -19,6 +20,9 @@ Boss2::Boss2() : IEnemy(m_MaxHP, m_Attack, m_EXP, m_dropChances, m_dropmaterialC
 Boss2::~Boss2()
 {
 	delete m_skinModelRender;
+	Teleport* tl = new Teleport;
+	tl->SetPosition(m_position);
+	tl->SetName(L"Teleport");
 }
 
 bool Boss2::Start()
