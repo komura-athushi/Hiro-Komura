@@ -10,6 +10,10 @@ Merchant::Merchant()
 Merchant::~Merchant()
 {
 	delete m_skinModelRender;
+	for (int i = 0; i < m_playerstatus->GetEquipmentNumber(); i++) {
+		delete m_spritelist[i];
+		delete m_spritefont[i];
+	}
 }
 
 bool Merchant::Start()
@@ -25,16 +29,13 @@ bool Merchant::Start()
 	m_skinModelRender->SetRot(m_rotation);
 	m_playerstatus = FindGO<PlayerStatus>(L"PlayerStatus");
 	m_gamedata = FindGO<GameData>(L"GameData");
-	//該当するddsファイルを読み込んでおく
-	m_sprite[0].Init(L"Resource/sprite/sword.dds");
-	m_sprite[1].Init(L"Resource/sprite/firesword.dds");
-	m_sprite[2].Init(L"Resource/sprite/icesword.dds");
-	m_sprite[3].Init(L"Resource/sprite/windsword.dds");
-	m_sprite[4].Init(L"Resource/sprite/greatsword.dds");
-	m_sprite[5].Init(L"Resource/sprite/bluelightsword.dds");
-	m_sprite[6].Init(L"Resource/sprite/battlereadyblade.dds");
-	m_sprite[7].Init(L"Resource/sprite/ancientwarriorblade.dds");
-	m_sprite[8].Init(L"Resource/sprite/excaliburmorgan.dds");
+	m_equipmentnumber = m_playerstatus->GetEquipmentNumber();
+ 	for (int i = 0; i < m_equipmentnumber; i++) {
+		CSprite* sprite = new CSprite;
+		sprite->Init(m_playerstatus->GetSpriteName(m_playerstatus->GetWeaponNumber(i)));
+		m_spritelist.push_back(sprite);
+		m_spritefont.push_back(new CFont);
+	}
 	m_cursor.Init(L"Resource/sprite/cursor.dds");
 	return true;
 }
@@ -70,15 +71,14 @@ void Merchant::PostRender()
 		m_swordid = m_playerstatus->GetSwordId();
 		return;
 	}
-	//武器のアイコン表示
-	CVector2 pos = m_aiconposition;
 	wchar_t output[256];
 	swprintf_s(output, L"どの武器を強化しますか？\n");
 	m_font.DrawScreenPos(output, { 00.0f,00.0f }, CVector4::White());
-	for (int i = 0; i < GameData::enWeapon_num; i++) {
-		if (m_playerstatus->GetisHaveWeapon(i) ) {
-			m_sprite[i].DrawScreenPos(pos, m_aiconscale);
-			m_spriteposition[i] = pos;
+	//武器のアイコン表示
+	CVector2 pos = m_aiconposition;
+	pos.y -= m_swordid * 70.0f;
+	for (int i = 0; i < m_playerstatus->GetEquipmentNumber(); i++) {
+			m_spritelist[i]->DrawScreenPos(pos, m_aiconscale);
 			wchar_t output[30];
 			if (m_playerstatus->GetEuipment(i).GetLv() != 5) {
 				swprintf_s(output, L"武器Lv %d  強化費用 %dメセタ\n", m_playerstatus->GetEuipment(i).GetLv(), m_playerstatus->GetEuipment(i).GetCost());
@@ -86,18 +86,17 @@ void Merchant::PostRender()
 			else {
 				swprintf_s(output, L"武器Lv %d\n", m_playerstatus->GetEuipment(i).GetLv());
 			}
-			m_spriteposition[i].x += 100.0f;
-			m_spritefont[i].DrawScreenPos(output, m_spriteposition[i], CVector4::White());
-			if (m_swordid == i) {
-				m_cursor.DrawScreenPos(pos, m_aiconscale, CVector2::Zero(),
-					0.0f,
-					CVector4::White(),
-					DirectX::SpriteEffects_None,
-					0.4f);
-			}
+			CVector2 pos2 = pos;
+			pos2.x += 100.0f;
+			m_spritefont[i]->DrawScreenPos(output, pos2, CVector4::White());
 			pos.y += 70.0f;
-		}
 	}
+	m_cursor.DrawScreenPos(m_aiconposition, m_aiconscale, CVector2::Zero(),
+		0.0f,
+		CVector4::White(),
+		DirectX::SpriteEffects_None,
+		0.4f);
+
 	int number = m_swordid;
 	if (Pad(0).GetButton(enButtonUp) && m_button) {
 		number--;
@@ -114,20 +113,14 @@ void Merchant::PostRender()
 	}
 	//上ボタン
 	if (m_swordid > number) {
-		for (int i = number; i >= 0; i--) {
-			if (m_playerstatus->GetisHaveWeapon(i)) {
-				m_swordid = i;
-				break;
-			}
+		if (m_swordid != 0) {
+			m_swordid = number;
 		}
 	}
 	//下ボタン
 	else if (m_swordid < number) {
-		for (int i = number; i < GameData::enWeapon_num; i++) {
-			if (m_playerstatus->GetisHaveWeapon(i)) {
-				m_swordid = i;
-				break;
-			}
+		if (m_swordid != m_playerstatus->GetEquipmentNumber()-1) {
+			m_swordid = number;
 		}
 	}
 	if (Pad(0).GetButton(enButtonB) && m_button) {

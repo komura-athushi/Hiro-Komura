@@ -1,5 +1,6 @@
 #pragma once
 class Player;
+class Equipment;
 //エネミーのドロップアイテムのクラスです
 class DropItem:public IGameObject
 {
@@ -45,10 +46,12 @@ private:
 	CQuaternion m_rotation;                                     //クオンテーション
 	int m_state;                                                //ドロップ品の番号
 	Player* m_player;                                           //プレイヤークラスのポインタ
+	Equipment* m_equipment = nullptr;
 	int m_rarity;												//武器のレアリティ
 	int m_number;												//武器のレアリティの中の番号
 	int m_meseta;												//メメタの額
 	bool m_isweapon = false;									//自身が武器かどうか
+	bool m_issetweapon = false;
 	static const float m_height;								//ドロップ時に+するy座標
 	static const float m_height_weapon;							//ドロップ時に+するy座標(武器)
 };

@@ -21,6 +21,10 @@ bool Ground::Start()
 	m_skinModelRender2->SetPos(m_position);
 	m_skinModelRender2->SetScale(m_scale);
 	m_skinModelRender2->SetIsShadowCaster(false);
+	m_skinModelRender2->GetSkinModel().FindMaterial([&](ModelEffect* mef) {
+		mef->SetLightingEnable(false);
+	}
+	);
 	m_staticobject2.CreateMesh(*m_skinModelRender2);
 	GameData* gamedata = FindGO<GameData>(L"GameData");
 	//ステージによって読み込むfbxファイルを変えます
@@ -31,6 +35,9 @@ bool Ground::Start()
 		}
 		else if (gamedata->GetTownLevel() == 1) {
 			m_skinModelRender->Init(L"Resource/modelData/ground2.cmo");
+		}
+		else if (gamedata->GetTownLevel() == 2) {
+			m_skinModelRender->Init(L"Resource/modelData/ground3.cmo");
 		}
 		break;
 	case 1:

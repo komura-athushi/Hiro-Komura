@@ -254,8 +254,10 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Stage1_Teleport.cpp" />
     <ClCompile Include="Stage2_Teleport.cpp" />
+    <ClCompile Include="Stage3_Teleport.cpp" />
     <ClCompile Include="Stone.cpp" />
     <ClCompile Include="Sword.cpp" />
+    <ClCompile Include="Teleport.cpp" />
     <ClCompile Include="Town.cpp" />
     <ClCompile Include="GameCamera.cpp" />
     <ClCompile Include="main.cpp" />
@@ -294,8 +296,10 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="Stage1_Teleport.h" />
     <ClInclude Include="Stage2_Teleport.h" />
+    <ClInclude Include="Stage3_Teleport.h" />
     <ClInclude Include="Stone.h" />
     <ClInclude Include="Sword.h" />
+    <ClInclude Include="Teleport.h" />
     <ClInclude Include="Town.h" />
     <ClInclude Include="GameCamera.h" />
     <ClInclude Include="Player.h" />
@@ -313,6 +317,7 @@
     <MeshContentTask Include="Asset\modelData\enemy\enemy.FBX" />
     <MeshContentTask Include="Asset\modelData\ground.FBX" />
     <MeshContentTask Include="Asset\modelData\ground2.FBX" />
+    <MeshContentTask Include="Asset\modelData\ground3.FBX" />
     <MeshContentTask Include="Asset\modelData\human\human.FBX" />
     <MeshContentTask Include="Asset\modelData\Magic_Sample.FBX" />
     <MeshContentTask Include="Asset\modelData\material\brick.FBX" />
@@ -324,6 +329,7 @@
     <MeshContentTask Include="Asset\modelData\stage1_ground.FBX" />
     <MeshContentTask Include="Asset\modelData\stage1_teleport.FBX" />
     <MeshContentTask Include="Asset\modelData\stage2_teleport\stage2_teleport.FBX" />
+    <MeshContentTask Include="Asset\modelData\stage3_teleport\stage3_teleport.FBX" />
     <MeshContentTask Include="Asset\modelData\stone.FBX" />
     <MeshContentTask Include="Asset\modelData\Sword\AncientWarriorBlade.FBX" />
     <MeshContentTask Include="Asset\modelData\Sword\BattleReadyBlade.FBX" />
@@ -366,9 +372,6 @@
     <ImageContentTask Include="Asset\sprite\loading.png" />
   </ItemGroup>
   <ItemGroup>
-    <ImageContentTask Include="Asset\sprite\HP_waku.png" />
-  </ItemGroup>
-  <ItemGroup>
     <ImageContentTask Include="Asset\sprite\clear.png" />
     <ImageContentTask Include="Asset\sprite\gameover.png" />
   </ItemGroup>
@@ -376,11 +379,35 @@
     <ImageContentTask Include="Asset\sprite\target.png" />
   </ItemGroup>
   <ItemGroup>
-    <ImageContentTask Include="Asset\sprite\hp\hpgage.png" />
-    <ImageContentTask Include="Asset\sprite\hp\hpgage_frame.png" />
+    <ImageContentTask Include="Asset\sprite\locktarget.png" />
   </ItemGroup>
   <ItemGroup>
-    <ImageContentTask Include="Asset\sprite\locktarget.png" />
+    <ImageContentTask Include="Asset\sprite\target2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Asset\sprite\status.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Asset\sprite\hud.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Asset\sprite\logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Asset\sprite\hpframe.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Asset\sprite\hpgage.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Asset\sprite\ppframe.png" />
+    <ImageContentTask Include="Asset\sprite\ppgage.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Asset\sprite\weaponstatus.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Asset\sprite\inventorystatus.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

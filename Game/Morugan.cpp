@@ -2,6 +2,7 @@
 #include "Morugan.h"
 #include "Player.h"
 #include "IEnemy.h"
+#include "PlayerStatus.h"
 Morugan::Morugan()
 {
 }
@@ -55,11 +56,18 @@ void Morugan::Update()
 			CVector3 pos2 = pos - c;
 			if (pos2.LengthSq() <= std::pow((enemy->GetRadius() + m_r), 2.0f)) {
 				enemy->Damage(m_damage);
+				//もしエネミーのHPが0以下になったら
+				if (enemy->GetDeath()) {
+					//エネミーの経験値をプレイヤーの経験値に加算
+					PlayerStatus* playerstatus = FindGO<PlayerStatus>(L"PlayerStatus");
+					playerstatus->PlusExp(enemy->GetExp());
+				}
 			}
 			return true;
 		});
 	}
 	m_timer += m_frame * GetDeltaTimeSec();
+	//プレイヤーが詠唱中でないなら自身を削除する
 	if (!m_player->GetAria()) {
 		delete this;
 	}

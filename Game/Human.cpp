@@ -42,6 +42,9 @@ bool Human::Start()
 
 void Human::Update()
 {
+	if (!m_istalk) {
+		return;
+	}
 	m_townlevel = m_gamedata->GetTownLevel();
 	if (m_player == nullptr) {
 		m_player = FindGO<Player>();
@@ -62,6 +65,7 @@ void Human::Update()
 		m_developtown = false;								
 		m_leveluptown = false;
 		m_ontalk = false;
+		m_istalk = false;
 	}
 	AnimationController();
 }
@@ -91,6 +95,9 @@ void Human::AnimationController()
 
 void Human::PostRender()
 {
+	if (!m_istalk) {
+		return;
+	}
 	if (!m_ontalk) {
 		return;
 	}

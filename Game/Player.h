@@ -6,6 +6,7 @@ class PlayerStatus;
 class Human;
 class Merchant;
 class IEnemy;
+class Town;
 //プレイヤーです
 class Player:public IGameObject
 {
@@ -36,7 +37,7 @@ public:
 	void Turn();
 	//キャラクターのアニメーションを再生
 	void AnimationController();
-	//特殊なキャラクターのアニメーションを決める
+	//特殊なキャラクターのアニメーションとかその他もろもろ
 	void Animation();
 	//キャラクターの移動を計算
 	void Move();
@@ -123,6 +124,11 @@ public:
 	{
 		m_stop = true;
 	}
+	//プレイヤーを動かす
+	void SetMove()
+	{
+		m_stop = false;
+	}
 	//剣の座標を取得
 	CVector3 GetSwordPosition() const
 	{
@@ -163,13 +169,28 @@ public:
 	{
 		return m_targetlock;
 	}
+	//PPを設定
+	void SetPP(const int& pp) 
+	{
+		m_MaxPP = pp;
+		m_PP = pp;
+	}
+	//ゲームクリア！！
+	void SetGameClear()
+	{
+		m_state = enState_GameClear;
+	}
 private:
 	bool m_cagliostro = false;
 	GameObj::CSkinModelRender* m_skinModelRender = nullptr;		//スキンモデルレンダラー
 	CSprite m_sprite2;											//ゲームクリアとかゲームオーバーの
 	CSprite m_targetsprite;										//ターゲットのスプライト
 	CSprite m_locktargetsprite;
-	CSprite m_hp, m_hpframe;									//HP関係のテクスチャ
+	CSprite m_hud ,m_hpframe ,m_hpgage ,m_ppframe ,m_ppgage;	//HUD関係のテクスチャ
+	CFont m_lvf, m_hpf, m_ppf;
+	CFont m_name;
+	CSprite m_logo;
+	CSprite m_statussprite,m_weaponstatussprite,m_inventorystatussprite;
 	bool m_displaysprite = false;								//
     SuicideObj::CCollisionObj* m_collision;                     //丸いコリジョン
 	CFont m_font;                                               //文字表示クラス
@@ -182,6 +203,7 @@ private:
 	CVector3 m_savemovespeed;                                   //m_movespeedを記憶しておく
 	Sword* m_sword;                                             //Swordクラスのポインタ
 	GameCamera* m_gamecamera = nullptr;                         //カメラのポインタ
+	Town* m_town = nullptr;
 	CVector3 m_movespeed;                                       //移動速度
 	CVector3 m_position = {0.0f,100.0f,00.0f};                  //ユニティちゃんの座標
 	CVector3 m_playerheikou = { 1.0f,0.0f,0.0f };               //プレイヤーと平行なベクトル
@@ -247,6 +269,7 @@ private:
     int m_Attack;                                               //攻撃力
 	int m_Mattack;                                              //魔法攻撃力
 	int m_SwordId;                                              //装備中の武器の番号
+	int m_WeaponNumber;
 	const wchar_t* m_SwordName;                                 //装備中の武器の名前
 	int m_MagicId;                                              //使える魔法の番号
 	const wchar_t* m_MagicName;						            //魔法の名前
@@ -283,6 +306,6 @@ private:
 	bool m_aria = false;										//呪文詠唱中かどうか
 	IEnemy* m_enemy = nullptr;
 	bool m_targetlock = false;									//ターゲットロック中かどうか
-
+	bool m_displaystatus = false;
 };
 

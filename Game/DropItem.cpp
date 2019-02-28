@@ -4,6 +4,7 @@
 #include "Player.h"
 #include "PlayerStatus.h" 
 #include "GameData.h"
+#include "Equipment.h"
 const float DropItem::m_height = 30.0f;
 const float DropItem::m_height_weapon = 10.0f;
 DropItem::DropItem()
@@ -14,6 +15,9 @@ DropItem::DropItem()
 DropItem::~DropItem()
 {
 	delete m_skinModelRender;
+	if (!m_issetweapon) {
+		delete m_equipment;
+	}
 }
 
 bool DropItem::Start()
@@ -53,10 +57,12 @@ bool DropItem::Start()
 			break;
 		}
 		m_position.y += m_height_weapon;
+		m_equipment = new Equipment(m_state);
 	}
 	else {
 		m_skinModelRender->Init(L"Resource/modelData/meseta.cmo");
 		m_position.y += m_height;
+		m_issetweapon = true;
 	}
 	m_skinModelRender->SetPos(m_position);
 	m_skinModelRender->SetScale(m_scale);
@@ -72,7 +78,8 @@ void DropItem::Update()
 		PlayerStatus* playerstatus = FindGO<PlayerStatus>(L"PlayerStatus");
 		if (m_isweapon) {
 			//自身が武器の場合プレイヤーに追加、既に所持している場合は設定したメセタの額をプレイヤーに追加
-			playerstatus->SetWeapon(m_state);
+			playerstatus->SetWeapon(m_equipment);
+			m_issetweapon = true;
 		}
 		else {
 			//設定したメセタの額をプレイヤーに追加

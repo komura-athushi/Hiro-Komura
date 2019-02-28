@@ -11,6 +11,7 @@
 #include "Merchant.h"
 #include "Effekseer.h"
 #include "Morugan.h"
+#include "Town.h"
 Player::Player()
 {
 } 
@@ -61,15 +62,22 @@ void Player::unityChan()
 	pos.x -= 70.0f;
 	pos.z += 10.0f;
 	m_sword->SetPosition(pos);
-	m_sword->SetSwordId(m_SwordId);
+	m_sword->SetSwordId(m_WeaponNumber);
 	//アニメーションイベントのコールバック関数を設定
 	m_skinModelRender->GetAnimCon().AddAnimationEventListener([&](const wchar_t* clipName, const wchar_t* eventName) {
 		OnAnimationEvent(clipName, eventName);
 	});
 	m_targetsprite.Init(L"Resource/sprite/target.dds");
 	m_locktargetsprite.Init(L"Resource/sprite/locktarget.dds");
-	m_hp.Init(L"Resource/sprite/hpgage.dds");
-	m_hpframe.Init(L"Resource/sprite/hpgage_frame.dds");
+	m_statussprite.Init(L"Resource/sprite/status.dds");
+	m_weaponstatussprite.Init(L"Resource/sprite/weaponstatus.dds");
+	m_inventorystatussprite.Init(L"Resource/sprite/inventorystatus.dds");
+	m_hpframe.Init(L"Resource/sprite/hpframe.dds");
+	m_hpgage.Init(L"Resource/sprite/hpgage.dds");
+	m_ppframe.Init(L"Resource/sprite/ppframe.dds");
+	m_ppgage.Init(L"Resource/sprite/ppgage.dds");
+	m_hud.Init(L"Resource/sprite/hud.dds");
+	m_logo.Init(L"Resource/sprite/logo.dds");
 }
 
 void Player::cagliostro()
@@ -101,6 +109,7 @@ bool Player::Start()
 	m_collision->SetClass(this);
 	//プレイヤーステータスクラスのポインタを検索検索ぅ～
 	m_playerstatus = FindGO<PlayerStatus>(L"PlayerStatus");
+	m_town = FindGO<Town>();
 	//ステータス
 	Status();
 	//武器のステータス
@@ -266,13 +275,24 @@ void Player::Animation()
 			}
 		}
 	}
-	//LT押したらゲームオーバー
-	if (m_HP <= 0 || Pad(0).GetButton(enButtonLT)) {
-		m_state = enState_GameOver;
+	if (m_town == nullptr) {
+		//LT押したらゲームオーバー
+		if (m_HP <= 0 || Pad(0).GetButton(enButtonLT)) {
+			m_state = enState_GameOver;
+		}
+		//LB1押したらゲームクリア
+		else if (Pad(0).GetButton(enButtonRT)) {
+			m_state = enState_GameClear;
+		}
 	}
-	//LB1押したらゲームクリア
-	else if (Pad(0).GetButton(enButtonRT)) {
-		m_state = enState_GameClear;
+	if (Pad(0).GetDown(enButtonStart)) {
+		if (!m_displaystatus) {
+			m_displaystatus = true;
+		}
+		else {
+			m_displaystatus = false;
+		}
+		int a = 0;
 	}
 	m_timer += m_frame * GetDeltaTimeSec();
 }
@@ -592,6 +612,17 @@ void Player::OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventName)
 		SuicideObj::CSE* se = NewGO<SuicideObj::CSE>(L"Asset/sound/unityChan/aria.wav");
 		se->Play(); //再生(再生が終わると削除されます)
 		se->SetVolume(m_voicevolume);
+		int i = 0;
+		if (i == 0) {
+			//SE
+			SuicideObj::CSE* se = NewGO<SuicideObj::CSE>(L"Asset/sound/se/aria.wav");
+			se->Play(); //再生(再生が終わると削除されます)
+			se->SetVolume(m_lvupvollume);
+			//3D再生
+			se->SetPos(m_position);//音の位置
+			se->SetDistance(200.0f);//音が聞こえる範囲
+			se->Play(true); //第一引数をtrue
+		}
 		//3D再生
 		se->SetPos(m_position);//音の位置
 		se->SetDistance(200.0f);//音が聞こえる範囲
@@ -641,6 +672,15 @@ void Player::Damage(const int& attack)
 		se->SetPos(m_position);//音の位置
 		se->SetDistance(200.0f);//音が聞こえる範囲
 		se->Play(true); //第一引数をtrue
+		if (0 == 0) {
+			SuicideObj::CSE* se = NewGO<SuicideObj::CSE>(L"Asset/sound/se/hidamage.wav");
+			se->Play(); //再生(再生が終わると削除されます)
+			se->SetVolume(m_lvupvollume+1.2f);
+			//3D再生
+			se->SetPos(m_position);//音の位置
+			se->SetDistance(500.0f);//音が聞こえる範囲
+			se->Play(true); //第一引数をtrue
+		}
 		m_damage = true;
 		m_timer2 = 0;
 		m_state = enState_Damage;
@@ -653,6 +693,7 @@ void Player::WeaponStatus()
 	m_Attack = m_playerstatus->GetAttack();
 	m_ShihutaAttack = m_Attack;
 	m_SwordId = m_playerstatus->GetSwordId();
+	m_WeaponNumber = m_playerstatus->GetWeaponNumber(m_SwordId);
 	m_SwordName = m_playerstatus->GetSwordName();
 	m_MagicId = m_playerstatus->GetMagicId();
 }
@@ -666,6 +707,7 @@ void Player::MagicStatus()
 
 void Player::SwitchWeapon()
 {
+	//特定のアニメーション再生時は武器の切り替えをしません
 	if (m_state == enState_Aria || m_state == enState_Attack || m_state == enState_Damage || m_state == enState_GameClear ||
 		m_state == enState_GameOver) {
 		return;
@@ -682,6 +724,14 @@ void Player::SwitchWeapon()
 			if (m_playerstatus->GetWeapon(m_SwordId - 1)) {
 				WeaponStatus();
 				MagicStatus();
+				//SE
+				SuicideObj::CSE* se = NewGO<SuicideObj::CSE>(L"Asset/sound/se/swtich.wav");
+				se->Play(); //再生(再生が終わると削除されます)
+				se->SetVolume(m_voicevolume);
+				//3D再生
+				se->SetPos(m_position);//音の位置
+				se->SetDistance(200.0f);//音が聞こえる範囲
+				se->Play(true); //第一引数をtrue
 			}
 			else {
 				return;
@@ -694,13 +744,22 @@ void Player::SwitchWeapon()
 			if (m_playerstatus->GetWeapon(m_SwordId + 1)) {
 				WeaponStatus();
 				MagicStatus();
+				//SE
+				SuicideObj::CSE* se = NewGO<SuicideObj::CSE>(L"Asset/sound/se/swtich.wav");
+				se->Play(); //再生(再生が終わると削除されます)
+				se->SetVolume(m_voicevolume);
+				//3D再生
+				se->SetPos(m_position);//音の位置
+				se->SetDistance(200.0f);//音が聞こえる範囲
+				se->Play(true); //第一引数をtrue
 			}
 			else {
 				return;
 			}
 		}
 	}
-	m_sword->SetSwordId(m_SwordId);
+	m_WeaponNumber = m_playerstatus->GetWeaponNumber(m_SwordId);
+	m_sword->SetSwordId(m_WeaponNumber);
 }
 
 void Player::RecoveryPP()
@@ -786,6 +845,7 @@ void Player::RelationMerchant()
 		return;
 	}
 	CVector3 pos = m_merchant->GetPosition() - m_position;
+	//プレイヤーとの距離が一定以内なら話せます
 	if (pos.LengthSq() <= 300.0f * 300.0f && m_state == enState_Idle) {
 		if (Pad(0).GetDown(enButtonB)) {
 			if (m_merchant->GetTalk()) {
@@ -807,6 +867,7 @@ void Player::RelationMerchant()
 
 void Player::OutTarget()
 {
+	//RSBボタンでターゲットをロックします
 	if (Pad(0).GetDown(enButtonRSB)) {
 		if (m_targetlock) {
 			m_targetlock = false;
@@ -815,6 +876,7 @@ void Player::OutTarget()
 			m_targetlock = true;
 		}
 	}
+	//ターゲットロック中であれば、ロックしたエネミーの座標をターゲットの座標とします
  	if (m_targetlock && m_targetdisplay) {
 		if (!m_enemy->GetDeath()) {
 			CVector3 pos = m_enemy->GetCollisionPosition() - m_position;
@@ -946,10 +1008,34 @@ void Player::PostRender()
 	else {
 		m_attacktarget = m_playerheikou;
 	}
-	wchar_t output[256];
-	swprintf_s(output, L"Lv   %d\nExp  %d\nNexp %d\nHP   %d\nPP   %d\nAtk  %d\nMatk %d\nWpn  %s\nMgc  %s\nMPC  %d\nMgg  %d\nWLv  %d\n", m_Level, m_Exp, m_NextExp, m_HP, m_PP, m_Attack, m_Mattack, m_SwordName, m_MagicName, m_PPCost, int(m_Mattack*m_DamageRate),m_playerstatus->GetWeaponLv(m_SwordId));
-	//swprintf_s(output, L"x   %f\ny   %f\nz  %f\nw   %f\n", m_swordqRot.x, m_swordqRot.y, m_swordqRot.z, m_swordqRot.w);
-	m_font.DrawScreenPos(output, { 700.0f,100.0f }, CVector4(200.0f, 00.0f, 100.0f, 1.0f));
+	//ステータス表示
+	if (m_displaystatus) {
+		wchar_t output[256];
+		swprintf_s(output, L"unityChan\nLv. %d\nHP        %d\nPP        %d\n力        %d\n賢さ      %d\n打撃力    %d\n法撃力    %d\nEx        %d\nNex       %d\n",m_Level,m_MaxHP,m_MaxPP,m_playerstatus->GetPower(),m_playerstatus->GetClever(),m_Attack,m_Mattack,m_Exp,m_NextExp);
+		//swprintf_s(output, L"x   %f\ny   %f\nz  %f\nw   %f\n", m_swordqRot.x, m_swordqRot.y, m_swordqRot.z, m_swordqRot.w);
+		m_font.DrawScreenPos(output, { 705.0f,60.0f }, CVector4::White(), {1.0f,1.0f});
+		m_statussprite.DrawScreenPos({ 700.0f,50.0f }, {1.0f,1.0f}, CVector2::Zero(),
+			0.0f,
+			{ 1.0f, 1.0f, 1.0f, 1.0f },
+			DirectX::SpriteEffects_None,
+			1.0f);
+		wchar_t output2[256];
+		swprintf_s(output2, L"武器\n武器Lv  %d\n武器名  %ls\n打撃力  %d\n法撃力  %d\n魔法    %ls\n消費PP  %d\n威力    %d\n",m_playerstatus->GetWeaponLv(),m_SwordName,m_playerstatus->GetWeaponAttack(),m_playerstatus->GetWeaponMattack(),m_MagicName,m_PPCost,int(m_DamageRate*100));
+		m_font.DrawScreenPos(output2, { 230.0f,60.0f }, CVector4::White(), { 0.7f,0.7f });
+		m_weaponstatussprite.DrawScreenPos({ 227.0f,50.0f }, { 1.0f,1.0f }, CVector2::Zero(),
+			0.0f,
+			{ 1.0f, 1.0f, 1.0f, 1.0f },
+			DirectX::SpriteEffects_None,
+			1.0f);
+		wchar_t output3[256];
+		swprintf_s(output3, L"インベントリ\n木        %d\n石        %d\nレンガ    %d\nメセタ    %dM\n",m_playerstatus->GetMaterial(0), m_playerstatus->GetMaterial(1), m_playerstatus->GetMaterial(2), m_playerstatus->GetHaveMeseta());
+		m_font.DrawScreenPos(output3, { 445.0f,317.0f }, CVector4::White(), { 0.7f,0.7f });
+		m_inventorystatussprite.DrawScreenPos({ 442.0f,307.0f }, { 1.0f,1.0f }, CVector2::Zero(),
+			0.0f,
+			{ 1.0f, 1.0f, 1.0f, 1.0f },
+			DirectX::SpriteEffects_None,
+			1.0f);
+	}
 	//ゲームオーバー表示
 	if (m_state == enState_GameOver && !m_skinModelRender->GetAnimCon().IsPlaying()) {
 		if (!m_displaysprite) {
@@ -960,7 +1046,7 @@ void Player::PostRender()
 			0.0f,
 			{ 1.0f, 1.0f, 1.0f, 1.0f },
 			DirectX::SpriteEffects_None,
-			1.0f);
+			0.7f);
 	}
 	//ゲームクリア表示
 	else if (m_state == enState_GameClear && !m_skinModelRender->GetAnimCon().IsPlaying()) {
@@ -972,20 +1058,68 @@ void Player::PostRender()
 			0.0f,
 			{ 1.0f, 1.0f, 1.0f, 1.0f },
 			DirectX::SpriteEffects_None,
-			1.0f);
+			0.7f);
 	}
 	//hpのHUD関係
 	float hpRate = (float)m_HP / m_MaxHP;
 	float offsetX = (hpRate - 1.0f) / 2;
 	m_spriteposition.x = m_protspriteposition.x + offsetX;
-	/*m_hp.DrawScreenPos({200.0f,200.0f}, CVector2::One(), CVector2::Zero(),
+	m_hud.DrawScreenPos({ 5.0f,595.0f }, CVector2::One(), CVector2::Zero(),
+		0.0f,
+		{ 1.0f, 1.0f, 1.0f, 0.7f },
+		DirectX::SpriteEffects_None,
+		1.0f);
+	m_logo.DrawScreenPos({ 30.0f,640.0f }, {0.4f,0.4f}, CVector2::Zero(),
 		0.0f,
 		{ 1.0f, 1.0f, 1.0f, 1.0f },
 		DirectX::SpriteEffects_None,
 		0.9f);
-	m_hpframe.DrawScreenPos({200.0f,200.0f}, CVector2::One(), CVector2::Zero(),
-		0.0f,
-		{ 1.0f, 1.0f, 1.0f, 1.0f },
-		DirectX::SpriteEffects_None,
-		1.0f);*/
+	if (true) {
+		wchar_t output[50];
+		swprintf_s(output, L"unityChan\n");
+		m_name.DrawScreenPos(output, { 165.0f,600.0f }, CVector4::White(), { 0.6f,0.6f });
+	}
+	if (true) {
+		wchar_t output[50];
+		swprintf_s(output, L"Lv  %d\n", m_Level);
+		m_lvf.DrawScreenPos(output, { 20.0f,600.0f }, CVector4::White(), { 0.7f,0.7f });
+	}
+	if (true) {
+		m_hpf.DrawScreenPos(L"HP", { 140.0f,643.0f }, CVector4::White(), { 0.4f,0.4f });
+		wchar_t output[10];
+		swprintf_s(output, L"%d", m_HP);
+		m_hpf.DrawScreenPos(output, { 180.0f,635.0f }, CVector4::White(), { 0.6f,0.6f });
+		wchar_t output2[10];
+		swprintf_s(output2, L"/ %d\n", m_MaxHP);
+		m_hpf.DrawScreenPos(output2, { 235.0f,635.0f }, CVector4::White(), { 0.6f,0.6f });
+		m_hpframe.DrawScreenPos({140.0f,662.0f}, CVector2::One(), CVector2::Zero(),
+			0.0f,
+			{ 1.0f, 1.0f, 1.0f, 1.0f },
+			DirectX::SpriteEffects_None,
+			0.9f);
+		m_hpgage.DrawScreenPos({ 140.0f,662.0f }, {(float)m_HP/m_MaxHP,1.0f}, CVector2::Zero(),
+			0.0f,
+			{ 1.0f, 1.0f, 1.0f, 1.0f },
+			DirectX::SpriteEffects_None,
+			0.8f);
+	}
+	if (true) {
+		m_ppf.DrawScreenPos(L"PP", { 140.0f,682.0f }, CVector4::White(), { 0.4f,0.4f });
+		wchar_t output[30];
+		swprintf_s(output, L"%d", m_PP);
+		m_ppf.DrawScreenPos(output, { 180.0f,674.0f }, CVector4::White(), { 0.6f,0.6f });
+		wchar_t output2[10];
+		swprintf_s(output2, L"/ %d\n", m_MaxHP);
+		m_ppf.DrawScreenPos(output2, { 235.0f,674.0f }, CVector4::White(), { 0.6f,0.6f });
+		m_ppframe.DrawScreenPos({ 140.0f,701.0f }, CVector2::One(), CVector2::Zero(),
+			0.0f,
+			{ 1.0f, 1.0f, 1.0f, 1.0f },
+			DirectX::SpriteEffects_None,
+			0.9f);
+		m_ppgage.DrawScreenPos({ 140.0f,701.0f }, { (float)m_PP / m_MaxPP,1.0f }, CVector2::Zero(),
+			0.0f,
+			{ 1.0f, 1.0f, 1.0f, 1.0f },
+			DirectX::SpriteEffects_None,
+			0.8f);
+	}
 }

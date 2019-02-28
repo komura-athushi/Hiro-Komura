@@ -96,5 +96,6 @@ protected:
 	static const int m_mesetarand = 2;
 	static const float m_frame;								  //fps
 	GameCamera* m_gamecamera;
+	const float m_sevolume = 2.5f;
 };
 

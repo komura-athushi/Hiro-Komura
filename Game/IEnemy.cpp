@@ -7,12 +7,16 @@
 const float IEnemy::m_frame = 40.0f; 
 IEnemy::IEnemy(const int& h,const int& a,const int& e,const int dropchances[Weapon::m_HighestRarity],const int dropmaterialchances[Material::m_HighestRarity],const int& meseta):m_HP(h),m_Attack(a),m_Exp(e),m_dropmeseta(meseta)
 {
-	/*for (int i = 0; i < Weapon::m_HighestRarity; i++) {
+	for (int i = 0; i < Weapon::m_HighestRarity; i++) {
 		m_dropChances[i] = *dropchances;
 		dropchances++;
-	}*/
-	memcpy(m_dropChances, dropchances, sizeof(dropchances));
-	memcpy(m_dropmaterialChances, dropmaterialchances, sizeof(dropmaterialchances));
+	}
+	for (int i = 0; i < Material::m_HighestRarity; i++) {
+		m_dropmaterialChances[i] = *dropmaterialchances;
+		dropmaterialchances++;
+	}
+	//memcpy(m_dropChances, dropchances, sizeof(dropchances));
+	//memcpy(m_dropmaterialChances, dropmaterialchances, sizeof(dropmaterialchances));
 	m_gamecamera = FindGO<GameCamera>();
 }
 
@@ -71,6 +75,7 @@ void IEnemy::SetCCollision(const CVector3& pos,const float& l)
 
 void IEnemy::Damage(const int& attack,int number)
 {
+	int HP = m_HP;
 	switch (number) {
 	case 0:
 		if (m_timer >= 15) {		//通常攻撃
@@ -106,7 +111,7 @@ void IEnemy::Damage(const int& attack,int number)
 	case 4:							//シフタ(ダメージ無し)
 		break;
 	case 5:							
-		if (m_timer5 >= 70) {		//マジスフィ
+		if (m_timer5 >= 50) {		//マジスフィ
 			m_HP -= attack;
 			m_timer5 = 0;
 			m_damage = true;
@@ -115,7 +120,7 @@ void IEnemy::Damage(const int& attack,int number)
 	case 6:
 		break;						//レスタ(ダメージ無し)
 	case 7:
-		if (m_timer7 >= 70) {		//覇王斬
+		if (m_timer7 >= 50) {		//覇王斬
 			m_HP -= attack;
 			m_timer7 = 0;
 			m_damage = true;
@@ -128,6 +133,16 @@ void IEnemy::Damage(const int& attack,int number)
 			m_damage = true;
 		}
 		break;
+	}
+	if (HP != m_HP) {
+		//SE
+		SuicideObj::CSE* se = NewGO<SuicideObj::CSE>(L"Asset/sound/se/damage.wav");
+		se->Play(); //再生(再生が終わると削除されます)
+		se->SetVolume(m_sevolume);
+		//3D再生
+		se->SetPos(m_position);//音の位置
+		se->SetDistance(500.0f);//音が聞こえる範囲
+		se->Play(true); //第一引数をtrue
 	}
 	if (m_HP <= 0) {
 		m_death = true;
