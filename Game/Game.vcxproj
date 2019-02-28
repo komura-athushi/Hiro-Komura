@@ -238,6 +238,7 @@
     <ClCompile Include="DropItem.cpp" />
     <ClCompile Include="DropMaterial.cpp" />
     <ClCompile Include="Fade.cpp" />
+    <ClCompile Include="GameClear.cpp" />
     <ClCompile Include="GameData.cpp" />
     <ClCompile Include="House.cpp" />
     <ClCompile Include="Human.cpp" />
@@ -280,6 +281,7 @@
     <ClInclude Include="DropItem.h" />
     <ClInclude Include="DropMaterial.h" />
     <ClInclude Include="Fade.h" />
+    <ClInclude Include="GameClear.h" />
     <ClInclude Include="GameData.h" />
     <ClInclude Include="House.h" />
     <ClInclude Include="Human.h" />
@@ -408,6 +410,12 @@
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Asset\sprite\inventorystatus.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Asset\sprite\gameclear.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Asset\sprite\credit.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

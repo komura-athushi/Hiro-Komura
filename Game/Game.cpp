@@ -15,6 +15,7 @@
 #include "Fade.h"
 #include "MainSound.h"
 #include "Teleport.h"
+#include "GameClear.h"
 Game::Game()
 {
 }
@@ -60,6 +61,7 @@ Game::~Game()
 
 bool Game::Start()
 {
+	m_gamedata = FindGO<GameData>(L"GameData");
 	//ディレクションライトを設定
 	m_lig = new GameObj::CDirectionLight;
 	m_color = { 1.0f,-1.0f,1.0f };
@@ -160,16 +162,24 @@ void Game::Update()
 {
 	if (m_isWaitFadeout) {
 		if (!m_fade->IsFade()) {
-			Town* town = new Town;
-			delete this;
+			if (m_gamedata->GetisGameClear() && !m_gamedata->GetisGameEnd()) {
+				GameClear* gameclear = new GameClear;
+				delete this;
+			}
+			else {
+				Town* town = new Town;
+				delete this;
+			}
 		}
 	}
 	else {
 		//プレイヤーがゲームオーバーあるいはゲームクリアで拠点に遷移
 		if (m_player->GetTransScene()) {
 			if (m_player->GetGameClear()) {
-				GameData* gamedata = FindGO<GameData>(L"GameData");
-				gamedata->SetClear(m_stagenumber-1);
+				m_gamedata->SetClear(m_stagenumber - 1);
+				if (m_stagenumber == 3 && !m_gamedata->GetisGameClear()) {
+					m_gamedata->SetGameClear();
+				}
 			}
 			m_isWaitFadeout = true;
 			m_fade->StartFadeOut();

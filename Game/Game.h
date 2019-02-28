@@ -6,6 +6,7 @@ class PlayerStatus;
 class Oni;
 class Boss;
 class Fade;
+class GameData;
 //ステージに関係するものを生成したり、管理したりするクラスです
 class Game:public IGameObject
 {
@@ -37,6 +38,7 @@ private:
 	std::vector<Oni*> m_oniList;
 	Boss* m_boss;
 	Fade* m_fade;
+	GameData* m_gamedata;
 	//trueなら画面切り替えする
 	bool m_isWaitFadeout = false;
 	int m_stagenumber;
