@@ -40,5 +40,9 @@ private:
 	CVector3 m_moveSpeed = { 0.0f,0.0f,0.0f };					//移動速度。
 	int m_damage = 0;
 	const float m_frame = 40.0f;
+	//コリジョン関係
+	SuicideObj::CCollisionObj* attackCol;
+	const float m_attack3r = 300.0f;                            //攻撃したときに発生させるコリジョンの半径
+	static const int m_Attack3 = 40;							//ファイヤーの攻撃力
 	Boss2* m_boss2;												//Boss2クラスのポインタ
 };
