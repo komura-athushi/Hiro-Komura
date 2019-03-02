@@ -15,7 +15,7 @@ Title::~Title()
 
 bool Title::Start()
 {
-	m_sprite.Init(L"Resource/sprite/MokoTitle.dds");
+	m_sprite.Init(L"Resource/sprite/Title.dds");
 	m_fade = FindGO<Fade>();
 	m_fade->StartFadeIn();
 	return true;

@@ -16,7 +16,8 @@ Morugan::~Morugan()
 bool Morugan::Start()
 {
     m_effect = new GameObj::Suicider::CEffekseer;
-	m_effect->Play(L"Asset/effect/morugan/morugan.efk", 1.0f, m_position, m_rotation, m_scale);
+	m_effect->Play(L"Asset/effect/Effects/efk/magic_BlackLaser.efk", 1.0f, m_position, m_rotation, m_scale);
+	//m_effect->Play(L"Asset/effect/morugan/efk/morugan.efk", 1.0f, m_position, m_rotation, m_scale);
 	m_player = FindGO<Player>(L"Player");
 	//エフェクトをプレイヤーの向きに回転
 	CQuaternion qRot;
