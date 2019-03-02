@@ -24,6 +24,7 @@ Town::Town()
 
 Town::~Town()
 {
+	//ŠeƒNƒ‰ƒX‚ğíœ
 	delete m_player;
 	delete m_human;
 	delete m_merchant;

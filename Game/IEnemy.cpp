@@ -15,8 +15,6 @@ IEnemy::IEnemy(const int& h,const int& a,const int& e,const int dropchances[Weap
 		m_dropmaterialChances[i] = *dropmaterialchances;
 		dropmaterialchances++;
 	}
-	//memcpy(m_dropChances, dropchances, sizeof(dropchances));
-	//memcpy(m_dropmaterialChances, dropmaterialchances, sizeof(dropmaterialchances));
 	m_gamecamera = FindGO<GameCamera>();
 }
 

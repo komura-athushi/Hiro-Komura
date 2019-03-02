@@ -21,8 +21,6 @@ bool Human::Start()
 	//m_animClip[enAnimationClip_idle].Load(L"Asset/animData/idle.tka", true);//, enZtoY);
 	m_skinModelRender = new GameObj::CSkinModelRender;
 	m_skinModelRender->Init(L"Resource/modelData/unityChan.cmo", m_animClip, enAnimationClip_num,enFbxUpAxisY);//, enFbxUpAxisZ);
-	//m_skinModelRender->Init(L"Resource/modelData/zunko.cmo", m_animClip,enAnimationClip_num);
-	//m_skinModelRender->Init(L"Resource/modelData/human.cmo");
 	m_skinModelRender->SetPos(m_position);
 	m_skinModelRender->SetScale(m_scale);
 	m_skinModelRender->GetAnimCon().SetSpeed(m_animationspeed);
