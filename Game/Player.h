@@ -301,7 +301,7 @@ private:
 	const float m_length2 = 128.0f;
 	const CVector2 m_protspriteposition = { 0.0f,0.0f };
 	CVector2 m_spriteposition = { 0.0f ,0.0f };
-	const float m_morugantime = 300.0f;
+	const float m_morugantime = 400.0f;
 	const float m_height = 60.0f;
 	bool m_aria = false;										//éÙï∂ârè•íÜÇ©Ç«Ç§Ç©
 	IEnemy* m_enemy = nullptr;
