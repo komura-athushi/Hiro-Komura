@@ -22,6 +22,9 @@ IEnemy::~IEnemy()
 {
 	if (m_death) {
 		Drop();
+		GameObj::Suicider::CEffekseer* effect = new GameObj::Suicider::CEffekseer;
+		effect->Play(L"Asset/effect/drop/drop.efk", 1.0f, m_position, CQuaternion::Identity(), { 30.0f*(m_r/70.0f),30.0f*(m_r / 70.0f),30.0f*(m_r / 70.0f) });
+		effect->SetSpeed(1.0f);
 	}
 	else {
 		m_collision->Delete();
@@ -141,6 +144,9 @@ void IEnemy::Damage(const int& attack,int number)
 		se->SetPos(m_position);//‰¹‚ÌˆÊ’u
 		se->SetDistance(500.0f);//‰¹‚ª•·‚±‚¦‚é”ÍˆÍ
 		se->Play(true); //‘æˆêˆø”‚ðtrue
+		GameObj::Suicider::CEffekseer* effect = new GameObj::Suicider::CEffekseer;
+		effect->Play(L"Asset/effect/hit/hit.efk", 1.0f, m_collisionposition, CQuaternion::Identity(), { 15.0f,15.0f,15.0f });
+		effect->SetSpeed(1.0f);
 	}
 	if (m_HP <= 0) {
 		m_death = true;

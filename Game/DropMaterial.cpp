@@ -45,12 +45,16 @@ bool DropMaterial::Start()
 	}
 	m_skinModelRender->SetPos(m_position);
 	m_skinModelRender->SetScale(m_scale);
+	m_skinModelRender->SetRot(m_rotation);
 	m_player = FindGO<Player>(L"Player");
 	return true;
 }
 
 void DropMaterial::Update()
 {
+	m_degree += 200.0f * GetDeltaTimeSec();
+	m_rotation.SetRotationDeg(CVector3::AxisY(), m_degree);
+	m_skinModelRender->SetRot(m_rotation);
 	//プレイヤーとの距離が一定以下になったらプレイヤーの所持武器に自身を追加する
 	CVector3 pos = m_player->GetPosition() - m_position;
 	if (pos.Length() <= 80.0f) {

@@ -342,6 +342,15 @@
     <MeshContentTask Include="Asset\modelData\Sword\IceSword.FBX" />
     <MeshContentTask Include="Asset\modelData\Sword\Sword.FBX" />
     <MeshContentTask Include="Asset\modelData\Sword\WindSword.FBX" />
+    <MeshContentTask Include="Asset\modelData\sword_drop\AncientWarriorBlade_drop.FBX" />
+    <MeshContentTask Include="Asset\modelData\sword_drop\BattleReadyBlade_drop.FBX" />
+    <MeshContentTask Include="Asset\modelData\sword_drop\BlueLightSword_drop.FBX" />
+    <MeshContentTask Include="Asset\modelData\sword_drop\excaliburmorgan_drop.FBX" />
+    <MeshContentTask Include="Asset\modelData\sword_drop\FireSword_drop.FBX" />
+    <MeshContentTask Include="Asset\modelData\sword_drop\GreatSword_drop.fbx" />
+    <MeshContentTask Include="Asset\modelData\sword_drop\IceSword_drop.FBX" />
+    <MeshContentTask Include="Asset\modelData\sword_drop\Sword_drop.FBX" />
+    <MeshContentTask Include="Asset\modelData\sword_drop\WindSword_drop.FBX" />
     <MeshContentTask Include="Asset\modelData\unityChan.fbx" />
     <MeshContentTask Include="Asset\modelData\zunko\zunko.FBX" />
   </ItemGroup>
@@ -416,6 +425,9 @@
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Asset\sprite\credit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Asset\sprite\pressstart.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
