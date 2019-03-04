@@ -233,6 +233,7 @@
     <ClCompile Include="Boss.cpp" />
     <ClCompile Include="Boss2.cpp" />
     <ClCompile Include="Boss2_Fire.cpp" />
+    <ClCompile Include="Boss3.cpp" />
     <ClCompile Include="BossAttack.cpp" />
     <ClCompile Include="Cagliostro_view.cpp" />
     <ClCompile Include="DropItem.cpp" />
@@ -276,6 +277,7 @@
     <ClInclude Include="Boss.h" />
     <ClInclude Include="Boss2.h" />
     <ClInclude Include="Boss2_Fire.h" />
+    <ClInclude Include="Boss3.h" />
     <ClInclude Include="BossAttack.h" />
     <ClInclude Include="Cagliostro_view.h" />
     <ClInclude Include="DropItem.h" />
@@ -312,6 +314,7 @@
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Asset\modelData\boss2\DarkDragon.FBX" />
+    <MeshContentTask Include="Asset\modelData\boss3\boss3.FBX" />
     <MeshContentTask Include="Asset\modelData\boss\boss.FBX" />
     <MeshContentTask Include="Asset\modelData\boss\bullet2.FBX" />
     <MeshContentTask Include="Asset\modelData\boss\bullet3.FBX" />

@@ -7,7 +7,7 @@
 #include "PlayerStatus.h"
 #include "Oni.h"
 #include "Boss.h"
-#include "Boss2.h"
+#include "Boss3.h"
 #include "DropItem.h"
 #include "DropMaterial.h"
 #include "IEnemy.h"
@@ -37,7 +37,7 @@ Game::~Game()
 		delete boss;
 		return true;
 	});
-	QueryGOs<Boss2>(L"Enemy", [&](Boss2* boss2)
+	QueryGOs<Boss3>(L"Enemy", [&](Boss3* boss2)
 	{
 		delete boss2;
 		return true;
@@ -130,11 +130,11 @@ bool Game::Start()
 		return false;
 	});
 	//仮ここから
-	//ボス2
-			//プレイヤーのインスタンスを生成する。
-	Boss2* boss2 = new Boss2;
-	boss2->SetName(L"Enemy");
-	boss2->SetPlayer(m_player);
+	//ボス3
+	//プレイヤーのインスタンスを生成する。
+	Boss3* boss3 = new Boss3;
+	boss3->SetName(L"Enemy");
+	//boss3->SetPlayer(m_player);
 	//ここまで
 	m_gamecamera = new GameCamera;
 	m_gamecamera->SetPlayer(m_player);

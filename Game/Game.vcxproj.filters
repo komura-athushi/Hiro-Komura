@@ -130,6 +130,7 @@
     <ClCompile Include="Ground.cpp" />
     <ClCompile Include="Weapon.cpp" />
     <ClCompile Include="GameClear.cpp" />
+    <ClCompile Include="Boss3.cpp" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Asset\modelData\Sword\AncientWarriorBlade.FBX">
@@ -231,6 +232,9 @@
     <MeshContentTask Include="Asset\modelData\zunko\zunko.FBX">
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
+    <MeshContentTask Include="Asset\modelData\boss3\boss3.FBX">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Boss.h" />
@@ -269,6 +273,7 @@
     <ClInclude Include="Ground.h" />
     <ClInclude Include="Weapon.h" />
     <ClInclude Include="GameClear.h" />
+    <ClInclude Include="Boss3.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Assets">
