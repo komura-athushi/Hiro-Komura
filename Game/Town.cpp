@@ -24,7 +24,7 @@ Town::Town()
 
 Town::~Town()
 {
-	//各クラスを削除
+	//各インスタンスを削除
 	delete m_player;
 	delete m_human;
 	delete m_merchant;
