@@ -180,6 +180,11 @@ public:
 	{
 		m_state = enState_GameClear;
 	}
+	//ゲームクリアのモーション中かどうかを取得
+	bool GetisClearAnimation() const
+	{
+		return m_state == enState_GameClear;
+	}
 private:
 	bool m_cagliostro = false;
 	GameObj::CSkinModelRender* m_skinModelRender = nullptr;		//スキンモデルレンダラー

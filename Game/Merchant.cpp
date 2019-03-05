@@ -37,6 +37,8 @@ bool Merchant::Start()
 		m_spritefont.push_back(new CFont);
 	}
 	m_cursor.Init(L"Resource/sprite/cursor.dds");
+	m_sprite2.Init(L"Resource/sprite/window.dds");
+	m_sprite3.Init(L"Resource/sprite/upgradewindow.dds");
 	return true;
 }
 
@@ -73,7 +75,6 @@ void Merchant::PostRender()
 	}
 	wchar_t output[256];
 	swprintf_s(output, L"どの武器を強化しますか？\n");
-	m_font.DrawScreenPos(output, { 00.0f,00.0f }, CVector4::White());
 	//武器のアイコン表示
 	CVector2 pos = m_aiconposition;
 	pos.y -= m_swordid * 70.0f;
@@ -81,14 +82,14 @@ void Merchant::PostRender()
 			m_spritelist[i]->DrawScreenPos(pos, m_aiconscale);
 			wchar_t output[30];
 			if (m_playerstatus->GetEuipment(i).GetLv() != 5) {
-				swprintf_s(output, L"武器Lv %d  強化費用 %dメセタ\n", m_playerstatus->GetEuipment(i).GetLv(), m_playerstatus->GetEuipment(i).GetCost());
+				swprintf_s(output, L"武器Lv %d\n強化費用 %dメセタ\n", m_playerstatus->GetEuipment(i).GetLv(), m_playerstatus->GetEuipment(i).GetCost());
 			}
 			else {
 				swprintf_s(output, L"武器Lv %d\n", m_playerstatus->GetEuipment(i).GetLv());
 			}
 			CVector2 pos2 = pos;
 			pos2.x += 100.0f;
-			m_spritefont[i]->DrawScreenPos(output, pos2, CVector4::White());
+			m_spritefont[i]->DrawScreenPos(output, pos2, CVector4::White(), {0.7f,0.7f});
 			pos.y += 70.0f;
 	}
 	m_cursor.DrawScreenPos(m_aiconposition, m_aiconscale, CVector2::Zero(),
@@ -96,7 +97,6 @@ void Merchant::PostRender()
 		CVector4::White(),
 		DirectX::SpriteEffects_None,
 		0.4f);
-
 	int number = m_swordid;
 	if (Pad(0).GetButton(enButtonUp) && m_button) {
 		number--;
@@ -125,7 +125,6 @@ void Merchant::PostRender()
 	}
 	if (Pad(0).GetButton(enButtonB) && m_button) {
 		if (m_playerstatus->GetEuipment(m_swordid).GetLv() == 5) {
-			return;
 		}
 		else {
 			m_playerstatus->WeaponStrengthen(m_swordid);
@@ -134,4 +133,20 @@ void Merchant::PostRender()
 		}
 		m_button = false;
 	}
+	m_font.DrawScreenPos(output, { 300.0f,450.0f }, CVector4::White(), { 0.6f,0.6f },
+		CVector2::Zero(),
+		0.0f,
+		DirectX::SpriteEffects_None,
+		0.7f
+	);
+	m_sprite2.DrawScreenPos({ 290.0f,440.0f }, CVector3::One(), CVector2::Zero(),
+		0.0f,
+		{ 1.0f, 1.0f, 1.0f, 0.7f },
+		DirectX::SpriteEffects_None,
+		0.8f);
+	m_sprite3.DrawScreenPos({ 780.0f,0.0f }, CVector3::One(), CVector2::Zero(),
+		0.0f,
+		{ 1.0f, 1.0f, 1.0f, 1.0f },
+		DirectX::SpriteEffects_None,
+		0.8f);
 }

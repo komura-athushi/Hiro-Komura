@@ -19,6 +19,7 @@ bool Teleport::Start()
 	m_player = FindGO<Player>(L"Player");
 	m_gamecamera = FindGO<GameCamera>();
 	m_sprite.Init(L"Resource/sprite/target2.dds");
+	m_sprite2.Init(L"Resource/sprite/window.dds");
 	return true;
 }
 
@@ -66,6 +67,9 @@ void Teleport::Update()
 
 void Teleport::PostRender()
 {
+	if (m_player->GetisClearAnimation()) {
+		return;
+	}
 	if (!m_isdisplay) {
 		return;
 	}
@@ -77,6 +81,11 @@ void Teleport::PostRender()
 	if (m_isaccess) {
 		wchar_t output[256];
 		swprintf_s(output, L"ステージをクリアしますか？\n");
-		m_font.DrawScreenPos(output, { 00.0f,00.0f }, CVector4::White());
+		m_font.DrawScreenPos(output, { 300.0f,450.0f }, CVector4::White(), { 0.6f,0.6f });
+		m_sprite2.DrawScreenPos({ 290.0f,440.0f }, CVector3::One(), CVector2::Zero(),
+			0.0f,
+			{ 1.0f, 1.0f, 1.0f, 0.7f },
+			DirectX::SpriteEffects_None,
+			0.8f);
 	}
 }

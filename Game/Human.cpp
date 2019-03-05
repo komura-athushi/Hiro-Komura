@@ -29,6 +29,7 @@ bool Human::Start()
 	m_gamedata = FindGO<GameData>(L"GameData");
 	m_playerstatus = FindGO<PlayerStatus>(L"PlayerStatus");
 	m_townlevel = m_gamedata->GetTownLevel();
+	m_sprite.Init(L"Resource/sprite/window.dds");
 	//条件を満たし手入れば、街を発展できるようにする
 	if (m_gamedata->GetStageClear(m_townlevel)) {
 		if (m_necessarymaterial <= m_playerstatus->GetMaterial(m_townlevel)) {
@@ -111,5 +112,10 @@ void Human::PostRender()
 			swprintf_s(output, L"街を発展させるにはステージ%dをクリアする必要があります\n", m_townlevel + 1);
 		}
 	}
-	m_font.DrawScreenPos(output, { 00.0f,00.0f }, CVector4::White());
+	m_font.DrawScreenPos(output, { 300.0f,450.0f }, CVector4::White(), {0.6f,0.6f});
+	m_sprite.DrawScreenPos({ 290.0f,440.0f }, CVector3::One(), CVector2::Zero(),
+		0.0f,
+		{ 1.0f, 1.0f, 1.0f, 0.7f },
+		DirectX::SpriteEffects_None,
+		0.8f);
 }
