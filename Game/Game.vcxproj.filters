@@ -91,6 +91,9 @@
     <ImageContentTask Include="Asset\sprite\credit.png">
       <Filter>Assets\sprite</Filter>
     </ImageContentTask>
+    <ImageContentTask Include="Asset\sprite\pressstart.png">
+      <Filter>Assets\sprite</Filter>
+    </ImageContentTask>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Boss.cpp" />
@@ -232,7 +235,35 @@
     <MeshContentTask Include="Asset\modelData\zunko\zunko.FBX">
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
+<<<<<<< HEAD
     <MeshContentTask Include="Asset\modelData\boss3\boss3.FBX">
+=======
+    <MeshContentTask Include="Asset\modelData\sword_drop\excaliburmorgan_drop.FBX">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Asset\modelData\sword_drop\FireSword_drop.FBX">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Asset\modelData\sword_drop\GreatSword_drop.fbx">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Asset\modelData\sword_drop\IceSword_drop.FBX">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Asset\modelData\sword_drop\Sword_drop.FBX">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Asset\modelData\sword_drop\WindSword_drop.FBX">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Asset\modelData\sword_drop\AncientWarriorBlade_drop.FBX">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Asset\modelData\sword_drop\BattleReadyBlade_drop.FBX">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Asset\modelData\sword_drop\BlueLightSword_drop.FBX">
+>>>>>>> 06d503c32891d05c262b093e0415f5e515d8b477
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
   </ItemGroup>

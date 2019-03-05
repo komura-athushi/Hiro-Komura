@@ -15,7 +15,8 @@ Title::~Title()
 
 bool Title::Start()
 {
-	m_sprite.Init(L"Resource/sprite/MokoTitle.dds");
+	m_sprite.Init(L"Resource/sprite/Title.dds");
+	m_sprite2.Init(L"Resource/sprite/pressstart.dds");
 	m_fade = FindGO<Fade>();
 	m_fade->StartFadeIn();
 	return true;
@@ -34,6 +35,36 @@ void Title::Update()
 		if (Pad(0).GetDown(enButtonStart)) {
 			m_isWaitFadeout = true;
 			m_fade->StartFadeOut();
+			//SE
+			SuicideObj::CSE* se = NewGO<SuicideObj::CSE>(L"Asset/sound/se/decision.wav");
+			se->Play(); //Ä¶(Ä¶‚ªI‚í‚é‚Æíœ‚³‚ê‚Ü‚·)
+			se->SetVolume(2.5f);
+			//3DÄ¶
+			se->SetPos(CVector3::Zero());//‰¹‚ÌˆÊ’u
+			se->SetDistance(500.0f);//‰¹‚ª•·‚±‚¦‚é”ÍˆÍ
+			se->Play(true); //‘æˆêˆø”‚ðtrue
+		}
+	}
+	if (m_currentAlpha > 1.0f && m_isadd) {
+		m_isadd = false;
+	}
+	else if(m_currentAlpha < 0.0f && !m_isadd){
+		m_isadd = true;
+	}
+	if (m_isadd) {
+		if (m_isWaitFadeout) {
+			m_currentAlpha += GetDeltaTimeSec() * 13.0f;
+		}
+		else {
+			m_currentAlpha += GetDeltaTimeSec() * 1.5f;
+		}
+	}
+	else {
+		if (m_isWaitFadeout) {
+			m_currentAlpha -= GetDeltaTimeSec() * 13.0f;
+		}
+		else {
+			m_currentAlpha -= GetDeltaTimeSec() * 1.5f;
 		}
 	}
 }
@@ -43,6 +74,11 @@ void Title::PostRender()
 	m_sprite.DrawScreenPos(m_position,m_scale, CVector2::Zero(),
 		0.0f,
 		{ 1.0f, 1.0f, 1.0f, 1.0f },
+		DirectX::SpriteEffects_None,
+		0.2f);
+	m_sprite2.DrawScreenPos(m_position, m_scale, CVector2::Zero(),
+		0.0f,
+		{ 1.0f, 1.0f, 1.0f, m_currentAlpha },
 		DirectX::SpriteEffects_None,
 		0.2f);
 }

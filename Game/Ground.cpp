@@ -15,7 +15,7 @@ Ground::~Ground()
 bool Ground::Start()
 {
 	m_skinModelRender = new GameObj::CSkinModelRender;
-	m_skinModelRender2 = new GameObj::CSkinModelRender;
+	/*m_skinModelRender2 = new GameObj::CSkinModelRender;
 	m_skinModelRender2->Init(L"Resource/modelData/sky.cmo");
 	m_scale = { 300.0f,300.0f,300.0f };
 	m_skinModelRender2->SetPos(m_position);
@@ -25,7 +25,7 @@ bool Ground::Start()
 		mef->SetLightingEnable(false);
 	}
 	);
-	m_staticobject2.CreateMesh(*m_skinModelRender2);
+	m_staticobject2.CreateMesh(*m_skinModelRender2);*/
 	GameData* gamedata = FindGO<GameData>(L"GameData");
 	//ステージによって読み込むfbxファイルを変えます
 	switch (m_stage) {

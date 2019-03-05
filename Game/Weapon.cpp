@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "Weapon.h"
 const int Weapon::m_raritynumber[Weapon::m_HighestRarity] = { 1,3,1,1,1,1,1 };
-
+//コンストラクタで各ステータスを設定
 Weapon::Weapon(const int& id, const wchar_t* name, const int& rarity, const int& atk, const int& matk, const int& mnumber,const int& meseta)
 	:m_id(id),m_name(name),m_rarity(rarity),m_atk(atk),m_matk(matk),m_magicid(mnumber),m_meseta(meseta)
 {

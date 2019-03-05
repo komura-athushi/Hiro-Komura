@@ -67,6 +67,7 @@ void Player::unityChan()
 	m_skinModelRender->GetAnimCon().AddAnimationEventListener([&](const wchar_t* clipName, const wchar_t* eventName) {
 		OnAnimationEvent(clipName, eventName);
 	});
+	//色々なddsファイル読み込み
 	m_targetsprite.Init(L"Resource/sprite/target.dds");
 	m_locktargetsprite.Init(L"Resource/sprite/locktarget.dds");
 	m_statussprite.Init(L"Resource/sprite/status.dds");
@@ -201,12 +202,6 @@ void Player::Move()
 	//計算したベクトルを移動速度に加算
 	m_movespeed += frontxz * m_multiply;
 	m_movespeed += rightxz * m_multiply;
-	//スティックの左右入力の処理
-	/*m_movespeed.z = +sin(m_radian)*stickL.x * m_multiply;
-	m_movespeed.x = -cos(m_radian)*stickL.x * m_multiply;
-	//スティックの上下入力の処理
-	m_movespeed.z += cos(m_radian)*stickL.y * m_multiply;
-	m_movespeed.x += sin(m_radian)*stickL.y * m_multiply;*/
 	//重力
 	m_movespeed.y -= 800.0f *GetDeltaTimeSec();
 	//キャラクターコントローラーを使用して、座標を更新。
@@ -630,6 +625,7 @@ void Player::OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventName)
 	}
 	//魔法を発生させる
 	else if (wcscmp(eventName, L"aria") == 0) {
+		//この魔法だけは他と違うクラスを使う
 		if (m_MagicId == 8) {
 			Morugan* morugan = new Morugan;
 			morugan->SetDamage(m_Mattack, m_DamageRate);
@@ -943,9 +939,6 @@ void Player::OutTarget()
 			m_target = enemy->GetCollisionPosition();
 			m_enemy = enemy;
  		}
-		//エネミーの座標とプレイヤーとエネミーの距離を配列に記憶します
-		//enemyList.push_back(enemy->GetCollisionPosition());
-		//distanceList.push_back(pos.LengthSq());
 		//配列の長さを加算します
 		enemynumber++;
 		return true;
@@ -956,9 +949,6 @@ void Player::OutTarget()
 		m_targetdisplay = false;
 		return;
 	}
-	//配列の長さの分だけ計算します
-	//for (int i = 0; i < enemynumber; i++) {
-	//}
 	//求めた一番小さい値が一定値より小さい場合、ターゲッティングをオンにします
 	if (fabs(degreemum) <= M_PI / 3) {
 		m_targetdisplay = true;
@@ -980,6 +970,7 @@ void Player::PostRender()
 		//該当の座標にターゲットの座標を表示します
 		if (0.0f <= pos.x && pos.x <= 1.0f && 0.0f <= pos.y && pos.y <= 1.0f && 0.0f <= pos.z && pos.z <= 1.0f) {
 			CVector3 scpos = pos;
+			//ターゲットロック中かどうかで表示する画像を変えます
 			if (m_targetlock) {
 				m_locktargetsprite.Draw(scpos, { 0.2f,0.2f }, { 0.5f,0.5f },
 					0.0f,
@@ -1010,6 +1001,7 @@ void Player::PostRender()
 	}
 	//ステータス表示
 	if (m_displaystatus) {
+		//プレイヤーのステータスを表示します
 		wchar_t output[256];
 		swprintf_s(output, L"unityChan\nLv. %d\nHP        %d\nPP        %d\n力        %d\n賢さ      %d\n打撃力    %d\n法撃力    %d\nEx        %d\nNex       %d\n",m_Level,m_MaxHP,m_MaxPP,m_playerstatus->GetPower(),m_playerstatus->GetClever(),m_Attack,m_Mattack,m_Exp,m_NextExp);
 		//swprintf_s(output, L"x   %f\ny   %f\nz  %f\nw   %f\n", m_swordqRot.x, m_swordqRot.y, m_swordqRot.z, m_swordqRot.w);
@@ -1019,6 +1011,7 @@ void Player::PostRender()
 			{ 1.0f, 1.0f, 1.0f, 1.0f },
 			DirectX::SpriteEffects_None,
 			1.0f);
+		//武器関連のステータスを表示します
 		wchar_t output2[256];
 		swprintf_s(output2, L"武器\n武器Lv  %d\n武器名  %ls\n打撃力  %d\n法撃力  %d\n魔法    %ls\n消費PP  %d\n威力    %d\n",m_playerstatus->GetWeaponLv(),m_SwordName,m_playerstatus->GetWeaponAttack(),m_playerstatus->GetWeaponMattack(),m_MagicName,m_PPCost,int(m_DamageRate*100));
 		m_font.DrawScreenPos(output2, { 230.0f,60.0f }, CVector4::White(), { 0.7f,0.7f });
@@ -1027,6 +1020,7 @@ void Player::PostRender()
 			{ 1.0f, 1.0f, 1.0f, 1.0f },
 			DirectX::SpriteEffects_None,
 			1.0f);
+		//インベントリ関連のステータスを表示します
 		wchar_t output3[256];
 		swprintf_s(output3, L"インベントリ\n木        %d\n石        %d\nレンガ    %d\nメセタ    %dM\n",m_playerstatus->GetMaterial(0), m_playerstatus->GetMaterial(1), m_playerstatus->GetMaterial(2), m_playerstatus->GetHaveMeseta());
 		m_font.DrawScreenPos(output3, { 445.0f,317.0f }, CVector4::White(), { 0.7f,0.7f });

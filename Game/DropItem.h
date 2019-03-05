@@ -43,7 +43,7 @@ private:
 	GameObj::CSkinModelRender* m_skinModelRender = nullptr;		//スキンモデルレンダラー。
 	CVector3 m_position;                                        //座標
 	CVector3 m_scale = { 1.0f,1.0f,1.0f };                      //大きさ
-	CQuaternion m_rotation;                                     //クオンテーション
+	CQuaternion m_rotation=CQuaternion::Identity();             //クオンテーション
 	int m_state;                                                //ドロップ品の番号
 	Player* m_player;                                           //プレイヤークラスのポインタ
 	Equipment* m_equipment = nullptr;
@@ -54,5 +54,6 @@ private:
 	bool m_issetweapon = false;
 	static const float m_height;								//ドロップ時に+するy座標
 	static const float m_height_weapon;							//ドロップ時に+するy座標(武器)
+	float m_degree = 0.0f;
 };
 

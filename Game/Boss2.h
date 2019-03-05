@@ -100,8 +100,8 @@ private:
 	int m_posttiming = 30;										//攻撃が来る前の注意のタイミング
 	int m_atktype = 0;											//攻撃の種類
 	float m_r = 150.0f;                                         //コリジョンの半径
-	const float m_attackr = 90.0f;                              //ひっかきしたときに発生させるコリジョンの半径
-	const float m_attack2r = 300.0f;                            //プレスしたときに発生させるコリジョンの半径
+	const float m_attackr = 130.0f;                             //ひっかきしたときに発生させるコリジョンの半径
+	const float m_attack2r = 350.0f;                            //プレスしたときに発生させるコリジョンの半径
 	float m_collisionheight = 70.0f;							//コリジョンをm_positionからどれだけ上にあげるか
 	int m_bonehead;                                             //頭のboneの番号
 	//Bossの色々なステータス
@@ -115,5 +115,6 @@ private:
 	bool m_gekiha = false;                                      //deleteするかどうか
 	//ファイヤー関連
 	bool m_fireend=false;										//ファイヤーが終わったかどうか
+	bool m_ischase = true;										//プレイヤーを追尾しているかどうか
 };
 

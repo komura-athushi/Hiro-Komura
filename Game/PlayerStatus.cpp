@@ -70,7 +70,7 @@ void PlayerStatus::PlusExp(const int& exp)
 	int ep = exp;
 	//経験値を加算
 	m_Exp += ep;
-	//レベルごとに必要な累計経験値がプレイヤーの累計経験値より大きくなるまでループ
+	//レベルアップに必要な累計経験値がプレイヤーの累計経験値より大きくなるまでループ
 	while (m_LevelExp <= m_Exp) {
 		ep -= m_NextExp;
 		m_Level += 1;

@@ -41,19 +41,28 @@ bool DropItem::Start()
 		//武器の番号によって読み込むfbxファイルを決めます
 		switch (m_state) {
 		case 1:
-			m_skinModelRender->Init(L"Resource/modelData/FireSword.cmo");
+			m_skinModelRender->Init(L"Resource/modelData/FireSword_drop.cmo");
 			break;
 		case 2:
-			m_skinModelRender->Init(L"Resource/modelData/IceSword.cmo");
+			m_skinModelRender->Init(L"Resource/modelData/IceSword_drop.cmo");
 			break;
 		case 3:
-			m_skinModelRender->Init(L"Resource/modelData/WindSword.cmo");
+			m_skinModelRender->Init(L"Resource/modelData/WindSword_drop.cmo");
 			break;
 		case 4:
-			m_skinModelRender->Init(L"Resource/modelData/GreatSword.cmo");
+			m_skinModelRender->Init(L"Resource/modelData/GreatSword_drop.cmo");
 			break;
 		case 5:
-			m_skinModelRender->Init(L"Resource/modelData/BlueLightSword.cmo");
+			m_skinModelRender->Init(L"Resource/modelData/BlueLightSword_drop.cmo");
+			break;
+		case 6:
+			m_skinModelRender->Init(L"Resource/modelData/BattleReadyBlade_drop.cmo");
+			break;
+		case 7:
+			m_skinModelRender->Init(L"Resource/modelData/AncientWarriorBlade_drop.cmo");
+			break;
+		case 8:
+			m_skinModelRender->Init(L"Resource/modelData/excaliburmorgan_drop.cmo");
 			break;
 		}
 		m_position.y += m_height_weapon;
@@ -66,12 +75,16 @@ bool DropItem::Start()
 	}
 	m_skinModelRender->SetPos(m_position);
 	m_skinModelRender->SetScale(m_scale);
+	m_skinModelRender->SetRot(m_rotation);
 	m_player = FindGO<Player>(L"Player");
 	return true;
 }
 
 void DropItem::Update()
 {
+	m_degree += 200.0f * GetDeltaTimeSec();
+	m_rotation.SetRotationDeg(CVector3::AxisY(), m_degree);
+	m_skinModelRender->SetRot(m_rotation);
 	//プレイヤーとの距離が一定以下になったらプレイヤーの所持武器に自身を追加する、あるいはメセタの額を加算する
 	CVector3 pos = m_player->GetPosition() - m_position;
 	if (pos.Length() <= 80.0f) {

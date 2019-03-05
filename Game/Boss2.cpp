@@ -77,7 +77,7 @@ void Boss2::Attack()
 		}
 	}
 	//プレス
-	else if (pos.LengthSq() < 500.0f*500.0f) {
+	else if (pos.LengthSq() < 450.0f * 450.0f) {
 		if (m_timer >= m_cooltime) {
 			m_state = enState_Press;
 			//タイマーをリセット。.
@@ -160,17 +160,23 @@ void Boss2::Chase()
 	//敵の初期位置と現在位置の距離
 	CVector3 oldpos = m_oldpos - m_position;
 	//攻撃
-	if (pos.LengthSq() < 500.0f*500.0f) {
+	if (pos.LengthSq() < 500.0f * 500.0f) {
 		Attack();
 	}
 	//もしプレイヤーと鬼の距離が近くなったら
-	if (pos.LengthSq() < 1000.0f*1000.0f) {
-		//近づいてくる
-		CVector3 EnemyPos = m_playerposition - m_position;
-		EnemyPos.Normalize();
-		m_movespeed = EnemyPos * 2.5f;
-		m_movespeed.y = 0.0f;
-		m_position += m_movespeed;
+	if (pos.LengthSq() < 1000.0f * 1000.0f) {
+		if (pos.LengthSq() > 200.0f * 200.0f) {
+			//近づいてくる
+			CVector3 EnemyPos = m_playerposition - m_position;
+			EnemyPos.Normalize();
+			m_movespeed = EnemyPos * 2.5f;
+			m_movespeed.y = 0.0f;
+			m_position += m_movespeed;
+			m_ischase = true;
+		}
+		else {
+			m_ischase = false;
+		}
 	}
 
 	else if (pos.LengthSq() > 1000.0f*1000.0f) {
@@ -180,7 +186,7 @@ void Boss2::Chase()
 		m_movespeed = EnemyOldPos * 5.0f;
 		m_movespeed.y = 0.0f;
 		//敵の初期位置と現在位置の距離がほぼ0だったら止まる
-		if (oldpos.Length() < 50.0f) {
+		if (oldpos.LengthSq() < 50.0f * 50.0f) {
 			m_movespeed = { 0.0f,0.0f,0.0f };
 		}
 		m_position += m_movespeed;
@@ -206,8 +212,16 @@ void Boss2::Turn()
 	if (moveSpeedXZ.LengthSq() < 0.5f) {
 		return;
 	}
-	m_parallel = moveSpeedXZ;
-	m_rotation.SetRotation({ 0.0f,1.0f,0.0f }, atan2f(moveSpeedXZ.x, moveSpeedXZ.z));
+	if (m_ischase) {
+		m_parallel = moveSpeedXZ;
+		m_rotation.SetRotation({ 0.0f,1.0f,0.0f }, atan2f(moveSpeedXZ.x, moveSpeedXZ.z));
+	}
+	else {
+		CVector3 pos = m_player->GetPosition() - m_position;
+		pos.y = 0.0f;
+		pos.Normalize();
+		m_rotation.GetRotation(CVector3::AxisY(), atan2f(pos.x, pos.z));
+	}
 	m_skinModelRender->SetRot(m_rotation);
 }
 
@@ -271,11 +285,11 @@ void Boss2::OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventName)
 		//形状の作成
 		CVector3 atkpos = m_position;
 		atkpos.z += 50.0f;
-		CVector3 pos = atkpos + CVector3::AxisY()*m_collisionheight;
-		pos += m_parallel * 180.0f;
+		CVector3 pos = atkpos + CVector3::AxisY() * (m_collisionheight-30.0f);
+		pos += m_parallel * 150.0f;
 		attackCol->CreateSphere(pos, CQuaternion::Identity(), m_attackr);
 		//寿命を設定
-		attackCol->SetTimer(60);//フレーム後削除される
+		attackCol->SetTimer(30);//フレーム後削除される
 		attackCol->SetCallback([&](SuicideObj::CCollisionObj::SCallbackParam& param) {
 			//衝突した判定の名前が"Player"ならm_Attack1分だけダメージ与える
 			if (param.EqualName(L"Player")) {
