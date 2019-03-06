@@ -26,7 +26,7 @@ Game::~Game()
 	delete m_gamecamera;
 	delete m_ground;
 	delete m_lig;
-	delete m_shadowMap;
+	delete m_CascadeShadowmap;
 	QueryGOs<Oni>(L"Enemy", [&](Oni* oni)
 	{
 		delete oni;
@@ -68,26 +68,11 @@ bool Game::Start()
 	m_color.Normalize();
 	m_lig->SetDirection(m_color);
 	m_lig->SetColor({ 1.0f, 1.0f, 1.0f });
-	m_shadowMap = new ShadowMapHandler;
+	m_CascadeShadowmap = new CascadeShadowHandler;
 
 	//初期化
 
-	m_shadowMap->Init(18048,//解像度(幅
-
-		18048,//解像度(高さ
-
-		m_lig->GetDirection()//ライトの方向
-
-	);
-
-	m_shadowMap->SetArea({ 14000.0f,14000.0f,14000.0f });//シャドウマップの範囲(Zがライトの方向)
-
-	m_shadowMap->SetTarget({ 9000.0f,0.0f,-4000.0f });//シャドウマップの範囲の中心位置*/
-	CascadeShadowHandler CascadeShadowmap;
-
-	//初期化
-
-	CascadeShadowmap.Init(3,//分割数
+	m_CascadeShadowmap->Init(5,//分割数
 
 		m_lig->GetDirection(),//ライトの方向
 
@@ -95,9 +80,9 @@ bool Game::Start()
 
 	);
 
-	CascadeShadowmap.SetNear(50.0f);
+	m_CascadeShadowmap->SetNear(30.0f);
 
-	CascadeShadowmap.SetFar(50000.0f);
+	m_CascadeShadowmap->SetFar(50000.0f);
 	//レベルを構築する。
 	m_level.Init(L"Asset/level/stage1.tkl", [&](LevelObjectData& objData) {
 		if (objData.EqualObjectName(L"stage1_ground") == true) {

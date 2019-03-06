@@ -42,7 +42,7 @@ private:
 	Level m_level;                                     //レベルデザインのためのクラス
 	PlayerStatus* m_playerstatus;                      //プレイヤーステータスクラスのポインタ
 	GameData* m_gamedata;
-	ShadowMapHandler* m_shadowMap;					   //シャドウマップ
+	CascadeShadowHandler* m_CascadeShadowmap;
 	//各オブジェクトの可変長配列
 	std::vector<Stone*> m_stoneList;                   //Stoneクラスのポインタを格納するための可変長配列
 	std::vector<House*> m_houseList;				   //Houseクラスのポインタの可変長配列

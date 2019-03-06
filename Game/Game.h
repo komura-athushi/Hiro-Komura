@@ -34,7 +34,7 @@ private:
 	Level m_level;                                     //レベルデザインのためのクラス
 	PlayerStatus* m_playerstatus;                      //プレイヤーステータスクラスのポインタ
 	CSprite m_sprite;								   //スプライトクラス
-	ShadowMapHandler* m_shadowMap;
+	CascadeShadowHandler* m_CascadeShadowmap;
 	std::vector<Oni*> m_oniList;
 	Boss* m_boss;
 	Fade* m_fade;
