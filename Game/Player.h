@@ -281,6 +281,7 @@ private:
 	float m_DamageRate;								       	    //魔法のダメージ倍率
 	int m_PPCost;										        //魔法を放つのに必要なPP
 	bool m_damage = false;                                      //ダメージを受けた！
+	bool m_isattack = false;									//攻撃中かどうか
 	bool m_isbutton = false;                                    //武器切り替えの時に使うやつ
 	float m_PPtimer = 0.0f;										//PP自動回復のクールタイム
 	int m_PPtime = 40;											//PP自動回復のタイム

@@ -26,7 +26,7 @@ private:
 	GameObj::Suicider::CEffekseer* m_effect = nullptr;
 	CVector3 m_position = CVector3::Zero();
 	CQuaternion m_rotation;
-	const CVector3 m_scale = { 7.0f,7.0f,4.0f };
+	const CVector3 m_scale = { 6.0f,6.0f,5.5f };
 	int m_damage = 0;
 	const float m_frame = 40.0f;
 	const float m_length = 1700.0f;								//ƒ‚ƒ‹ƒKƒ“‚Ì’·‚³

@@ -228,7 +228,10 @@ void Boss2::Turn()
 void Boss2::Damage()
 {
 	if (IEnemy::m_damage) {
-		m_state = enState_Damage;
+		int ran = rand() % 10+1;
+		if (ran > 7) {
+			m_state = enState_Damage;
+		}
 		IEnemy::m_damage = false;
 	}
 }

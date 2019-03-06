@@ -119,19 +119,19 @@ bool ShotMagic::Start()
 	 skinModelRender->SetPos(pos);*/
 	 switch (m_id) {
 	 case 1:
-		 effect->Play(L"Asset/effect/efk/magic_proj02.efk", 1.0f, pos, CQuaternion::Identity(), scl * 12);
+		 effect->Play(L"Asset/effect/Effects/efk/magic_fire.efk", 1.0f, pos, CQuaternion::Identity(), scl * 12);
 		 break;
 	 case 2:
-		 effect->Play(L"Asset/effect/efk/magic_proj03.efk", 1.0f, pos, CQuaternion::Identity(), scl * 12);
+		 effect->Play(L"Asset/effect/Effects/efk/magic_ice.efk", 1.0f, pos, CQuaternion::Identity(), scl * 12);
 		 break;
 	 case 3:
-		 effect->Play(L"Asset/effect/efk/magic_explo04.efk", 1.0f, pos, CQuaternion::Identity(), scl * 12);
+		 effect->Play(L"Asset/effect/Effects/efk/magic_wind.efk", 1.0f, pos, CQuaternion::Identity(), scl * 12);
 		 break;
 	 case 4:
 		 effect->Play(L"Asset/effect/powerup/powerup.efk", 1.0f, pos, CQuaternion::Identity(), scl * 12);
 		 break;
 	 case 5:
-		 effect->Play(L"Asset/effect/efk/magic_proj01.efk", 1.0f, pos, CQuaternion::Identity(), scl * 12);
+		 effect->Play(L"Asset/effect/Effects/efk/magic_sphere.efk", 1.0f, pos, CQuaternion::Identity(), scl * 12);
 		 break;
 	 case 6:
 		 effect->Play(L"Asset/effect/resta/resta.efk", 1.0f, pos, CQuaternion::Identity(), scl * 12);

@@ -60,17 +60,32 @@ bool Town::Start()
 
 	//初期化
 
-	m_shadowMap->Init(8048,//解像度(幅
+	m_shadowMap->Init(18048,//解像度(幅
 
-		8048,//解像度(高さ
+		18048,//解像度(高さ
 
 		m_lig->GetDirection()//ライトの方向
 
 	);
 
-	m_shadowMap->SetArea({ 20000.0f,20000.0f,20000.0f });//シャドウマップの範囲(Zがライトの方向)
+	m_shadowMap->SetArea({ 12000.0f,8000.0f,12000.0f });//シャドウマップの範囲(Zがライトの方向)
 
-	m_shadowMap->SetTarget({0.0f,0.0f,0.0f});//シャドウマップの範囲の中心位置*/
+	m_shadowMap->SetTarget({6000.0f,0.0f,-1000.0f});//シャドウマップの範囲の中心位置*/
+	CascadeShadowHandler CascadeShadowmap;
+
+	//初期化
+
+	CascadeShadowmap.Init(3,//分割数
+
+		m_lig->GetDirection(),//ライトの方向
+
+		1.0f//シャドウマップの範囲(メインカメラのFarにかかる係数です)
+
+	);
+
+	CascadeShadowmap.SetNear(50.0f);
+
+	CascadeShadowmap.SetFar(50000.0f);
 	BuildLevel();
 	m_gamecamera = new GameCamera;
 	m_gamecamera->SetPlayer(m_player);

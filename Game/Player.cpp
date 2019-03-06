@@ -352,10 +352,11 @@ void Player::AnimationController()
 		Animation();
 		break;
 	case enState_Damage:
-		if (m_skinModelRender->GetAnimCon().IsPlaying() || m_isjump || m_aria) {
+		if (m_skinModelRender->GetAnimCon().IsPlaying() || m_isjump || m_aria || m_isattack) {
 			m_skinModelRender->GetAnimCon().Play(enAnimationClip_damage, 0.2f);
 			m_aria = false;
 			m_isjump = false;
+			m_isattack = false;
 		}
 		else {
 			//アニメーションの再生が終わったら、再びアニメーション分岐
@@ -431,12 +432,13 @@ void Player::AnimationController()
 		Animation();
 		break;
 	case enState_Attack:
-		if (m_skinModelRender->GetAnimCon().IsPlaying() || m_isjump==true) {
+		if (m_skinModelRender->GetAnimCon().IsPlaying() || m_isjump) {
 			m_skinModelRender->GetAnimCon().Play(enAnimationClip_attack, 0.2f);
 			m_skinModelRender->GetAnimCon().SetSpeed(7.0f * 60.0f * GetDeltaTimeSec());
 			Animation();
 			m_isjump = false;
 			m_timer = 0;
+			m_isattack = true;
 		}
 		else {
 			//アニメーションの再生が終わったら、アニメーション分岐
@@ -449,6 +451,7 @@ void Player::AnimationController()
 					m_state = enState_Idle;
 				}
 				m_timer = 0;
+				m_isattack = false;
 			}
 			
 		}
@@ -601,7 +604,32 @@ void Player::OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventName)
 	else if (wcscmp(eventName, L"aria_start") == 0) {
 		//呪文詠唱のエフェクトを発生させる
 		GameObj::Suicider::CEffekseer* effect = new GameObj::Suicider::CEffekseer;
-		effect->Play(L"Asset/effect/efk/magic_cast01.efk", 1.0f, m_position, CQuaternion::Identity(), { 12.0f,12.0f,12.0f });
+		switch (m_MagicId) {
+		case 1:
+			effect->Play(L"Asset/effect/Effects/efk/cast_fire.efk", 1.0f, m_position, CQuaternion::Identity(), { 12.0f,12.0f,12.0f });
+			break;
+		case 2:
+			effect->Play(L"Asset/effect/Effects/efk/cast_ice.efk", 1.0f, m_position, CQuaternion::Identity(), { 12.0f,12.0f,12.0f });
+			break;
+		case 3:
+			effect->Play(L"Asset/effect/Effects/efk/cast_wind.efk", 1.0f, m_position, CQuaternion::Identity(), { 12.0f,12.0f,12.0f });
+			break;
+		case 4:
+			effect->Play(L"Asset/effect/Effects/efk/cast_sphere.efk", 1.0f, m_position, CQuaternion::Identity(), { 12.0f,12.0f,12.0f });
+			break;
+		case 5:
+			effect->Play(L"Asset/effect/Effects/efk/cast_sphere.efk", 1.0f, m_position, CQuaternion::Identity(), { 12.0f,12.0f,12.0f });
+			break;
+		case 6:
+			effect->Play(L"Asset/effect/Effects/efk/cast_sphere.efk", 1.0f, m_position, CQuaternion::Identity(), { 12.0f,12.0f,12.0f });
+			break;
+		case 7:
+			effect->Play(L"Asset/effect/Effects/efk/cast_sword.efk", 1.0f, m_position, CQuaternion::Identity(), { 12.0f,12.0f,12.0f });
+			break;
+		case 8:
+			effect->Play(L"Asset/effect/Effects/efk/cast_laser.efk", 1.0f, m_position, CQuaternion::Identity(), { 12.0f,12.0f,12.0f });
+			break;
+		}
 		effect->SetSpeed(2.0f);
 		//SE
 		SuicideObj::CSE* se = NewGO<SuicideObj::CSE>(L"Asset/sound/unityChan/aria.wav");
@@ -999,12 +1027,15 @@ void Player::PostRender()
 	else {
 		m_attacktarget = m_playerheikou;
 	}
+	//プレイヤーのステータスを表示します
+	wchar_t output[256];
+	swprintf_s(output, L"x   %f\ny   %f\nz  %f\n", m_position.x, m_position.y, m_position.z);
+	m_font.Draw(output,CVector2::Zero());
 	//ステータス表示
 	if (m_displaystatus) {
 		//プレイヤーのステータスを表示します
 		wchar_t output[256];
 		swprintf_s(output, L"unityChan\nLv. %d\nHP        %d\nPP        %d\n力        %d\n賢さ      %d\n打撃力    %d\n法撃力    %d\nEx        %d\nNex       %d\n",m_Level,m_MaxHP,m_MaxPP,m_playerstatus->GetPower(),m_playerstatus->GetClever(),m_Attack,m_Mattack,m_Exp,m_NextExp);
-		//swprintf_s(output, L"x   %f\ny   %f\nz  %f\nw   %f\n", m_swordqRot.x, m_swordqRot.y, m_swordqRot.z, m_swordqRot.w);
 		m_font.DrawScreenPos(output, { 705.0f,60.0f }, CVector4::White(), {1.0f,1.0f});
 		m_statussprite.DrawScreenPos({ 700.0f,50.0f }, {1.0f,1.0f}, CVector2::Zero(),
 			0.0f,

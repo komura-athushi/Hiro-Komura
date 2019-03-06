@@ -76,11 +76,11 @@ void PlayerStatus::PlusExp(const int& exp)
 		m_Level += 1;
 		m_NextExp = (int)((1 + (float)(m_Level * m_Level * 0.1f)) * 60);
 		m_LevelExp += m_NextExp;
-		m_Power += 5 + rand() % 3;
+		m_Power = ProtPower + m_Level * 10 - 10;
 		m_Attack = m_Power + m_SwordAttack;
-		m_MaxHP += 10;
-		m_MaxPP += 10;
-		m_Clever += 10;
+		m_MaxHP = ProtStatus + m_Level * 10 - 10;
+		m_MaxPP = ProtStatus + m_Level * 10 - 10;
+		m_Clever = ProtPower + m_Level * 10 - 10;
 		m_Attack = m_Power + m_SwordAttack;
 		m_Mattack = m_Clever + m_SwordMattack;
 		m_levelup = true;
