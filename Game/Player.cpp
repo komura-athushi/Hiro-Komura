@@ -181,7 +181,7 @@ void Player::Move()
 	}
 	else {
 		stickL = Pad(0).GetStick(L);	//アナログスティックの入力量を取得。
-		if (Pad(0).GetDown(enButtonA) //Aボタンが押されたら
+		if (Pad(0).GetDown(enButtonB) //Aボタンが押されたら
 			&& m_charaCon.IsOnGround()  //かつ、地面に居たら
 			) {
 			//ジャンプする。
@@ -386,7 +386,7 @@ void Player::AnimationController()
 		}
 		else {
 			//アニメーションの再生が終わったら、クリアフラグをONにする
-			if (Pad(0).GetButton(enButtonBack)) {
+			if (Pad(0).GetButton(enButtonA)) {
 				m_gameclear = true;
 				m_transscene = true;
 			}
@@ -406,7 +406,7 @@ void Player::AnimationController()
 		}
 		else {
 			//アニメーションの再生が終わったら、ゲームオーバーフラグをONにする
-			if (Pad(0).GetButton(enButtonBack)) {
+			if (Pad(0).GetButton(enButtonA)) {
 				m_gameover = true;
 				m_transscene = true;
 			}
@@ -857,14 +857,14 @@ void Player::RelationHuman()
 	CVector3 pos = m_human->GetPosition() - m_position;
 	//待機状態かつ距離が一定以内の時にBボタンを押すと話せる
 	if (pos.LengthSq() <= 300.0f * 300.0f && m_state==enState_Idle) {
-		if (Pad(0).GetDown(enButtonB)) {
+		if (Pad(0).GetDown(enButtonA)) {
 			if (m_human->GetTalk() && m_human->isLevelUpTown()) {
 				m_human->SetLevelUpTown();
 			}
 			m_human->OnTalk();
 			m_stop = true;
 		}
-		if (Pad(0).GetDown(enButtonA)) {
+		if (Pad(0).GetDown(enButtonB)) {
 			m_human->OffTalk();
 			m_stop = false;
 		}
@@ -880,7 +880,7 @@ void Player::RelationMerchant()
 	CVector3 pos = m_merchant->GetPosition() - m_position;
 	//プレイヤーとの距離が一定以内なら話せます
 	if (pos.LengthSq() <= 300.0f * 300.0f && m_state == enState_Idle) {
-		if (Pad(0).GetDown(enButtonB)) {
+		if (Pad(0).GetDown(enButtonA)) {
 			if (m_merchant->GetTalk()) {
 
 			}
@@ -889,7 +889,7 @@ void Player::RelationMerchant()
 				m_stop = true;
 			}
 		}
-		else if (Pad(0).GetDown(enButtonA)) {
+		else if (Pad(0).GetDown(enButtonB)) {
 			if (m_merchant->GetTalk()) {
 				m_merchant->OffTalk();
 				m_stop = false;
@@ -1056,7 +1056,7 @@ void Player::PostRender()
 			1.0f);
 		//武器関連のステータスを表示します
 		wchar_t output2[256];
-		swprintf_s(output2, L"武器\n武器Lv  %d\n武器名  %ls\n打撃力  %d\n法撃力  %d\n魔法    %ls\n消費PP  %d\n威力    %d\n",m_playerstatus->GetWeaponLv(),m_SwordName,m_playerstatus->GetWeaponAttack(),m_playerstatus->GetWeaponMattack(),m_MagicName,m_PPCost,int(m_DamageRate*100));
+		swprintf_s(output2, L"武器\n武器Lv  %d\n武器名  %ls\n打撃力  %d\n法撃力  %d\n魔法    %ls\n消費PP  %d\n威力    %d\n特殊能力\n１      %ls\n２      %ls\n３      %ls\n",m_playerstatus->GetWeaponLv(),m_SwordName,m_playerstatus->GetWeaponAttack(),m_playerstatus->GetWeaponMattack(),m_MagicName,m_PPCost,int(m_DamageRate*100),m_playerstatus->GetEuipment(m_SwordId).GetAbilityName(1), m_playerstatus->GetEuipment(m_SwordId).GetAbilityName(2), m_playerstatus->GetEuipment(m_SwordId).GetAbilityName(3));
 		m_font.DrawScreenPos(output2, { 230.0f,60.0f }, CVector4::White(), { 0.7f,0.7f });
 		m_weaponstatussprite.DrawScreenPos({ 227.0f,50.0f }, { 1.0f,1.0f }, CVector2::Zero(),
 			0.0f,
@@ -1066,8 +1066,8 @@ void Player::PostRender()
 		//インベントリ関連のステータスを表示します
 		wchar_t output3[256];
 		swprintf_s(output3, L"インベントリ\n木        %d\n石        %d\nレンガ    %d\nメセタ    %dM\n",m_playerstatus->GetMaterial(0), m_playerstatus->GetMaterial(1), m_playerstatus->GetMaterial(2), m_playerstatus->GetHaveMeseta());
-		m_font.DrawScreenPos(output3, { 445.0f,317.0f }, CVector4::White(), { 0.7f,0.7f });
-		m_inventorystatussprite.DrawScreenPos({ 442.0f,307.0f }, { 1.0f,1.0f }, CVector2::Zero(),
+		m_font.DrawScreenPos(output3, { 445.0f,438.0f }, CVector4::White(), { 0.7f,0.7f });
+		m_inventorystatussprite.DrawScreenPos({ 442.0f,428.0f }, { 1.0f,1.0f }, CVector2::Zero(),
 			0.0f,
 			{ 1.0f, 1.0f, 1.0f, 1.0f },
 			DirectX::SpriteEffects_None,

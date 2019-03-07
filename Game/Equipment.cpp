@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "Equipment.h"
 #include "GameData.h"
-#include "Ability.h"
 const float Equipment::m_multiply = 1.15f;
 const float Equipment::m_costmultiply = 1.2f;
 Equipment::Equipment(const int& number):m_SwordId(number)
@@ -82,4 +81,19 @@ void Equipment::Strengthen()
 	m_SwordAttack *= m_multiply;
 	m_SwordMattack *= m_multiply;
 	SetWeaponStatus();
+}
+
+const wchar_t* Equipment::GetAbilityName(const int& number)
+{
+	if (!m_ishaveability) {
+		return L"–³‚µ";
+	}
+	else {
+		if (number <= m_abilitylist.size()) {
+			return m_abilitylist[number - 1]->GetName();
+		}
+		else {
+			return L"–³‚µ";
+		}
+	}
 }

@@ -1,8 +1,8 @@
 #pragma once
+#include "Ability.h"
 class GameData;
 class Weapon;
 class Magic;
-class Ability;
 //武器を収納しているインベントリのクラスです
 class Equipment
 {
@@ -16,6 +16,8 @@ public:
 	void SetMagicStatus();
 	//武器を強化する
 	void Strengthen();
+	//該当の特殊能力の名前を取得
+	const wchar_t* GetAbilityName(const int& number);
 	//武器の番号を取得
 	int GetId() const
 	{
@@ -118,7 +120,7 @@ private:
 	std::vector<Ability*> m_abilitylist;				  //アビリティクラスのポインタの可変長配列
 	static const float m_multiply;						  //強化時のステータスの上昇倍率
 	static const float m_costmultiply;					  //強化費用の上昇倍率
-	const int m_probability = 20;					      //特殊能力が１個つく確率
+	const int m_probability = 40;					      //特殊能力が１個つく確率
 	const int m_slotlimitnumber = 3;				      //特殊能力数の上限
 	bool m_ishaveability = false;						  //特殊能力を所持しているかどうか
 };

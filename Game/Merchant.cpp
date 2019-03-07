@@ -107,7 +107,7 @@ void Merchant::PostRender()
 		m_button = false;
 	}
 	else {
-		if (!Pad(0).GetButton(enButtonUp) && !Pad(0).GetButton(enButtonDown) && !Pad(0).GetButton(enButtonB)) {
+		if (!Pad(0).GetButton(enButtonUp) && !Pad(0).GetButton(enButtonDown) && !Pad(0).GetButton(enButtonA)) {
 			m_button = true;
 		}
 	}
@@ -123,7 +123,7 @@ void Merchant::PostRender()
 			m_swordid = number;
 		}
 	}
-	if (Pad(0).GetButton(enButtonB) && m_button) {
+	if (Pad(0).GetButton(enButtonA) && m_button) {
 		if (m_playerstatus->GetEuipment(m_swordid).GetLv() == 5) {
 		}
 		else {

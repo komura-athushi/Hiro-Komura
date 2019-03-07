@@ -35,7 +35,7 @@ void Teleport::Update()
 		if (0.0f <= pos.x && pos.x <= 1.0f && 0.0f <= pos.y && pos.y <= 1.0f && 0.0f <= pos.z && pos.z <= 1.0f) {
 			m_displayposition = pos;
 			m_isdisplay = true;
-			if (Pad(0).GetDown(enButtonB) && !m_isaccess) {
+			if (Pad(0).GetDown(enButtonA) && !m_isaccess) {
 				m_isaccess = true;
 				m_player->SetStop();
 				m_isbutton = false;
@@ -48,16 +48,16 @@ void Teleport::Update()
 	else {
 		m_isdisplay = false;
 	}
-	if (!Pad(0).GetButton(enButtonA) && !Pad(0).GetButton(enButtonB)) {
+	if (!Pad(0).GetButton(enButtonB) && !Pad(0).GetButton(enButtonA)) {
 		m_isbutton = true;
 	}
 	if (m_isaccess && m_isbutton) {
-		if (Pad(0).GetDown(enButtonB)) {
+		if (Pad(0).GetDown(enButtonA)) {
 			m_player->SetMove();
 			m_player->SetGameClear();
 			m_isbutton = false;
 		}
-		else if (Pad(0).GetDown(enButtonA)) {
+		else if (Pad(0).GetDown(enButtonB)) {
 			m_isaccess = false;
 			m_isbutton = false;
 			m_player->SetMove();
