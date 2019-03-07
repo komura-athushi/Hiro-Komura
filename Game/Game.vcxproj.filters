@@ -140,6 +140,7 @@
     <ClCompile Include="Weapon.cpp" />
     <ClCompile Include="GameClear.cpp" />
     <ClCompile Include="Skeleton2.cpp" />
+    <ClCompile Include="Ability.cpp" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Asset\modelData\Sword\AncientWarriorBlade.FBX">
@@ -310,6 +311,7 @@
     <ClInclude Include="Weapon.h" />
     <ClInclude Include="GameClear.h" />
     <ClInclude Include="Skeleton2.h" />
+    <ClInclude Include="Ability.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Assets">

@@ -54,14 +54,12 @@ void PlayerStatus::Update()
 		for (int i = 0; i < m_gamedata->m_stagenumber; i++) {
 			//m_gamedata->SetClear(i);
 		}
-		m_MaxPP = 1000000000;
-		m_havemeseta = 10000000;
+		m_MaxPP = 1000;
+		m_havemeseta = 10000;
 		Player* player = FindGO<Player>(L"Player");
 		if (player != nullptr) {
 			player->SetPP(m_MaxPP);
 		}
-		//PlusExp(1000000000);
-		
 	}
 }
 
@@ -85,7 +83,7 @@ void PlayerStatus::PlusExp(const int& exp)
 		m_Mattack = m_Clever + m_SwordMattack;
 		m_levelup = true;
 	}
-		m_NextExp -= ep;
+	m_NextExp -= ep;
 }
 
 void PlayerStatus::SetWeaponStatus()
@@ -97,6 +95,8 @@ void PlayerStatus::SetWeaponStatus()
 	m_SwordName = m_equipmentlist[m_SwordId]->GetName();
 	m_Mattack = m_Clever + m_SwordMattack;
 	m_Attack = m_Power + m_SwordAttack;
+	m_SwordHP = m_equipmentlist[m_SwordId]->GetHP();
+	m_SwordPP = m_equipmentlist[m_SwordId]->GetPP();
 }
 
 void PlayerStatus::SetMagicStatus()

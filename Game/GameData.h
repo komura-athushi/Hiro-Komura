@@ -2,7 +2,7 @@
 #include "Weapon.h"
 #include "Magic.h"
 #include "Material.h"
-#include "Equipment.h"
+#include "Ability.h"
 class Enemy;
 //データクラスのインスタンスを生成するクラスです
 class GameData:public IGameObject
@@ -79,6 +79,16 @@ public:
 	{
 		m_isgameend = true;
 	}
+	//該当のアビリティのポインタを取得
+	Ability* GetAbility(const int& number)
+	{
+		return &m_abilitylist[number];
+	}
+	//アビリティクラスの可変長配列の長さを取得
+	int GetAbilityListNumber() const
+	{
+		return m_abilitylist.size();
+	}
 	enum EnWeapon {
 		enWeapon_Sword,									//ソード
 		enWeapon_FireSword,								//ファイアソード
@@ -114,7 +124,7 @@ private:
 	std::vector<Weapon> m_weaponlist;                   //Weaponクラスの可変長配列
 	std::vector<Magic> m_magiclist;						//Magicクラスの可変長配列
 	std::vector<Material> m_materiallist;				//Materialクラスの可変長配列
-	std::vector<Equipment> m_equipmentlist;				//Equipmentクラスの可変長配列
+	std::vector<Ability> m_abilitylist;					//アビリティクラスの可変長配列
 	bool m_stage[3] = { false,false,false };			//各ステージをクリアしたかどうか
 	int m_townlevel = 0;								//街の発展レベル
 	bool m_isgameclear = false;							//ゲームをクリアしたかどうか

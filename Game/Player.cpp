@@ -721,6 +721,14 @@ void Player::WeaponStatus()
 	m_WeaponNumber = m_playerstatus->GetWeaponNumber(m_SwordId);
 	m_SwordName = m_playerstatus->GetSwordName();
 	m_MagicId = m_playerstatus->GetMagicId();
+	m_MaxHP = m_playerstatus->GetMaxHP();
+	if (m_HP > m_MaxHP) {
+		m_HP = m_MaxHP;
+	}
+	m_MaxPP = m_playerstatus->GetMaxPP();
+	if (m_PP > m_MaxPP) {
+		m_PP = m_MaxPP;
+	}
 }
 
 void Player::MagicStatus()
@@ -1138,7 +1146,7 @@ void Player::PostRender()
 		swprintf_s(output, L"%d", m_PP);
 		m_ppf.DrawScreenPos(output, { 180.0f,674.0f }, CVector4::White(), { 0.6f,0.6f });
 		wchar_t output2[10];
-		swprintf_s(output2, L"/ %d\n", m_MaxHP);
+		swprintf_s(output2, L"/ %d\n", m_MaxPP);
 		m_ppf.DrawScreenPos(output2, { 235.0f,674.0f }, CVector4::White(), { 0.6f,0.6f });
 		m_ppframe.DrawScreenPos({ 140.0f,701.0f }, CVector2::One(), CVector2::Zero(),
 			0.0f,

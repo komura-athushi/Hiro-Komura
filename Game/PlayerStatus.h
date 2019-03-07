@@ -47,12 +47,12 @@ public:
 	//最大HPを取得
 	int GetMaxHP() const
 	{
-		return m_MaxHP;
+		return m_MaxHP + m_SwordHP;
 	}
 	//最大PPを取得
 	int GetMaxPP() const
 	{
-		return m_MaxPP;
+		return m_MaxPP + m_SwordPP;
 	}
 	//攻撃力を取得
 	int GetAttack() const
@@ -210,6 +210,8 @@ private:
 	int m_MagicId = 0;                                    //使える魔法の番号
 	int m_SwordId = 0;                                    //装備中の武器の番号
 	int m_Rarity = 0;                                     //装備中の武器のレアリティ
+	int m_SwordHP = 0;									  //装備中の武器のHP
+	int m_SwordPP = 0;								      //装備中の武器のPP
 	const wchar_t* m_SwordName;                           //装備中の武器の名前
 	const wchar_t* m_MagicName;						      //魔法の名前
 	float m_DamageRate;									  //魔法のダメージ倍率

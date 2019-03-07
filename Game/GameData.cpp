@@ -36,7 +36,19 @@ bool GameData::Start()
 	m_materiallist.push_back(Material(L"木"					, 1));
 	m_materiallist.push_back(Material(L"石"					, 2));
 	m_materiallist.push_back(Material(L"レンガ"				, 3));
-
+	//アビリティクラスのインスタンスを作成
+	m_abilitylist.push_back(Ability(1 , L"スタミナ1"        ,   0,  0, 10,  0));
+	m_abilitylist.push_back(Ability(2 , L"パワー1"          ,  10,  0,  0,  0));
+	m_abilitylist.push_back(Ability(3 , L"テクニック1"      ,   0, 10,  0,  0));
+	m_abilitylist.push_back(Ability(4 , L"スピリタ1"        ,   0,  0,  0, 10));
+	m_abilitylist.push_back(Ability(5 , L"スタミナ2"        ,   0,  0, 30,  0));
+	m_abilitylist.push_back(Ability(6 , L"パワー2"          ,  30,  0,  0,  0));
+	m_abilitylist.push_back(Ability(7 , L"テクニック2"      ,   0, 30,  0,  0));
+	m_abilitylist.push_back(Ability(8 , L"スピリタ2"        ,   0,  0,  0, 30));
+	m_abilitylist.push_back(Ability(9 , L"スタミナ3"        ,   0,  0, 50,  0));
+	m_abilitylist.push_back(Ability(10, L"パワー3"          ,  50,  0,  0,  0));
+	m_abilitylist.push_back(Ability(11, L"テクニック3"      ,   0, 50,  0,  0));
+	m_abilitylist.push_back(Ability(12, L"スピリタ3"        ,   0,  0,  0, 50));
 	return true;
 }
 
