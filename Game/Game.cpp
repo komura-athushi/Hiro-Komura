@@ -6,6 +6,7 @@
 #include "Town.h"
 #include "PlayerStatus.h"
 #include "Oni.h"
+#include "Skeleton2.h"
 #include "Boss.h"
 #include "Boss2.h"
 #include "DropItem.h"
@@ -30,6 +31,11 @@ Game::~Game()
 	QueryGOs<Oni>(L"Enemy", [&](Oni* oni)
 	{
 		delete oni;
+		return true;
+	});
+	QueryGOs<Skeleton2>(L"Enemy", [&](Skeleton2* sk2)
+	{
+		delete sk2;
 		return true;
 	});
 	QueryGOs<Boss>(L"Enemy", [&](Boss* boss)
@@ -84,10 +90,27 @@ bool Game::Start()
 
 	m_CascadeShadowmap->SetFar(50000.0f);
 	//レベルを構築する。
-	m_level.Init(L"Asset/level/stage1.tkl", [&](LevelObjectData& objData) {
+	const wchar_t* levelpath = nullptr;
+	switch (m_stagenumber) {
+	case 1:
+		levelpath = L"Asset/level/stage1.tkl";
+			break;
+	case 2:
+		levelpath = L"Asset/level/stage2.tkl";
+			break;
+	case 3:
+		levelpath = L"Asset/level/stage2.tkl";
+	}
+	m_level.Init(levelpath, [&](LevelObjectData& objData) {
 		if (objData.EqualObjectName(L"stage1_ground") == true) {
 			m_ground = new Ground;
 			m_ground->SetStage(1);
+			m_ground->SetPosition(objData.position);
+			return true;
+		}
+		if (objData.EqualObjectName(L"stage2_ground") == true) {
+			m_ground = new Ground;
+			m_ground->SetStage(2);
 			m_ground->SetPosition(objData.position);
 			return true;
 		}
@@ -115,6 +138,20 @@ bool Game::Start()
 			//フックした場合はtrueを返す。
 			return true;
 		}
+		else if (objData.EqualObjectName(L"enemy2") == true) {
+			//スケルトン
+			//プレイヤーのインスタンスを生成する。
+			Skeleton2* sk2 = new Skeleton2;
+			sk2->SetPosition(objData.position);
+			sk2->SetOldPosition(objData.position);
+			sk2->SetName(L"Enemy");
+			//後で削除するのでリストに積んで記憶しておく。
+			m_sk2List.push_back(sk2);
+			sk2->SetPlayer(m_player);
+			sk2->SetGame(this);
+			//フックした場合はtrueを返す。
+			return true;
+		}
 		else if (objData.EqualObjectName(L"boss") == true) {
 			//ボス
 			//プレイヤーのインスタンスを生成する。
@@ -127,14 +164,25 @@ bool Game::Start()
 			//フックした場合はtrueを返す。
 			return true;
 		}
+		else if (objData.EqualObjectName(L"boss2") == true) {
+			//ボス
+			//プレイヤーのインスタンスを生成する。
+			Boss2* boss = new Boss2;
+			boss->SetPosition(objData.position);
+			boss->SetOldPosition(objData.position);
+			boss->SetName(L"Enemy");
+			boss->SetPlayer(m_player);
+			//フックした場合はtrueを返す。
+			return true;
+		}
 		return false;
 	});
 	//仮ここから
 	//ボス2
-			//プレイヤーのインスタンスを生成する。
-	Boss2* boss2 = new Boss2;
+	//プレイヤーのインスタンスを生成する。
+	/*Boss2* boss2 = new Boss2;
 	boss2->SetName(L"Enemy");
-	boss2->SetPlayer(m_player);
+	boss2->SetPlayer(m_player);*/
 	//ここまで
 	m_gamecamera = new GameCamera;
 	m_gamecamera->SetPlayer(m_player);

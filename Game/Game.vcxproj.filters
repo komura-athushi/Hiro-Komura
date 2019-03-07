@@ -139,6 +139,7 @@
     <ClCompile Include="Ground.cpp" />
     <ClCompile Include="Weapon.cpp" />
     <ClCompile Include="GameClear.cpp" />
+    <ClCompile Include="Skeleton2.cpp" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Asset\modelData\Sword\AncientWarriorBlade.FBX">
@@ -267,6 +268,9 @@
     <MeshContentTask Include="Asset\modelData\sword_drop\BlueLightSword_drop.FBX">
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
+    <MeshContentTask Include="Asset\modelData\enemy2\enemy2.FBX">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Boss.h" />
@@ -305,6 +309,7 @@
     <ClInclude Include="Ground.h" />
     <ClInclude Include="Weapon.h" />
     <ClInclude Include="GameClear.h" />
+    <ClInclude Include="Skeleton2.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Assets">

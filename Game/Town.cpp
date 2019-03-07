@@ -89,17 +89,17 @@ void Town::Update()
 			//m_stateによって次のモードを分岐させる
 			if (m_state == enSt1) {
 				Game* game = new Game;
-				game->SetStageNumber(1);
+				game->SetStageNumber(enSt1);
 				delete this;
 			}
 			else if (m_state == enSt2) {
 				Game* game = new Game;
-				game->SetStageNumber(2);
+				game->SetStageNumber(enSt2);
 				delete this;
  			}
 			else if (m_state == enSt3) {
 				Game* game = new Game;
-				game->SetStageNumber(3);
+				game->SetStageNumber(enSt3);
 				delete this;
 			}
 			else if (m_state == enCga) {
@@ -141,12 +141,12 @@ void Town::Update()
 			m_isWaitFadeout = true;
 			m_fade->StartFadeOut();
 		}
-		/*//拠点に居る時にSTARTボタンを押すとカリオストロちゃん☆モードに遷移する
-		else if (Pad(0).GetDown(enButtonStart)) {
+		//拠点に居る時にSTARTボタンを押すとカリオストロちゃん☆モードに遷移する
+		else if (Pad(0).GetDown(enButtonBack)) {
 			m_state = enCga;
 			m_isWaitFadeout = true;
 			m_fade->StartFadeOut();
-		}*/
+		}
 		//街を再構築
 		else if (m_developtown) {
 			m_state = enTown;

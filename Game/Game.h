@@ -4,6 +4,7 @@ class Ground;
 class GameCamera;
 class PlayerStatus;
 class Oni;
+class Skeleton2;
 class Boss;
 class Fade;
 class GameData;
@@ -36,6 +37,7 @@ private:
 	CSprite m_sprite;								   //スプライトクラス
 	CascadeShadowHandler* m_CascadeShadowmap;
 	std::vector<Oni*> m_oniList;
+	std::vector<Skeleton2*> m_sk2List;
 	Boss* m_boss;
 	Fade* m_fade;
 	GameData* m_gamedata;

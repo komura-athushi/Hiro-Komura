@@ -253,6 +253,7 @@
     <ClCompile Include="PlayerStatus.cpp" />
     <ClCompile Include="ShotMagic.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="Skeleton2.cpp" />
     <ClCompile Include="Stage1_Teleport.cpp" />
     <ClCompile Include="Stage2_Teleport.cpp" />
     <ClCompile Include="Stage3_Teleport.cpp" />
@@ -296,6 +297,7 @@
     <ClInclude Include="PlayerStatus.h" />
     <ClInclude Include="ShotMagic.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="Skeleton2.h" />
     <ClInclude Include="Stage1_Teleport.h" />
     <ClInclude Include="Stage2_Teleport.h" />
     <ClInclude Include="Stage3_Teleport.h" />
@@ -316,6 +318,7 @@
     <MeshContentTask Include="Asset\modelData\boss\bullet2.FBX" />
     <MeshContentTask Include="Asset\modelData\boss\bullet3.FBX" />
     <MeshContentTask Include="Asset\modelData\cagliostro\cagliostro.fbx" />
+    <MeshContentTask Include="Asset\modelData\enemy2\enemy2.FBX" />
     <MeshContentTask Include="Asset\modelData\enemy\enemy.FBX" />
     <MeshContentTask Include="Asset\modelData\ground.FBX" />
     <MeshContentTask Include="Asset\modelData\ground2.FBX" />

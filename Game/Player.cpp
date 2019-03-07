@@ -88,6 +88,7 @@ void Player::cagliostro()
 	m_skinModelRender->Init(L"Resource/modelData/cagliostro.cmo");
 	m_scale = {1.0f, 1.0f, 1.0f};
 	m_skinModelRender->SetScale(m_scale);
+	m_skinModelRender->SetIsShadowCaster(false);
 }
 
 bool Player::Start()
@@ -990,6 +991,9 @@ void Player::OutTarget()
 
 void Player::PostRender()
 {
+	if (m_cagliostro) {
+		return;
+	}
 	//ターゲッティングがオンであればターゲットの画像を表示します
 	if (m_targetdisplay) {
 		//該当のワールド座標を2D座標を変換します)
@@ -1028,9 +1032,9 @@ void Player::PostRender()
 		m_attacktarget = m_playerheikou;
 	}
 	//プレイヤーのステータスを表示します
-	wchar_t output[256];
+	/*wchar_t output[256];
 	swprintf_s(output, L"x   %f\ny   %f\nz  %f\n", m_position.x, m_position.y, m_position.z);
-	m_font.Draw(output,CVector2::Zero());
+	m_font.Draw(output,CVector2::Zero());*/
 	//ステータス表示
 	if (m_displaystatus) {
 		//プレイヤーのステータスを表示します

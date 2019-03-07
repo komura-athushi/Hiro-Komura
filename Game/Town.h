@@ -51,11 +51,11 @@ private:
 	bool m_isWaitFadeout = false;
 	//‰æ–Ê‚ÌØ‚è‘Ö‚¦æ‚ğ•ªŠò‚³‚¹‚é
 	enum State {
-		enTown,
-		enCga,
-		enSt1,
+		enSt1 = 1,
 		enSt2,
 		enSt3,
+		enTown,
+		enCga,
 	};
 	State m_state;
 };
