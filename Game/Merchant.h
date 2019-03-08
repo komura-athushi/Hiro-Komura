@@ -12,6 +12,12 @@ public:
 	void Update();
 	void PostRender() override;
 	void Turn();
+	void Base();
+	void Material();
+	void Decision();
+	void Upgrade();
+	//Bボタンでステートを一つ前の状態に戻す
+	void BackState();
 	//座標を設定
 	void SetPosition(const CVector3& pos)
 	{
@@ -30,20 +36,39 @@ public:
 	//トーク状態をオン
 	void SetTalk()
 	{
-		m_talk = true;
+		if (m_state == enState_Free) {
+			m_state=enState_Base;
+		}
 	}
 	//トーク状態をオフ
 	void OffTalk()
 	{
-		m_talk = false;
+		m_state = enState_Free;
 	}
 	//トーク状態かどうかを取得
 	bool GetTalk() const
 	{
-		return m_talk;
+		return m_state != enState_Free;
+	}
+	//ベース選択時かどうかを取得
+	bool GetBase() const
+	{
+		return m_state == enState_Base;
+	}
+	//アイドル状態かどうかを取得
+	bool GetIdle() const
+	{
+		return m_state == enState_Free;
 	}
 private:
-	
+	enum State {
+		enState_Free,                               //何もしてない状態
+		enState_Base,								//ベースを選択
+		enState_Material,							//素材を選択
+		enState_Decision,							//強化するかどうかを決定
+		enState_Upgrade,							//強化終わり、結果を表示
+	};
+	State m_state = enState_Free;
 	GameObj::CSkinModelRender* m_skinModelRender = nullptr;		//スキンモデルレンダラー。
 	CVector3 m_position = CVector3::Zero();
 	CVector2 m_aiconposition = { 800.0f,50.0f+70.0f*4 };	    //画像の位置;
@@ -72,8 +97,12 @@ private:
 	Player* m_player = nullptr;
 	GameData* m_gamedata;
 	PlayerStatus* m_playerstatus;
-	int m_swordid;
+	int m_swordid1 =0, m_swordid2 =0, m_swordid3 =0;              //それぞれプレイヤーが装備している武器の番号、ベースの番号、素材の番号である
 	bool m_button = false;
 	int m_equipmentnumber = 0;
+	CSprite m_basesprite, m_materialsprite, m_upgradesprite;      //それぞれベース、素材、強化結果の武器のスプライトである
+	CSprite m_back;												  //強化の時に武器のバックに表示する画像
+	bool m_isspriteInit = false;								  //上記の画像の読み込みが終わったかどうか
+	int m_level = 0;
 };
 

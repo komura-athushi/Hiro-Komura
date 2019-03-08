@@ -18,6 +18,10 @@ public:
 	void Strengthen();
 	//該当の特殊能力の名前を取得
 	const wchar_t* GetAbilityName(const int& number);
+	//経験値を加算
+	void PlusExp(const int& exp);
+	//経験値を仮に与えた場合にステータスを計算
+	void KariPlusExp(const int& exp);
 	//武器の番号を取得
 	int GetId() const
 	{
@@ -38,15 +42,30 @@ public:
 	{
 		return m_weaponextend;
 	}
+	//武器の仮の強化レベルを取得
+	int GetKariLv() const
+	{
+		return m_kariweaponextend;
+	}
 	//武器の物理攻撃力を取得
 	int GetAtk() const
 	{
 		return m_Attack;
 	}
+	//武器の仮の物理攻撃力を取得
+	int GetKariAtk() const
+	{
+ 		return m_kariAttack;
+	}
 	//武器の魔法攻撃力を取得
 	int GetMatk() const
 	{
 		return m_Mattack;
+	}
+	//武器の仮の魔法攻撃力を取得
+	int GetKariMatk() const
+	{
+		return m_kariMattack;
 	}
 	//武器の魔法の番号を取得
 	int GetMagicId() const
@@ -98,9 +117,50 @@ public:
 	{
 		return m_pp;
 	}
+	//累計経験値を取得
+	int GetExp() const
+	{
+		return m_Exp;
+	}
+	//仮の累計経験値を取得
+	int GetKariExp() const
+	{
+		return m_kariExp;
+	}
+	//次のレベルアップに必要な経験値を取得
+	int GetNextExp() const
+	{
+		return m_NextExp;
+	}
+	//次のレベルアップに必要な仮の経験値を取得
+	int GetKariNextExp() const
+	{
+		return m_kariNextExp;
+	}
+	//素材にしたときの経験値を取得
+	int GetMaterialExp() const
+	{
+		return (m_weaponextend + 1) * m_explevel1 * 0.6f;
+	}
 private:
-	int m_SwordMattack = 0;                               //武器の魔法攻撃力                          
+	int m_kariExp = 0;                                    //経験値
+	int m_kariNextExp = 0;                                //次のレベルアップに必要な経験値
+	int m_kariLevelExp = 0;                               //レベルごとに必要な累計経験値
+	int m_kariSwordMattack = 0;                           //武器の魔法攻撃力
+	int m_kariSwordAttack = 0;                            //武器の攻撃力
+	int m_kariweaponextend = 0;                           //武器エクステンドレベル
+	int m_kariAttack = 0;							      //特殊能力や強化による最終的な仮の打撃力
+	int m_kariMattack = 0;							      //特殊能力や強化による最終的な仮の法撃力
+	int m_Exp = 0;                                        //経験値
+	int m_NextExp = 0;                                    //次のレベルアップに必要な経験値
+	int m_LevelExp = 0;                                   //レベルごとに必要な累計経験値
+	int m_explevel1 = 50;						          //レベル1までに必要な経験値
+	const int m_expcost = 1.5f;							  //レベルが上がるごとに必要な経験値の乗算
+	const float m_exprarity = 0.3f;					      //レアリティごとにレベルアップに必要な経験値を乗算
+	int m_SwordMattack = 0;                               //武器の魔法攻撃力
+	int m_protSwordMattack = 0;							  //武器の初期の魔法攻撃力
 	int m_SwordAttack = 0;                                //武器の攻撃力
+	int m_protSwordAattack = 0;							  //武器の初期の攻撃力
 	int m_Attack = 0;									  //特殊能力や強化による最終的な打撃力
 	int m_Mattack = 0;									  //特殊能力や強化による最終的な法撃力
 	int m_MagicId = 0;                                    //使える魔法の番号

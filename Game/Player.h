@@ -185,6 +185,12 @@ public:
 	{
 		return m_state == enState_GameClear;
 	}
+	//武器のステータスをセット
+	void SetStatus()
+	{
+		WeaponStatus();
+		MagicStatus();
+	}
 private:
 	bool m_cagliostro = false;
 	GameObj::CSkinModelRender* m_skinModelRender = nullptr;		//スキンモデルレンダラー

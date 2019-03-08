@@ -194,7 +194,11 @@ public:
 	{
 		return m_SwordMattack;
 	}
-	//装備中の武器のポインタを取得
+	//該当の番号の武器を装備しているかどうかを取得
+	bool GetisEquippedto(const int& number) const
+	{
+		return m_SwordId == number;
+	}
 private:  
 	int m_Level = 1;                                      //レベル
 	int m_Exp = 0;                                        //経験値

@@ -881,18 +881,20 @@ void Player::RelationMerchant()
 	//プレイヤーとの距離が一定以内なら話せます
 	if (pos.LengthSq() <= 300.0f * 300.0f && m_state == enState_Idle) {
 		if (Pad(0).GetDown(enButtonA)) {
-			if (m_merchant->GetTalk()) {
-
-			}
-			else {
+			if (m_merchant->GetIdle()) {
 				m_merchant->SetTalk();
 				m_stop = true;
 			}
 		}
 		else if (Pad(0).GetDown(enButtonB)) {
-			if (m_merchant->GetTalk()) {
+			if (m_merchant->GetBase()) {
 				m_merchant->OffTalk();
 				m_stop = false;
+			}
+			else {
+				if (m_merchant->GetTalk()) {
+					m_merchant->BackState();
+				}
 			}
 		}
 	}
