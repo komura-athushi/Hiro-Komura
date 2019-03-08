@@ -44,6 +44,7 @@ Equipment::~Equipment()
 {
 }
 
+
 void Equipment::SetWeaponStatus()
 {
 	if (m_weaponextend == 0) {
@@ -116,8 +117,8 @@ void Equipment::PlusExp(const int& exp)
 		m_weaponextend += 1;
 		m_NextExp = (int)((1 + (float)(m_weaponextend * m_weaponextend * 0.1f)) * m_explevel1);
 		m_LevelExp += m_NextExp;
-		m_SwordAttack = m_protSwordAattack * (m_weaponextend + 1)* m_multiply;
-		m_SwordMattack = m_protSwordMattack * (m_weaponextend + 1)* m_multiply;
+		m_SwordAttack = m_protSwordAattack * std::pow(m_multiply, m_weaponextend);
+		m_SwordMattack = m_protSwordMattack * std::pow(m_multiply, m_weaponextend);
 		SetWeaponStatus();
 	}
 	m_NextExp -= ep;
@@ -140,8 +141,8 @@ void Equipment::KariPlusExp(const int& exp)
 		m_kariweaponextend += 1;
 		m_kariNextExp = (int)((1 + (float)(m_kariweaponextend * m_kariweaponextend * 0.1f)) * m_explevel1);
 		m_kariLevelExp += m_kariNextExp;
-		m_kariSwordAttack = m_protSwordAattack * std::pow(m_multiply, m_weaponextend);
-		m_kariSwordMattack = m_protSwordMattack * std::pow(m_multiply, m_weaponextend);
+		m_kariSwordAttack = m_protSwordAattack * std::pow(m_multiply, m_kariweaponextend);
+		m_kariSwordMattack = m_protSwordMattack * std::pow(m_multiply, m_kariweaponextend);
 		m_kariAttack = m_kariSwordAttack;
 		m_kariMattack = m_kariSwordMattack;
 		if (m_ishaveability) {

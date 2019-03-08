@@ -40,6 +40,8 @@ bool Merchant::Start()
 	m_sprite2.Init(L"Resource/sprite/window.dds");
 	m_sprite3.Init(L"Resource/sprite/upgradewindow.dds");
 	m_back.Init(L"Resource/sprite/upgrade_back.dds");
+	m_equipment.Init(L"Resource/sprite/equipment.dds");
+	m_base.Init(L"Resource/sprite/base.dds");
 	return true;
 }
 
@@ -76,6 +78,9 @@ void Merchant::BackState()
 	case enState_Decision:
 		m_state = enState_Material;
 		break;
+	case enState_Upgrade:
+		m_state = enState_Base;
+		break;
 	}
 }
 
@@ -88,12 +93,19 @@ void Merchant::Base()
 	pos.y -= m_swordid2 * 70.0f;
 	for (int i = 0; i < m_playerstatus->GetEquipmentNumber(); i++) {
 		m_spritelist[i]->DrawScreenPos(pos, m_aiconscale);
-		wchar_t output[30];
-		if (m_playerstatus->GetEuipment(i).GetLv() != 5) {
-			swprintf_s(output, L"ïêäÌLv %d\nã≠âªîÔóp %dÉÅÉZÉ^\n", m_playerstatus->GetEuipment(i).GetLv(), m_playerstatus->GetEuipment(i).GetCost());
+		if (m_swordid1 == i) {
+			m_equipment.DrawScreenPos(pos, m_aiconscale, CVector2::Zero(),
+				0.0f,
+				{1.0f,1.0f,1.0f,1.0f},
+				DirectX::SpriteEffects_None,
+				0.3f);
+		}
+		wchar_t output[50];
+		if (m_playerstatus->GetEuipment(i)->GetLv() != 5) {
+			swprintf_s(output, L"ïêäÌLv %d\nã≠âªîÔóp %dÉÅÉZÉ^\n", m_playerstatus->GetEuipment(i)->GetLv(), m_playerstatus->GetEuipment(i)->GetCost());
 		}
 		else {
-			swprintf_s(output, L"ïêäÌLv %d\n", m_playerstatus->GetEuipment(i).GetLv());
+			swprintf_s(output, L"ïêäÌLv %d\n", m_playerstatus->GetEuipment(i)->GetLv());
 		}
 		CVector2 pos2 = pos;
 		pos2.x += 100.0f;
@@ -132,7 +144,7 @@ void Merchant::Base()
 		}
 	}
 	if (Pad(0).GetButton(enButtonA) && m_button) {
-		if (m_playerstatus->GetEuipment(m_swordid2).GetLv() == 5) {
+		if (m_playerstatus->GetEuipment(m_swordid2)->GetLv() == 5) {
 		}
 		else {
 			m_state = enState_Material;
@@ -166,12 +178,26 @@ void Merchant::Material()
 	pos.y -= m_swordid3 * 70.0f;
 	for (int i = 0; i < m_playerstatus->GetEquipmentNumber(); i++) {
 		m_spritelist[i]->DrawScreenPos(pos, m_aiconscale);
+		if (m_swordid2 == i) {
+			m_base.DrawScreenPos(pos, m_aiconscale, CVector2::Zero(),
+				0.0f,
+				{ 1.0f,1.0f,1.0f,1.0f },
+				DirectX::SpriteEffects_None,
+				0.3f);
+		}
+		else if(m_swordid1 == i){
+			m_equipment.DrawScreenPos(pos, m_aiconscale, CVector2::Zero(),
+				0.0f,
+				{ 1.0f,1.0f,1.0f,1.0f },
+				DirectX::SpriteEffects_None,
+				0.3f);
+		}
 		wchar_t output[30];
-		if (m_playerstatus->GetEuipment(i).GetLv() != 5) {
-			swprintf_s(output, L"ïêäÌLv %d\nã≠âªîÔóp %dÉÅÉZÉ^\n", m_playerstatus->GetEuipment(i).GetLv(), m_playerstatus->GetEuipment(i).GetCost());
+		if (m_playerstatus->GetEuipment(i)->GetLv() != 5) {
+			swprintf_s(output, L"ïêäÌLv %d\nã≠âªîÔóp %dÉÅÉZÉ^\n", m_playerstatus->GetEuipment(i)->GetLv(), m_playerstatus->GetEuipment(i)->GetCost());
 		}
 		else {
-			swprintf_s(output, L"ïêäÌLv %d\n", m_playerstatus->GetEuipment(i).GetLv());
+			swprintf_s(output, L"ïêäÌLv %d\n", m_playerstatus->GetEuipment(i)->GetLv());
 		}
 		CVector2 pos2 = pos;
 		pos2.x += 100.0f;
@@ -239,9 +265,9 @@ void Merchant::Decision()
 		m_basesprite.Init(m_playerstatus->GetSpriteName(m_playerstatus->GetWeaponNumber(m_swordid2)));
 		m_materialsprite.Init(m_playerstatus->GetSpriteName(m_playerstatus->GetWeaponNumber(m_swordid3)));
 		m_upgradesprite.Init(m_playerstatus->GetSpriteName(m_playerstatus->GetWeaponNumber(m_swordid2)));
-		int ep = m_playerstatus->GetEuipment(m_swordid3).GetMaterialExp();
-		m_playerstatus->GetEuipment(m_swordid2).KariPlusExp(ep);
-		m_level = m_playerstatus->GetEuipment(m_swordid2).GetKariLv();
+		int ep = m_playerstatus->GetEuipment(m_swordid3)->GetMaterialExp();
+		m_playerstatus->GetEuipment(m_swordid2)->KariPlusExp(ep);
+		m_level = m_playerstatus->GetEuipment(m_swordid2)->GetKariLv();
 		m_isspriteInit = true;
 	}
 	//ÉxÅ[ÉX
@@ -264,8 +290,8 @@ void Merchant::Decision()
 		DirectX::SpriteEffects_None,
 		0.7f);
 	wchar_t output4[150];
-	swprintf_s(output4, L"ïêäÌLv.%d\në≈  %d\nñ@  %d\nÇP  %ls\nÇQ  %ls\nÇR  %ls\nåoå±íl\nó›åv      %d\néüLvÇ‹Ç≈  %d\n",m_playerstatus->GetEuipment(m_swordid2).GetLv(), m_playerstatus->GetEuipment(m_swordid2).GetAtk(), m_playerstatus->GetEuipment(m_swordid2).GetMatk(),
-		m_playerstatus->GetEuipment(m_swordid2).GetAbilityName(1), m_playerstatus->GetEuipment(m_swordid2).GetAbilityName(2), m_playerstatus->GetEuipment(m_swordid2).GetAbilityName(3), m_playerstatus->GetEuipment(m_swordid2).GetExp(), m_playerstatus->GetEuipment(m_swordid2).GetNextExp());
+	swprintf_s(output4, L"ïêäÌLv.%d\në≈  %d\nñ@  %d\nÇP  %ls\nÇQ  %ls\nÇR  %ls\nåoå±íl\nó›åv      %d\néüLvÇ‹Ç≈  %d\n",m_playerstatus->GetEuipment(m_swordid2)->GetLv(), m_playerstatus->GetEuipment(m_swordid2)->GetAtk(), m_playerstatus->GetEuipment(m_swordid2)->GetMatk(),
+		m_playerstatus->GetEuipment(m_swordid2)->GetAbilityName(1), m_playerstatus->GetEuipment(m_swordid2)->GetAbilityName(2), m_playerstatus->GetEuipment(m_swordid2)->GetAbilityName(3), m_playerstatus->GetEuipment(m_swordid2)->GetExp(), m_playerstatus->GetEuipment(m_swordid2)->GetNextExp());
 	m_font.DrawScreenPos(output4, { 150.0f,200.0f },CVector4::White(), { 0.5f,0.5f },
 		CVector2::Zero(),
 		0.0f,
@@ -292,8 +318,8 @@ void Merchant::Decision()
 		DirectX::SpriteEffects_None,
 		0.7f);
 	wchar_t output5[150];
-	swprintf_s(output5, L"ïêäÌLv.%d\në≈  %d\nñ@  %d\nÇP  %ls\nÇQ  %ls\nÇR  %ls\nåoå±íl   +%d\n", m_playerstatus->GetEuipment(m_swordid3).GetLv(), m_playerstatus->GetEuipment(m_swordid3).GetAtk(), m_playerstatus->GetEuipment(m_swordid3).GetMatk(),
-		m_playerstatus->GetEuipment(m_swordid3).GetAbilityName(1), m_playerstatus->GetEuipment(m_swordid3).GetAbilityName(2), m_playerstatus->GetEuipment(m_swordid3).GetAbilityName(3), m_playerstatus->GetEuipment(m_swordid3).GetMaterialExp());
+	swprintf_s(output5, L"ïêäÌLv.%d\në≈  %d\nñ@  %d\nÇP  %ls\nÇQ  %ls\nÇR  %ls\nåoå±íl   +%d\n", m_playerstatus->GetEuipment(m_swordid3)->GetLv(), m_playerstatus->GetEuipment(m_swordid3)->GetAtk(), m_playerstatus->GetEuipment(m_swordid3)->GetMatk(),
+		m_playerstatus->GetEuipment(m_swordid3)->GetAbilityName(1), m_playerstatus->GetEuipment(m_swordid3)->GetAbilityName(2), m_playerstatus->GetEuipment(m_swordid3)->GetAbilityName(3), m_playerstatus->GetEuipment(m_swordid3)->GetMaterialExp());
 	m_font.DrawScreenPos(output5, { 500.0f,200.0f }, CVector4::White(), { 0.5f,0.5f },
 		CVector2::Zero(),
 		0.0f,
@@ -302,7 +328,7 @@ void Merchant::Decision()
 	);
 	//ã≠âªåãâ 
 	wchar_t output7[10];
-	swprintf_s(output7, L"ã≠âªåãâ \n");
+	swprintf_s(output7, L"åãâ ó\ë™\n");
 	m_font.DrawScreenPos(output7, { 1000.0f,20.0f }, { 200.0f,200.0f,200.0,1.0f }, { 0.6f,0.6f },
 		CVector2::Zero(),
 		0.0f,
@@ -320,8 +346,8 @@ void Merchant::Decision()
 		DirectX::SpriteEffects_None,
 		0.7f);
 	wchar_t output6[150];
-	swprintf_s(output6, L"ïêäÌLv.%d\në≈  %d\nñ@  %d\nÇP  %ls\nÇQ  %ls\nÇR  %ls\nåoå±íl\nó›åv      %d\néüLvÇ‹Ç≈  %d\n", m_playerstatus->GetEuipment(m_swordid2).GetKariLv(),m_playerstatus->GetEuipment(m_swordid2).GetKariAtk(), m_playerstatus->GetEuipment(m_swordid2).GetKariMatk(),
-		m_playerstatus->GetEuipment(m_swordid2).GetAbilityName(1), m_playerstatus->GetEuipment(m_swordid2).GetAbilityName(2), m_playerstatus->GetEuipment(m_swordid2).GetAbilityName(3), m_playerstatus->GetEuipment(m_swordid2).GetKariExp(), m_playerstatus->GetEuipment(m_swordid2).GetKariNextExp());
+	swprintf_s(output6, L"ïêäÌLv.%d\në≈  %d\nñ@  %d\nÇP  %ls\nÇQ  %ls\nÇR  %ls\nåoå±íl\nó›åv      %d\néüLvÇ‹Ç≈  %d\n", m_playerstatus->GetEuipment(m_swordid2)->GetKariLv(),m_playerstatus->GetEuipment(m_swordid2)->GetKariAtk(), m_playerstatus->GetEuipment(m_swordid2)->GetKariMatk(),
+		m_playerstatus->GetEuipment(m_swordid2)->GetAbilityName(1), m_playerstatus->GetEuipment(m_swordid2)->GetAbilityName(2), m_playerstatus->GetEuipment(m_swordid2)->GetAbilityName(3), m_playerstatus->GetEuipment(m_swordid2)->GetKariExp(), m_playerstatus->GetEuipment(m_swordid2)->GetKariNextExp());
 	m_font.DrawScreenPos(output6, { 1000.0f,200.0f }, CVector4::White(), { 0.5f,0.5f },
 		CVector2::Zero(),
 		0.0f,
@@ -345,7 +371,16 @@ void Merchant::Decision()
 		m_button = true;
 	}
 	if (Pad(0).GetButton(enButtonA) && m_button) {
-		m_playerstatus->GetEuipment(m_swordid2).PlusExp(m_playerstatus->GetEuipment(m_swordid3).GetMaterialExp());
+		m_playerstatus->GetEuipment(m_swordid2)->PlusExp(m_playerstatus->GetEuipment(m_swordid3)->GetMaterialExp());
+		m_playerstatus->DeleteEquipment(m_swordid3);
+		m_playerstatus->SetStatus();
+		m_player->SetStatus();
+		CSprite* sp = m_spritelist[m_swordid3];
+		m_spritelist.erase(m_spritelist.begin() + m_swordid3);
+		delete sp;
+		m_swordid1 = m_playerstatus->GetSwordId();
+		m_swordid2 = m_swordid1;
+		m_swordid3 = m_swordid1;
 		m_button = false;
 		m_state = enState_Upgrade;
 	}
@@ -353,6 +388,47 @@ void Merchant::Decision()
 
 void Merchant::Upgrade()
 {
+	//ã≠âªåãâ 
+	wchar_t output7[10];
+	swprintf_s(output7, L"ã≠âªåãâ \n");
+	m_font.DrawScreenPos(output7, { 600.0f,20.0f }, { 200.0f,200.0f,200.0,1.0f }, { 0.6f,0.6f },
+		CVector2::Zero(),
+		0.0f,
+		DirectX::SpriteEffects_None,
+		1.0f
+	);
+	m_back.DrawScreenPos({ 600.0f,50.0f }, CVector3::One(), CVector2::Zero(),
+		0.0f,
+		{ 1.0f, 1.0f, 1.0f, 0.7f },
+		DirectX::SpriteEffects_None,
+		0.8f);
+	m_upgradesprite.DrawScreenPos({ 600.0f,50.0f }, { 0.313f,0.3f }, CVector2::Zero(),
+		0.0f,
+		{ 1.0f, 1.0f, 1.0f, 0.7f },
+		DirectX::SpriteEffects_None,
+		0.7f);
+	wchar_t output6[150];
+	swprintf_s(output6, L"ïêäÌLv.%d\në≈  %d\nñ@  %d\nÇP  %ls\nÇQ  %ls\nÇR  %ls\nåoå±íl\nó›åv      %d\néüLvÇ‹Ç≈  %d\n", m_playerstatus->GetEuipment(m_swordid2)->GetLv(), m_playerstatus->GetEuipment(m_swordid2)->GetAtk(), m_playerstatus->GetEuipment(m_swordid2)->GetMatk(),
+		m_playerstatus->GetEuipment(m_swordid2)->GetAbilityName(1), m_playerstatus->GetEuipment(m_swordid2)->GetAbilityName(2), m_playerstatus->GetEuipment(m_swordid2)->GetAbilityName(3), m_playerstatus->GetEuipment(m_swordid2)->GetExp(), m_playerstatus->GetEuipment(m_swordid2)->GetNextExp());
+	m_font.DrawScreenPos(output6, { 600.0f,200.0f }, CVector4::White(), { 0.5f,0.5f },
+		CVector2::Zero(),
+		0.0f,
+		DirectX::SpriteEffects_None,
+		0.7f
+	);
+	wchar_t output[20];
+	swprintf_s(output, L"ã≠âªÇ…ê¨å˜ÇµÇ‹ÇµÇΩ\n");
+	m_font.DrawScreenPos(output, { 300.0f,450.0f }, CVector4::White(), { 0.6f,0.6f },
+		CVector2::Zero(),
+		0.0f,
+		DirectX::SpriteEffects_None,
+		0.7f
+	);
+	m_sprite2.DrawScreenPos({ 290.0f,440.0f }, CVector3::One(), CVector2::Zero(),
+		0.0f,
+		{ 1.0f, 1.0f, 1.0f, 0.7f },
+		DirectX::SpriteEffects_None,
+		0.8f);
 	if (!Pad(0).GetButton(enButtonUp) && !Pad(0).GetButton(enButtonDown) && !Pad(0).GetButton(enButtonA)) {
 		m_button = true;
 	}

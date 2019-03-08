@@ -34,6 +34,10 @@ public:
 	void PostRender()override;
 	//該当の武器の強化費用より所持メセタが多い場合、武器の強化を実行します
 	void WeaponStrengthen(const int& number);
+	//該当の番号の武器を削除
+	void DeleteEquipment(const int& number);
+	//武器強化によるステータスを更新
+	void SetStatus();
 	//GameDataクラスのインスタンスのポインタを設定
 	void SetGameData(GameData* gamedata)
 	{
@@ -155,9 +159,9 @@ public:
 		m_havemeseta += meseta;
 	}
 	//該当のEquipmentクラスのインスタンスにアクセス
-	Equipment GetEuipment(const int& number) const
+	Equipment* GetEuipment(const int& number) const
 	{
-		return *m_equipmentlist[number];
+		return m_equipmentlist[number];
 	}
 	//所持武器の個数
 	int GetEquipmentNumber() const

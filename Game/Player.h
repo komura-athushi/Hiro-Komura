@@ -69,6 +69,8 @@ public:
 	void OutTarget();
 	//クリアボイス
 	void ClearVoice();
+	//武器のステータスをセット
+	void SetStatus();
 	//プレイヤーの座標をセット
 	void SetPosition(const CVector3& pos)
 	{
@@ -185,8 +187,6 @@ public:
 	{
 		return m_state == enState_GameClear;
 	}
-	//武器のステータスをセット
-	void SetStatus();
 private:
 	bool m_cagliostro = false;
 	GameObj::CSkinModelRender* m_skinModelRender = nullptr;		//スキンモデルレンダラー

@@ -9,6 +9,7 @@ class Equipment
 public:
 	//Equipment();
 	Equipment(const int& number);
+	Equipment(const Equipment& eq);
 	~Equipment();
 	//武器のステータスを設定
 	void SetWeaponStatus();

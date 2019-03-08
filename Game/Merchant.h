@@ -76,6 +76,7 @@ private:
 	CVector3 m_scale = { 0.8f,0.8f,0.8f };
 	CQuaternion m_rotation = CQuaternion::Identity();
 	CSprite m_sprite2,m_sprite3;
+	CSprite m_equipment, m_base;							    //装備中表示とベース表示
 	CQuaternion m_protrotation = CQuaternion::Identity();
 	CFont m_font;                                               //文字表示クラス
 	std::vector<CFont*> m_spritefont;					        //文字表示

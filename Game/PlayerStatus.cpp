@@ -192,3 +192,22 @@ void PlayerStatus::WeaponStrengthen(const int& number)
 		}
 	}
 }
+
+void PlayerStatus::SetStatus()
+{
+	SetWeaponStatus();
+	SetMagicStatus();
+}
+
+void PlayerStatus::DeleteEquipment(const int& number)
+{
+	Equipment* eq = m_equipmentlist[number];
+	CSprite* sp = m_spritelist[number];
+ 	m_equipmentlist.erase(m_equipmentlist.begin() + number);
+	m_spritelist.erase(m_spritelist.begin() + number);
+	delete eq;
+	delete sp;
+	if (m_SwordId > number) {
+		m_SwordId -= 1;
+	}
+}

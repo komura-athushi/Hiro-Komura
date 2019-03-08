@@ -288,7 +288,6 @@ void Player::Animation()
 		else {
 			m_displaystatus = false;
 		}
-		int a = 0;
 	}
 	m_timer += m_frame * GetDeltaTimeSec();
 }
@@ -1058,7 +1057,7 @@ void Player::PostRender()
 			1.0f);
 		//•ŠíŠÖ˜A‚ÌƒXƒe[ƒ^ƒX‚ð•\Ž¦‚µ‚Ü‚·
 		wchar_t output2[256];
-		swprintf_s(output2, L"•Ší\n•ŠíLv  %d\n•Ší–¼  %ls\n‘ÅŒ‚—Í  %d\n–@Œ‚—Í  %d\n–‚–@    %ls\nÁ”ïPP  %d\nˆÐ—Í    %d\n“ÁŽê”\—Í\n‚P      %ls\n‚Q      %ls\n‚R      %ls\n",m_playerstatus->GetWeaponLv(),m_SwordName,m_playerstatus->GetWeaponAttack(),m_playerstatus->GetWeaponMattack(),m_MagicName,m_PPCost,int(m_DamageRate*100),m_playerstatus->GetEuipment(m_SwordId).GetAbilityName(1), m_playerstatus->GetEuipment(m_SwordId).GetAbilityName(2), m_playerstatus->GetEuipment(m_SwordId).GetAbilityName(3));
+		swprintf_s(output2, L"•Ší\n•ŠíLv  %d\n•Ší–¼  %ls\n‘ÅŒ‚—Í  %d\n–@Œ‚—Í  %d\n–‚–@    %ls\nÁ”ïPP  %d\nˆÐ—Í    %d\n“ÁŽê”\—Í\n‚P      %ls\n‚Q      %ls\n‚R      %ls\n",m_playerstatus->GetWeaponLv(),m_SwordName,m_playerstatus->GetWeaponAttack(),m_playerstatus->GetWeaponMattack(),m_MagicName,m_PPCost,int(m_DamageRate*100),m_playerstatus->GetEuipment(m_SwordId)->GetAbilityName(1), m_playerstatus->GetEuipment(m_SwordId)->GetAbilityName(2), m_playerstatus->GetEuipment(m_SwordId)->GetAbilityName(3));
 		m_font.DrawScreenPos(output2, { 230.0f,60.0f }, CVector4::White(), { 0.7f,0.7f });
 		m_weaponstatussprite.DrawScreenPos({ 227.0f,50.0f }, { 1.0f,1.0f }, CVector2::Zero(),
 			0.0f,
