@@ -1162,3 +1162,9 @@ void Player::PostRender()
 			0.8f);
 	}
 }
+
+void Player::SetStatus()
+{
+	WeaponStatus();
+	MagicStatus();
+}

@@ -76,9 +76,6 @@ void Merchant::BackState()
 	case enState_Decision:
 		m_state = enState_Material;
 		break;
-	case enState_Upgrade:
-		m_state = enState_Base;
-		break;
 	}
 }
 
@@ -242,7 +239,8 @@ void Merchant::Decision()
 		m_basesprite.Init(m_playerstatus->GetSpriteName(m_playerstatus->GetWeaponNumber(m_swordid2)));
 		m_materialsprite.Init(m_playerstatus->GetSpriteName(m_playerstatus->GetWeaponNumber(m_swordid3)));
 		m_upgradesprite.Init(m_playerstatus->GetSpriteName(m_playerstatus->GetWeaponNumber(m_swordid2)));
-		m_playerstatus->GetEuipment(m_swordid2).KariPlusExp(m_playerstatus->GetEuipment(m_swordid3).GetMaterialExp());
+		int ep = m_playerstatus->GetEuipment(m_swordid3).GetMaterialExp();
+		m_playerstatus->GetEuipment(m_swordid2).KariPlusExp(ep);
 		m_level = m_playerstatus->GetEuipment(m_swordid2).GetKariLv();
 		m_isspriteInit = true;
 	}
@@ -265,8 +263,9 @@ void Merchant::Decision()
 		{ 1.0f, 1.0f, 1.0f, 0.7f },
 		DirectX::SpriteEffects_None,
 		0.7f);
-	wchar_t output4[100];
-	swprintf_s(output4, L"•ŠíLv.%d\n‘Å  %d\n–@  %d\n‚P  %ls\n‚Q  %ls\n‚R  %ls\n",m_playerstatus->GetEuipment(m_swordid2).GetLv(), m_playerstatus->GetEuipment(m_swordid2).GetAtk(), m_playerstatus->GetEuipment(m_swordid2).GetMatk(), m_playerstatus->GetEuipment(m_swordid2).GetAbilityName(1), m_playerstatus->GetEuipment(m_swordid2).GetAbilityName(2), m_playerstatus->GetEuipment(m_swordid2).GetAbilityName(3));
+	wchar_t output4[150];
+	swprintf_s(output4, L"•ŠíLv.%d\n‘Å  %d\n–@  %d\n‚P  %ls\n‚Q  %ls\n‚R  %ls\nŒoŒ±’l\n—ÝŒv      %d\nŽŸLv‚Ü‚Å  %d\n",m_playerstatus->GetEuipment(m_swordid2).GetLv(), m_playerstatus->GetEuipment(m_swordid2).GetAtk(), m_playerstatus->GetEuipment(m_swordid2).GetMatk(),
+		m_playerstatus->GetEuipment(m_swordid2).GetAbilityName(1), m_playerstatus->GetEuipment(m_swordid2).GetAbilityName(2), m_playerstatus->GetEuipment(m_swordid2).GetAbilityName(3), m_playerstatus->GetEuipment(m_swordid2).GetExp(), m_playerstatus->GetEuipment(m_swordid2).GetNextExp());
 	m_font.DrawScreenPos(output4, { 150.0f,200.0f },CVector4::White(), { 0.5f,0.5f },
 		CVector2::Zero(),
 		0.0f,
@@ -292,8 +291,9 @@ void Merchant::Decision()
 		{ 1.0f, 1.0f, 1.0f, 0.7f },
 		DirectX::SpriteEffects_None,
 		0.7f);
-	wchar_t output5[100];
-	swprintf_s(output5, L"•ŠíLv.%d\n‘Å  %d\n–@  %d\n‚P  %ls\n‚Q  %ls\n‚R  %ls\n", m_playerstatus->GetEuipment(m_swordid3).GetLv(), m_playerstatus->GetEuipment(m_swordid3).GetAtk(), m_playerstatus->GetEuipment(m_swordid3).GetMatk(), m_playerstatus->GetEuipment(m_swordid3).GetAbilityName(1), m_playerstatus->GetEuipment(m_swordid3).GetAbilityName(2), m_playerstatus->GetEuipment(m_swordid3).GetAbilityName(3));
+	wchar_t output5[150];
+	swprintf_s(output5, L"•ŠíLv.%d\n‘Å  %d\n–@  %d\n‚P  %ls\n‚Q  %ls\n‚R  %ls\nŒoŒ±’l   +%d\n", m_playerstatus->GetEuipment(m_swordid3).GetLv(), m_playerstatus->GetEuipment(m_swordid3).GetAtk(), m_playerstatus->GetEuipment(m_swordid3).GetMatk(),
+		m_playerstatus->GetEuipment(m_swordid3).GetAbilityName(1), m_playerstatus->GetEuipment(m_swordid3).GetAbilityName(2), m_playerstatus->GetEuipment(m_swordid3).GetAbilityName(3), m_playerstatus->GetEuipment(m_swordid3).GetMaterialExp());
 	m_font.DrawScreenPos(output5, { 500.0f,200.0f }, CVector4::White(), { 0.5f,0.5f },
 		CVector2::Zero(),
 		0.0f,
@@ -320,7 +320,8 @@ void Merchant::Decision()
 		DirectX::SpriteEffects_None,
 		0.7f);
 	wchar_t output6[150];
-	swprintf_s(output6, L"•ŠíLv.%d\n‘Å  %d\n–@  %d\n‚P  %ls\n‚Q  %ls\n‚R  %ls\n", m_playerstatus->GetEuipment(m_swordid2).GetKariLv(),m_playerstatus->GetEuipment(m_swordid2).GetKariAtk(), m_playerstatus->GetEuipment(m_swordid2).GetKariMatk(), m_playerstatus->GetEuipment(m_swordid2).GetAbilityName(1), m_playerstatus->GetEuipment(m_swordid2).GetAbilityName(2), m_playerstatus->GetEuipment(m_swordid2).GetAbilityName(3));
+	swprintf_s(output6, L"•ŠíLv.%d\n‘Å  %d\n–@  %d\n‚P  %ls\n‚Q  %ls\n‚R  %ls\nŒoŒ±’l\n—ÝŒv      %d\nŽŸLv‚Ü‚Å  %d\n", m_playerstatus->GetEuipment(m_swordid2).GetKariLv(),m_playerstatus->GetEuipment(m_swordid2).GetKariAtk(), m_playerstatus->GetEuipment(m_swordid2).GetKariMatk(),
+		m_playerstatus->GetEuipment(m_swordid2).GetAbilityName(1), m_playerstatus->GetEuipment(m_swordid2).GetAbilityName(2), m_playerstatus->GetEuipment(m_swordid2).GetAbilityName(3), m_playerstatus->GetEuipment(m_swordid2).GetKariExp(), m_playerstatus->GetEuipment(m_swordid2).GetKariNextExp());
 	m_font.DrawScreenPos(output6, { 1000.0f,200.0f }, CVector4::White(), { 0.5f,0.5f },
 		CVector2::Zero(),
 		0.0f,
@@ -340,7 +341,25 @@ void Merchant::Decision()
 		{ 1.0f, 1.0f, 1.0f, 0.7f },
 		DirectX::SpriteEffects_None,
 		0.8f);
+	if (!Pad(0).GetButton(enButtonUp) && !Pad(0).GetButton(enButtonDown) && !Pad(0).GetButton(enButtonA)) {
+		m_button = true;
+	}
+	if (Pad(0).GetButton(enButtonA) && m_button) {
+		m_playerstatus->GetEuipment(m_swordid2).PlusExp(m_playerstatus->GetEuipment(m_swordid3).GetMaterialExp());
+		m_button = false;
+		m_state = enState_Upgrade;
+	}
+}
 
+void Merchant::Upgrade()
+{
+	if (!Pad(0).GetButton(enButtonUp) && !Pad(0).GetButton(enButtonDown) && !Pad(0).GetButton(enButtonA)) {
+		m_button = true;
+	}
+	if (Pad(0).GetButton(enButtonA) && m_button) {
+		m_button = false;
+		m_state = enState_Base;
+	}
 }
 
 void Merchant::PostRender()
@@ -365,6 +384,8 @@ void Merchant::PostRender()
 		Decision();
 		break;
 	case enState_Upgrade:
+		Upgrade();
+		m_isspriteInit = false;
 		break;
 	}
 }
