@@ -157,6 +157,14 @@ public:
 	void AddMeseta(const int& meseta) 
 	{
 		m_havemeseta += meseta;
+		if (m_havemeseta > 99999) {
+			m_havemeseta = 99999;
+		}
+	}
+	//引数文のメセタをプレイヤーのメセタから減産
+	void CutMeseta(const int& meseta)
+	{
+		m_havemeseta -= meseta;
 	}
 	//該当のEquipmentクラスのインスタンスにアクセス
 	Equipment* GetEuipment(const int& number) const

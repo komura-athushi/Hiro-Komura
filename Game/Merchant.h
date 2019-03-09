@@ -102,8 +102,10 @@ private:
 	bool m_button = false;
 	int m_equipmentnumber = 0;
 	CSprite m_basesprite, m_materialsprite, m_upgradesprite;      //それぞれベース、素材、強化結果の武器のスプライトである
+	CSprite m_mesetasprite;
 	CSprite m_back;												  //強化の時に武器のバックに表示する画像
 	bool m_isspriteInit = false;								  //上記の画像の読み込みが終わったかどうか
 	int m_level = 0;
+	bool m_isstrength = false;									  //武器の強化ができるかどうか
 };
 

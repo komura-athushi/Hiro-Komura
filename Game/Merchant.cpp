@@ -42,6 +42,7 @@ bool Merchant::Start()
 	m_back.Init(L"Resource/sprite/upgrade_back.dds");
 	m_equipment.Init(L"Resource/sprite/equipment.dds");
 	m_base.Init(L"Resource/sprite/base.dds");
+	m_mesetasprite.Init(L"Resource/sprite/upgrade_mesetawindow.dds");
 	return true;
 }
 
@@ -102,7 +103,7 @@ void Merchant::Base()
 		}
 		wchar_t output[50];
 		if (m_playerstatus->GetEuipment(i)->GetLv() != 5) {
-			swprintf_s(output, L"武器Lv %d\n強化費用 %dメセタ\n", m_playerstatus->GetEuipment(i)->GetLv(), m_playerstatus->GetEuipment(i)->GetCost());
+			swprintf_s(output, L"武器Lv %d\n強化費用 %dM\n", m_playerstatus->GetEuipment(i)->GetLv(), m_playerstatus->GetEuipment(i)->GetCost());
 		}
 		else {
 			swprintf_s(output, L"武器Lv %d\n", m_playerstatus->GetEuipment(i)->GetLv());
@@ -194,7 +195,7 @@ void Merchant::Material()
 		}
 		wchar_t output[30];
 		if (m_playerstatus->GetEuipment(i)->GetLv() != 5) {
-			swprintf_s(output, L"武器Lv %d\n強化費用 %dメセタ\n", m_playerstatus->GetEuipment(i)->GetLv(), m_playerstatus->GetEuipment(i)->GetCost());
+			swprintf_s(output, L"武器Lv %d\n強化費用 %dM\n", m_playerstatus->GetEuipment(i)->GetLv(), m_playerstatus->GetEuipment(i)->GetCost());
 		}
 		else {
 			swprintf_s(output, L"武器Lv %d\n", m_playerstatus->GetEuipment(i)->GetLv());
@@ -273,7 +274,7 @@ void Merchant::Decision()
 	//ベース
 	wchar_t output2[10];
 	swprintf_s(output2, L"ベース\n");
-	m_font.DrawScreenPos(output2, { 150.0f,20.0f }, { 200.0f,200.0f,200.0,1.0f }, { 0.6f,0.6f },
+	m_font.DrawScreenPos(output2, { 150.0f,20.0f }, { 225.0f,000.0f,000.0,1.0f }, { 0.6f,0.6f },
 		CVector2::Zero(),
 		0.0f,
 		DirectX::SpriteEffects_None,
@@ -355,7 +356,14 @@ void Merchant::Decision()
 		0.7f
 	);
  	wchar_t output[20];
-	swprintf_s(output, L"強化しますか？\n");
+	if (m_playerstatus->GetEuipment(m_swordid2)->GetCost() < m_playerstatus->GetHaveMeseta()) {
+		swprintf_s(output, L"強化しますか？\n");
+		m_isstrength = true;
+	}
+	else {
+		swprintf_s(output, L"メセタが足りません\n");
+		m_isstrength = false;
+	}
 	m_font.DrawScreenPos(output, { 300.0f,450.0f }, CVector4::White(), { 0.6f,0.6f },
 		CVector2::Zero(),
 		0.0f,
@@ -367,11 +375,25 @@ void Merchant::Decision()
 		{ 1.0f, 1.0f, 1.0f, 0.7f },
 		DirectX::SpriteEffects_None,
 		0.8f);
+	wchar_t output9[50];
+	swprintf_s(output9, L"所持メセタ  %dM\n強化費用    %dM",m_playerstatus->GetHaveMeseta(), m_playerstatus->GetEuipment(m_swordid2)->GetCost());
+	m_font.DrawScreenPos(output9, { 750.0f,392.0f }, CVector4::White(), { 0.5f,0.5f },
+		CVector2::Zero(),
+		0.0f,
+		DirectX::SpriteEffects_None,
+		0.7f
+	);
+	m_mesetasprite.DrawScreenPos({ 745.0f,387.0f }, CVector3::One(), CVector2::Zero(),
+		0.0f,
+		{ 1.0f, 1.0f, 1.0f, 1.0f },
+		DirectX::SpriteEffects_None,
+		0.8f);
 	if (!Pad(0).GetButton(enButtonUp) && !Pad(0).GetButton(enButtonDown) && !Pad(0).GetButton(enButtonA)) {
 		m_button = true;
 	}
-	if (Pad(0).GetButton(enButtonA) && m_button) {
+	if (Pad(0).GetButton(enButtonA) && m_button && m_isstrength) {
 		m_playerstatus->GetEuipment(m_swordid2)->PlusExp(m_playerstatus->GetEuipment(m_swordid3)->GetMaterialExp());
+		m_playerstatus->CutMeseta(m_playerstatus->GetEuipment(m_swordid2)->GetCost());
 		m_playerstatus->DeleteEquipment(m_swordid3);
 		m_playerstatus->SetStatus();
 		m_player->SetStatus();

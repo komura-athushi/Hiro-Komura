@@ -109,6 +109,9 @@
     <ImageContentTask Include="Asset\sprite\base.png">
       <Filter>Assets\sprite</Filter>
     </ImageContentTask>
+    <ImageContentTask Include="Asset\sprite\upgrade_mesetawindow.png">
+      <Filter>Assets\sprite</Filter>
+    </ImageContentTask>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Boss.cpp" />

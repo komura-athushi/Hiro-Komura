@@ -447,6 +447,9 @@
     <ImageContentTask Include="Asset\sprite\base.png" />
     <ImageContentTask Include="Asset\sprite\equipment.png" />
   </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Asset\sprite\upgrade_mesetawindow.png" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="$(VCTargetsPath)\BuildCustomizations\ImageContentTask.targets" />
