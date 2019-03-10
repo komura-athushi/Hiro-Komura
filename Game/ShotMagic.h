@@ -26,10 +26,11 @@ public:
 	*int id;						//魔法の番号
 	*int number						//ダメージ無しの時にいる 
 	*bool damage;					//trueでダメージありのコリジョンを生成します
+	*float time;					//ヒットタイム
 	*/
-	void SetCollisionModel(const CVector3& pos, const float& scale,const int& id, const CVector3& scl = CVector3::Zero(),const int& number=0,bool damage = true); //こ↑こ↓をfalseにするとダメージ無しのコリジョンを生成します
+	void SetCollisionModel(const CVector3& pos, const float& scale, const int& id, const CVector3& scl = CVector3::Zero(), const int& number = 0, bool damage = true, float time = 0.0f);
 	/*!
-	//ダメ無しコリジョンを発生させたい場合はこっち
+	//複数のエフェクトを発生させる場合はこっち
 	//コリジョンとモデルを設定、座標とコリジョンの大きさ
 	@brief	魔法のモデルをコリジョンを生成します
 	*CVector3 pos;					//座標
@@ -37,8 +38,9 @@ public:
 	*int id;						//魔法の番号
 	*int number						//m_modelcountを代入してください
 	*bool damage;					//trueでダメージありのコリジョンを生成します
+	*float time;					//ヒットタイム
 	*/
-	void SetCollisionModelnoDamage(const CVector3& pos, const float& scale, const int& id, const CVector3& scl = CVector3::Zero(), const int& number = 0, bool damage = true);
+	void SetCollisionModelnoDamage(const CVector3& pos, const float& scale, const int& id, const CVector3& scl = CVector3::Zero(), const int& number = 0, bool damage = true ,float time = 0.0f);
 	//フォイエ
 	void Foie();
 	void FoieUpdate();
@@ -142,8 +144,11 @@ private:
 		GameObj::Suicider::CEffekseer* s_effect;		//エフェクト
 		SuicideObj::CCollisionObj* s_collision;			//コリジョン
 		float s_timer = 0.0f;							//デリートタイム
-		CVector3 s_position = {CVector3::Zero()};		//座標
+		CVector3 s_position = { CVector3::Zero() };		//座標
 		bool s_delete = false;							//モデルとコリジョンを削除したかどうか
+		std::unordered_map<int, float> s_enemyidlist;   //ヒットしたエネミーのIDとフレーム数
+		float s_hittimer = 0.0f;                        //ヒットした時間
+		float s_hittime = 0.0f;						    //ヒットのクールタイム
 	};
 	std::vector<MagicModel> m_magicmocelList;			//MagicModel構造体の可変長配列
 	static const int m_number[];						//構造体の配列の添え字を記憶するのに使います
@@ -168,6 +173,7 @@ private:
 	const float m_collisionscale3 = 225.0f;
 	const float m_multiplyspeed3 = 0.0f;
 	const int m_multihit = 2;
+	const float m_hittime3 = 25.0f;
 	//シフタ
 	const float m_deletetime4 = 30.0f;
 	const int m_modelnumber4 = 1;

@@ -33,7 +33,7 @@ public:
 	*/
 	void SetCCollision(const CVector3& pos,const float& l);
 	//プレイヤーがエネミーにダメージを与える時の処理
-	void Damage(const int& attack,int number=0);
+	void Damage(const int& attack,int number = 0);
 	//ドロップするアイテムの処理
 	void Drop();
 	//文字表示
@@ -62,6 +62,16 @@ public:
 	float GetRadius() const
 	{
 		return m_r;
+	}
+	//エネミーの番号を設定
+	void SetNumber(const int& number)
+	{
+		m_number = number;
+	}
+	//エネミーの番号を取得
+	int GetNumber() const 
+	{
+		return m_number;
 	}
 protected:
 	SuicideObj::CCollisionObj* m_collision;                   //丸いコリジョン
@@ -97,5 +107,6 @@ protected:
 	static const float m_frame;								  //fps
 	GameCamera* m_gamecamera;
 	const float m_sevolume = 2.5f;
+	int m_number = 0;
 };
 

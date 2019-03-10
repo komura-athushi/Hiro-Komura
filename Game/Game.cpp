@@ -101,6 +101,7 @@ bool Game::Start()
 	case 3:
 		levelpath = L"Asset/level/stage2.tkl";
 	}
+	int number = 0;
 	m_level.Init(levelpath, [&](LevelObjectData& objData) {
 		if (objData.EqualObjectName(L"stage1_ground") == true) {
 			m_ground = new Ground;
@@ -135,6 +136,8 @@ bool Game::Start()
 			m_oniList.push_back(oni);
 			oni->SetPlayer(m_player);
 			oni->SetGame(this);
+			oni->SetNumber(number);
+			number++;
 			//フックした場合はtrueを返す。
 			return true;
 		}
@@ -149,6 +152,8 @@ bool Game::Start()
 			m_sk2List.push_back(sk2);
 			sk2->SetPlayer(m_player);
 			sk2->SetGame(this);
+			sk2->SetNumber(number);
+			number++;
 			//フックした場合はtrueを返す。
 			return true;
 		}
@@ -161,6 +166,8 @@ bool Game::Start()
 			boss->SetName(L"Enemy");
 			boss->SetPlayer(m_player);
 			boss->SetStage1(this);
+			boss->SetNumber(number);
+			number++;
 			//フックした場合はtrueを返す。
 			return true;
 		}
@@ -172,6 +179,8 @@ bool Game::Start()
 			boss->SetOldPosition(objData.position);
 			boss->SetName(L"Enemy");
 			boss->SetPlayer(m_player);
+			boss->SetNumber(number);
+			number++;
 			//フックした場合はtrueを返す。
 			return true;
 		}

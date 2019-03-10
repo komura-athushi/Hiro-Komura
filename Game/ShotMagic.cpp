@@ -96,6 +96,7 @@ bool ShotMagic::Start()
 				 mgml.s_effect->SetSpeed(m_frame * GetDeltaTimeSec());
 				 mgml.s_collision->SetPosition(mgml.s_position);
 				 mgml.s_timer += 60.0f*GetDeltaTimeSec();
+				 mgml.s_hittimer += 40.0f * GetDeltaTimeSec();
 			 }
 		 }
 	 }
@@ -107,16 +108,12 @@ bool ShotMagic::Start()
 		 delete this;
 	 }
 }
- void ShotMagic::SetCollisionModel(const CVector3& pos, const float& scale,const int& id, const CVector3& scl, const int& number, bool damage)
+ void ShotMagic::SetCollisionModel(const CVector3& pos, const float& scale,const int& id, const CVector3& scl, const int& number, bool damage, float time)
  {
 	 GameObj::Suicider::CEffekseer* effect = new GameObj::Suicider::CEffekseer;
 	 SuicideObj::CCollisionObj* attackCol = NewGO<SuicideObj::CCollisionObj>();
 	 //MagicModelクラスの可変長配列に生成したモデルとコリジョンを格納します
 	 m_magicmocelList.push_back({ effect,attackCol });
-	 //モデルを作成します
-	 /*skinModelRender->Init(L"Resource/modelData/Magic_Sample.cmo");
-	 skinModelRender->SetScale(m_scale);
-	 skinModelRender->SetPos(pos);*/
 	 switch (m_id) {
 	 case 1:
 		 effect->Play(L"Asset/effect/Effects/efk/magic_fire.efk", 1.0f, pos, CQuaternion::Identity(), scl * 12);
@@ -184,14 +181,43 @@ bool ShotMagic::Start()
 				 }
 				 );
 			 }
-			 else if (id != 5) {
-				 //エネミーにダメージ
-				 enemy->Damage(m_damage, id);
-				 //もしエネミーのHPが0以下になったら
-				 if (enemy->GetDeath()) {
-					 //エネミーの経験値をプレイヤーの経験値に加算
-					 PlayerStatus* playerstatus = FindGO<PlayerStatus>(L"PlayerStatus");
-					 playerstatus->PlusExp(enemy->GetExp());
+			 else if (id == 3) {
+				 if (m_magicmocelList[number].s_enemyidlist.count(enemy->GetNumber()) == 0) {
+					 m_magicmocelList[number].s_enemyidlist[enemy->GetNumber()] = m_magicmocelList[number].s_hittimer;
+					 //エネミーにダメージ
+					 enemy->Damage(m_damage, id);
+					 //もしエネミーのHPが0以下になったら
+					 if (enemy->GetDeath()) {
+						 //エネミーの経験値をプレイヤーの経験値に加算
+						 PlayerStatus* playerstatus = FindGO<PlayerStatus>(L"PlayerStatus");
+						 playerstatus->PlusExp(enemy->GetExp());
+					 }
+
+				 }
+				 else if((m_magicmocelList[number].s_enemyidlist[enemy->GetNumber()] + m_hittime3) <= m_magicmocelList[number].s_hittimer){
+					 m_magicmocelList[number].s_enemyidlist[enemy->GetNumber()] = m_magicmocelList[number].s_hittimer;
+					 //エネミーにダメージ
+					 enemy->Damage(m_damage, id);
+					 //もしエネミーのHPが0以下になったら
+					 if (enemy->GetDeath()) {
+						 //エネミーの経験値をプレイヤーの経験値に加算
+						 PlayerStatus* playerstatus = FindGO<PlayerStatus>(L"PlayerStatus");
+						 playerstatus->PlusExp(enemy->GetExp());
+					 }
+				 }
+			 }
+			 else {
+				 if (m_magicmocelList[number].s_enemyidlist.count(enemy->GetNumber()) == 0) {
+					 m_magicmocelList[number].s_enemyidlist[enemy->GetNumber()] = m_magicmocelList[number].s_hittimer;
+					 //エネミーにダメージ
+					 enemy->Damage(m_damage, id);
+					 //もしエネミーのHPが0以下になったら
+					 if (enemy->GetDeath()) {
+						 //エネミーの経験値をプレイヤーの経験値に加算
+						 PlayerStatus* playerstatus = FindGO<PlayerStatus>(L"PlayerStatus");
+						 playerstatus->PlusExp(enemy->GetExp());
+					 }
+
 				 }
 			 }
 		 }
@@ -207,7 +233,7 @@ bool ShotMagic::Start()
 	 m_scale = m_scale1;
 	 m_position = m_position + CVector3::AxisY()*60.0f;
 	 m_movespeed = m_directionplayer * m_multiplyspeed1;
-	 SetCollisionModel(m_position,m_collisionscale1,m_id,m_scale);
+	 SetCollisionModelnoDamage(m_position, m_collisionscale1, m_id, m_scale, m_modelcount, true);
 	 m_damage /= m_modelnumber;
  }
  void ShotMagic::FoieUpdate()
@@ -229,7 +255,7 @@ bool ShotMagic::Start()
  {
 	 if (m_modelcount != m_modelnumber) {
 		 if (m_timer >= m_time2) {
-			 SetCollisionModel(m_position, m_collisionscale2,m_id,m_scale);
+			 SetCollisionModelnoDamage(m_position, m_collisionscale2, m_id, m_scale, m_modelcount, true);
 			 m_timer = 0;
 		 }
 	 }
@@ -243,7 +269,7 @@ bool ShotMagic::Start()
 	 m_scale = m_scale3;
 	 m_position = m_position; //+CVector3::AxisY()*60.0f;
 	 m_movespeed = m_directionplayer * m_multiplyspeed3;
-	 SetCollisionModel(m_position, m_collisionscale3, m_id,m_scale);
+	 SetCollisionModelnoDamage(m_position, m_collisionscale3, m_id, m_scale, m_modelcount, true,m_hittime3);
 	 m_damage /= m_modelnumber;
 	 m_damage /= m_multihit;
  }
@@ -260,7 +286,7 @@ bool ShotMagic::Start()
 	 m_scale = m_scale4;
 	 m_position = m_position; //+CVector3::AxisY()*60.0f;
 	 m_movespeed = m_directionplayer * m_multiplyspeed4;
-	 SetCollisionModel(m_position, m_collisionscale4, m_id,m_scale);
+	 SetCollisionModelnoDamage(m_position, m_collisionscale4, m_id, m_scale, m_modelcount, false);
 	 m_damage /= m_modelnumber;
 	 Player* player = FindGO<Player>(L"Player");
 	 player->SetShihuta();
@@ -295,7 +321,7 @@ bool ShotMagic::Start()
 	 m_scale = m_scale6;
 	 m_position = m_position; //+CVector3::AxisY()*60.0f;
 	 m_movespeed = m_directionplayer * m_multiplyspeed6;
-	 SetCollisionModel(m_position, m_collisionscale6, m_id, m_scale);
+	 SetCollisionModelnoDamage(m_position, m_collisionscale6, m_id, m_scale, m_modelcount,false);
 	 m_damage /= m_modelnumber;
 	 Player* player = FindGO<Player>(L"Player");
 	 player->Resta(m_damage);
@@ -308,7 +334,7 @@ bool ShotMagic::Start()
 	 m_scale = m_scale7;
 	 m_position = m_position;
 	 m_movespeed = m_directionplayer * m_multiplyspeed7;
-	 SetCollisionModel(m_position, m_collisionscale1, m_id, m_scale);
+	 SetCollisionModelnoDamage(m_position, m_collisionscale1, m_id, m_scale, m_modelcount, true);
 	 m_damage /= m_modelnumber;
  }
 
@@ -321,7 +347,7 @@ bool ShotMagic::Start()
 	 m_magicmocelList[number].s_delete = true;
  }
 
- void ShotMagic::SetCollisionModelnoDamage(const CVector3& pos, const float& scale, const int& id, const CVector3& scl, const int& number, bool damage)
+ void ShotMagic::SetCollisionModelnoDamage(const CVector3& pos, const float& scale, const int& id, const CVector3& scl, const int& number, bool damage, float time)
  {
-	 SetCollisionModel(pos, scale, id, scl, m_number[number], damage);
+	 SetCollisionModel(pos, scale, id, scl, m_number[number], damage, time);
  }
