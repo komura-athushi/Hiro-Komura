@@ -6,7 +6,7 @@
 #include "Player.h"
 #include "BossAttack.h"
 #include "GameCamera.h"
-#include "Boss2_Fire.h"
+#include "Enemy_Fire.h"
 #include "Teleport.h"
 //cppでエネミーのレア度ごとのドロップ率を設定
 const int Boss2::m_dropChances[Weapon::m_HighestRarity] = { 0,0,0,100,0,0,0 };
@@ -329,14 +329,15 @@ void Boss2::OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventName)
 		CVector3 b_pos = m_skinModelRender->GetBonePos(m_bonehead);
 		//プレイヤーとボスの距離
 		CVector3 pos = m_player->GetPosition() - m_position;
-		m_fire = new Boss2_Fire;
+		Enemy_Fire* fire = new Enemy_Fire;
 		//弾丸の座標にボスの座標を代入する。
-		m_fire->SetPosition(b_pos);
+		fire->SetPosition(b_pos);
+		fire->SetAttack(m_attackfire);
 		CVector3 bulletPos = m_playerposition - b_pos;
 		bulletPos.Normalize();
 		bulletPos = bulletPos * 20.0f;
 		//弾のスピードを変える
-		m_fire->SetMoveSpeed(bulletPos);
+		fire->SetMoveSpeed(bulletPos);
 	}
 }
 

@@ -60,6 +60,8 @@ public:
 	void Resta();
 	//覇王斬
 	void Haou();
+	//該当の番号のMagicModelの配列の色々を削除
+	void DeleteMagicModel(const int& number);
 	//魔法の番号を取得
 	int GetId() const
 	{
@@ -105,6 +107,11 @@ public:
 	{
 		m_damage = int(mattack*damagerate);
 	}
+	//ダメージを設定(エネミー用)
+	void SetDamage(const int& attack)
+	{
+		m_damage = attack;
+	}
 	//ダメージを取得
 	int GetDamage()
 	{
@@ -120,8 +127,11 @@ public:
 	{
 		return m_magicmocelList[number].s_position;
 	}
-	//該当の番号のMagicModelの配列の色々を削除
-	void DeleteMagicModel(const int& number);
+	//エネミーからの魔法であることを設定
+	void SetEnemy()
+	{
+		m_isenemy = true;
+	}
 private:
 	int m_id;											//魔法の番号
 	const wchar_t* m_name;								//魔法の名前
@@ -150,8 +160,10 @@ private:
 		float s_hittimer = 0.0f;                        //ヒットした時間
 		float s_hittime = 0.0f;						    //ヒットのクールタイム
 	};
+	const int PLAYERNUMBER = 1;							//エネミーからの魔法がエネミーにヒットした場合のunordered_mapのキー
 	std::vector<MagicModel> m_magicmocelList;			//MagicModel構造体の可変長配列
 	static const int m_number[];						//構造体の配列の添え字を記憶するのに使います
+	bool m_isenemy = false;								//trueならエネミーからプレイヤーに向けた魔法になります
 	//各魔法の色々なやつ
 	//フォイエ
 	const float m_deletetime1 = 60.0f;

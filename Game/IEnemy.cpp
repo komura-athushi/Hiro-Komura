@@ -94,46 +94,6 @@ void IEnemy::Damage(const int& attack,int number)
 		m_HP -= attack;
 		m_damage = true;
 		break;
-
-	//case 1:
-	//	if (m_timer1 >= 40) {		//フォイエ
-	//		m_HP -= attack;
-	//		m_timer1 = 0;
-	//		m_damage = true;
-	//	}
-	//	break;
-	//case 2:
-	//	if (m_timer2 >= 12) {		//イルグランツ
-	//		m_HP -= attack;
-	//		m_timer2 = 0;
-	//		m_damage = true;
-	//	}
-	//	break;
-	//case 3:
-	//	if (m_timer3 >= 25) {		//ザンバース
-	//		m_HP -= attack;
-	//		m_timer3 = 0;
-	//		m_damage = true;
-	//	}
-	//	break;
-	//case 4:							//シフタ(ダメージ無し)
-	//	break;
-	//case 5:							
-	//	if (m_timer5 >= 50) {		//マジスフィ
-	//		m_HP -= attack;
-	//		m_timer5 = 0;
-	//		m_damage = true;
-	//	}
-	//	break;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
-	//case 6:
-	//	break;						//レスタ(ダメージ無し)
-	//case 7:
-	//	if (m_timer7 >= 50) {		//覇王斬
-	//		m_HP -= attack;
-	//		m_timer7 = 0;
-	//		m_damage = true;
-	//	}
-	//	break;
 	}
 	if (HP != m_HP) {
 		//SE
@@ -167,7 +127,7 @@ void IEnemy::PostRender()
 		m_gamecamera = FindGO<GameCamera>();
 	}
 	else {
-	    wchar_t output[256];
+	    wchar_t output[10];
 	    //swprintf_s(output, L"HP   %d\natk  %d\nドロップ  %d\n", m_HP,m_Attack,m_dropChances[1]);
 	    swprintf_s(output, L"%d\n", m_damagecount);
 		CVector2 pos = m_gamecamera->GetCamera()->CalcScreenPosFromWorldPos(m_fontposition);

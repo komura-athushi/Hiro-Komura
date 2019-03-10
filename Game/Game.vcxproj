@@ -233,7 +233,7 @@
     <ClCompile Include="Ability.cpp" />
     <ClCompile Include="Boss.cpp" />
     <ClCompile Include="Boss2.cpp" />
-    <ClCompile Include="Boss2_Fire.cpp" />
+    <ClCompile Include="Enemy_Fire.cpp" />
     <ClCompile Include="BossAttack.cpp" />
     <ClCompile Include="Cagliostro_view.cpp" />
     <ClCompile Include="DropItem.cpp" />
@@ -245,6 +245,7 @@
     <ClCompile Include="Human.cpp" />
     <ClCompile Include="IEnemy.cpp" />
     <ClCompile Include="Equipment.cpp" />
+    <ClCompile Include="Kurage.cpp" />
     <ClCompile Include="Magic.cpp" />
     <ClCompile Include="MainSound.cpp" />
     <ClCompile Include="Material.cpp" />
@@ -278,7 +279,7 @@
     <ClInclude Include="Ability.h" />
     <ClInclude Include="Boss.h" />
     <ClInclude Include="Boss2.h" />
-    <ClInclude Include="Boss2_Fire.h" />
+    <ClInclude Include="Enemy_Fire.h" />
     <ClInclude Include="BossAttack.h" />
     <ClInclude Include="Cagliostro_view.h" />
     <ClInclude Include="DropItem.h" />
@@ -290,6 +291,7 @@
     <ClInclude Include="Human.h" />
     <ClInclude Include="IEnemy.h" />
     <ClInclude Include="Equipment.h" />
+    <ClInclude Include="Kurage.h" />
     <ClInclude Include="Magic.h" />
     <ClInclude Include="MainSound.h" />
     <ClInclude Include="Material.h" />
@@ -326,6 +328,7 @@
     <MeshContentTask Include="Asset\modelData\ground2.FBX" />
     <MeshContentTask Include="Asset\modelData\ground3.FBX" />
     <MeshContentTask Include="Asset\modelData\human\human.FBX" />
+    <MeshContentTask Include="Asset\modelData\kurage\kurage.FBX" />
     <MeshContentTask Include="Asset\modelData\Magic_Sample.FBX" />
     <MeshContentTask Include="Asset\modelData\material\brick.FBX" />
     <MeshContentTask Include="Asset\modelData\material\ishi.FBX" />

@@ -116,7 +116,6 @@
   <ItemGroup>
     <ClCompile Include="Boss.cpp" />
     <ClCompile Include="Boss2.cpp" />
-    <ClCompile Include="Boss2_Fire.cpp" />
     <ClCompile Include="BossAttack.cpp" />
     <ClCompile Include="Cagliostro_view.cpp" />
     <ClCompile Include="DropItem.cpp" />
@@ -153,6 +152,8 @@
     <ClCompile Include="GameClear.cpp" />
     <ClCompile Include="Skeleton2.cpp" />
     <ClCompile Include="Ability.cpp" />
+    <ClCompile Include="Kurage.cpp" />
+    <ClCompile Include="Enemy_Fire.cpp" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Asset\modelData\Sword\AncientWarriorBlade.FBX">
@@ -284,11 +285,13 @@
     <MeshContentTask Include="Asset\modelData\enemy2\enemy2.FBX">
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
+    <MeshContentTask Include="Asset\modelData\kurage\kurage.FBX">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Boss.h" />
     <ClInclude Include="Boss2.h" />
-    <ClInclude Include="Boss2_Fire.h" />
     <ClInclude Include="BossAttack.h" />
     <ClInclude Include="Cagliostro_view.h" />
     <ClInclude Include="DropItem.h" />
@@ -324,6 +327,8 @@
     <ClInclude Include="GameClear.h" />
     <ClInclude Include="Skeleton2.h" />
     <ClInclude Include="Ability.h" />
+    <ClInclude Include="Kurage.h" />
+    <ClInclude Include="Enemy_Fire.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Assets">

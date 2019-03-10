@@ -149,28 +149,110 @@ bool ShotMagic::Start()
 	 //寿命を設定
 	 attackCol->SetTimer(enNoTimer);
 	 attackCol->SetCallback([&](SuicideObj::CCollisionObj::SCallbackParam& param) {
-		 //衝突した判定の名前が"IEnemy"ならm_Attack分だけダメージ与える
-		 if (param.EqualName(L"IEnemy")) {
-			 IEnemy* enemy = param.GetClass<IEnemy>();//相手の判定に設定されているCEnemyのポインタを取得
-			 if (id == 5) {
-				 ShotMagic* shotmagic = FindGO<ShotMagic>(L"ShotMagic");
-				 CVector3 pos = shotmagic->GetPosition(number);
-				 shotmagic->DeleteMagicModel(number);
-				 GameObj::Suicider::CEffekseer* effect = new GameObj::Suicider::CEffekseer;
-				 effect->Play(L"Asset/effect/explosion/explosion.efk", 1.0f, pos, CQuaternion::Identity(), scl * 12);
-			
-				 //攻撃判定の発生
-				 SuicideObj::CCollisionObj* attackCol = NewGO<SuicideObj::CCollisionObj>();
-				 attackCol->CreateSphere(pos, CQuaternion::Identity(), scale *m_multiply5);
-				 //寿命を設定
-				 attackCol->SetTimer(30);
-				 attackCol->SetCallback([&](SuicideObj::CCollisionObj::SCallbackParam& param) {
-					 //衝突した判定の名前が"IEnemy"ならm_Attack分だけダメージ与える
-					 if (param.EqualName(L"IEnemy")) {
-						 IEnemy* enemy = param.GetClass<IEnemy>();//相手の判定に設定されているCEnemyのポインタを取得
-						 ShotMagic* shotmagic = FindGO<ShotMagic>(L"ShotMagic");
+		 //エネミーからの魔法
+		 if (m_isenemy) {
+			 //衝突した判定の名前が"IEnemy"ならm_Attack分だけダメージ与える
+			 if (param.EqualName(L"Player")) {
+				 Player* player = param.GetClass<Player>();//相手の判定に設定されているCEnemyのポインタを取得
+				 if (id == 5) {
+					 ShotMagic* shotmagic = FindGO<ShotMagic>(L"ShotMagic");
+					 CVector3 pos = shotmagic->GetPosition(number);
+					 shotmagic->DeleteMagicModel(number);
+					 GameObj::Suicider::CEffekseer* effect = new GameObj::Suicider::CEffekseer;
+					 effect->Play(L"Asset/effect/explosion/explosion.efk", 1.0f, pos, CQuaternion::Identity(), scl * 12);
+					 //攻撃判定の発生
+					 SuicideObj::CCollisionObj* attackCol = NewGO<SuicideObj::CCollisionObj>();
+					 attackCol->CreateSphere(pos, CQuaternion::Identity(), scale *m_multiply5);
+					 //寿命を設定
+					 attackCol->SetTimer(30);
+					 attackCol->SetCallback([&](SuicideObj::CCollisionObj::SCallbackParam& param) {
+						 //衝突した判定の名前が"IEnemy"ならm_Attack分だけダメージ与える
+						 if (param.EqualName(L"Player")) {
+							 Player* player = param.GetClass<Player>();//相手の判定に設定されているCEnemyのポインタを取得
+							 if (m_magicmocelList[number].s_enemyidlist.count(PLAYERNUMBER) == 0) {
+								 m_magicmocelList[number].s_enemyidlist[PLAYERNUMBER] = m_magicmocelList[number].s_hittimer;
+								 //エネミーにダメージ
+								 player->Damage(m_damage);
+							 }
+						 }
+					 }
+					 );
+				 }
+				 else if (id == 3) {
+					 if (m_magicmocelList[number].s_enemyidlist.count(PLAYERNUMBER) == 0) {
+						 m_magicmocelList[number].s_enemyidlist[PLAYERNUMBER] = m_magicmocelList[number].s_hittimer;
 						 //エネミーにダメージ
-						 enemy->Damage(shotmagic->GetDamage(), id);
+						 player->Damage(m_damage);
+					 }
+					 else if ((m_magicmocelList[number].s_enemyidlist[PLAYERNUMBER] + m_hittime3) <= m_magicmocelList[number].s_hittimer) {
+						 m_magicmocelList[number].s_enemyidlist[PLAYERNUMBER] = m_magicmocelList[number].s_hittimer;
+						 //エネミーにダメージ
+						 player->Damage(m_damage);
+					 }
+				 }
+				 else {
+					 if (m_magicmocelList[number].s_enemyidlist.count(PLAYERNUMBER) == 0) {
+						 m_magicmocelList[number].s_enemyidlist[PLAYERNUMBER] = m_magicmocelList[number].s_hittimer;
+						 //エネミーにダメージ
+						 player->Damage(m_damage);
+					 }
+				 }
+			 }
+		 }
+		 //プレイヤーからの魔法
+		 else {
+			 //衝突した判定の名前が"IEnemy"ならm_Attack分だけダメージ与える
+			 if (param.EqualName(L"IEnemy")) {
+				 IEnemy* enemy = param.GetClass<IEnemy>();//相手の判定に設定されているCEnemyのポインタを取得
+				 if (id == 5) {
+					 ShotMagic* shotmagic = FindGO<ShotMagic>(L"ShotMagic");
+					 CVector3 pos = shotmagic->GetPosition(number);
+					 shotmagic->DeleteMagicModel(number);
+					 GameObj::Suicider::CEffekseer* effect = new GameObj::Suicider::CEffekseer;
+					 effect->Play(L"Asset/effect/explosion/explosion.efk", 1.0f, pos, CQuaternion::Identity(), scl * 12);
+
+					 //攻撃判定の発生
+					 SuicideObj::CCollisionObj* attackCol = NewGO<SuicideObj::CCollisionObj>();
+					 attackCol->CreateSphere(pos, CQuaternion::Identity(), scale *m_multiply5);
+					 //寿命を設定
+					 attackCol->SetTimer(30);
+					 attackCol->SetCallback([&](SuicideObj::CCollisionObj::SCallbackParam& param) {
+						 //衝突した判定の名前が"IEnemy"ならm_Attack分だけダメージ与える
+						 if (param.EqualName(L"IEnemy")) {
+							 IEnemy* enemy = param.GetClass<IEnemy>();//相手の判定に設定されているCEnemyのポインタを取得
+							 if (m_magicmocelList[number].s_enemyidlist.count(enemy->GetNumber()) == 0) {
+								 m_magicmocelList[number].s_enemyidlist[enemy->GetNumber()] = m_magicmocelList[number].s_hittimer;
+								 //エネミーにダメージ
+								 enemy->Damage(m_damage, id);
+								 //もしエネミーのHPが0以下になったら
+								 if (enemy->GetDeath()) {
+									 //エネミーの経験値をプレイヤーの経験値に加算
+									 PlayerStatus* playerstatus = FindGO<PlayerStatus>(L"PlayerStatus");
+									 playerstatus->PlusExp(enemy->GetExp());
+								 }
+
+							 }
+						 }
+					 }
+					 );
+				 }
+				 else if (id == 3) {
+					 if (m_magicmocelList[number].s_enemyidlist.count(enemy->GetNumber()) == 0) {
+						 m_magicmocelList[number].s_enemyidlist[enemy->GetNumber()] = m_magicmocelList[number].s_hittimer;
+						 //エネミーにダメージ
+						 enemy->Damage(m_damage, id);
+						 //もしエネミーのHPが0以下になったら
+						 if (enemy->GetDeath()) {
+							 //エネミーの経験値をプレイヤーの経験値に加算
+							 PlayerStatus* playerstatus = FindGO<PlayerStatus>(L"PlayerStatus");
+							 playerstatus->PlusExp(enemy->GetExp());
+						 }
+
+					 }
+					 else if ((m_magicmocelList[number].s_enemyidlist[enemy->GetNumber()] + m_hittime3) <= m_magicmocelList[number].s_hittimer) {
+						 m_magicmocelList[number].s_enemyidlist[enemy->GetNumber()] = m_magicmocelList[number].s_hittimer;
+						 //エネミーにダメージ
+						 enemy->Damage(m_damage, id);
 						 //もしエネミーのHPが0以下になったら
 						 if (enemy->GetDeath()) {
 							 //エネミーの経験値をプレイヤーの経験値に加算
@@ -179,45 +261,19 @@ bool ShotMagic::Start()
 						 }
 					 }
 				 }
-				 );
-			 }
-			 else if (id == 3) {
-				 if (m_magicmocelList[number].s_enemyidlist.count(enemy->GetNumber()) == 0) {
-					 m_magicmocelList[number].s_enemyidlist[enemy->GetNumber()] = m_magicmocelList[number].s_hittimer;
-					 //エネミーにダメージ
-					 enemy->Damage(m_damage, id);
-					 //もしエネミーのHPが0以下になったら
-					 if (enemy->GetDeath()) {
-						 //エネミーの経験値をプレイヤーの経験値に加算
-						 PlayerStatus* playerstatus = FindGO<PlayerStatus>(L"PlayerStatus");
-						 playerstatus->PlusExp(enemy->GetExp());
-					 }
+				 else {
+					 if (m_magicmocelList[number].s_enemyidlist.count(enemy->GetNumber()) == 0) {
+						 m_magicmocelList[number].s_enemyidlist[enemy->GetNumber()] = m_magicmocelList[number].s_hittimer;
+						 //エネミーにダメージ
+						 enemy->Damage(m_damage, id);
+						 //もしエネミーのHPが0以下になったら
+						 if (enemy->GetDeath()) {
+							 //エネミーの経験値をプレイヤーの経験値に加算
+							 PlayerStatus* playerstatus = FindGO<PlayerStatus>(L"PlayerStatus");
+							 playerstatus->PlusExp(enemy->GetExp());
+						 }
 
-				 }
-				 else if((m_magicmocelList[number].s_enemyidlist[enemy->GetNumber()] + m_hittime3) <= m_magicmocelList[number].s_hittimer){
-					 m_magicmocelList[number].s_enemyidlist[enemy->GetNumber()] = m_magicmocelList[number].s_hittimer;
-					 //エネミーにダメージ
-					 enemy->Damage(m_damage, id);
-					 //もしエネミーのHPが0以下になったら
-					 if (enemy->GetDeath()) {
-						 //エネミーの経験値をプレイヤーの経験値に加算
-						 PlayerStatus* playerstatus = FindGO<PlayerStatus>(L"PlayerStatus");
-						 playerstatus->PlusExp(enemy->GetExp());
 					 }
-				 }
-			 }
-			 else {
-				 if (m_magicmocelList[number].s_enemyidlist.count(enemy->GetNumber()) == 0) {
-					 m_magicmocelList[number].s_enemyidlist[enemy->GetNumber()] = m_magicmocelList[number].s_hittimer;
-					 //エネミーにダメージ
-					 enemy->Damage(m_damage, id);
-					 //もしエネミーのHPが0以下になったら
-					 if (enemy->GetDeath()) {
-						 //エネミーの経験値をプレイヤーの経験値に加算
-						 PlayerStatus* playerstatus = FindGO<PlayerStatus>(L"PlayerStatus");
-						 playerstatus->PlusExp(enemy->GetExp());
-					 }
-
 				 }
 			 }
 		 }

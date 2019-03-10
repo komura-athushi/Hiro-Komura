@@ -17,6 +17,7 @@
 #include "MainSound.h"
 #include "Teleport.h"
 #include "GameClear.h"
+#include "Kurage.h"
 Game::Game()
 {
 }
@@ -153,6 +154,20 @@ bool Game::Start()
 			sk2->SetPlayer(m_player);
 			sk2->SetGame(this);
 			sk2->SetNumber(number);
+			number++;
+			//フックした場合はtrueを返す。
+			return true;
+		}
+		else if (objData.EqualObjectName(L"kurage") == true) {
+			//スケルトン
+			//プレイヤーのインスタンスを生成する。
+			Kurage* kr = new Kurage;
+			kr->SetPosition(objData.position);
+			kr->SetName(L"Enemy");
+			//後で削除するのでリストに積んで記憶しておく。
+			kr->SetPlayer(m_player);
+			kr->SetGame(this);
+			kr->SetNumber(number);
 			number++;
 			//フックした場合はtrueを返す。
 			return true;

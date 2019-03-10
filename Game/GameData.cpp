@@ -28,7 +28,7 @@ bool GameData::Start()
 	m_magiclist.push_back(Magic(2 , L"イル・グランツ"			, 1.9f, 40));
 	m_magiclist.push_back(Magic(3 , L"ザンバース"				, 1.6f, 40));
 	m_magiclist.push_back(Magic(4 , L"シフタ"					, 0.0f, 50));
-	m_magiclist.push_back(Magic(5 , L"マジックスフィア"		    , 2.3f, 60));
+	m_magiclist.push_back(Magic(5 , L"マジックスフィア"		    , 2.0f, 60));
 	m_magiclist.push_back(Magic(6 , L"レスタ"                   , 0.6f, 40));
 	m_magiclist.push_back(Magic(7 , L"覇王斬"                   , 2.0f, 60));
 	m_magiclist.push_back(Magic(8 , L"約束された勝利の剣"       , 2.3f, 60));
@@ -37,18 +37,18 @@ bool GameData::Start()
 	m_materiallist.push_back(Material(L"石"					, 2));
 	m_materiallist.push_back(Material(L"レンガ"				, 3));
 	//アビリティクラスのインスタンスを作成
-	m_abilitylist.push_back(Ability(1 , L"スタミナ1"        ,   0,  0, 10,  0));
+	m_abilitylist.push_back(Ability(1 , L"HPアップ1"        ,   0,  0, 10,  0));
 	m_abilitylist.push_back(Ability(2 , L"パワー1"          ,  10,  0,  0,  0));
 	m_abilitylist.push_back(Ability(3 , L"テクニック1"      ,   0, 10,  0,  0));
-	m_abilitylist.push_back(Ability(4 , L"スピリタ1"        ,   0,  0,  0, 10));
-	m_abilitylist.push_back(Ability(5 , L"スタミナ2"        ,   0,  0, 30,  0));
+	m_abilitylist.push_back(Ability(4 , L"PPアップ1"        ,   0,  0,  0, 10));
+	m_abilitylist.push_back(Ability(5 , L"HPアップ2"        ,   0,  0, 30,  0));
 	m_abilitylist.push_back(Ability(6 , L"パワー2"          ,  30,  0,  0,  0));
 	m_abilitylist.push_back(Ability(7 , L"テクニック2"      ,   0, 30,  0,  0));
-	m_abilitylist.push_back(Ability(8 , L"スピリタ2"        ,   0,  0,  0, 30));
-	m_abilitylist.push_back(Ability(9 , L"スタミナ3"        ,   0,  0, 50,  0));
+	m_abilitylist.push_back(Ability(8 , L"PPアップ2"        ,   0,  0,  0, 30));
+	m_abilitylist.push_back(Ability(9 , L"HPアップ3"        ,   0,  0, 50,  0));
 	m_abilitylist.push_back(Ability(10, L"パワー3"          ,  50,  0,  0,  0));
 	m_abilitylist.push_back(Ability(11, L"テクニック3"      ,   0, 50,  0,  0));
-	m_abilitylist.push_back(Ability(12, L"スピリタ3"        ,   0,  0,  0, 50));
+	m_abilitylist.push_back(Ability(12, L"PPアップ3"        ,   0,  0,  0, 50));
 	return true;
 }
 

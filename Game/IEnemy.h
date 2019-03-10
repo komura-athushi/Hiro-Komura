@@ -88,11 +88,6 @@ protected:
 	int m_damagecount;										  //受けたダメージ
 	int m_Exp;                                                //経験値
 	float m_timer = 0.0f;                                     //当たり判定にクールタイム
-	float m_timer1 = 0.0f;									  //フォイエの当たり判定のクールタイム
-	float m_timer2 = 0.0f;									  //イルグランツの
-	float m_timer3 = 0.0f;									  //ザンバースの
-	float m_timer5 = 0.0f;									  //マジスフィの
-	float m_timer7 = 0.0f;									  //覇王斬の
 	float m_timer8 = 0.0f;									  //モルガンの	
 	float m_fonttimer = 0.0f;								  //文字表示のタイマー
 	bool m_damage = false;                                    //ダメージを受けたかどうか

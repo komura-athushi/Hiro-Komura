@@ -6,7 +6,6 @@
 class Stage1;
 class Player;
 class BossAttack;
-class Boss2_Fire;
 class Boss2 : public IEnemy
 {
 public:
@@ -84,7 +83,6 @@ private:
 	CVector3 m_parallel = { 0.0f,0.0f,0.0f };					//ユニティちゃんの向きと平行なベクトル
 	Player* m_player;											//プレイヤークラスのポインタ
 	BossAttack* m_bossattack;									//BossAttackクラスのポインタ
-	Boss2_Fire* m_fire;											//Boss2_Fireクラスのポインタ
 	CFont m_font;												//文字表示クラス
 	bool m_disp = false;										//ダメ表示するかどうか
 	//自機の角度　初期は180度
@@ -116,5 +114,6 @@ private:
 	//ファイヤー関連
 	bool m_fireend=false;										//ファイヤーが終わったかどうか
 	bool m_ischase = true;										//プレイヤーを追尾しているかどうか
+	const int m_attackfire = 50;								//ファイヤーの攻撃力
 };
 

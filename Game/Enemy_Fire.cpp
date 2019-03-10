@@ -1,24 +1,22 @@
 #include "stdafx.h"
-#include "Boss2_Fire.h"
-#include "Boss2.h"
+#include "Enemy_Fire.h"
 #include "Player.h"
 
-Boss2_Fire::Boss2_Fire()
+Enemy_Fire::Enemy_Fire()
 {
 }
 
 
-Boss2_Fire::~Boss2_Fire()
+Enemy_Fire::~Enemy_Fire()
 {
 	delete m_effect;
 	delete m_attackCol;
 }
 
-bool Boss2_Fire::Start()
+bool Enemy_Fire::Start()
 {
 	m_effect = new GameObj::Suicider::CEffekseer;
 	m_effect->Play(L"Asset/effect/efk/magic_proj02.efk", 1.0f, m_position, m_rotation, m_scale);
-	m_boss2 = FindGO<Boss2>(L"Enemy");
 	//コリジョン
 	//攻撃判定の発生
 	m_attackCol = NewGO<SuicideObj::CCollisionObj>();
@@ -30,14 +28,14 @@ bool Boss2_Fire::Start()
 		//衝突した判定の名前が"Player"ならm_Attack3分だけダメージ与える
 		if (param.EqualName(L"Player")) {
 			Player* player = param.GetClass<Player>();
-			player->Damage(m_Attack3);
+			player->Damage(m_attack);
 		}
 	}
 	);
 	return true;
 }
 
-void Boss2_Fire::Update() 
+void Enemy_Fire::Update() 
 {
 	//再生速度
 	m_effect->SetSpeed(m_frame * GetDeltaTimeSec());

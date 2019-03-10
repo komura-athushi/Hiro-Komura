@@ -1,10 +1,9 @@
 #pragma once
-class Boss2;
-class Boss2_Fire : public IGameObject
+class Enemy_Fire : public IGameObject
 {
 public:
-	Boss2_Fire();
-	~Boss2_Fire();
+	Enemy_Fire();
+	~Enemy_Fire();
 	bool Start() override;
 	void Update() override;
 	//ダメージを設定
@@ -32,6 +31,11 @@ public:
 	{
 		return m_position;
 	}
+	//ファイヤーの攻撃力を設定
+	void SetAttack(const int& attack)
+	{
+		m_attack = attack;
+	}
 private:
 	GameObj::Suicider::CEffekseer* m_effect = nullptr;
 	CVector3 m_position = CVector3::Zero();						//弾の座標
@@ -43,8 +47,7 @@ private:
 	//コリジョン関係
 	SuicideObj::CCollisionObj* m_attackCol;
 	const float m_attack3r = 90.0f;                            //攻撃したときに発生させるコリジョンの半径
-	static const int m_Attack3 = 40;							//ファイヤーの攻撃力
-	Boss2* m_boss2;												//Boss2クラスのポインタ
+	int m_attack = 30;							               //ファイヤーの攻撃力、デフォルトで30
 	float m_timer = 0.0f;
 	const float m_time = 50.0f;
 };
