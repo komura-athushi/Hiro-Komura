@@ -3,12 +3,12 @@
 #include "DemolisherWeapon/physics/PhysicsStaticObject.h"
 class Player;
 class Game;
-//プレイヤーに近づいて攻撃してくる一番弱い緑のクラゲ
-class Kurage:public IEnemy
+//ランダムに移動して魔法で攻撃してくる二番目に弱い青いクラゲ
+class Kurage2 :public IEnemy
 {
 public:
-	Kurage();
-	~Kurage();
+	Kurage2();
+	~Kurage2();
 	bool Start();
 	void Update();
 	void Chase();
@@ -41,9 +41,9 @@ private:
 	const float m_r = 60.0f;                                    //コリジョンの半径
 	const float m_collisionheight = 40.0f;                      //コリジョンをm_positionからどれだけ上にあげるか
 	//クラゲの色々なステータス
-	static const int m_MaxHP = 150;                             //最大HP
-	static const int m_Attack = 20;                             //攻撃力
-	static const int m_EXP = 10;                                //経験値
+	static const int m_MaxHP = 300;                             //最大HP
+	static const int m_Attack = 35;                             //攻撃力
+	static const int m_EXP = 35;                                //経験値
 	//ヘッダーファイルでは宣言だけ、定義はcppファイルに書いてください
 	static const int m_dropChances[];                           //エネミーのドロップするアイテム、[1]が10ならレア度1が10%でドロップするみたいな
 	static const int m_dropmaterialChances[];					//エネミーのドロップする素材の確率
@@ -56,21 +56,22 @@ private:
 		enState_Pose,
 		enState_Attack,
 	};
-	bool m_isaria = false;
-	const float m_chasedistance = 1200.0f * 1200.0f;
-	const float m_attackdistance = 150.0f * 150.0f;
 	State m_state = enState_Pose;
+	const float m_chasedistance = 2000.0f * 2000.0f;
+	const float m_attackdistance = 700.0f * 700.0f;
+	bool m_isaria = false;
 	const float m_frame = 40.0f;
-	const float m_movespeedmultiply = 7.0f;
+	const float m_movespeedmultiply = 4.0f;
 	float m_dethtimer = 0.0f;
 	const int m_dethtime = 5;
 	float m_chasetimer = 0.0f;
-	const int m_chasetime = 30;
+	const int m_chasetime = 50;
 	float m_stoptimer = 0.0f;
 	const int m_stoptime = 20;
 	float m_movetimer = 0.0f;
-	const int m_movetime = 130;
+	const int m_movetime = 180;
 	float m_attacktimer = 0.0f;
-	const int m_attacktime = 40;
+	const int m_attacktime = 50;
 };
+
 

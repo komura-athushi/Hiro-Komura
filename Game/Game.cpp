@@ -18,6 +18,8 @@
 #include "Teleport.h"
 #include "GameClear.h"
 #include "Kurage.h"
+#include "Kurage2.h"
+#include "Kurage3.h"
 Game::Game()
 {
 }
@@ -37,6 +39,21 @@ Game::~Game()
 	QueryGOs<Skeleton2>(L"Enemy", [&](Skeleton2* sk2)
 	{
 		delete sk2;
+		return true;
+	});
+	QueryGOs<Kurage>(L"Enemy", [&](Kurage* kg)
+	{
+		delete kg;
+		return true;
+	});
+	QueryGOs<Kurage2>(L"Enemy", [&](Kurage2* kg2)
+	{
+		delete kg2;
+		return true;
+	});
+	QueryGOs<Kurage3>(L"Enemy", [&](Kurage3* kg3)
+	{
+		delete kg3;
 		return true;
 	});
 	QueryGOs<Boss>(L"Enemy", [&](Boss* boss)
@@ -168,6 +185,34 @@ bool Game::Start()
 			kr->SetPlayer(m_player);
 			kr->SetGame(this);
 			kr->SetNumber(number);
+			number++;
+			//フックした場合はtrueを返す。
+			return true;
+		}
+		else if (objData.EqualObjectName(L"kurage2") == true) {
+			//スケルトン
+			//プレイヤーのインスタンスを生成する。
+			Kurage2* kr2 = new Kurage2;
+			kr2->SetPosition(objData.position);
+			kr2->SetName(L"Enemy");
+			//後で削除するのでリストに積んで記憶しておく。
+			kr2->SetPlayer(m_player);
+			kr2->SetGame(this);
+			kr2->SetNumber(number);
+			number++;
+			//フックした場合はtrueを返す。
+			return true;
+		}
+		else if (objData.EqualObjectName(L"kurage3") == true) {
+			//スケルトン
+			//プレイヤーのインスタンスを生成する。
+			Kurage3* kr3 = new Kurage3;
+			kr3->SetPosition(objData.position);
+			kr3->SetName(L"Enemy");
+			//後で削除するのでリストに積んで記憶しておく。
+			kr3->SetPlayer(m_player);
+			kr3->SetGame(this);
+			kr3->SetNumber(number);
 			number++;
 			//フックした場合はtrueを返す。
 			return true;

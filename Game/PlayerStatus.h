@@ -216,13 +216,13 @@ private:
 	int m_Exp = 0;                                        //経験値
 	int m_NextExp = 40;                                   //次のレベルアップに必要な経験値
 	int m_LevelExp = 40;                                  //レベルごとに必要な累計経験値
-	int m_MaxHP = 100;                                    //最大HP
+	int m_MaxHP = 65;                                    //最大HP
 	int m_MaxPP = 100;                                    //最大PP(魔法撃つのに必要)
 	int m_Mattack = 40;                                   //魔法攻撃力(賢さ+武器の魔法攻撃力)
-	int m_Clever = 30;                                    //賢さ
+	int m_Clever = 20;                                    //賢さ
 	int m_SwordMattack = 10;                              //武器の魔法攻撃力
 	int m_Attack = 40;                                    //攻撃力(力＋武器の攻撃力)
-	int m_Power = 30;                                     //力
+	int m_Power = 20;                                     //力
 	int m_SwordAttack = 10;                               //武器の攻撃力
 	int m_MagicId = 0;                                    //使える魔法の番号
 	int m_SwordId = 0;                                    //装備中の武器の番号
@@ -246,6 +246,8 @@ private:
 	GameData* m_gamedata;                                 //GameDataクラスのポインタ
 	Weapon* m_weapon;									  //Weaponクラスのポインタ
 	Magic* m_magic;										  //Magicクラスのポインタ
-	const int ProtStatus = 100;
-	const int ProtPower = 30;
+	const int m_ProtHP = 65;
+	const int m_ProtPP = 100;
+	const int m_ProtPower = 20;
+	const int m_ProtMpower = 20;
 };

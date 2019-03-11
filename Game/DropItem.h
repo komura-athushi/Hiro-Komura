@@ -55,5 +55,6 @@ private:
 	static const float m_height;								//ドロップ時に+するy座標
 	static const float m_height_weapon;							//ドロップ時に+するy座標(武器)
 	float m_degree = 0.0f;
+	const float m_sevolume = 2.0f;
 };
 

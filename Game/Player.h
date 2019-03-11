@@ -297,6 +297,7 @@ private:
 	bool m_clear_over_voice = false;							//ゲームオーバーあるいはゲームクリアのボイスを発生させたかどうか
 	const float m_voicevolume = 3.5f;							//ボイスの音量
 	const float m_lvupvollume = 2.0f;							//レベルアップのSEの音量
+	const float m_cancelvolume = 5.0f;
 	bool m_targetdisplay = false;								//ターゲッティング状態かどうか
 	const float m_distancetarget = 1400.0f * 1400.0f;			//ターゲットが有効な距離
 	const float m_degreemultiply = 0.3f;						//ターゲットの距離補正
@@ -315,5 +316,6 @@ private:
 	IEnemy* m_enemy = nullptr;
 	bool m_targetlock = false;									//ターゲットロック中かどうか
 	bool m_displaystatus = false;
+	const int m_randDamage = 95;
 };
 

@@ -28,6 +28,7 @@ ShotMagic::~ShotMagic()
 
 bool ShotMagic::Start()
 {
+	m_damage = m_damage * (m_randDamage + rand() % 10) / 100;
 	//–‚–@‚Ì”Ô†‚É‚æ‚Á‚Äˆ—‚ğ•Ï‚¦‚Ü‚·
 	switch (m_id) {
 	case 1:

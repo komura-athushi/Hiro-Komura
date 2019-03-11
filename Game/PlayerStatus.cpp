@@ -32,6 +32,8 @@ bool PlayerStatus::Start()
 	CSprite* sprite = new CSprite;
 	sprite->Init(m_spritenamelist[0]);
 	m_spritelist.push_back(sprite);
+	m_NextExp = m_Level * (m_Level + 1) * (m_Level + 4);
+	m_LevelExp = m_Level * (m_Level + 1) * (m_Level + 4);
 	return true;
 }
 
@@ -72,13 +74,12 @@ void PlayerStatus::PlusExp(const int& exp)
 	while (m_LevelExp <= m_Exp) {
 		ep -= m_NextExp;
 		m_Level += 1;
-		m_NextExp = (int)((1 + (float)(m_Level * m_Level * 0.1f)) * 60);
+		m_NextExp = m_Level * (m_Level + 1) * (m_Level + 4);
 		m_LevelExp += m_NextExp;
-		m_Power = ProtPower + m_Level * 10 - 10;
-		m_Attack = m_Power + m_SwordAttack;
-		m_MaxHP = ProtStatus + m_Level * 10 - 10;
-		m_MaxPP = ProtStatus + m_Level * 10 - 10;
-		m_Clever = ProtPower + m_Level * 10 - 10;
+		m_MaxHP = m_ProtHP + m_Level * (m_Level + 34) * (m_Level + 100) / 100;
+		m_MaxPP = m_ProtPP + m_Level * (m_Level + 10) / 20;
+		m_Power = m_ProtPower + m_Level * (m_Level + 10);
+		m_Clever = m_ProtMpower + m_Level * (m_Level +10);
 		m_Attack = m_Power + m_SwordAttack;
 		m_Mattack = m_Clever + m_SwordMattack;
 		m_levelup = true;

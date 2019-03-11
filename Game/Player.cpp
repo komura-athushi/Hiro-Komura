@@ -590,7 +590,7 @@ void Player::OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventName)
 			if (param.EqualName(L"IEnemy")) {
 				IEnemy* enemy = param.GetClass<IEnemy>();//相手の判定に設定されているCEnemyのポインタを取得
 				//エネミーにダメージ
-				enemy->Damage(m_Attack);
+				enemy->Damage(m_Attack * (m_randDamage + rand() % 10 ) / 100);
 				//もしエネミーのHPが0以下になったら
 				if (enemy->GetDeath()) {
 					//エネミーの経験値をプレイヤーの経験値に加算
@@ -881,18 +881,41 @@ void Player::RelationMerchant()
 	if (pos.LengthSq() <= 300.0f * 300.0f && m_state == enState_Idle) {
 		if (Pad(0).GetDown(enButtonA)) {
 			if (m_merchant->GetIdle()) {
+				SuicideObj::CSE* se = NewGO<SuicideObj::CSE>(L"Asset/sound/se/kettei.wav");
+				se->Play(); //再生(再生が終わると削除されます)
+				se->SetVolume(m_lvupvollume);
+				//3D再生
+				se->SetPos(m_position);//音の位置
+				se->SetDistance(500.0f);//音が聞こえる範囲
+				se->Play(true); //第一引数をtru
 				m_merchant->SetTalk();
 				m_stop = true;
 			}
 		}
 		else if (Pad(0).GetDown(enButtonB)) {
-			if (m_merchant->GetBase()) {
-				m_merchant->OffTalk();
-				m_stop = false;
-			}
-			else {
-				if (m_merchant->GetTalk()) {
-					m_merchant->BackState();
+			if (!m_merchant->GetIdle()) {
+				if (m_merchant->GetBase()) {
+					m_merchant->OffTalk();
+					m_stop = false;
+					SuicideObj::CSE* se = NewGO<SuicideObj::CSE>(L"Asset/sound/se/cansel.wav");
+					se->Play(); //再生(再生が終わると削除されます)
+					se->SetVolume(m_cancelvolume);
+					//3D再生
+					se->SetPos(m_position);//音の位置
+					se->SetDistance(500.0f);//音が聞こえる範囲
+					se->Play(true); //第一引数をtru
+				}
+				else {
+					if (m_merchant->GetTalk()) {
+						m_merchant->BackState();
+						SuicideObj::CSE* se = NewGO<SuicideObj::CSE>(L"Asset/sound/se/cansel.wav");
+						se->Play(); //再生(再生が終わると削除されます)
+						se->SetVolume(m_cancelvolume);
+						//3D再生
+						se->SetPos(m_position);//音の位置
+						se->SetDistance(500.0f);//音が聞こえる範囲
+						se->Play(true); //第一引数をtru
+					}
 				}
 			}
 		}

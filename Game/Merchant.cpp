@@ -195,7 +195,7 @@ void Merchant::Material()
 		}
 		wchar_t output[30];
 		if (m_playerstatus->GetEuipment(i)->GetLv() != 5) {
-			swprintf_s(output, L"武器Lv %d\n強化費用 %dM\n", m_playerstatus->GetEuipment(i)->GetLv(), m_playerstatus->GetEuipment(i)->GetCost());
+			swprintf_s(output, L"武器Lv %d\n経験値 +%d\n", m_playerstatus->GetEuipment(i)->GetLv(), m_playerstatus->GetEuipment(i)->GetMaterialExp());
 		}
 		else {
 			swprintf_s(output, L"武器Lv %d\n", m_playerstatus->GetEuipment(i)->GetLv());
@@ -346,7 +346,7 @@ void Merchant::Decision()
 		{ 1.0f, 1.0f, 1.0f, 0.7f },
 		DirectX::SpriteEffects_None,
 		0.7f);
-	wchar_t output6[150];
+	wchar_t output6[200];
 	swprintf_s(output6, L"武器Lv.%d\n打  %d\n法  %d\n１  %ls\n２  %ls\n３  %ls\n経験値\n累計      %d\n次Lvまで  %d\n", m_playerstatus->GetEuipment(m_swordid2)->GetKariLv(),m_playerstatus->GetEuipment(m_swordid2)->GetKariAtk(), m_playerstatus->GetEuipment(m_swordid2)->GetKariMatk(),
 		m_playerstatus->GetEuipment(m_swordid2)->GetAbilityName(1), m_playerstatus->GetEuipment(m_swordid2)->GetAbilityName(2), m_playerstatus->GetEuipment(m_swordid2)->GetAbilityName(3), m_playerstatus->GetEuipment(m_swordid2)->GetKariExp(), m_playerstatus->GetEuipment(m_swordid2)->GetKariNextExp());
 	m_font.DrawScreenPos(output6, { 1000.0f,200.0f }, CVector4::White(), { 0.5f,0.5f },
@@ -469,6 +469,7 @@ void Merchant::PostRender()
 		m_swordid3 = m_swordid1;
 		return;
 	}
+	State state = m_state;
 	switch (m_state) {
 	case enState_Base:
 		Base();
@@ -485,6 +486,15 @@ void Merchant::PostRender()
 		Upgrade();
 		m_isspriteInit = false;
 		break;
+	}
+	if (state != m_state) {
+		SuicideObj::CSE* se = NewGO<SuicideObj::CSE>(L"Asset/sound/se/kettei.wav");
+		se->Play(); //再生(再生が終わると削除されます)
+		se->SetVolume(m_sevolume);
+		//3D再生
+		se->SetPos(m_position);//音の位置
+		se->SetDistance(500.0f);//音が聞こえる範囲
+		se->Play(true); //第一引数をtru
 	}
 }
 

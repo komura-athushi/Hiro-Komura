@@ -1,24 +1,24 @@
 #include "stdafx.h"
-#include "Kurage.h"
+#include "Kurage3.h"
 #include "Player.h"
 //cppでエネミーのレア度ごとのドロップ率を設定
-const int Kurage::m_dropChances[Weapon::m_HighestRarity] = { 0,50,0,0,0,0,0 };
-const int Kurage::m_dropmaterialChances[Material::m_HighestRarity] = { 30.0f,0.0f,0.0f };
-Kurage::Kurage():IEnemy(m_MaxHP, m_Attack, m_EXP, m_dropChances, m_dropmaterialChances, m_meseta)
+const int Kurage3::m_dropChances[Weapon::m_HighestRarity] = { 0,50,0,0,0,0,0 };
+const int Kurage3::m_dropmaterialChances[Material::m_HighestRarity] = { 30.0f,0.0f,0.0f };
+Kurage3::Kurage3() :IEnemy(m_MaxHP, m_Attack, m_EXP, m_dropChances, m_dropmaterialChances, m_meseta)
 {
 }
 
 
-Kurage::~Kurage()
+Kurage3::~Kurage3()
 {
 	delete m_skinModelRender;
 }
 
-bool Kurage::Start()
+bool Kurage3::Start()
 {
 	IEnemy::CCollision(m_position, m_collisionheight, m_r);
 	m_skinModelRender = new GameObj::CSkinModelRender;
-	m_skinModelRender->Init(L"Resource/modelData/kurage.cmo");
+	m_skinModelRender->Init(L"Resource/modelData/kurage3.cmo");
 	m_skinModelRender->SetScale(m_scale);
 	m_skinModelRender->SetPos(m_position);
 	CQuaternion rot = CQuaternion::Identity();
@@ -29,7 +29,7 @@ bool Kurage::Start()
 	return true;
 }
 
-void Kurage::Update()
+void Kurage3::Update()
 {
 	Chase();
 	if (!IEnemy::m_death) {
@@ -48,7 +48,7 @@ void Kurage::Update()
 	}
 }
 
-void Kurage::Chase()
+void Kurage3::Chase()
 {
 	CVector3 pos = m_player->GetPosition() - m_position;
 	if (pos.LengthSq() < m_attackdistance) {
@@ -90,7 +90,7 @@ void Kurage::Chase()
 			}
 			else if (m_attacktimer >= m_attacktime / 2 && m_isaria) {
 				Attack();
-				m_attacktimer = 0.0f;
+				m_attacktimer =0.0f;
 				m_isaria = false;
 			}
 			break;
@@ -115,15 +115,15 @@ void Kurage::Chase()
 		m_isaria = false;
 		IEnemy::m_damage = false;
 	}
- 	m_position += m_movespeed * GetDeltaTimeSec() * m_frame;
+	m_position += m_movespeed * GetDeltaTimeSec() * m_frame;
 }
 
-void Kurage::Aria()
+void Kurage3::Aria()
 {
 
 }
 
-void Kurage::Attack()
+void Kurage3::Attack()
 {
 
 	m_state = enState_Pose;

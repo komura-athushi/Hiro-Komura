@@ -58,6 +58,14 @@ void DropMaterial::Update()
 	//プレイヤーとの距離が一定以下になったらプレイヤーの所持武器に自身を追加する
 	CVector3 pos = m_player->GetPosition() - m_position;
 	if (pos.Length() <= 80.0f) {
+		//SE
+		SuicideObj::CSE* se = NewGO<SuicideObj::CSE>(L"Asset/sound/se/get.wav");
+		se->Play(); //再生(再生が終わると削除されます)
+		se->SetVolume(m_sevolume);
+		//3D再生
+		se->SetPos(m_position);//音の位置
+		se->SetDistance(200.0f);//音が聞こえる範囲
+		se->Play(true); //第一引数をtrue
 		PlayerStatus* playerstatus = FindGO<PlayerStatus>(L"PlayerStatus");
 		//プレイヤーの所持素材に追加
 		playerstatus->SetMaterial(m_state);

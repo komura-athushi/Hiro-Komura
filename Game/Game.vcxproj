@@ -246,6 +246,8 @@
     <ClCompile Include="IEnemy.cpp" />
     <ClCompile Include="Equipment.cpp" />
     <ClCompile Include="Kurage.cpp" />
+    <ClCompile Include="Kurage2.cpp" />
+    <ClCompile Include="Kurage3.cpp" />
     <ClCompile Include="Magic.cpp" />
     <ClCompile Include="MainSound.cpp" />
     <ClCompile Include="Material.cpp" />
@@ -292,6 +294,8 @@
     <ClInclude Include="IEnemy.h" />
     <ClInclude Include="Equipment.h" />
     <ClInclude Include="Kurage.h" />
+    <ClInclude Include="Kurage2.h" />
+    <ClInclude Include="Kurage3.h" />
     <ClInclude Include="Magic.h" />
     <ClInclude Include="MainSound.h" />
     <ClInclude Include="Material.h" />
@@ -329,6 +333,8 @@
     <MeshContentTask Include="Asset\modelData\ground3.FBX" />
     <MeshContentTask Include="Asset\modelData\human\human.FBX" />
     <MeshContentTask Include="Asset\modelData\kurage\kurage.FBX" />
+    <MeshContentTask Include="Asset\modelData\kurage\kurage2.FBX" />
+    <MeshContentTask Include="Asset\modelData\kurage\kurage3.FBX" />
     <MeshContentTask Include="Asset\modelData\Magic_Sample.FBX" />
     <MeshContentTask Include="Asset\modelData\material\brick.FBX" />
     <MeshContentTask Include="Asset\modelData\material\ishi.FBX" />

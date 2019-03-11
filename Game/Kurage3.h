@@ -4,11 +4,11 @@
 class Player;
 class Game;
 //プレイヤーに近づいて攻撃してくる一番弱い緑のクラゲ
-class Kurage:public IEnemy
+class Kurage3 :public IEnemy
 {
 public:
-	Kurage();
-	~Kurage();
+	Kurage3();
+	~Kurage3();
 	bool Start();
 	void Update();
 	void Chase();
@@ -38,12 +38,12 @@ private:
 	CVector3 m_scale = CVector3::One();					        //鬼のスケール
 	CVector3 m_movespeed = CVector3::Zero();					//移動速度
 	CVector3 m_protposition = CVector3::Zero();
-	const float m_r = 60.0f;                                    //コリジョンの半径
-	const float m_collisionheight = 40.0f;                      //コリジョンをm_positionからどれだけ上にあげるか
+	const float m_r = 110.0f;                                    //コリジョンの半径
+	const float m_collisionheight = 80.0f;                      //コリジョンをm_positionからどれだけ上にあげるか
 	//クラゲの色々なステータス
-	static const int m_MaxHP = 150;                             //最大HP
-	static const int m_Attack = 20;                             //攻撃力
-	static const int m_EXP = 10;                                //経験値
+	static const int m_MaxHP = 600;                             //最大HP
+	static const int m_Attack = 60;                             //攻撃力
+	static const int m_EXP = 120;                               //経験値
 	//ヘッダーファイルでは宣言だけ、定義はcppファイルに書いてください
 	static const int m_dropChances[];                           //エネミーのドロップするアイテム、[1]が10ならレア度1が10%でドロップするみたいな
 	static const int m_dropmaterialChances[];					//エネミーのドロップする素材の確率
@@ -57,11 +57,11 @@ private:
 		enState_Attack,
 	};
 	bool m_isaria = false;
-	const float m_chasedistance = 1200.0f * 1200.0f;
-	const float m_attackdistance = 150.0f * 150.0f;
+	const float m_chasedistance = 1400.0f * 1400.0f;
+	const float m_attackdistance = 230.0f * 230.0f;
 	State m_state = enState_Pose;
 	const float m_frame = 40.0f;
-	const float m_movespeedmultiply = 7.0f;
+	const float m_movespeedmultiply = 8.0f;
 	float m_dethtimer = 0.0f;
 	const int m_dethtime = 5;
 	float m_chasetimer = 0.0f;

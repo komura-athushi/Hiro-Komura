@@ -164,6 +164,7 @@ private:
 	std::vector<MagicModel> m_magicmocelList;			//MagicModel構造体の可変長配列
 	static const int m_number[];						//構造体の配列の添え字を記憶するのに使います
 	bool m_isenemy = false;								//trueならエネミーからプレイヤーに向けた魔法になります
+	const int m_randDamage = 95;
 	//各魔法の色々なやつ
 	//フォイエ
 	const float m_deletetime1 = 60.0f;

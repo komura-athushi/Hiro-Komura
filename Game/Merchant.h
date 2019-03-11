@@ -107,5 +107,6 @@ private:
 	bool m_isspriteInit = false;								  //ã‹L‚Ì‰æ‘œ‚Ì“Ç‚İ‚İ‚ªI‚í‚Á‚½‚©‚Ç‚¤‚©
 	int m_level = 0;
 	bool m_isstrength = false;									  //•Ší‚Ì‹­‰»‚ª‚Å‚«‚é‚©‚Ç‚¤‚©
+	const float m_sevolume = 2.0f;
 };
 

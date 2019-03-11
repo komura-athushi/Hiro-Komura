@@ -154,6 +154,8 @@
     <ClCompile Include="Ability.cpp" />
     <ClCompile Include="Kurage.cpp" />
     <ClCompile Include="Enemy_Fire.cpp" />
+    <ClCompile Include="Kurage2.cpp" />
+    <ClCompile Include="Kurage3.cpp" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Asset\modelData\Sword\AncientWarriorBlade.FBX">
@@ -288,6 +290,12 @@
     <MeshContentTask Include="Asset\modelData\kurage\kurage.FBX">
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
+    <MeshContentTask Include="Asset\modelData\kurage\kurage2.FBX">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Asset\modelData\kurage\kurage3.FBX">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Boss.h" />
@@ -329,6 +337,8 @@
     <ClInclude Include="Ability.h" />
     <ClInclude Include="Kurage.h" />
     <ClInclude Include="Enemy_Fire.h" />
+    <ClInclude Include="Kurage2.h" />
+    <ClInclude Include="Kurage3.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Assets">
