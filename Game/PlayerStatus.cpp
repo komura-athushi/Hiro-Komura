@@ -16,6 +16,12 @@ bool PlayerStatus::Start()
 {
 	//Å‰‚Ì•Ší‚¾‚¯ŠŽó‹µ‚ðtrue‚ÉÝ’è‚·‚é
 	m_equipmentlist.push_back(new Equipment(0));
+	m_NextExp = m_Level * (m_Level + 1) * (m_Level + 4);
+	m_LevelExp += m_NextExp;
+	m_MaxHP = m_ProtHP + m_Level * (m_Level + 34) * (m_Level + 100) / 100;
+	m_MaxPP = m_ProtPP + m_Level * (m_Level + 10) / 20;
+	m_Power = m_ProtPower + m_Level * (m_Level + 10);
+	m_Clever = m_ProtMpower + m_Level * (m_Level + 10);
 	SetWeaponStatus();
 	SetMagicStatus();
 	//ŠY“–‚·‚éddsƒtƒ@ƒCƒ‹‚ð“Ç‚Ýž‚ñ‚Å‚¨‚­
@@ -32,8 +38,8 @@ bool PlayerStatus::Start()
 	CSprite* sprite = new CSprite;
 	sprite->Init(m_spritenamelist[0]);
 	m_spritelist.push_back(sprite);
-	m_NextExp = m_Level * (m_Level + 1) * (m_Level + 4);
-	m_LevelExp = m_Level * (m_Level + 1) * (m_Level + 4);
+	m_NextExp = m_Level * (m_Level + 1) * (m_Level + 2) * 5 - 10;
+	m_LevelExp = m_Level * (m_Level + 1) * (m_Level + 2) * 5 - 10;
 	return true;
 }
 
@@ -74,7 +80,7 @@ void PlayerStatus::PlusExp(const int& exp)
 	while (m_LevelExp <= m_Exp) {
 		ep -= m_NextExp;
 		m_Level += 1;
-		m_NextExp = m_Level * (m_Level + 1) * (m_Level + 4);
+		m_NextExp = m_Level * (m_Level + 1) * (m_Level + 2) * 5 - 10;
 		m_LevelExp += m_NextExp;
 		m_MaxHP = m_ProtHP + m_Level * (m_Level + 34) * (m_Level + 100) / 100;
 		m_MaxPP = m_ProtPP + m_Level * (m_Level + 10) / 20;

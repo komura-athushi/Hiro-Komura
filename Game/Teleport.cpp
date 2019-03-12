@@ -39,6 +39,13 @@ void Teleport::Update()
 				m_isaccess = true;
 				m_player->SetStop();
 				m_isbutton = false;
+				SuicideObj::CSE* se = NewGO<SuicideObj::CSE>(L"Asset/sound/se/kettei.wav");
+				se->Play(); //再生(再生が終わると削除されます)
+				se->SetVolume(2.0f);
+				//3D再生
+				se->SetPos(m_position);//音の位置
+				se->SetDistance(500.0f);//音が聞こえる範囲
+				se->Play(true); //第一引数をtru
 			}
 		}
 		else {
@@ -56,11 +63,25 @@ void Teleport::Update()
 			m_player->SetMove();
 			m_player->SetGameClear();
 			m_isbutton = false;
+			SuicideObj::CSE* se = NewGO<SuicideObj::CSE>(L"Asset/sound/se/kettei.wav");
+			se->Play(); //再生(再生が終わると削除されます)
+			se->SetVolume(2.0f);
+			//3D再生
+			se->SetPos(m_position);//音の位置
+			se->SetDistance(500.0f);//音が聞こえる範囲
+			se->Play(true); //第一引数をtru
 		}
 		else if (Pad(0).GetDown(enButtonB)) {
 			m_isaccess = false;
 			m_isbutton = false;
 			m_player->SetMove();
+			SuicideObj::CSE* se = NewGO<SuicideObj::CSE>(L"Asset/sound/se/cansel.wav");
+			se->Play(); //再生(再生が終わると削除されます)
+			se->SetVolume(5.0f);
+			//3D再生
+			se->SetPos(m_position);//音の位置
+			se->SetDistance(500.0f);//音が聞こえる範囲
+			se->Play(true); //第一引数をtru
 		}
 	}
 }

@@ -89,6 +89,11 @@ public:
 	{
 		return m_abilitylist.size();
 	}
+	//該当の番号の数字のCSpriteクラスのポインタを返す
+	CSprite* GetCSprite(const int& number)
+	{
+		return m_numberspritelist[number];
+	}
 	enum EnWeapon {
 		enWeapon_Sword,									//ソード
 		enWeapon_FireSword,								//ファイアソード
@@ -125,9 +130,12 @@ private:
 	std::vector<Magic> m_magiclist;						//Magicクラスの可変長配列
 	std::vector<Material> m_materiallist;				//Materialクラスの可変長配列
 	std::vector<Ability> m_abilitylist;					//アビリティクラスの可変長配列
+	std::vector<CSprite*> m_numberspritelist;           //数字の画像の可変長配列
+	std::vector<const wchar_t*> m_filepathlist;
 	bool m_stage[3] = { false,false,false };			//各ステージをクリアしたかどうか
 	int m_townlevel = 0;								//街の発展レベル
 	bool m_isgameclear = false;							//ゲームをクリアしたかどうか
 	bool m_isgameend = false;							//ゲームが一旦終わったかどうか
+	CSprite* m_sprite;
 };
 

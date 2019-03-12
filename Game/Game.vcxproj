@@ -238,7 +238,9 @@
     <ClCompile Include="Cagliostro_view.cpp" />
     <ClCompile Include="DropItem.cpp" />
     <ClCompile Include="DropMaterial.cpp" />
+    <ClCompile Include="Enemy_Wind.cpp" />
     <ClCompile Include="Fade.cpp" />
+    <ClCompile Include="FontNumber.cpp" />
     <ClCompile Include="GameClear.cpp" />
     <ClCompile Include="GameData.cpp" />
     <ClCompile Include="House.cpp" />
@@ -286,7 +288,9 @@
     <ClInclude Include="Cagliostro_view.h" />
     <ClInclude Include="DropItem.h" />
     <ClInclude Include="DropMaterial.h" />
+    <ClInclude Include="Enemy_Wind.h" />
     <ClInclude Include="Fade.h" />
+    <ClInclude Include="FontNumber.h" />
     <ClInclude Include="GameClear.h" />
     <ClInclude Include="GameData.h" />
     <ClInclude Include="House.h" />
@@ -458,6 +462,18 @@
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Asset\sprite\upgrade_mesetawindow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Asset\sprite\number\number00.png" />
+    <ImageContentTask Include="Asset\sprite\number\number01.png" />
+    <ImageContentTask Include="Asset\sprite\number\number02.png" />
+    <ImageContentTask Include="Asset\sprite\number\number03.png" />
+    <ImageContentTask Include="Asset\sprite\number\number04.png" />
+    <ImageContentTask Include="Asset\sprite\number\number05.png" />
+    <ImageContentTask Include="Asset\sprite\number\number06.png" />
+    <ImageContentTask Include="Asset\sprite\number\number07.png" />
+    <ImageContentTask Include="Asset\sprite\number\number08.png" />
+    <ImageContentTask Include="Asset\sprite\number\number09.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -50,7 +50,7 @@ void Cagliostro_view::Update()
 		}
 	}
 	else {
-		if (Pad(0).GetButton(enButtonBack)) {
+		if (Pad(0).GetDown(enButtonBack)) {
 			m_isWaitFadeout = true;
 			m_fade->StartFadeOut();
 		}

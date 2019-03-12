@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Kurage.h"
 #include "Player.h"
+#include "Enemy_Wind.h"
 //cppでエネミーのレア度ごとのドロップ率を設定
 const int Kurage::m_dropChances[Weapon::m_HighestRarity] = { 0,50,0,0,0,0,0 };
 const int Kurage::m_dropmaterialChances[Material::m_HighestRarity] = { 30.0f,0.0f,0.0f };
@@ -125,7 +126,9 @@ void Kurage::Aria()
 
 void Kurage::Attack()
 {
-
+	Enemy_Wind* ew = new Enemy_Wind;
+	ew->SetPosition(m_position);
+	ew->SetAttack(m_Attack);
 	m_state = enState_Pose;
 	m_stoptimer = 0.0f;
 }

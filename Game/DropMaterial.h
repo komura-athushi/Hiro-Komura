@@ -33,6 +33,6 @@ private:
 	int m_rarity;												//素材のレアリティ
 	int m_number;												//素材のレアリティの中の番号
 	float m_degree = 0.0f;
-	const float m_sevolume = 2.0f;
+	const float m_sevolume = 1.7f;
 };
 

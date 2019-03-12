@@ -12,6 +12,7 @@
 #include "Effekseer.h"
 #include "Morugan.h"
 #include "Town.h"
+#include "FontNumber.h"
 Player::Player()
 {
 } 
@@ -79,6 +80,7 @@ void Player::unityChan()
 	m_ppgage.Init(L"Resource/sprite/ppgage.dds");
 	m_hud.Init(L"Resource/sprite/hud.dds");
 	m_logo.Init(L"Resource/sprite/logo.dds");
+	m_window.Init(L"Resource/sprite/window.dds");
 }
 
 void Player::cagliostro()
@@ -133,14 +135,23 @@ void Player::Update()
 	}
 	else {
 		//停止状態なら回転だけ
-		if (m_stop) {
-			Turn();
-		}
-		else {
+		if (!m_stop) {
 			//キャラクターのアニメーションの処理、移動や回転も入ってる
 			AnimationController();
 			Kougeki();
 			SwitchWeapon();
+		}
+		else {
+			Turn();
+			if (m_isbackchoice) {
+				if (Pad(0).GetDown(enButtonA)) {
+					m_transscene = true;
+				}
+				else if (Pad(0).GetDown(enButtonB)) {
+					m_isbackchoice = false;
+					m_stop = false;
+				}
+			}
 		}
 	}
 	if (m_charaCon.IsOnGround()) {
@@ -280,7 +291,17 @@ void Player::Animation()
 		else if (Pad(0).GetButton(enButtonRT)) {
 			m_state = enState_GameClear;
 		}
+		if (m_state == enState_Idle) {
+			;
+			if (!m_isbackchoice) {
+				if (Pad(0).GetDown(enButtonBack)) {
+					m_isbackchoice = true;
+					m_stop = true;
+				}
+			}
+		}
 	}
+	//スタートボタン押したらステ表示
 	if (Pad(0).GetDown(enButtonStart)) {
 		if (!m_displaystatus) {
 			m_displaystatus = true;
@@ -688,6 +709,11 @@ void Player::Damage(const int& attack)
 		if (m_HP < 0) {
 			m_HP = 0;
 		}
+		FontNumber* fn = new FontNumber;
+		fn->SetNumber(attack);
+		CVector3 pos = m_position;
+		pos.y += 40.0f;
+		fn->SetPosition(pos);
 		//SE
 		SuicideObj::CSE* se = NewGO<SuicideObj::CSE>(L"Asset/sound/unityChan/bad.wav");
 		se->Play(); //再生(再生が終わると削除されます)
@@ -699,7 +725,7 @@ void Player::Damage(const int& attack)
 		if (0 == 0) {
 			SuicideObj::CSE* se = NewGO<SuicideObj::CSE>(L"Asset/sound/se/hidamage.wav");
 			se->Play(); //再生(再生が終わると削除されます)
-			se->SetVolume(m_lvupvollume+1.2f);
+			se->SetVolume(m_lvupvollume + 1.2f);
 			//3D再生
 			se->SetPos(m_position);//音の位置
 			se->SetDistance(500.0f);//音が聞こえる範囲
@@ -707,7 +733,9 @@ void Player::Damage(const int& attack)
 		}
 		m_damage = true;
 		m_timer2 = 0;
-		m_state = enState_Damage;
+		if (m_HP != 0) {
+			m_state = enState_Damage;
+		}
 	}
 }
 
@@ -1096,6 +1124,22 @@ void Player::PostRender()
 			{ 1.0f, 1.0f, 1.0f, 1.0f },
 			DirectX::SpriteEffects_None,
 			1.0f);
+	}
+	if (m_isbackchoice) {
+		//拠点に戻るかどうかを表示
+		wchar_t output[20];
+		swprintf_s(output, L"拠点に戻りますか？\n");
+		m_font.DrawScreenPos(output, { 300.0f,450.0f }, CVector4::White(), { 0.6f,0.6f },
+			CVector2::Zero(),
+			0.0f,
+			DirectX::SpriteEffects_None,
+			0.7f
+		);
+		m_window.DrawScreenPos({ 290.0f,440.0f }, CVector3::One(), CVector2::Zero(),
+			0.0f,
+			{ 1.0f, 1.0f, 1.0f, 0.7f },
+			DirectX::SpriteEffects_None,
+			0.8f);
 	}
 	//ゲームオーバー表示
 	if (m_state == enState_GameOver && !m_skinModelRender->GetAnimCon().IsPlaying()) {

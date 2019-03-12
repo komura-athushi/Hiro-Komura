@@ -112,6 +112,36 @@
     <ImageContentTask Include="Asset\sprite\upgrade_mesetawindow.png">
       <Filter>Assets\sprite</Filter>
     </ImageContentTask>
+    <ImageContentTask Include="Asset\sprite\number\number00.png">
+      <Filter>Assets\sprite\number</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Asset\sprite\number\number01.png">
+      <Filter>Assets\sprite\number</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Asset\sprite\number\number02.png">
+      <Filter>Assets\sprite\number</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Asset\sprite\number\number03.png">
+      <Filter>Assets\sprite\number</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Asset\sprite\number\number04.png">
+      <Filter>Assets\sprite\number</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Asset\sprite\number\number05.png">
+      <Filter>Assets\sprite\number</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Asset\sprite\number\number06.png">
+      <Filter>Assets\sprite\number</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Asset\sprite\number\number07.png">
+      <Filter>Assets\sprite\number</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Asset\sprite\number\number08.png">
+      <Filter>Assets\sprite\number</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Asset\sprite\number\number09.png">
+      <Filter>Assets\sprite\number</Filter>
+    </ImageContentTask>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Boss.cpp" />
@@ -156,6 +186,8 @@
     <ClCompile Include="Enemy_Fire.cpp" />
     <ClCompile Include="Kurage2.cpp" />
     <ClCompile Include="Kurage3.cpp" />
+    <ClCompile Include="Enemy_Wind.cpp" />
+    <ClCompile Include="FontNumber.cpp" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Asset\modelData\Sword\AncientWarriorBlade.FBX">
@@ -339,6 +371,8 @@
     <ClInclude Include="Enemy_Fire.h" />
     <ClInclude Include="Kurage2.h" />
     <ClInclude Include="Kurage3.h" />
+    <ClInclude Include="Enemy_Wind.h" />
+    <ClInclude Include="FontNumber.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Assets">
@@ -349,6 +383,9 @@
     </Filter>
     <Filter Include="Assets\sprite">
       <UniqueIdentifier>{5f3793c4-dea4-4ffe-8b70-6a47bb0400a8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\sprite\number">
+      <UniqueIdentifier>{92542737-b049-4a29-b25a-158d8e212878}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

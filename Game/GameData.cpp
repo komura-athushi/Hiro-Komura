@@ -49,6 +49,23 @@ bool GameData::Start()
 	m_abilitylist.push_back(Ability(10, L"パワー3"          ,  50,  0,  0,  0));
 	m_abilitylist.push_back(Ability(11, L"テクニック3"      ,   0, 50,  0,  0));
 	m_abilitylist.push_back(Ability(12, L"PPアップ3"        ,   0,  0,  0, 50));
+	//ファイルパスを設定
+	m_filepathlist.push_back(L"Resource/sprite/number00.dds");
+	m_filepathlist.push_back(L"Resource/sprite/number01.dds");
+	m_filepathlist.push_back(L"Resource/sprite/number02.dds");
+	m_filepathlist.push_back(L"Resource/sprite/number03.dds");
+	m_filepathlist.push_back(L"Resource/sprite/number04.dds");
+	m_filepathlist.push_back(L"Resource/sprite/number05.dds");
+	m_filepathlist.push_back(L"Resource/sprite/number06.dds");
+	m_filepathlist.push_back(L"Resource/sprite/number07.dds");
+	m_filepathlist.push_back(L"Resource/sprite/number08.dds");
+	m_filepathlist.push_back(L"Resource/sprite/number09.dds");
+	//数字の画像を読み込む
+	for (int i = 0; i < 10; i++) {
+		CSprite* sprite = new CSprite;
+		sprite->Init(m_filepathlist[i]);
+		m_numberspritelist.push_back(sprite);
+	}
 	return true;
 }
 

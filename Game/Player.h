@@ -316,6 +316,8 @@ private:
 	IEnemy* m_enemy = nullptr;
 	bool m_targetlock = false;									//ターゲットロック中かどうか
 	bool m_displaystatus = false;
+	bool m_isbackchoice = false;
+	CSprite m_window;
 	const int m_randDamage = 95;
 };
 
