@@ -121,7 +121,17 @@ void Kurage::Chase()
 
 void Kurage::Aria()
 {
-
+	GameObj::Suicider::CEffekseer* effect = new GameObj::Suicider::CEffekseer;
+	effect->Play(L"Asset/effect/Effects/efk/cast_wind.efk", 1.0f, m_position, CQuaternion::Identity(), { 12.0f,12.0f,12.0f });
+	effect->SetSpeed(2.0f);
+	//SE
+	SuicideObj::CSE* se = NewGO<SuicideObj::CSE>(L"Asset/sound/se/aria.wav");
+	se->Play(); //Ä¶(Ä¶‚ªI‚í‚é‚Æíœ‚³‚ê‚Ü‚·)
+	se->SetVolume(m_sevolume);
+	//3DÄ¶
+	se->SetPos(m_position);//‰¹‚ÌˆÊ’u
+	se->SetDistance(200.0f);//‰¹‚ª•·‚±‚¦‚é”ÍˆÍ
+	se->Play(true); //‘æˆêˆø”‚ğtrue
 }
 
 void Kurage::Attack()

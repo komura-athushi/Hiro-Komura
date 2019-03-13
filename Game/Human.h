@@ -32,10 +32,7 @@ public:
 		return m_developtown;
 	}
 	//街を発展させる！
-	void SetLevelUpTown()
-	{
-		m_leveluptown = true;
-	}
+	void SetLevelUpTown();
 	//トークをオンにする
 	void OnTalk()
 	{

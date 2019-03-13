@@ -30,10 +30,13 @@ bool Human::Start()
 	m_playerstatus = FindGO<PlayerStatus>(L"PlayerStatus");
 	m_townlevel = m_gamedata->GetTownLevel();
 	m_sprite.Init(L"Resource/sprite/window.dds");
-	//ğŒ‚ğ–‚½‚µè“ü‚ê‚ÎAŠX‚ğ”­“W‚Å‚«‚é‚æ‚¤‚É‚·‚é
-	if (m_gamedata->GetStageClear(m_townlevel)) {
-		if (m_necessarymaterial <= m_playerstatus->GetMaterial(m_townlevel)) {
-			m_developtown = true;
+	//ŠX‚Ì”­“WƒŒƒxƒ‹‚ª2‚Å‚ ‚ê‚Î‚±‚êˆÈã‚Í”­“W‚µ‚È‚¢‚æ‚¤‚É‚·‚é
+	if (m_gamedata->GetTownLevel() != 2) {
+		//ğŒ‚ğ–‚½‚µè“ü‚ê‚ÎAŠX‚ğ”­“W‚Å‚«‚é‚æ‚¤‚É‚·‚é
+		if (m_gamedata->GetStageClear(m_townlevel)) {
+			if (m_necessarymaterial <= m_playerstatus->GetMaterial(m_townlevel) && m_necessarymaterial <= m_playerstatus->GetMaterial(m_townlevel + 1)) {
+				m_developtown = true;
+			}
 		}
 	}
 	return true;
@@ -92,6 +95,14 @@ void Human::AnimationController()
 	}
 }
 
+void Human::SetLevelUpTown()
+{
+	if (m_gamedata->GetTownLevel() == 2) {
+		return;
+	}
+	m_leveluptown = true;
+}
+
 void Human::PostRender()
 {
 	if (!m_istalk) {
@@ -100,16 +111,31 @@ void Human::PostRender()
 	if (!m_ontalk) {
 		return;
 	}
-	wchar_t output[256];
-	if (m_developtown) {
-		swprintf_s(output, L"ŠX‚ğ”­“W‚³‚¹‚é‚±‚Æ‚ª‚Å‚«‚Ü‚·B\nŠX‚ğ”­“W‚³‚¹‚Ü‚·‚©H\n");
+	wchar_t output[100];
+	if (m_gamedata->GetTownLevel() == 2) {
+		swprintf_s(output, L"‚±‚êˆÈãŠX‚ğ”­“W‚³‚¹‚é‚±‚Æ‚Ío—ˆ‚Ü‚¹‚ñ\n");
 	}
 	else {
-		if (m_gamedata->GetStageClear(m_townlevel)) {
-			swprintf_s(output, L"ŠX‚ğ”­“W‚³‚¹‚é‚É‚Í%s‚ª%dŒÂ•K—v‚Å‚·\n",m_gamedata->GetMaterial(m_townlevel)->GetMaterialName(), m_necessarymaterial-m_playerstatus->GetMaterial(m_townlevel));
+		if (m_developtown) {
+			swprintf_s(output, L"ŠX‚ğ”­“W‚³‚¹‚é‚±‚Æ‚ª‚Å‚«‚Ü‚·B\nŠX‚ğ”­“W‚³‚¹‚Ü‚·‚©H\n");
 		}
 		else {
-			swprintf_s(output, L"ŠX‚ğ”­“W‚³‚¹‚é‚É‚ÍƒXƒe[ƒW%d‚ğƒNƒŠƒA‚·‚é•K—v‚ª‚ ‚è‚Ü‚·\n", m_townlevel + 1);
+			if (m_gamedata->GetStageClear(m_townlevel)) {
+				if (m_necessarymaterial > m_playerstatus->GetMaterial(m_townlevel) && m_necessarymaterial > m_playerstatus->GetMaterial(m_townlevel + 1)) {
+					swprintf_s(output, L"ŠX‚ğ”­“W‚³‚¹‚é‚É‚Í%s‚ª%dŒÂA%s‚ª%dŒÂ•K—v‚Å‚·\n", m_gamedata->GetMaterial(m_townlevel)->GetMaterialName(), m_necessarymaterial - m_playerstatus->GetMaterial(m_townlevel),
+						m_gamedata->GetMaterial(m_townlevel + 1)->GetMaterialName(), m_necessarymaterial - m_playerstatus->GetMaterial(m_townlevel + 1));
+				}
+				else if (m_necessarymaterial > m_playerstatus->GetMaterial(m_townlevel)) {
+					swprintf_s(output, L"ŠX‚ğ”­“W‚³‚¹‚é‚É‚Í%s‚ª%dŒÂ•K—v‚Å‚·\n", m_gamedata->GetMaterial(m_townlevel)->GetMaterialName(), m_necessarymaterial - m_playerstatus->GetMaterial(m_townlevel));
+				}
+				else if (m_necessarymaterial > m_playerstatus->GetMaterial(m_townlevel + 1)) {
+					swprintf_s(output, L"ŠX‚ğ”­“W‚³‚¹‚é‚É‚Í%s‚ª%dŒÂ•K—v‚Å‚·\n", m_gamedata->GetMaterial(m_townlevel + 1)->GetMaterialName(), m_necessarymaterial - m_playerstatus->GetMaterial(m_townlevel + 1));
+				}
+			}
+				
+			else {
+				swprintf_s(output, L"ŠX‚ğ”­“W‚³‚¹‚é‚É‚ÍƒXƒe[ƒW%d‚ğƒNƒŠƒA‚·‚é•K—v‚ª‚ ‚è‚Ü‚·\n", m_townlevel + 1);
+			}
 		}
 	}
 	m_font.DrawScreenPos(output, { 300.0f,450.0f }, CVector4::White(), {0.6f,0.6f});

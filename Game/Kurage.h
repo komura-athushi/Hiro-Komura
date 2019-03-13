@@ -58,7 +58,7 @@ private:
 	};
 	bool m_isaria = false;
 	const float m_chasedistance = 1200.0f * 1200.0f;
-	const float m_attackdistance = 150.0f * 150.0f;
+	const float m_attackdistance = 130.0f * 130.0f;
 	State m_state = enState_Pose;
 	const float m_frame = 40.0f;
 	const float m_movespeedmultiply = 7.0f;

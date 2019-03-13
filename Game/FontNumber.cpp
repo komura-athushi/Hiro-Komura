@@ -30,6 +30,21 @@ bool FontNumber::Start()
 	for (int i = 0; i < m_numberlist.size(); i++) {
 		m_spritelist.push_back(m_gamedata->GetCSprite(m_numberlist[i]));
 	}
+	//ダメ表記の座標にランダムに加算
+	int rn = rand() % 25;
+	int rn2 = rand() % 30;
+	if (rn > 13) {
+		m_plusposition.x += rn2 * 0.0008f + 0.01f;
+	}
+	else {
+		m_plusposition.x -= rn2 * 0.0008f - 0.01f;
+	}
+	if (rn2 > 15) {
+		m_plusposition.y += rn * 0.0008f + 0.01f;
+	}
+	else {
+		m_plusposition.y -= rn * 0.0008f - 0.01f;
+	}
 	return true;
 }
 
@@ -50,6 +65,7 @@ void FontNumber::PostRender()
 	}
 	else {
 		CVector3 pos = m_gamecamera->GetCamera()->CalcScreenPosFromWorldPos(m_position);
+		pos += m_plusposition;
 		if (0.0f <= pos.x && pos.x <= 1.0f && 0.0f <= pos.y && pos.y <= 1.0f && 0.0f <= pos.z && pos.z <= 1.0f) {
 			pos.y += m_y;
 			for (int i = 0; i < m_spritelist.size(); i++) {

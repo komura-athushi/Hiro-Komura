@@ -106,13 +106,6 @@ void IEnemy::Damage(const int& attack,int number)
 		m_death = true;
 		m_collision->Delete();
 	}
-}
-
-void IEnemy::PostRender()
-{
-	if (m_gamecamera == nullptr) {
-		m_gamecamera = FindGO<GameCamera>();
-	}
 	if (!m_displayfont) {
 		return;
 	}
@@ -122,6 +115,11 @@ void IEnemy::PostRender()
 		fn->SetPosition(m_fontposition);
 		m_displayfont = false;
 	}
+}
+
+void IEnemy::PostRender()
+{
+	
 }
 
 void IEnemy::Drop()

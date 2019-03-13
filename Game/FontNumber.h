@@ -25,6 +25,7 @@ private:
 	CVector3 m_position;								//受け取った座標
 	CVector3 m_spriteposition;							//スクリーン座標
 	CVector2 m_scale = { 0.3f,0.3f};
+	CVector3 m_plusposition = CVector3::Zero();			//ランダムに座標を変える
 	const float m_addx = -0.015f;
 	const float m_addy = -0.0015f;
 	float m_y = 0.0f;

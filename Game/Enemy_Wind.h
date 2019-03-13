@@ -46,7 +46,7 @@ private:
 	const float m_frame = 120.0f;
 	//コリジョン関係
 	SuicideObj::CCollisionObj* m_attackCol;
-	const float m_attack3r = 160.0f;                            //攻撃したときに発生させるコリジョンの半径
+	const float m_attack3r = 140.0f;                            //攻撃したときに発生させるコリジョンの半径
 	const float m_collisionheight = 20.0f;
 	int m_attack = 30;							               //ファイヤーの攻撃力、デフォルトで30
 	float m_timer = 0.0f;
