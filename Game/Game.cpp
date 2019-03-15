@@ -125,6 +125,8 @@ bool Game::Start()
 			m_ground = new Ground;
 			m_ground->SetStage(1);
 			m_ground->SetPosition(objData.position);
+			m_ground->SetRot(objData.rotation);
+			m_ground->SetScale(objData.scale);
 			return true;
 		}
 		if (objData.EqualObjectName(L"stage2_ground") == true) {

@@ -14,6 +14,8 @@ public:
 	void Chase();
 	void Attack();
 	void Aria();
+	//攻撃に移行？
+	void ChangeAttack();
 	void SetPlayer(Player* player)								//プレイヤーのポイントをセット
 	{
 		m_player = player;
@@ -43,7 +45,7 @@ private:
 	//クラゲの色々なステータス
 	static const int m_MaxHP = 150;                             //最大HP
 	static const int m_Attack = 20;                             //攻撃力
-	static const int m_EXP = 10;                                //経験値
+	static const int m_EXP = 20;                                //経験値
 	//ヘッダーファイルでは宣言だけ、定義はcppファイルに書いてください
 	static const int m_dropChances[];                           //エネミーのドロップするアイテム、[1]が10ならレア度1が10%でドロップするみたいな
 	static const int m_dropmaterialChances[];					//エネミーのドロップする素材の確率
@@ -71,6 +73,7 @@ private:
 	float m_movetimer = 0.0f;
 	const int m_movetime = 130;
 	float m_attacktimer = 0.0f;
-	const int m_attacktime = 70;
+	const int m_ariatime = 20;
+	const int m_attacktime = 50;
 };
 

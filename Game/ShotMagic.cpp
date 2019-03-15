@@ -52,6 +52,7 @@ bool ShotMagic::Start()
 	case 7:
 		Haou();
 	}
+	m_movespeed *= m_speed;
 	return true;
 }
 
@@ -92,7 +93,7 @@ bool ShotMagic::Start()
 			 }
 			 else {
 				 //ƒ‚ƒfƒ‹‚ÆƒRƒŠƒWƒ‡ƒ“‚ð“®‚©‚µ‚Ü‚·
-				 mgml.s_position = mgml.s_effect->GetPos() + m_movespeed*GetDeltaTimeSec();
+				 mgml.s_position = mgml.s_effect->GetPos() + m_movespeed * GetDeltaTimeSec();
 				 mgml.s_effect->SetPos(mgml.s_position);
 				 mgml.s_effect->SetSpeed(m_frame * GetDeltaTimeSec());
 				 mgml.s_collision->SetPosition(mgml.s_position);

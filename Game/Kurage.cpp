@@ -52,9 +52,6 @@ void Kurage::Update()
 void Kurage::Chase()
 {
 	CVector3 pos = m_player->GetPosition() - m_position;
-	if (pos.LengthSq() < m_attackdistance) {
-		m_state = enState_Attack;
-	}
 	if (pos.LengthSq() < m_chasedistance) {
 		switch (m_state) {
 		case enState_Chase:
@@ -64,6 +61,7 @@ void Kurage::Chase()
 				pos *= m_movespeedmultiply;
 				m_movespeed = pos;
 				m_chasetimer = 0.0f;
+				ChangeAttack();
 			}
 			m_chasetimer += m_frame * GetDeltaTimeSec();
 			m_movetimer += m_frame * GetDeltaTimeSec();
@@ -71,6 +69,7 @@ void Kurage::Chase()
 				m_state = enState_Pose;
 				m_chasetimer = 0.0f;
 				m_movetimer = 0.0f;
+				ChangeAttack();
 			}
 			break;
 		case enState_Pose:
@@ -79,12 +78,13 @@ void Kurage::Chase()
 			if (m_stoptimer >= m_stoptime) {
 				m_stoptimer = 0.0f;
 				m_state = enState_Chase;
+				ChangeAttack();
 			}
 			break;
 		case enState_Attack:
 			m_movespeed = CVector3::Zero();
 			m_attacktimer += m_frame * GetDeltaTimeSec();
-			if (m_attacktimer >= m_attacktime && !m_isaria) {
+			if (m_attacktimer >= m_ariatime && !m_isaria) {
 				Aria();
 				m_attacktimer = 0.0f;
 				m_isaria = true;
@@ -141,4 +141,16 @@ void Kurage::Attack()
 	ew->SetAttack(m_Attack);
 	m_state = enState_Pose;
 	m_stoptimer = 0.0f;
+}
+
+void Kurage::ChangeAttack()
+{
+	CVector3 pos = m_player->GetPosition() - m_position;
+	if (pos.LengthSq() < m_attackdistance) {
+		m_state = enState_Pose;
+		int rn = rand() % 100;
+		if (rn >= 30) {
+			m_state = enState_Attack;
+		}
+	}
 }

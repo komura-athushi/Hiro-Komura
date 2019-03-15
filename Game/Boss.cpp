@@ -163,35 +163,38 @@ void Boss::Damage()
 
 void Boss::PostRender()
 {
-	GameCamera* gc = FindGO<GameCamera>();
-	//もしFindGOでカメラを見つけられたら
-	if (gc != nullptr) {
-		if (m_atktype == 1 || m_atktype == 2) {
-			if (m_timer >= m_cooltime - m_posttiming) {
-				wchar_t output[256];
-				swprintf_s(output, L"！\n");
-				CVector3 drawpos = m_player->GetPosition();
-				drawpos.y += 150.0f;
-				drawpos.x += 40.0f;
-				//3Dの座標を2Dに変換
-				CVector2 pos = gc->GetCamera()->CalcScreenPosFromWorldPos(drawpos);
-				CVector2 scale = { 3.0f,3.0f };
-				m_font.Draw(output, pos, CVector4(225.0f, 00.0f, 00.0f, 0.8f), scale);
+	CVector3 pos = m_player->GetPosition() - m_position;
+	if (pos.LengthSq() < 1700.0f * 1700.0f) {
+		GameCamera* gc = FindGO<GameCamera>();
+		//もしFindGOでカメラを見つけられたら
+		if (gc != nullptr) {
+			if (m_atktype == 1 || m_atktype == 2) {
+				if (m_timer >= m_cooltime - m_posttiming) {
+					wchar_t output[256];
+					swprintf_s(output, L"！\n");
+					CVector3 drawpos = m_player->GetPosition();
+					drawpos.y += 150.0f;
+					drawpos.x += 40.0f;
+					//3Dの座標を2Dに変換
+					CVector2 pos = gc->GetCamera()->CalcScreenPosFromWorldPos(drawpos);
+					CVector2 scale = { 3.0f,3.0f };
+					m_font.Draw(output, pos, CVector4(225.0f, 00.0f, 00.0f, 0.8f), scale);
+				}
 			}
-		}
-		else if (m_atktype == 3) {
-			if (m_timer >= m_atk3cooltime - m_posttiming) {
-				wchar_t output[256];
-				swprintf_s(output, L"！\n");
-				CVector3 drawpos = m_player->GetPosition();
-				drawpos.y += 150.0f;
-				drawpos.x += 40.0f;
-				//3Dの座標を2Dに変換
-				CVector2 pos = gc->GetCamera()->CalcScreenPosFromWorldPos(drawpos);
-				CVector2 scale = { 3.0f,3.0f };
-				m_font.Draw(output, pos, CVector4(225.0f, 00.0f, 00.0f, 0.8f), scale);
-			}
+			else if (m_atktype == 3) {
+				if (m_timer >= m_atk3cooltime - m_posttiming) {
+					wchar_t output[256];
+					swprintf_s(output, L"！\n");
+					CVector3 drawpos = m_player->GetPosition();
+					drawpos.y += 150.0f;
+					drawpos.x += 40.0f;
+					//3Dの座標を2Dに変換
+					CVector2 pos = gc->GetCamera()->CalcScreenPosFromWorldPos(drawpos);
+					CVector2 scale = { 3.0f,3.0f };
+					m_font.Draw(output, pos, CVector4(225.0f, 00.0f, 00.0f, 0.8f), scale);
+				}
 
+			}
 		}
 	}
 }

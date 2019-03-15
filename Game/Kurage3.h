@@ -43,7 +43,7 @@ private:
 	//クラゲの色々なステータス
 	static const int m_MaxHP = 600;                             //最大HP
 	static const int m_Attack = 60;                             //攻撃力
-	static const int m_EXP = 120;                               //経験値
+	static const int m_EXP = 240;                               //経験値
 	//ヘッダーファイルでは宣言だけ、定義はcppファイルに書いてください
 	static const int m_dropChances[];                           //エネミーのドロップするアイテム、[1]が10ならレア度1が10%でドロップするみたいな
 	static const int m_dropmaterialChances[];					//エネミーのドロップする素材の確率

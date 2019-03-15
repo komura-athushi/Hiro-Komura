@@ -92,7 +92,7 @@ public:
 	{
 		m_position = position;
 	}
-	//移動速度を設定
+	//移動方向を設定
 	void SetMoveSpeed(const CVector3& movespeed)
 	{
 		m_movespeed = movespeed;
@@ -132,6 +132,11 @@ public:
 	{
 		m_isenemy = true;
 	}
+	//魔法の速度を変化させる
+	void SetSpeed(const float speed)
+	{
+		m_speed = speed;
+	}
 private:
 	int m_id;											//魔法の番号
 	const wchar_t* m_name;								//魔法の名前
@@ -141,6 +146,7 @@ private:
 	CVector3 m_position{ CVector3::Zero() };            //エフェクトの座標
 	CVector3 m_movespeed{ CVector3::Zero() };			//エフェクトの移動速度
 	CVector3 m_directionplayer{ CVector3::Zero() };		//プレイヤーの向きに平行なベクトル
+	float m_speed = 1.0f;
 	int m_damage;										//当たった場合にエネミーに与えるダメージ
 	float m_deletetime = 0;								//魔法を消すまでの時間
 	SuicideObj::CCollisionObj* m_collision;		        //丸いコリジョン

@@ -34,11 +34,9 @@ bool Ground::Start()
 		break;
 	case 1:
 		m_skinModelRender->Init(L"Resource/modelData/stage1_ground.cmo");
-		m_scale = CVector3::One();
 		break;
 	case 2:
 		m_skinModelRender->Init(L"Resource/modelData/stage1_ground.cmo");
-		m_scale = CVector3::One();
 		break;
 		//カリオストロちゃんモードなら背景だけ読み込みます
 	default:
@@ -46,8 +44,9 @@ bool Ground::Start()
 		break;
 	}
 	m_skinModelRender->SetScale(m_scale);
-	m_staticobject.CreateMesh(*m_skinModelRender);
 	m_skinModelRender->SetPos(m_position);
+	m_skinModelRender->SetRot(m_rotation);
+	m_staticobject.CreateMesh(*m_skinModelRender);
 	return true;
 }
 

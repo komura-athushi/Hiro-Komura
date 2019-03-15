@@ -115,6 +115,11 @@ void IEnemy::Damage(const int& attack,int number)
 		fn->SetPosition(m_fontposition);
 		m_displayfont = false;
 	}
+	//ランダムでエネミーの被ダメ時の行動を制限する
+	int rn = rand() % 100 + 1;
+	if (rn <= 70) {
+		m_damage = false;
+	}
 }
 
 void IEnemy::PostRender()

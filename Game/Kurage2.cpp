@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Kurage2.h"
 #include "Player.h"
+#include "ShotMagic.h"
 //cppでエネミーのレア度ごとのドロップ率を設定
 const int Kurage2::m_dropChances[Weapon::m_HighestRarity] = { 0,50,0,0,0,0,0 };
 const int Kurage2::m_dropmaterialChances[Material::m_HighestRarity] = { 30.0f,0.0f,0.0f };
@@ -63,9 +64,6 @@ void Kurage2::Chase()
 	}
 	else {
 		CVector3 pos = m_player->GetPosition() - m_position;
-		if (pos.LengthSq() < m_attackdistance) {
-			m_state = enState_Attack;
-		}
 		if (pos.LengthSq() < m_chasedistance) {
 			switch (m_state) {
 			case enState_Chase:
@@ -86,6 +84,7 @@ void Kurage2::Chase()
 					}
 					m_movespeed = pos;
 					m_chasetimer = 0.0f;
+					ChangeAttack();
 				}
 				m_chasetimer += m_frame * GetDeltaTimeSec();
 				m_movetimer += m_frame * GetDeltaTimeSec();
@@ -93,6 +92,7 @@ void Kurage2::Chase()
 					m_state = enState_Pose;
 					m_chasetimer = 0.0f;
 					m_movetimer = 0.0f;
+					ChangeAttack();
 				}
 				break;
 			case enState_Pose:
@@ -101,17 +101,18 @@ void Kurage2::Chase()
 				if (m_stoptimer >= m_stoptime) {
 					m_stoptimer = 0.0f;
 					m_state = enState_Chase;
+					ChangeAttack();
 				}
 				break;
 			case enState_Attack:
 				m_movespeed = CVector3::Zero();
 				m_attacktimer += m_frame * GetDeltaTimeSec();
-				if (m_attacktimer >= m_attacktime && !m_isaria) {
+				if (m_attacktimer >= m_ariatime && !m_isaria) {
 					Aria();
 					m_attacktimer = 0.0f;
 					m_isaria = true;
 				}
-				else if (m_attacktimer >= m_attacktime / 2 && m_isaria) {
+				else if (m_attacktimer >= m_attacktime && m_isaria) {
 					Attack();
 					m_attacktimer = 0.0f;
 					m_isaria = false;
@@ -144,11 +145,47 @@ void Kurage2::Chase()
 
 void Kurage2::Aria()
 {
-
+	GameObj::Suicider::CEffekseer* effect = new GameObj::Suicider::CEffekseer;
+	effect->Play(L"Asset/effect/Effects/efk/cast_wind.efk", 1.0f, m_position, CQuaternion::Identity(), { 12.0f,12.0f,12.0f });
+	effect->SetSpeed(2.0f);
+	//SE
+	SuicideObj::CSE* se = NewGO<SuicideObj::CSE>(L"Asset/sound/se/aria.wav");
+	se->Play(); //再生(再生が終わると削除されます)
+	se->SetVolume(m_sevolume);
+	//3D再生
+	se->SetPos(m_position);//音の位置
+	se->SetDistance(200.0f);//音が聞こえる範囲
+	se->Play(true); //第一引数をtrue
 }
 
 void Kurage2::Attack()
 {
+	ShotMagic* sm = new ShotMagic;
+	CVector3 pos = m_player->GetPosition() - m_position;
+	pos.Normalize();
+	sm->SetPosition(m_position);
+	sm->SetDirectionPlayer(pos);
+	sm->SetDamage(m_Attack);
+	sm->SetEnemy();
+	sm->SetId(1);
+	sm->SetSpeed(m_magicspeed);
 	m_state = enState_Pose;
 	m_stoptimer = 0.0f;
+	m_movetimer = 0.0f;
+	m_attacktimer = 0.0f;
+}
+
+void Kurage2::ChangeAttack()
+{
+	CVector3 pos = m_player->GetPosition() - m_position;
+	if (pos.LengthSq() < m_attackdistance) {
+		m_state = enState_Chase;
+		int rn = rand() % 100;
+		if (rn >= 70) {
+			m_state = enState_Attack;
+		}
+	}
+	m_stoptimer = 0.0f;
+	m_movetimer = 0.0f;
+	m_attacktimer = 0.0f;
 }
