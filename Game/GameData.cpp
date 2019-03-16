@@ -65,7 +65,7 @@ bool GameData::Start()
 			m_totalabilitygroupweightlist.push_back(m_abilitylist[i]->GetWeight());
 		}
 		else {
-			m_totalabilitygroupweightlist[i] += m_abilitylist[i]->GetWeight();
+			m_totalabilitygroupweightlist[m_abilitygroupnumber - 1] += m_abilitylist[i]->GetWeight();
 		}
 	}
 	//ファイルパスを設定
