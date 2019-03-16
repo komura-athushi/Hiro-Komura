@@ -19,11 +19,11 @@ Equipment::Equipment(const int& number):m_SwordId(number)
 			if (rn < m_probability[abilitynumber]) {
 				//ウェイト値を求めます
 				int rn2 = rand() % totalabilityweight;
-				int i = 0;
 				if (m_ishaveability) {
+					int i = 0;
 					while (true) {
 						bool isgroup = false;
-						for (int j = 0; j < abilitynumber - 1; j++) {
+						for (int j = 0; j < abilitynumber; j++) {
 							if (abilitygroupnumberlist[j] == m_gamedata->GetAbility(i)->GetGroup()) {
 								isgroup = true;
 								i++;
