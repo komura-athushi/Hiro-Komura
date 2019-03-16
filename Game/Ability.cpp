@@ -2,8 +2,14 @@
 #include "Ability.h"
 
 
-Ability::Ability(const int& id, const wchar_t* name, const int& power, const int& mpower, const int& hp, const int& pp)
-	:m_id(id), m_abilityname(name), m_power(power), m_mpower(mpower), m_hp(hp), m_pp(pp)
+Ability::Ability(const int& id, const wchar_t* name, const int& group, const int& weight, const int& power, const int& mpower, const int& hp, const int& pp)
+	:m_id(id), m_abilityname(name), m_group(group), m_weight(weight), m_power(power), m_mpower(mpower), m_hp(hp), m_pp(pp)
+{
+
+}
+
+Ability::Ability(const int& power, const int& mpower, const int& hp, const int& pp)
+	: m_power(power), m_mpower(mpower), m_hp(hp), m_pp(pp)
 {
 
 }

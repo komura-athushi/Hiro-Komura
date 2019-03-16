@@ -108,16 +108,6 @@ public:
 	{
 		return m_ishaveability;
 	}
-	//武器のHPを取得
-	int GetHP() const
-	{
-		return m_hp;
-	}
-	//武器のPPを取得
-	int GetPP() const
-	{
-		return m_pp;
-	}
 	//累計経験値を取得
 	int GetExp() const
 	{
@@ -143,6 +133,11 @@ public:
 	{
 		return (m_weaponextend + 1) * m_explevel1 * 0.6f;
 	}
+	//アビリティの合計値の値を持っているアビリティクラスのポインタを返す
+	Ability* GetAbility() const
+	{
+		return m_ability;
+	}
 private:
 	int m_kariExp = 0;                                    //経験値
 	int m_kariNextExp = 0;                                //次のレベルアップに必要な経験値
@@ -167,8 +162,6 @@ private:
 	int m_MagicId = 0;                                    //使える魔法の番号
 	int m_SwordId = 0;                                    //武器の番号
 	int m_Rarity = 0;                                     //武器のレアリティ
-	int m_hp = 0;										  //特殊能力によって付与されるhp
-	int m_pp = 0;										  //特殊能力によって付与されるpp
 	const wchar_t* m_SwordName;                           //武器の名前
 	const wchar_t* m_MagicName;						      //魔法の名前
 	float m_DamageRate;									  //魔法のダメージ倍率
@@ -178,11 +171,12 @@ private:
 	GameData* m_gamedata;                                 //GameDataクラスのポインタ
 	Weapon* m_weapon;									  //Weaponクラスのポインタ
 	Magic* m_magic;										  //Magicクラスのポインタ
+	Ability* m_ability;									  //持ってるアビリティの合計値
 	std::vector<Ability*> m_abilitylist;				  //アビリティクラスのポインタの可変長配列
 	static const float m_multiply;						  //強化時のステータスの上昇倍率
 	static const float m_costmultiply;					  //強化費用の上昇倍率
-	const int m_probability = 40;					      //特殊能力が１個つく確率
 	const int m_slotlimitnumber = 3;				      //特殊能力数の上限
 	bool m_ishaveability = false;						  //特殊能力を所持しているかどうか
+	const int m_probability[3] = {75, 40, 20};			  //特殊能力の付与成功率
 };
 

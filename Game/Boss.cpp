@@ -6,6 +6,7 @@
 #include "BossAttack.h"
 #include "GameCamera.h"
 #include "Teleport.h"
+#include "ShotMagic.h"
 //cppでエネミーのレア度ごとのドロップ率を設定
 const int Boss::m_dropChances[Weapon::m_HighestRarity] = { 0,0,100,0,0,0,0 };
 const int Boss::m_dropmaterialChances[Material::m_HighestRarity] = { 0,100,0 };
@@ -46,42 +47,47 @@ void Boss::Attack()
 
 	if(m_HP >= 600) {
 		if (m_timer >= m_cooltime) {
-			BossAttack* bossattack = new BossAttack;
+			/*BossAttack* bossattack = new BossAttack;
 			bossattack->SetName(L"bossattack");
-			bossattack->SetNumber(1);
+			bossattack->SetNumber(1);*/
 			m_atktype = 1;
 			//弾丸の座標にボスの座標を代入する。
 			CVector3 l_pos = m_position;
 			l_pos.y += 70.0f;
-			bossattack->SetPosition(l_pos);
 			CVector3 bulletPos = m_playerposition - l_pos;
 			bulletPos.Normalize();
-			bulletPos = bulletPos * 30.0f;
-			//弾のスピードを変える
-			bossattack->SetMoveSpeed(bulletPos);
-			
+			ShotMagic* sm = new ShotMagic;
+			sm->SetPosition(l_pos);
+			sm->SetDirectionPlayer(bulletPos);
+			sm->SetDamage(m_Attack1);
+			sm->SetEnemy();
+			sm->SetId(1);
+			sm->SetSpeed(0.7f);
+			//bossattack->SetPosition(l_pos);
+			//CVector3 bulletPos = m_playerposition - l_pos;
+			//bulletPos.Normalize();
+			//bulletPos = bulletPos * 30.0f;
+			////弾のスピードを変える
+			//bossattack->SetMoveSpeed(bulletPos);
+			//
 			//タイマーをリセット。
 			m_timer = 0;
 		}
 	}
 	else if(m_HP >= 300) {
 		if (m_timer >= m_cooltime) {
-			BossAttack* bossattack = new BossAttack;
-			bossattack->SetName(L"bossattack");
-			bossattack->SetNumber(2);
-			m_atktype = 2;
-
-			//弾丸の座標にボスの座標を代入する。
 			CVector3 l_pos = m_position;
-			l_pos.y += 200.0f;
-			bossattack->SetPosition(l_pos);
-
+			l_pos.y += 70.0f;
 			CVector3 bulletPos = m_playerposition - l_pos;
 			bulletPos.Normalize();
-			bulletPos = bulletPos * 10.0f;
-			//弾のスピードを変える
-			bossattack->SetMoveSpeed(bulletPos);
-
+			ShotMagic* sm = new ShotMagic;
+			sm->SetPosition(l_pos);
+			sm->SetDirectionPlayer(bulletPos);
+			sm->SetDamage(m_Attack2);
+			sm->SetEnemy();
+			sm->SetId(2);
+			sm->SetSpeed(0.7f);
+			m_atktype = 2;
 			//タイマーをリセット。
 			m_timer = 0;
 		}
@@ -90,28 +96,18 @@ void Boss::Attack()
 		if (m_timer >= m_atk3cooltime) {
 			m_atk3timer++;
 			if (m_atk3timer >= 30) {
-				BossAttack* bossattack = new BossAttack;
-				bossattack->SetName(L"bossattack");
-				bossattack->SetNumber(3);
 				m_atktype = 3;
-
-				//弾丸の座標にボスの座標を代入する。
 				CVector3 l_pos = m_position;
-				l_pos.y += 200.0f;
-				bossattack->SetPosition(l_pos);
-
+				l_pos.y += 70.0f;
 				CVector3 bulletPos = m_playerposition - l_pos;
 				bulletPos.Normalize();
-				bulletPos = bulletPos * 10.0f;
-				//弾のスピードを変える
-				bossattack->SetMoveSpeed(bulletPos);
-				m_atk3timer = 0;
-				m_atk3count++;
-				if (m_atk3count == 3) {
-					//タイマーをリセット。
-					m_timer = 0;
-					m_atk3count = 0;
-				}
+				ShotMagic* sm = new ShotMagic;
+				sm->SetPosition(l_pos);
+				sm->SetDirectionPlayer(bulletPos);
+				sm->SetDamage(m_Attack3);
+				sm->SetEnemy();
+				sm->SetId(5);
+				sm->SetSpeed(0.7f);
 			}
 		}
 	}

@@ -7,6 +7,9 @@ GameData::GameData()
 
 GameData::~GameData()
 {
+	for (int i = 0; i < m_abilitylist.size(); i++) {
+		delete m_abilitylist[i];
+	}
 }
 
 bool GameData::Start()
@@ -37,18 +40,34 @@ bool GameData::Start()
 	m_materiallist.push_back(Material(L"石"					, 2));
 	m_materiallist.push_back(Material(L"レンガ"				, 3));
 	//アビリティクラスのインスタンスを作成
-	m_abilitylist.push_back(Ability(1 , L"HPアップ1"        ,   0,  0, 10,  0));
-	m_abilitylist.push_back(Ability(2 , L"パワー1"          ,  10,  0,  0,  0));
-	m_abilitylist.push_back(Ability(3 , L"テクニック1"      ,   0, 10,  0,  0));
-	m_abilitylist.push_back(Ability(4 , L"PPアップ1"        ,   0,  0,  0, 10));
-	m_abilitylist.push_back(Ability(5 , L"HPアップ2"        ,   0,  0, 30,  0));
-	m_abilitylist.push_back(Ability(6 , L"パワー2"          ,  30,  0,  0,  0));
-	m_abilitylist.push_back(Ability(7 , L"テクニック2"      ,   0, 30,  0,  0));
-	m_abilitylist.push_back(Ability(8 , L"PPアップ2"        ,   0,  0,  0, 30));
-	m_abilitylist.push_back(Ability(9 , L"HPアップ3"        ,   0,  0, 50,  0));
-	m_abilitylist.push_back(Ability(10, L"パワー3"          ,  50,  0,  0,  0));
-	m_abilitylist.push_back(Ability(11, L"テクニック3"      ,   0, 50,  0,  0));
-	m_abilitylist.push_back(Ability(12, L"PPアップ3"        ,   0,  0,  0, 50));
+	m_abilitylist.push_back(new Ability(1 , L"HPアップ1"        , 1, 6,   0,  0, 10,  0));
+	m_abilitylist.push_back(new Ability(2 , L"HPアップ2"        , 1, 4,   0,  0, 20,  0));
+	m_abilitylist.push_back(new Ability(3 , L"HPアップ3"        , 1, 2,   0,  0, 30,  0));
+	m_abilitylist.push_back(new Ability(4 , L"PPアップ1"        , 2, 6,   0,  0,  0, 10));
+	m_abilitylist.push_back(new Ability(5 , L"PPアップ2"        , 2, 4,   0,  0,  0, 20));
+	m_abilitylist.push_back(new Ability(6 , L"PPアップ3"        , 2, 2,   0,  0,  0, 30));
+	m_abilitylist.push_back(new Ability(7 , L"パワー1"          , 3, 6,  10,  0,  0,  0));
+	m_abilitylist.push_back(new Ability(8 , L"パワー2"          , 3, 4,  15,  0,  0,  0));
+	m_abilitylist.push_back(new Ability(9 , L"パワー3"          , 3, 2,  20,  0,  0,  0));
+	m_abilitylist.push_back(new Ability(10, L"テクニック1"      , 4, 6,   0,  5,  0,  0));
+	m_abilitylist.push_back(new Ability(11, L"テクニック2"      , 4, 4,   0, 10,  0,  0));
+	m_abilitylist.push_back(new Ability(12, L"テクニック3"      , 4, 2,   0, 15,  0,  0));
+	m_abilitylist.push_back(new Ability(13, L"オール1"          , 5, 3,   5,  5,  5,  5));
+	m_abilitylist.push_back(new Ability(14, L"オール2"          , 5, 2,  10, 10, 10, 10));
+	m_abilitylist.push_back(new Ability(15, L"オール3"          , 5, 1,  15, 15, 15, 15));
+	m_abilitylist.push_back(new Ability(16, L"アーチャー"       , 6, 2,  10, 20, 10, 20));
+	m_abilitylist.push_back(new Ability(17, L"ランサー"         , 6, 2,  30,  0, 30,  0));
+	m_abilitylist.push_back(new Ability(18, L"セイバー"         , 6, 1,  20, 15, 20, 15));
+	for (int i = 0; i < m_abilitylist.size(); i++) {
+		m_totalabilityweight += m_abilitylist[i]->GetWeight();
+		if (m_abilitygroupnumber != m_abilitylist[i]->GetGroup()) {
+			m_abilitygroupnumber++;
+			m_totalabilitygroupweightlist.push_back(m_abilitylist[i]->GetWeight());
+		}
+		else {
+			m_totalabilitygroupweightlist[i] += m_abilitylist[i]->GetWeight();
+		}
+	}
 	//ファイルパスを設定
 	m_filepathlist.push_back(L"Resource/sprite/number00.dds");
 	m_filepathlist.push_back(L"Resource/sprite/number01.dds");
@@ -61,7 +80,7 @@ bool GameData::Start()
 	m_filepathlist.push_back(L"Resource/sprite/number08.dds");
 	m_filepathlist.push_back(L"Resource/sprite/number09.dds");
 	//数字の画像を読み込む
-	for (int i = 0; i < 10; i++) {
+	for (int i = 0; i < m_filepathlist.size(); i++) {
 		CSprite* sprite = new CSprite;
 		sprite->Init(m_filepathlist[i]);
 		m_numberspritelist.push_back(sprite);

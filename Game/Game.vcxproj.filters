@@ -247,9 +247,6 @@
     <MeshContentTask Include="Asset\modelData\material\ishi.FBX">
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
-    <MeshContentTask Include="Asset\modelData\Magic_Sample.FBX">
-      <Filter>Assets\modelData</Filter>
-    </MeshContentTask>
     <MeshContentTask Include="Asset\modelData\meseta\meseta.FBX">
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>

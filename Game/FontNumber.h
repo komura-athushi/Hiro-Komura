@@ -19,6 +19,11 @@ public:
 	{
 		m_position = position;
 	}
+	//赤色に設定
+	void SetRed()
+	{
+		m_isred = true;
+	}
 private:
 	std::vector<int> m_numberlist;						//引数で受け取った数字を記憶する
 	std::vector<CSprite*> m_spritelist;					//CSpriteの可変長配列
@@ -26,7 +31,7 @@ private:
 	CVector3 m_spriteposition;							//スクリーン座標
 	CVector2 m_scale = { 0.3f,0.3f};
 	CVector3 m_plusposition = CVector3::Zero();			//ランダムに座標を変える
-	const float m_addx = -0.015f;
+	const float m_addx = -0.016f;
 	const float m_addy = -0.0015f;
 	float m_y = 0.0f;
 	const float m_frame = 40.0f;
@@ -36,5 +41,6 @@ private:
 	GameCamera* m_gamecamera = nullptr;
 	GameData* m_gamedata = nullptr;
 	int m_number;
+	bool m_isred = false;
 };
 

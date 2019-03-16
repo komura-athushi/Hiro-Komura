@@ -102,8 +102,7 @@ void PlayerStatus::SetWeaponStatus()
 	m_SwordName = m_equipmentlist[m_SwordId]->GetName();
 	m_Mattack = m_Clever + m_SwordMattack;
 	m_Attack = m_Power + m_SwordAttack;
-	m_SwordHP = m_equipmentlist[m_SwordId]->GetHP();
-	m_SwordPP = m_equipmentlist[m_SwordId]->GetPP();
+	m_ability = m_equipmentlist[m_SwordId]->GetAbility();
 }
 
 void PlayerStatus::SetMagicStatus()

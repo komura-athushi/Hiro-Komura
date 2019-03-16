@@ -51,22 +51,22 @@ public:
 	//最大HPを取得
 	int GetMaxHP() const
 	{
-		return m_MaxHP + m_SwordHP;
+		return m_MaxHP * (1 + 0.01f * float(m_ability->GetHP()));
 	}
 	//最大PPを取得
 	int GetMaxPP() const
 	{
-		return m_MaxPP + m_SwordPP;
+		return m_MaxPP * (1 + 0.01f * float(m_ability->GetPP()));
 	}
 	//攻撃力を取得
 	int GetAttack() const
 	{
-		return m_Attack;
+		return m_Attack * (1 + 0.01f * float(m_ability->GetPower()));
 	}
 	//魔法攻撃力を取得
 	int GetMattack() const
 	{
-		return m_Mattack;
+		return m_Mattack * (1 + 0.01f * float(m_ability->GetMpower()));
 	}
 	//使用する魔法の番号を取得
 	int GetMagicId() const
@@ -227,8 +227,6 @@ private:
 	int m_MagicId = 0;                                    //使える魔法の番号
 	int m_SwordId = 0;                                    //装備中の武器の番号
 	int m_Rarity = 0;                                     //装備中の武器のレアリティ
-	int m_SwordHP = 0;									  //装備中の武器のHP
-	int m_SwordPP = 0;								      //装備中の武器のPP
 	const wchar_t* m_SwordName;                           //装備中の武器の名前
 	const wchar_t* m_MagicName;						      //魔法の名前
 	float m_DamageRate;									  //魔法のダメージ倍率
@@ -246,6 +244,7 @@ private:
 	GameData* m_gamedata;                                 //GameDataクラスのポインタ
 	Weapon* m_weapon;									  //Weaponクラスのポインタ
 	Magic* m_magic;										  //Magicクラスのポインタ
+	Ability* m_ability;
 	const int m_ProtHP = 65;
 	const int m_ProtPP = 100;
 	const int m_ProtPower = 20;

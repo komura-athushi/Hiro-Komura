@@ -714,6 +714,7 @@ void Player::Damage(const int& attack)
 		CVector3 pos = m_position;
 		pos.y += 40.0f;
 		fn->SetPosition(pos);
+		fn->SetRed();
 		//SE
 		SuicideObj::CSE* se = NewGO<SuicideObj::CSE>(L"Asset/sound/unityChan/bad.wav");
 		se->Play(); //Ä¶(Ä¶‚ªI‚í‚é‚Æíœ‚³‚ê‚Ü‚·)

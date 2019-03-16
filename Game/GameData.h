@@ -82,7 +82,7 @@ public:
 	//該当のアビリティのポインタを取得
 	Ability* GetAbility(const int& number)
 	{
-		return &m_abilitylist[number];
+		return m_abilitylist[number];
 	}
 	//アビリティクラスの可変長配列の長さを取得
 	int GetAbilityListNumber() const
@@ -93,6 +93,16 @@ public:
 	CSprite* GetCSprite(const int& number)
 	{
 		return m_numberspritelist[number];
+	}
+	//特殊能力のウェイトの合計値を取得
+	int GetTotalWeight() const
+	{
+		return m_totalabilityweight;
+	}
+	//特殊能力の引数のグループのウェイトの合計値を取得
+	int GetTotalGroupWeight(const int& group) const
+	{
+		return m_totalabilitygroupweightlist[group - 1];
 	}
 	enum EnWeapon {
 		enWeapon_Sword,									//ソード
@@ -129,7 +139,7 @@ private:
 	std::vector<Weapon> m_weaponlist;                   //Weaponクラスの可変長配列
 	std::vector<Magic> m_magiclist;						//Magicクラスの可変長配列
 	std::vector<Material> m_materiallist;				//Materialクラスの可変長配列
-	std::vector<Ability> m_abilitylist;					//アビリティクラスの可変長配列
+	std::vector<Ability*> m_abilitylist;				//アビリティクラスの可変長配列
 	std::vector<CSprite*> m_numberspritelist;           //数字の画像の可変長配列
 	std::vector<const wchar_t*> m_filepathlist;
 	bool m_stage[3] = { false,false,false };			//各ステージをクリアしたかどうか
@@ -137,5 +147,8 @@ private:
 	bool m_isgameclear = false;							//ゲームをクリアしたかどうか
 	bool m_isgameend = false;							//ゲームが一旦終わったかどうか
 	CSprite* m_sprite;
+	int m_totalabilityweight = 0;
+	int m_abilitygroupnumber = 0;
+	std::vector<int> m_totalabilitygroupweightlist;
 };
 

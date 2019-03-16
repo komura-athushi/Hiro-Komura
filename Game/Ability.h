@@ -6,12 +6,22 @@ public:
     @brief	Abilityのコンストラクタ
     *int id;							アビリティの番号
     *const wchar_t* name;				アビリティの名前
+	*int group							アビリティの所属するグループ
+	*int weight							アビリティのウェイト()
     *int power;						    ＋する打撃力
     *int mpower;					    ＋する法撃力
     *int hp;							＋するＨＰ
     *int pp;						    ＋するＰＰ
     */
-	Ability(const int& id, const wchar_t* name, const int& power, const int& mpower, const int& hp, const int& pp);
+	Ability(const int& id, const wchar_t* name, const int& group, const int& weight, const int& power, const int& mpower, const int& hp, const int& pp);
+	/*!
+	@brief	Abilityのコンストラクタ(Equipment用)
+	*int power;						    ＋する打撃力
+	*int mpower;					    ＋する法撃力
+	*int hp;							＋するＨＰ
+	*int pp;						    ＋するＰＰ
+	*/
+	Ability(const int& power, const int& mpower, const int& hp, const int& pp);
 	//コピーコンストラクタ
 	Ability(const Ability& ab);
 	~Ability();
@@ -45,12 +55,24 @@ public:
 	{
 		return m_pp;
 	}
+	//グループを取得
+	int GetGroup() const
+	{
+		return m_group;
+	}
+	//ウェイトを取得
+	int GetWeight() const
+	{
+		return m_weight;
+	}
 private:
-	int m_id;
-	const wchar_t* m_abilityname;
+	int m_id = 0;
+	const wchar_t* m_abilityname = nullptr;
 	int m_power = 0;
 	int m_mpower = 0;
 	int m_hp = 0;
 	int m_pp = 0;
+	int m_group = 0;
+	int m_weight = 0;
 };
 

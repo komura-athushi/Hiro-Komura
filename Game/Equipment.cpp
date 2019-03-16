@@ -10,27 +10,60 @@ Equipment::Equipment(const int& number):m_SwordId(number)
 	//それぞれのステータスを設定
 	SetWeaponStatus();
 	SetMagicStatus();
+	std::vector <int> abilitygroupnumberlist;
+	int abilitynumber = 0;
+	int totalabilityweight = m_gamedata->GetTotalWeight();
 	if (m_SwordId != 0) {
 		for (int i = 0; i < m_slotlimitnumber; i++) {
 			int rn = rand() % 100 + 1;
-			if (rn < m_probability) {
-				rn = rn % m_gamedata->GetAbilityListNumber();
+			if (rn < m_probability[abilitynumber]) {
+				//ウェイト値を求めます
+				int rn2 = rand() % totalabilityweight;
+				int i = 0;
 				if (m_ishaveability) {
-					for (int i = 0; i < m_abilitylist.size(); i++) {
-						if (rn == m_abilitylist[i]->GetId()) {
-							break;
+					while (true) {
+						bool isgroup = false;
+						for (int j = 0; j < abilitynumber - 1; j++) {
+							if (abilitygroupnumberlist[j] == m_gamedata->GetAbility(i)->GetGroup()) {
+								isgroup = true;
+								i++;
+								break;
+							}
 						}
-						if (i == m_abilitylist.size()) {
-							m_abilitylist.push_back(m_gamedata->GetAbility(rn));
-							m_ishaveability = true;
+						if (!isgroup) {
+							if ((rn2 -= m_gamedata->GetAbility(i)->GetWeight()) >= 0) {
+								i++;
+							}
+							else {
+								m_abilitylist.push_back(m_gamedata->GetAbility(i));
+								abilitygroupnumberlist.push_back(m_gamedata->GetAbility(i)->GetGroup());
+								abilitynumber++;
+								totalabilityweight -= m_gamedata->GetTotalGroupWeight(m_gamedata->GetAbility(i)->GetGroup());
+								m_ishaveability = true;
+								break;
+							}
 						}
 					}
 				}
 				else {
-					m_abilitylist.push_back(m_gamedata->GetAbility(rn));
-					m_ishaveability = true;
+					int i = 0;
+					while (true) {
+						if ((rn2 -= m_gamedata->GetAbility(i)->GetWeight()) >= 0) {
+							i++;
+						}
+						else {
+							m_abilitylist.push_back(m_gamedata->GetAbility(i));
+							abilitygroupnumberlist.push_back(m_gamedata->GetAbility(i)->GetGroup());
+							abilitynumber++;
+							totalabilityweight -= m_gamedata->GetTotalGroupWeight(m_gamedata->GetAbility(i)->GetGroup());
+							m_ishaveability = true;
+							break;
+						}
+					}
 				}
-		
+			}
+			else {
+				break;
 			}
 		}
 		SetWeaponStatus();
@@ -38,10 +71,21 @@ Equipment::Equipment(const int& number):m_SwordId(number)
 	m_explevel1 = float(m_explevel1) * (1.0f + m_exprarity * float(m_Rarity));
 	m_NextExp = m_explevel1;
 	m_LevelExp = m_NextExp;
+	int attack = 0, mattack = 0, hp = 0, pp = 0;
+	if (m_ishaveability) {
+		for (int i = 0; i < m_abilitylist.size(); i++) {
+			attack += m_abilitylist[i]->GetPower();
+			mattack += m_abilitylist[i]->GetMpower();
+			hp += m_abilitylist[i]->GetHP();
+			pp += m_abilitylist[i]->GetPP();
+		}
+	}
+	m_ability = new Ability(attack, mattack, hp, pp);
 }
 
 Equipment::~Equipment()
 {
+	delete m_ability;
 }
 
 
@@ -62,17 +106,6 @@ void Equipment::SetWeaponStatus()
 	}
 	m_Attack = m_SwordAttack;
 	m_Mattack = m_SwordMattack;
-	m_hp = 0;
-	m_pp = 0;
-	if (m_ishaveability) {
-		for (int i = 0; i < m_abilitylist.size(); i++) {
-			m_Attack += m_abilitylist[i]->GetPower();
-			m_Mattack += m_abilitylist[i]->GetMpower();
-			m_hp += m_abilitylist[i]->GetHP();
-			m_pp += m_abilitylist[i]->GetPP();
-		}
-	}
-
 }
 
 void Equipment::SetMagicStatus()
@@ -147,12 +180,6 @@ void Equipment::KariPlusExp(const int& exp)
 		m_kariSwordMattack = m_protSwordMattack * std::pow(m_multiply, m_kariweaponextend);
 		m_kariAttack = m_kariSwordAttack;
 		m_kariMattack = m_kariSwordMattack;
-	}
-	if (m_ishaveability) {
-		for (int i = 0; i < m_abilitylist.size(); i++) {
-			m_kariAttack += m_abilitylist[i]->GetPower();
-			m_kariMattack += m_abilitylist[i]->GetMpower();
-		}
 	}
 	m_kariNextExp -= ep;
 }

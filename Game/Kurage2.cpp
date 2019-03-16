@@ -181,7 +181,7 @@ void Kurage2::ChangeAttack()
 	if (pos.LengthSq() < m_attackdistance) {
 		m_state = enState_Chase;
 		int rn = rand() % 100;
-		if (rn >= 70) {
+		if (rn >= 40) {
 			m_state = enState_Attack;
 		}
 	}

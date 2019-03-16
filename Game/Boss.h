@@ -74,5 +74,8 @@ private:
 	static const int m_dropmaterialChances[];
 	static const int m_meseta = 500;
 	float m_deathtimer = 0.0f;
+	const int m_attack1 = 50;
+	const int m_attack2 = 60;
+	const int m_attack3 = 80;
 };
 

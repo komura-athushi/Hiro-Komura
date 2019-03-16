@@ -69,12 +69,22 @@ void FontNumber::PostRender()
 		if (0.0f <= pos.x && pos.x <= 1.0f && 0.0f <= pos.y && pos.y <= 1.0f && 0.0f <= pos.z && pos.z <= 1.0f) {
 			pos.y += m_y;
 			for (int i = 0; i < m_spritelist.size(); i++) {
-				m_spritelist[i]->Draw(pos, m_scale, { 0.5f,0.5f },
-					0.0f,
-					{1.0f,1.0f,1.0f,m_alpha},
-					DirectX::SpriteEffects_None,
-					1.0f
-				);
+				if (m_isred) {
+					m_spritelist[i]->Draw(pos, m_scale, { 0.5f,0.5f },
+						0.0f,
+						{ 225.0f, 0.2f, 0.2f, m_alpha },
+						DirectX::SpriteEffects_None,
+						1.0f
+					);
+				}
+				else {
+					m_spritelist[i]->Draw(pos, m_scale, { 0.5f,0.5f },
+						0.0f,
+						{ 1.0f, 1.0f, 1.0f, m_alpha },
+						DirectX::SpriteEffects_None,
+						1.0f
+					);
+				}
 				pos.x += m_addx;
 			}
 		}
