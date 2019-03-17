@@ -339,6 +339,7 @@ bool ShotMagic::Start()
 	 m_movespeed = m_directionplayer * m_multiplyspeed3;
 	 m_directionplayer.y = 0.0f;
 	 m_position += m_directionplayer * 250.0f;
+	 m_position.y += 100.0f;
 	 SetCollisionModelnoDamage(m_position, m_collisionscale3, m_id, m_scale, m_modelcount, true,m_hittime3);
 	 m_damage /= m_modelnumber;
 	 m_damage /= m_multihit;

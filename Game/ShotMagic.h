@@ -191,7 +191,7 @@ private:
 	const CVector3 m_scale3 = { 3.5f,3.5f,3.5f };
 	const float m_collisionscale3 = 225.0f;
 	const float m_multiplyspeed3 = 0.0f;
-	const int m_multihit = 2;
+	const int m_multihit = 1;
 	const float m_hittime3 = 25.0f;
 	//ƒVƒtƒ^
 	const float m_deletetime4 = 30.0f;

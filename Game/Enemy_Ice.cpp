@@ -37,7 +37,7 @@ bool Enemy_Ice::Start()
 		}
 	}
 	);
-	m_moveSpeed *= 13.0f * 60.0f;
+	m_moveSpeed *= 7.0f * 60.0f;
 	m_moveSpeed *= m_speed;
 	return true;
 }

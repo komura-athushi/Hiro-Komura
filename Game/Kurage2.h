@@ -59,7 +59,7 @@ private:
 	};
 	State m_state = enState_Pose;
 	const float m_chasedistance = 2000.0f * 2000.0f;
-	const float m_attackdistance = 700.0f * 700.0f;
+	const float m_attackdistance = 1500.0f * 1500.0f;
 	const float m_magicspeed = 0.4f;
 	bool m_isaria = false;
 	const float m_frame = 40.0f;
