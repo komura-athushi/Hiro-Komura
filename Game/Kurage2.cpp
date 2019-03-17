@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "Kurage2.h"
 #include "Player.h"
-#include "ShotMagic.h"
+#include "Enemy_Ice.h"
 //cppでエネミーのレア度ごとのドロップ率を設定
 const int Kurage2::m_dropChances[Weapon::m_HighestRarity] = { 0,50,0,0,0,0,0 };
 const int Kurage2::m_dropmaterialChances[Material::m_HighestRarity] = { 30.0f,0.0f,0.0f };
@@ -146,7 +146,7 @@ void Kurage2::Chase()
 void Kurage2::Aria()
 {
 	GameObj::Suicider::CEffekseer* effect = new GameObj::Suicider::CEffekseer;
-	effect->Play(L"Asset/effect/Effects/efk/cast_wind.efk", 1.0f, m_position, CQuaternion::Identity(), { 12.0f,12.0f,12.0f });
+	effect->Play(L"Asset/effect/Effects/efk/cast_ice.efk", 1.0f, m_position, CQuaternion::Identity(), { 12.0f,12.0f,12.0f });
 	effect->SetSpeed(2.0f);
 	//SE
 	SuicideObj::CSE* se = NewGO<SuicideObj::CSE>(L"Asset/sound/se/aria.wav");
@@ -160,15 +160,13 @@ void Kurage2::Aria()
 
 void Kurage2::Attack()
 {
-	ShotMagic* sm = new ShotMagic;
+	Enemy_Ice* ei = new Enemy_Ice;
 	CVector3 pos = m_player->GetPosition() - m_position;
 	pos.Normalize();
-	sm->SetPosition(m_position);
-	sm->SetDirectionPlayer(pos);
-	sm->SetDamage(m_Attack);
-	sm->SetEnemy();
-	sm->SetId(1);
-	sm->SetSpeed(m_magicspeed);
+	ei->SetPosition(m_position);
+	ei->SetMoveSpeed(pos);
+	ei->SetAttack(m_Attack);
+	//ei->SetSpeed(m_magicspeed);
 	m_state = enState_Pose;
 	m_stoptimer = 0.0f;
 	m_movetimer = 0.0f;

@@ -68,8 +68,7 @@ Equipment::Equipment(const int& number):m_SwordId(number)
 		}
 		SetWeaponStatus();
 	}
-	m_explevel1 = float(m_explevel1) * (1.0f + m_exprarity * float(m_Rarity));
-	m_NextExp = m_explevel1;
+	m_NextExp = pow(2.0f, m_Rarity) * m_weaponextend * (m_weaponextend + 1);
 	m_LevelExp = m_NextExp;
 	int attack = 0, mattack = 0, hp = 0, pp = 0;
 	if (m_ishaveability) {
@@ -91,7 +90,7 @@ Equipment::~Equipment()
 
 void Equipment::SetWeaponStatus()
 {
-	if (m_weaponextend == 0) {
+	if (m_weaponextend == 1) {
 		m_weapon = m_gamedata->GetWeapon(m_SwordId);
 		m_SwordMattack = m_weapon->GetMatk();
 		m_protSwordMattack = m_SwordMattack;
@@ -148,10 +147,10 @@ void Equipment::PlusExp(const int& exp)
 	while (m_LevelExp <= m_Exp) {
 		ep -= m_NextExp;
 		m_weaponextend += 1;
-		m_NextExp = (int)((1 + (float)(m_weaponextend * m_weaponextend * 0.1f)) * m_explevel1);
+		m_NextExp = pow(2.0f, m_Rarity) * m_weaponextend * (m_weaponextend + 1);
 		m_LevelExp += m_NextExp;
-		m_SwordAttack = m_protSwordAattack * std::pow(m_multiply, m_weaponextend);
-		m_SwordMattack = m_protSwordMattack * std::pow(m_multiply, m_weaponextend);
+		m_SwordAttack = m_protSwordAattack * (1 + m_weaponextend * (m_weaponextend - 1) * 0.05f) + 10 * (m_weaponextend - 1);
+		m_SwordMattack = m_protSwordMattack * (1 + m_weaponextend * (m_weaponextend - 1) * 0.05f) + 10 * (m_weaponextend - 1);
 	}
 	SetWeaponStatus();
 	m_NextExp -= ep;
@@ -174,12 +173,22 @@ void Equipment::KariPlusExp(const int& exp)
 	while (m_kariLevelExp <= m_kariExp) {
 		ep -= m_kariNextExp;
 		m_kariweaponextend += 1;
-		m_kariNextExp = (int)((1 + (float)(m_kariweaponextend * m_kariweaponextend * 0.1f)) * m_explevel1);
+		m_kariNextExp = pow(2.0f, m_Rarity) * m_kariweaponextend * (m_kariweaponextend + 1);
 		m_kariLevelExp += m_kariNextExp;
-		m_kariSwordAttack = m_protSwordAattack * std::pow(m_multiply, m_kariweaponextend);
-		m_kariSwordMattack = m_protSwordMattack * std::pow(m_multiply, m_kariweaponextend);
+		m_kariSwordAttack = m_protSwordAattack * (1 + m_kariweaponextend * (m_kariweaponextend - 1) * 0.05f) + 10 * (m_kariweaponextend - 1);
+		m_kariSwordMattack = m_protSwordMattack * (1 + m_kariweaponextend * (m_kariweaponextend - 1) * 0.05f) + 10 * (m_kariweaponextend - 1);
 		m_kariAttack = m_kariSwordAttack;
 		m_kariMattack = m_kariSwordMattack;
 	}
 	m_kariNextExp -= ep;
+}
+
+int Equipment::GetMaterialExp(const int& id) const
+{
+	if(m_SwordId==id) {
+		return pow(2.0f, m_Rarity) * (m_weaponextend * 2 - 1) * 2.0f;
+	}
+	else {
+		return pow(2.0f, m_Rarity) * (m_weaponextend * 2 - 1);
+	}
 }

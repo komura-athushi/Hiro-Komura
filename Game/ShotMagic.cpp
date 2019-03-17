@@ -28,7 +28,6 @@ ShotMagic::~ShotMagic()
 
 bool ShotMagic::Start()
 {
-	m_damage = m_damage * (m_randDamage + rand() % 10) / 100;
 	//魔法の番号によって処理を変えます
 	switch (m_id) {
 	case 1:
@@ -157,7 +156,7 @@ bool ShotMagic::Start()
 			 if (param.EqualName(L"Player")) {
 				 Player* player = param.GetClass<Player>();//相手の判定に設定されているCEnemyのポインタを取得
 				 if (id == 5) {
-					 ShotMagic* shotmagic = FindGO<ShotMagic>(L"ShotMagic");
+					 ShotMagic* shotmagic = FindGO<ShotMagic>();
 					 CVector3 pos = shotmagic->GetPosition(number);
 					 shotmagic->DeleteMagicModel(number);
 					 GameObj::Suicider::CEffekseer* effect = new GameObj::Suicider::CEffekseer;
@@ -174,28 +173,32 @@ bool ShotMagic::Start()
 							 if (m_magicmocelList[number].s_enemyidlist.count(PLAYERNUMBER) == 0) {
 								 m_magicmocelList[number].s_enemyidlist[PLAYERNUMBER] = m_magicmocelList[number].s_hittimer;
 								 //エネミーにダメージ
+								 m_damage = m_damage * (m_randDamage + rand() % 10) / 100;
 								 player->Damage(m_damage);
 							 }
 						 }
 					 }
 					 );
 				 }
-				 else if (id == 3) {
+				 /*else if (id == 2) {
 					 if (m_magicmocelList[number].s_enemyidlist.count(PLAYERNUMBER) == 0) {
 						 m_magicmocelList[number].s_enemyidlist[PLAYERNUMBER] = m_magicmocelList[number].s_hittimer;
 						 //エネミーにダメージ
+						 m_damage = m_damage * (m_randDamage + rand() % 10) / 100;
 						 player->Damage(m_damage);
 					 }
 					 else if ((m_magicmocelList[number].s_enemyidlist[PLAYERNUMBER] + m_hittime3) <= m_magicmocelList[number].s_hittimer) {
 						 m_magicmocelList[number].s_enemyidlist[PLAYERNUMBER] = m_magicmocelList[number].s_hittimer;
 						 //エネミーにダメージ
+						 m_damage = m_damage * (m_randDamage + rand() % 10) / 100;
 						 player->Damage(m_damage);
 					 }
-				 }
+				 }*/
 				 else {
 					 if (m_magicmocelList[number].s_enemyidlist.count(PLAYERNUMBER) == 0) {
 						 m_magicmocelList[number].s_enemyidlist[PLAYERNUMBER] = m_magicmocelList[number].s_hittimer;
 						 //エネミーにダメージ
+						 m_damage = m_damage * (m_randDamage + rand() % 10) / 100;
 						 player->Damage(m_damage);
 					 }
 				 }
@@ -225,6 +228,7 @@ bool ShotMagic::Start()
 							 if (m_magicmocelList[number].s_enemyidlist.count(enemy->GetNumber()) == 0) {
 								 m_magicmocelList[number].s_enemyidlist[enemy->GetNumber()] = m_magicmocelList[number].s_hittimer;
 								 //エネミーにダメージ
+								 m_damage = m_damage * (m_randDamage + rand() % 10) / 100;
 								 enemy->Damage(m_damage, id);
 								 //もしエネミーのHPが0以下になったら
 								 if (enemy->GetDeath()) {
@@ -238,10 +242,11 @@ bool ShotMagic::Start()
 					 }
 					 );
 				 }
-				 else if (id == 3) {
+				 /*else if (id == 2) {
 					 if (m_magicmocelList[number].s_enemyidlist.count(enemy->GetNumber()) == 0) {
 						 m_magicmocelList[number].s_enemyidlist[enemy->GetNumber()] = m_magicmocelList[number].s_hittimer;
 						 //エネミーにダメージ
+						 m_damage = m_damage * (m_randDamage + rand() % 10) / 100;
 						 enemy->Damage(m_damage, id);
 						 //もしエネミーのHPが0以下になったら
 						 if (enemy->GetDeath()) {
@@ -249,11 +254,13 @@ bool ShotMagic::Start()
 							 PlayerStatus* playerstatus = FindGO<PlayerStatus>(L"PlayerStatus");
 							 playerstatus->PlusExp(enemy->GetExp());
 						 }
-
+						 ShotMagic* shotmagic = FindGO<ShotMagic>(L"ShotMagic");
+						 shotmagic->DeleteMagicModel(number);
 					 }
 					 else if ((m_magicmocelList[number].s_enemyidlist[enemy->GetNumber()] + m_hittime3) <= m_magicmocelList[number].s_hittimer) {
 						 m_magicmocelList[number].s_enemyidlist[enemy->GetNumber()] = m_magicmocelList[number].s_hittimer;
 						 //エネミーにダメージ
+						 m_damage = m_damage * (m_randDamage + rand() % 10) / 100;
 						 enemy->Damage(m_damage, id);
 						 //もしエネミーのHPが0以下になったら
 						 if (enemy->GetDeath()) {
@@ -261,12 +268,15 @@ bool ShotMagic::Start()
 							 PlayerStatus* playerstatus = FindGO<PlayerStatus>(L"PlayerStatus");
 							 playerstatus->PlusExp(enemy->GetExp());
 						 }
+						 ShotMagic* shotmagic = FindGO<ShotMagic>(L"ShotMagic");
+						 shotmagic->DeleteMagicModel(number);
 					 }
-				 }
+				 }*/
 				 else {
 					 if (m_magicmocelList[number].s_enemyidlist.count(enemy->GetNumber()) == 0) {
 						 m_magicmocelList[number].s_enemyidlist[enemy->GetNumber()] = m_magicmocelList[number].s_hittimer;
 						 //エネミーにダメージ
+						 m_damage = m_damage * (m_randDamage + rand() % 10) / 100;
 						 enemy->Damage(m_damage, id);
 						 //もしエネミーのHPが0以下になったら
 						 if (enemy->GetDeath()) {
@@ -325,8 +335,10 @@ bool ShotMagic::Start()
 	 m_deletetime = m_deletetime3;
 	 m_modelnumber = m_modelnumber3;
 	 m_scale = m_scale3;
-	 m_position = m_position; //+CVector3::AxisY()*60.0f;
+	 //m_position = m_position; //+CVector3::AxisY()*60.0f;
 	 m_movespeed = m_directionplayer * m_multiplyspeed3;
+	 m_directionplayer.y = 0.0f;
+	 m_position += m_directionplayer * 250.0f;
 	 SetCollisionModelnoDamage(m_position, m_collisionscale3, m_id, m_scale, m_modelcount, true,m_hittime3);
 	 m_damage /= m_modelnumber;
 	 m_damage /= m_multihit;

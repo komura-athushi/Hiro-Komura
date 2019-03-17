@@ -188,6 +188,7 @@
     <ClCompile Include="Kurage3.cpp" />
     <ClCompile Include="Enemy_Wind.cpp" />
     <ClCompile Include="FontNumber.cpp" />
+    <ClCompile Include="Enemy_Ice.cpp" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Asset\modelData\Sword\AncientWarriorBlade.FBX">
@@ -370,6 +371,7 @@
     <ClInclude Include="Kurage3.h" />
     <ClInclude Include="Enemy_Wind.h" />
     <ClInclude Include="FontNumber.h" />
+    <ClInclude Include="Enemy_Ice.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Assets">

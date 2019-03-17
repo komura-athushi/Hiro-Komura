@@ -481,8 +481,13 @@ void Player::AnimationController()
 		break;
 	case enState_Aria:
 		if (m_skinModelRender->GetAnimCon().IsPlaying() || m_isjump == true) {
+			if (m_MagicId == 6) {
+				m_skinModelRender->GetAnimCon().SetSpeed(1.0f * m_ariaspeed * GetDeltaTimeSec() * 0.5f);
+			}
+			else {
+				m_skinModelRender->GetAnimCon().SetSpeed(1.0f * m_ariaspeed * GetDeltaTimeSec());
+			}
 			m_skinModelRender->GetAnimCon().Play(enAnimationClip_aria, 0.2f);
-			m_skinModelRender->GetAnimCon().SetSpeed(1.0f * 60.0f * GetDeltaTimeSec());
 			Animation();
 			m_isjump = false;
 			m_timer = 0;
@@ -504,7 +509,7 @@ void Player::AnimationController()
 				}
 			}
 			else {
-				if (m_timer >= 20) {
+				if (m_timer >= m_ariaposetime) {
 					if (m_movespeed.LengthSq() > 40.0f * 40.0f) {
 						m_state = enState_Run;
 					}

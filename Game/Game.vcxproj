@@ -238,6 +238,7 @@
     <ClCompile Include="Cagliostro_view.cpp" />
     <ClCompile Include="DropItem.cpp" />
     <ClCompile Include="DropMaterial.cpp" />
+    <ClCompile Include="Enemy_Ice.cpp" />
     <ClCompile Include="Enemy_Wind.cpp" />
     <ClCompile Include="Fade.cpp" />
     <ClCompile Include="FontNumber.cpp" />
@@ -288,6 +289,7 @@
     <ClInclude Include="Cagliostro_view.h" />
     <ClInclude Include="DropItem.h" />
     <ClInclude Include="DropMaterial.h" />
+    <ClInclude Include="Enemy_Ice.h" />
     <ClInclude Include="Enemy_Wind.h" />
     <ClInclude Include="Fade.h" />
     <ClInclude Include="FontNumber.h" />

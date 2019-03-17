@@ -65,10 +65,10 @@ private:
 	float m_r = 150.0f;                                         //コリジョンの半径
 	float m_collisionheight = 270.0f;                           //コリジョンをm_positionからどれだけ上にあげるか
 	//Bossの色々なステータス
-	static const int m_MaxHP = 900;                             //最大HP
-	static const int m_Attack1 = 20;							//攻撃力1
-	static const int m_Attack2 = 30;							//攻撃力2
-	static const int m_Attack3 = 40;							//攻撃力3
+	static const int m_MaxHP = 1800;                             //最大HP
+	static const int m_Attack1 = 50;							//攻撃力1
+	static const int m_Attack2 = 100;							//攻撃力2
+	static const int m_Attack3 = 90;							//攻撃力3
 	static const int m_EXP = 500;                               //経験値
 	static const int m_dropChances[];				            //エネミーのドロップするアイテム、[1]が10ならレア度1が10%でドロップするみたいな
 	static const int m_dropmaterialChances[];

@@ -108,5 +108,7 @@ private:
 	int m_level = 0;
 	bool m_isstrength = false;									  //•Ší‚Ì‹­‰»‚ª‚Å‚«‚é‚©‚Ç‚¤‚©
 	const float m_sevolume = 2.0f;
+	CVector2 m_FontSize = { 0.5f,0.5f };
+	static const int m_limitweaponlv = 6;
 };
 

@@ -319,5 +319,7 @@ private:
 	bool m_isbackchoice = false;
 	CSprite m_window;
 	const int m_randDamage = 95;
+	int m_ariaposetime = 20;
+	const float m_ariaspeed = 30.0f;
 };
 

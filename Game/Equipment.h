@@ -23,6 +23,8 @@ public:
 	void PlusExp(const int& exp);
 	//経験値を仮に与えた場合にステータスを計算
 	void KariPlusExp(const int& exp);
+	//素材にしたときの経験値を取得
+	int GetMaterialExp(const int& id) const; 
 	//武器の番号を取得
 	int GetId() const
 	{
@@ -96,7 +98,7 @@ public:
 	//強化コスト(メセタ)を取得
 	int GetCost() const
 	{
-		return (m_weaponextend + 1) * m_meseta * m_costmultiply;
+		return pow(2.0f, m_Rarity) * m_weaponextend * 50 + 50;
 	}
 	//特殊能力の数を取得
 	int GetAbilityNumber() const
@@ -128,11 +130,6 @@ public:
 	{
 		return m_kariNextExp;
 	}
-	//素材にしたときの経験値を取得
-	int GetMaterialExp() const
-	{
-		return (m_weaponextend + 1) * m_explevel1 * 0.6f;
-	}
 	//アビリティの合計値の値を持っているアビリティクラスのポインタを返す
 	Ability* GetAbility() const
 	{
@@ -150,9 +147,6 @@ private:
 	int m_Exp = 0;                                        //経験値
 	int m_NextExp = 0;                                    //次のレベルアップに必要な経験値
 	int m_LevelExp = 0;                                   //レベルごとに必要な累計経験値
-	int m_explevel1 = 50;						          //レベル1までに必要な経験値
-	const int m_expcost = 1.5f;							  //レベルが上がるごとに必要な経験値の乗算
-	const float m_exprarity = 0.3f;					      //レアリティごとにレベルアップに必要な経験値を乗算
 	int m_SwordMattack = 0;                               //武器の魔法攻撃力
 	int m_protSwordMattack = 0;							  //武器の初期の魔法攻撃力
 	int m_SwordAttack = 0;                                //武器の攻撃力
@@ -166,7 +160,7 @@ private:
 	const wchar_t* m_MagicName;						      //魔法の名前
 	float m_DamageRate;									  //魔法のダメージ倍率
 	int m_PPCost;                                         //魔法を放つのに必要なPP
-	int m_weaponextend = 0;                               //武器エクステンドレベル
+	int m_weaponextend = 1;                               //武器エクステンドレベル
 	int m_meseta = 0;									  //売却時に獲得できるメセタの額
 	GameData* m_gamedata;                                 //GameDataクラスのポインタ
 	Weapon* m_weapon;									  //Weaponクラスのポインタ

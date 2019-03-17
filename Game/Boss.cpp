@@ -43,9 +43,8 @@ void Boss::Attack()
 {
 	//プレイヤーの座標を取得
 	CVector3 m_playerposition = m_player->GetPosition();
-	m_playerposition.y += 100.0f;
 
-	if(m_HP >= 600) {
+	if(m_HP >= m_MaxHP * 2 / 3) {
 		if (m_timer >= m_cooltime) {
 			/*BossAttack* bossattack = new BossAttack;
 			bossattack->SetName(L"bossattack");
@@ -74,7 +73,7 @@ void Boss::Attack()
 			m_timer = 0;
 		}
 	}
-	else if(m_HP >= 300) {
+	else if(m_HP >= m_MaxHP / 3) {
 		if (m_timer >= m_cooltime) {
 			CVector3 l_pos = m_position;
 			l_pos.y += 70.0f;
@@ -107,7 +106,8 @@ void Boss::Attack()
 				sm->SetDamage(m_Attack3);
 				sm->SetEnemy();
 				sm->SetId(5);
-				sm->SetSpeed(0.7f);
+				//sm->SetSpeed(0.7f);
+				m_timer = 0;
 			}
 		}
 	}

@@ -102,15 +102,15 @@ void Merchant::Base()
 				0.3f);
 		}
 		wchar_t output[50];
-		if (m_playerstatus->GetEuipment(i)->GetLv() != 5) {
-			swprintf_s(output, L"武器Lv %d\n強化費用 %dM\n", m_playerstatus->GetEuipment(i)->GetLv(), m_playerstatus->GetEuipment(i)->GetCost());
+		if (m_playerstatus->GetEuipment(i)->GetLv() != m_limitweaponlv) {
+			swprintf_s(output, L"R%d\n%ls  \n武器Lv  %d\n", m_playerstatus->GetEuipment(i)->GetRarity(), m_playerstatus->GetEuipment(i)->GetName(), m_playerstatus->GetEuipment(i)->GetLv());
 		}
 		else {
-			swprintf_s(output, L"武器Lv %d\n", m_playerstatus->GetEuipment(i)->GetLv());
+			swprintf_s(output, L"R%d\n%ls  \n武器Lv  %d\n", m_playerstatus->GetEuipment(i)->GetRarity(), m_playerstatus->GetEuipment(i)->GetName(), m_playerstatus->GetEuipment(i)->GetLv());
 		}
 		CVector2 pos2 = pos;
 		pos2.x += 100.0f;
-		m_spritefont[i]->DrawScreenPos(output, pos2, CVector4::White(), { 0.7f,0.7f });
+		m_spritefont[i]->DrawScreenPos(output, pos2, CVector4::White(), m_FontSize);
 		pos.y += 70.0f;
 	}
 	m_cursor.DrawScreenPos(m_aiconposition, m_aiconscale, CVector2::Zero(),
@@ -145,7 +145,7 @@ void Merchant::Base()
 		}
 	}
 	if (Pad(0).GetButton(enButtonA) && m_button) {
-		if (m_playerstatus->GetEuipment(m_swordid2)->GetLv() == 5) {
+		if (m_playerstatus->GetEuipment(m_swordid2)->GetLv() == m_limitweaponlv) {
 		}
 		else {
 			m_state = enState_Material;
@@ -168,6 +168,34 @@ void Merchant::Base()
 		{ 1.0f, 1.0f, 1.0f, 1.0f },
 		DirectX::SpriteEffects_None,
 		0.8f);
+	//ベース
+	wchar_t output2[10];
+	swprintf_s(output2, L"ベース\n");
+	m_font.DrawScreenPos(output2, { 150.0f,20.0f }, { 225.0f,000.0f,000.0,1.0f }, { 0.6f,0.6f },
+		CVector2::Zero(),
+		0.0f,
+		DirectX::SpriteEffects_None,
+		1.0f
+	);
+	m_back.DrawScreenPos({ 150.0f,50.0f }, CVector3::One(), CVector2::Zero(),
+		0.0f,
+		{ 1.0f, 1.0f, 1.0f, 0.7f },
+		DirectX::SpriteEffects_None,
+		0.8f);
+	m_spritelist[m_swordid2]->DrawScreenPos({ 150.0f,50.0f }, { 0.313f,0.3f }, CVector2::Zero(),
+		0.0f,
+		{ 1.0f, 1.0f, 1.0f, 0.7f },
+		DirectX::SpriteEffects_None,
+		0.7f);
+	wchar_t output4[150];
+	swprintf_s(output4, L"武器Lv.%d\n打  %d\n法  %d\n１  %ls\n２  %ls\n３  %ls\n経験値\n累計      %d\n次Lvまで  %d\n", m_playerstatus->GetEuipment(m_swordid2)->GetLv(), m_playerstatus->GetEuipment(m_swordid2)->GetAtk(), m_playerstatus->GetEuipment(m_swordid2)->GetMatk(),
+		m_playerstatus->GetEuipment(m_swordid2)->GetAbilityName(1), m_playerstatus->GetEuipment(m_swordid2)->GetAbilityName(2), m_playerstatus->GetEuipment(m_swordid2)->GetAbilityName(3), m_playerstatus->GetEuipment(m_swordid2)->GetExp(), m_playerstatus->GetEuipment(m_swordid2)->GetNextExp());
+	m_font.DrawScreenPos(output4, { 150.0f,200.0f }, CVector4::White(), { 0.5f,0.5f },
+		CVector2::Zero(),
+		0.0f,
+		DirectX::SpriteEffects_None,
+		0.7f
+	);
 }
 
 void Merchant::Material()
@@ -194,15 +222,10 @@ void Merchant::Material()
 				0.3f);
 		}
 		wchar_t output[30];
-		if (m_playerstatus->GetEuipment(i)->GetLv() != 5) {
-			swprintf_s(output, L"武器Lv %d\n経験値 +%d\n", m_playerstatus->GetEuipment(i)->GetLv(), m_playerstatus->GetEuipment(i)->GetMaterialExp());
-		}
-		else {
-			swprintf_s(output, L"武器Lv %d\n", m_playerstatus->GetEuipment(i)->GetLv());
-		}
+		swprintf_s(output, L"経験値  %d\n強化費用  %dM\n", m_playerstatus->GetEuipment(i)->GetMaterialExp(m_playerstatus->GetEuipment(m_swordid2)->GetId()), m_playerstatus->GetEuipment(i)->GetCost());
 		CVector2 pos2 = pos;
 		pos2.x += 100.0f;
-		m_spritefont[i]->DrawScreenPos(output, pos2, CVector4::White(), { 0.7f,0.7f });
+		m_spritefont[i]->DrawScreenPos(output, pos2, CVector4::White(), m_FontSize);
 		pos.y += 70.0f;
 	}
 	m_cursor.DrawScreenPos(m_aiconposition, m_aiconscale, CVector2::Zero(),
@@ -258,15 +281,68 @@ void Merchant::Material()
 		{ 1.0f, 1.0f, 1.0f, 1.0f },
 		DirectX::SpriteEffects_None,
 		0.8f);
+	//ベース
+	wchar_t output2[10];
+	swprintf_s(output2, L"ベース\n");
+	m_font.DrawScreenPos(output2, { 150.0f,20.0f }, { 225.0f,000.0f,000.0,1.0f }, { 0.6f,0.6f },
+		CVector2::Zero(),
+		0.0f,
+		DirectX::SpriteEffects_None,
+		1.0f
+	);
+	m_back.DrawScreenPos({ 150.0f,50.0f }, CVector3::One(), CVector2::Zero(),
+		0.0f,
+		{ 1.0f, 1.0f, 1.0f, 0.7f },
+		DirectX::SpriteEffects_None,
+		0.8f);
+	m_spritelist[m_swordid2]->DrawScreenPos({ 150.0f,50.0f }, { 0.313f,0.3f }, CVector2::Zero(),
+		0.0f,
+		{ 1.0f, 1.0f, 1.0f, 0.7f },
+		DirectX::SpriteEffects_None,
+		0.7f);
+	wchar_t output4[150];
+	swprintf_s(output4, L"武器Lv.%d\n打  %d\n法  %d\n１  %ls\n２  %ls\n３  %ls\n経験値\n累計      %d\n次Lvまで  %d\n", m_playerstatus->GetEuipment(m_swordid2)->GetLv(), m_playerstatus->GetEuipment(m_swordid2)->GetAtk(), m_playerstatus->GetEuipment(m_swordid2)->GetMatk(),
+		m_playerstatus->GetEuipment(m_swordid2)->GetAbilityName(1), m_playerstatus->GetEuipment(m_swordid2)->GetAbilityName(2), m_playerstatus->GetEuipment(m_swordid2)->GetAbilityName(3), m_playerstatus->GetEuipment(m_swordid2)->GetExp(), m_playerstatus->GetEuipment(m_swordid2)->GetNextExp());
+	m_font.DrawScreenPos(output4, { 150.0f,200.0f }, CVector4::White(), { 0.5f,0.5f },
+		CVector2::Zero(),
+		0.0f,
+		DirectX::SpriteEffects_None,
+		0.7f
+	);
+	//素材
+	wchar_t output3[10];
+	swprintf_s(output3, L"素材\n");
+	m_font.DrawScreenPos(output3, { 500.0f,20.0f }, { 200.0f,200.0f,200.0,1.0f }, { 0.6f,0.6f },
+		CVector2::Zero(),
+		0.0f,
+		DirectX::SpriteEffects_None,
+		1.0f
+	);
+	m_back.DrawScreenPos({ 500.0f,50.0f }, CVector3::One(), CVector2::Zero(),
+		0.0f,
+		{ 1.0f, 1.0f, 1.0f, 0.7f },
+		DirectX::SpriteEffects_None,
+		0.8f);
+	m_spritelist[m_swordid3]->DrawScreenPos({ 500.0f,50.0f }, { 0.313f,0.3f }, CVector2::Zero(),
+		0.0f,
+		{ 1.0f, 1.0f, 1.0f, 0.7f },
+		DirectX::SpriteEffects_None,
+		0.7f);
+	wchar_t output5[150];
+	swprintf_s(output5, L"武器Lv.%d\n打  %d\n法  %d\n１  %ls\n２  %ls\n３  %ls\n経験値   +%d\n", m_playerstatus->GetEuipment(m_swordid3)->GetLv(), m_playerstatus->GetEuipment(m_swordid3)->GetAtk(), m_playerstatus->GetEuipment(m_swordid3)->GetMatk(),
+		m_playerstatus->GetEuipment(m_swordid3)->GetAbilityName(1), m_playerstatus->GetEuipment(m_swordid3)->GetAbilityName(2), m_playerstatus->GetEuipment(m_swordid3)->GetAbilityName(3), m_playerstatus->GetEuipment(m_swordid3)->GetMaterialExp(m_playerstatus->GetEuipment(m_swordid2)->GetId()));
+	m_font.DrawScreenPos(output5, { 500.0f,200.0f }, CVector4::White(), { 0.5f,0.5f },
+		CVector2::Zero(),
+		0.0f,
+		DirectX::SpriteEffects_None,
+		0.7f
+	);
 }
 
 void Merchant::Decision()
 {
 	if (!m_isspriteInit) {
-		m_basesprite.Init(m_playerstatus->GetSpriteName(m_playerstatus->GetWeaponNumber(m_swordid2)));
-		m_materialsprite.Init(m_playerstatus->GetSpriteName(m_playerstatus->GetWeaponNumber(m_swordid3)));
-		m_upgradesprite.Init(m_playerstatus->GetSpriteName(m_playerstatus->GetWeaponNumber(m_swordid2)));
-		int ep = m_playerstatus->GetEuipment(m_swordid3)->GetMaterialExp();
+		int ep = m_playerstatus->GetEuipment(m_swordid3)->GetMaterialExp(m_playerstatus->GetEuipment(m_swordid2)->GetId());
 		m_playerstatus->GetEuipment(m_swordid2)->KariPlusExp(ep);
 		m_level = m_playerstatus->GetEuipment(m_swordid2)->GetKariLv();
 		m_isspriteInit = true;
@@ -285,7 +361,7 @@ void Merchant::Decision()
 		{ 1.0f, 1.0f, 1.0f, 0.7f },
 		DirectX::SpriteEffects_None,
 		0.8f);
-	m_basesprite.DrawScreenPos({ 150.0f,50.0f }, {0.313f,0.3f}, CVector2::Zero(),
+	m_spritelist[m_swordid2]->DrawScreenPos({ 150.0f,50.0f }, {0.313f,0.3f}, CVector2::Zero(),
 		0.0f,
 		{ 1.0f, 1.0f, 1.0f, 0.7f },
 		DirectX::SpriteEffects_None,
@@ -313,14 +389,14 @@ void Merchant::Decision()
 		{ 1.0f, 1.0f, 1.0f, 0.7f },
 		DirectX::SpriteEffects_None,
 		0.8f);
-	m_materialsprite.DrawScreenPos({ 500.0f,50.0f }, {0.313f,0.3f}, CVector2::Zero(),
+	m_spritelist[m_swordid3]->DrawScreenPos({ 500.0f,50.0f }, {0.313f,0.3f}, CVector2::Zero(),
 		0.0f,
 		{ 1.0f, 1.0f, 1.0f, 0.7f },
 		DirectX::SpriteEffects_None,
 		0.7f);
 	wchar_t output5[150];
 	swprintf_s(output5, L"武器Lv.%d\n打  %d\n法  %d\n１  %ls\n２  %ls\n３  %ls\n経験値   +%d\n", m_playerstatus->GetEuipment(m_swordid3)->GetLv(), m_playerstatus->GetEuipment(m_swordid3)->GetAtk(), m_playerstatus->GetEuipment(m_swordid3)->GetMatk(),
-		m_playerstatus->GetEuipment(m_swordid3)->GetAbilityName(1), m_playerstatus->GetEuipment(m_swordid3)->GetAbilityName(2), m_playerstatus->GetEuipment(m_swordid3)->GetAbilityName(3), m_playerstatus->GetEuipment(m_swordid3)->GetMaterialExp());
+		m_playerstatus->GetEuipment(m_swordid3)->GetAbilityName(1), m_playerstatus->GetEuipment(m_swordid3)->GetAbilityName(2), m_playerstatus->GetEuipment(m_swordid3)->GetAbilityName(3), m_playerstatus->GetEuipment(m_swordid3)->GetMaterialExp(m_playerstatus->GetEuipment(m_swordid2)->GetId()));
 	m_font.DrawScreenPos(output5, { 500.0f,200.0f }, CVector4::White(), { 0.5f,0.5f },
 		CVector2::Zero(),
 		0.0f,
@@ -341,7 +417,7 @@ void Merchant::Decision()
 		{ 1.0f, 1.0f, 1.0f, 0.7f },
 		DirectX::SpriteEffects_None,
 		0.8f);
-	m_upgradesprite.DrawScreenPos({ 1000.0f,50.0f }, { 0.313f,0.3f }, CVector2::Zero(),
+	m_spritelist[m_swordid2]->DrawScreenPos({ 1000.0f,50.0f }, { 0.313f,0.3f }, CVector2::Zero(),
 		0.0f,
 		{ 1.0f, 1.0f, 1.0f, 0.7f },
 		DirectX::SpriteEffects_None,
@@ -356,7 +432,7 @@ void Merchant::Decision()
 		0.7f
 	);
  	wchar_t output[20];
-	if (m_playerstatus->GetEuipment(m_swordid2)->GetCost() < m_playerstatus->GetHaveMeseta()) {
+	if (m_playerstatus->GetEuipment(m_swordid3)->GetCost() < m_playerstatus->GetHaveMeseta()) {
 		swprintf_s(output, L"強化しますか？\n");
 		m_isstrength = true;
 	}
@@ -376,7 +452,7 @@ void Merchant::Decision()
 		DirectX::SpriteEffects_None,
 		0.8f);
 	wchar_t output9[50];
-	swprintf_s(output9, L"所持メセタ  %dM\n強化費用    %dM",m_playerstatus->GetHaveMeseta(), m_playerstatus->GetEuipment(m_swordid2)->GetCost());
+	swprintf_s(output9, L"所持メセタ  %dM\n強化費用    %dM",m_playerstatus->GetHaveMeseta(), m_playerstatus->GetEuipment(m_swordid3)->GetCost());
 	m_font.DrawScreenPos(output9, { 750.0f,392.0f }, CVector4::White(), { 0.5f,0.5f },
 		CVector2::Zero(),
 		0.0f,
@@ -392,8 +468,8 @@ void Merchant::Decision()
 		m_button = true;
 	}
 	if (Pad(0).GetButton(enButtonA) && m_button && m_isstrength) {
-		m_playerstatus->GetEuipment(m_swordid2)->PlusExp(m_playerstatus->GetEuipment(m_swordid3)->GetMaterialExp());
-		m_playerstatus->CutMeseta(m_playerstatus->GetEuipment(m_swordid2)->GetCost());
+		m_playerstatus->GetEuipment(m_swordid2)->PlusExp(m_playerstatus->GetEuipment(m_swordid3)->GetMaterialExp(m_playerstatus->GetEuipment(m_swordid2)->GetId()));
+		m_playerstatus->CutMeseta(m_playerstatus->GetEuipment(m_swordid3)->GetCost());
 		m_playerstatus->DeleteEquipment(m_swordid3);
 		m_playerstatus->SetStatus();
 		m_player->SetStatus();
@@ -424,7 +500,7 @@ void Merchant::Upgrade()
 		{ 1.0f, 1.0f, 1.0f, 0.7f },
 		DirectX::SpriteEffects_None,
 		0.8f);
-	m_upgradesprite.DrawScreenPos({ 600.0f,50.0f }, { 0.313f,0.3f }, CVector2::Zero(),
+	m_spritelist[m_swordid2]->DrawScreenPos({ 600.0f,50.0f }, { 0.313f,0.3f }, CVector2::Zero(),
 		0.0f,
 		{ 1.0f, 1.0f, 1.0f, 0.7f },
 		DirectX::SpriteEffects_None,

@@ -188,7 +188,7 @@ private:
 	//ザンバース
 	const float m_deletetime3 = 60.0f;
 	static const int m_modelnumber3 = 1;
-	const CVector3 m_scale3 = { 5.0f,5.0f,5.0f };
+	const CVector3 m_scale3 = { 3.5f,3.5f,3.5f };
 	const float m_collisionscale3 = 225.0f;
 	const float m_multiplyspeed3 = 0.0f;
 	const int m_multihit = 2;
