@@ -66,13 +66,13 @@ public:
 		return m_weight;
 	}
 private:
-	int m_id = 0;
-	const wchar_t* m_abilityname = nullptr;
-	int m_power = 0;
-	int m_mpower = 0;
-	int m_hp = 0;
-	int m_pp = 0;
-	int m_group = 0;
-	int m_weight = 0;
+	int m_id = 0;											//アビリティの番号
+	const wchar_t* m_abilityname = nullptr;					//アビリティの名前
+	int m_power = 0;										//打撃力
+	int m_mpower = 0;										//法撃力
+	int m_hp = 0;											//体力
+	int m_pp = 0;											//pp
+	int m_group = 0;										//グループ
+	int m_weight = 0;										//抽選の高さ
 };
 

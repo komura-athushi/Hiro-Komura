@@ -4,7 +4,7 @@
 #include "Material.h"
 #include "Ability.h"
 class Enemy;
-//データクラスのインスタンスを生成するクラスです
+//ゲームの色々なデータを持っているクラスです
 class GameData:public IGameObject
 {
 	//シングルトン、そのクラスのインスタンスが一つしか存在しえないことを示すデザインパターンの一つです

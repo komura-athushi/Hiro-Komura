@@ -67,9 +67,9 @@ private:
 	CVector3 m_playerposition;                             //プレイヤーの座標
 	Player* m_player;                                      //プレイヤークラスのポインタ
 	float m_topos = 80.0f;
-	CVector3 m_front = CVector3::Zero();
-	CVector3 m_right = CVector3::Zero();
+	CVector3 m_front = CVector3::Zero();				   //カメラの正面のベクトル
+	CVector3 m_right = CVector3::Zero();				   //カメラの右方向のベクトル
 	float m_timer = 0.0f;								  //時間経過で変動させる変数、ロック時は1、非ロック時は0にする
-	CVector3 m_locktarget = CVector3::Zero();
+	CVector3 m_locktarget = CVector3::Zero();			   //ターゲット中の座標
 };
 

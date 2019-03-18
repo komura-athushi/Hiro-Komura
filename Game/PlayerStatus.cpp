@@ -187,18 +187,6 @@ void PlayerStatus::PostRender()
 
 }
 
-void PlayerStatus::WeaponStrengthen(const int& number)
-{
-	if (m_havemeseta >= m_equipmentlist[number]->GetCost()) {
-		m_havemeseta -= m_equipmentlist[number]->GetCost();
-		m_equipmentlist[number]->Strengthen();
-		if (m_SwordId == number) {
-			SetWeaponStatus();
-			SetMagicStatus();
-		}
-	}
-}
-
 void PlayerStatus::SetStatus()
 {
 	SetWeaponStatus();

@@ -59,6 +59,7 @@ bool GameData::Start()
 	m_abilitylist.push_back(new Ability(17, L"キャスター"       , 6, 1,   0, 40,-40,  0));
 	m_abilitylist.push_back(new Ability(18, L"セイバー"         , 6, 1,  25,  0, 25,  0));
 	m_abilitylist.push_back(new Ability(19, L"テクター"         , 6, 1,   0, 25, 25,  0));
+	//特殊能力の色々な値を計算
 	for (int i = 0; i < m_abilitylist.size(); i++) {
 		m_totalabilityweight += m_abilitylist[i]->GetWeight();
 		if (m_abilitygroupnumber != m_abilitylist[i]->GetGroup()) {

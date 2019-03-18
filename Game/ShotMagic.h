@@ -225,6 +225,6 @@ private:
 	const CVector3 m_scale7 = { 2.0f,2.0f,2.0f };
 	const float m_collisionscale7 = 90.0f;
 	const float m_multiplyspeed7 = 0.0f;
-	int m_magicnumber = 0;
+	int m_magicnumber = 0;										//それぞれのShotMagicクラスのインスタンスを区別するための番号です
 };
 

@@ -92,6 +92,7 @@ bool Game::Start()
 	m_color.Normalize();
 	m_lig->SetDirection(m_color);
 	m_lig->SetColor({ 1.0f, 1.0f, 1.0f });
+	//カスケードシャドウ、カメラとの距離に応じてシャドウの解像度を変える？とかなんとか
 	m_CascadeShadowmap = new CascadeShadowHandler;
 
 	//初期化
@@ -260,6 +261,7 @@ bool Game::Start()
 	m_player->SetCamera(m_gamecamera);
 	m_fade = FindGO<Fade>();
 	m_fade->StartFadeIn();
+	//ステージに応じて流すBGMを変化させます
 	MainSound* ms = FindGO<MainSound>();
 	if (m_stagenumber == 1) {
 		ms->SetBGM(2);
@@ -292,8 +294,9 @@ void Game::Update()
 		}
 	}
 	else {
-		//プレイヤーがゲームオーバーあるいはゲームクリアで拠点に遷移
+		//プレイヤーのシーン遷移フラグがオンになればシーン遷移します
 		if (m_player->GetTransScene()) {
+			//プレイヤーのクリアフラグがオンになれば、GameDataのステージごとのクリアフラグをオンにします
 			if (m_player->GetGameClear()) {
 				m_gamedata->SetClear(m_stagenumber - 1);
 				if (m_stagenumber == 3 && !m_gamedata->GetisGameClear()) {

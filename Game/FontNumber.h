@@ -25,14 +25,14 @@ public:
 		m_isred = true;
 	}
 private:
-	std::vector<int> m_numberlist;						//引数で受け取った数字を記憶する
+	std::vector<int> m_numberlist;						//引数で受け取った数字を記憶する、154なら{1, 5, 4}みたいな感じで
 	std::vector<CSprite*> m_spritelist;					//CSpriteの可変長配列
 	CVector3 m_position;								//受け取った座標
 	CVector3 m_spriteposition;							//スクリーン座標
 	CVector2 m_scale = { 0.3f,0.3f};
 	CVector3 m_plusposition = CVector3::Zero();			//ランダムに座標を変える
-	const float m_addx = -0.016f;
-	const float m_addy = -0.0015f;
+	const float m_addx = -0.016f;						//表示する数字をx方向に少しずつずらします
+	const float m_addy = -0.0015f;						//表示する数字を少しずつ上に動くようにします
 	float m_y = 0.0f;
 	const float m_frame = 40.0f;
 	float m_alpha = 1.0f;
@@ -40,7 +40,7 @@ private:
 	const int m_time = 40;								//タイマーの制限
 	GameCamera* m_gamecamera = nullptr;
 	GameData* m_gamedata = nullptr;
-	int m_number;
+	int m_number;										//受け取った数値を記憶します
 	bool m_isred = false;
 };
 

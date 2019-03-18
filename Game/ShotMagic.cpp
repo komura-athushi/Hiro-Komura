@@ -112,10 +112,10 @@ bool ShotMagic::Start()
 	 }
 }
  void ShotMagic::SetCollisionModel(const int& magicnumber, const CVector3& pos, const float& scale,const int& id, const CVector3& scl, const int& number, bool damage, float time)
- {
+ {	
 	 GameObj::Suicider::CEffekseer* effect = new GameObj::Suicider::CEffekseer;
 	 SuicideObj::CCollisionObj* attackCol = NewGO<SuicideObj::CCollisionObj>();
-	 //MagicModelクラスの可変長配列に生成したモデルとコリジョンを格納します
+	 //MagicModel構造体の可変長配列に生成したモデルとコリジョンを格納します
 	 m_magicmocelList.push_back({ effect,attackCol });
 	 switch (m_id) {
 	 case 1:

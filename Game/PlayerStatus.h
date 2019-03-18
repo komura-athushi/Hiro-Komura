@@ -32,8 +32,6 @@ public:
 	void SetWeapon(Equipment* number);
 	//文字表示
 	void PostRender()override;
-	//該当の武器の強化費用より所持メセタが多い場合、武器の強化を実行します
-	void WeaponStrengthen(const int& number);
 	//該当の番号の武器を削除
 	void DeleteEquipment(const int& number);
 	//武器強化によるステータスを更新

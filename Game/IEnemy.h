@@ -2,8 +2,8 @@
 #include "Weapon.h"
 #include "Material.h"
 class GameCamera;
-//エネミーの基本クラスです
-//HPやドロップ、削除の処理などはこのクラスで処理します
+//全エネミーの基本クラスです
+//HPやドロップ、コリジョンの処理などはこのクラスで処理します
 class IEnemy : public IGameObject
 {
 public:

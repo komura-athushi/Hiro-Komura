@@ -1,5 +1,6 @@
 #pragma once
 class Fade;
+//ƒQ[ƒ€‚ğƒNƒŠƒA‚µ‚½‚Æ‚«‚ÉŒÄ‚Ñ‚¾‚³‚ê‚é‰æ–Ê
 class GameClear:public IGameObject
 {
 public:

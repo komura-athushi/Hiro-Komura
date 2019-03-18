@@ -15,8 +15,6 @@ public:
 	void SetWeaponStatus();
 	//魔法のステータスを設定
 	void SetMagicStatus();
-	//武器を強化する
-	void Strengthen();
 	//該当の特殊能力の名前を取得
 	const wchar_t* GetAbilityName(const int& number);
 	//経験値を加算
