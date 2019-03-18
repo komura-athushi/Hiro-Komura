@@ -76,6 +76,8 @@ bool ShotMagic::Start()
 	 case 5:
 		 MagicSphereUpdate();
 		 break;
+	 case 7:
+		 HaouUpdate();
 	 }
 	 int i = 0;
 	 //MagciModel構造体の可変長配列にアクセスします
@@ -307,6 +309,33 @@ bool ShotMagic::Start()
 		 }
 	 }
 	 );
+	 if (id == 7) {
+		 //攻撃判定の発生
+		 SuicideObj::CCollisionObj* attackCol = NewGO<SuicideObj::CCollisionObj>();
+		 attackCol->CreateSphere(pos, CQuaternion::Identity(), scale * m_multiply7);
+		 //寿命を設定
+		 attackCol->SetTimer(10);
+		 attackCol->SetCallback([&](SuicideObj::CCollisionObj::SCallbackParam& param) {
+			  //衝突した判定の名前が"IEnemy"ならm_Attack分だけダメージ与える
+			 if (param.EqualName(L"IEnemy")) {
+				 IEnemy* enemy = param.GetClass<IEnemy>();//相手の判定に設定されているCEnemyのポインタを取得
+				 if (m_magicmocelList[number].s_enemyidlist.count(enemy->GetNumber()) == 0) {
+					 m_magicmocelList[number].s_enemyidlist[enemy->GetNumber()] = m_magicmocelList[number].s_hittimer;
+					 //エネミーにダメージ
+					 m_damage = m_damage * (m_randDamage + rand() % 10) / 100;
+					 enemy->Damage(m_damage, id);
+					 //もしエネミーのHPが0以下になったら
+					 if (enemy->GetDeath()) {
+						 //エネミーの経験値をプレイヤーの経験値に加算
+						 PlayerStatus* playerstatus = FindGO<PlayerStatus>(L"PlayerStatus");
+						 playerstatus->PlusExp(enemy->GetExp());
+					 }
+
+				 }
+			 }
+		 }
+		 );
+	 }
 	 m_modelcount++;
  }
 
@@ -343,7 +372,7 @@ bool ShotMagic::Start()
 			 m_timer = 0;
 		 }
 	 }
-	 m_timer++;
+	 m_timer += 40.0f *GetDeltaTimeSec();
  }
 
  void ShotMagic::Zanbas()
@@ -421,8 +450,18 @@ bool ShotMagic::Start()
 	 m_scale = m_scale7;
 	 m_position = m_position;
 	 m_movespeed = m_directionplayer * m_multiplyspeed7;
-	 SetCollisionModelnoDamage(m_position, m_collisionscale1, m_id, m_scale, m_modelcount, true);
 	 m_damage /= m_modelnumber;
+ }
+
+ void ShotMagic::HaouUpdate()
+ {
+	 if (m_modelcount != m_modelnumber) {
+		 if (m_timer >= m_time7) {
+			 SetCollisionModelnoDamage(m_position, m_collisionscale2, m_id, m_scale, m_modelcount, true);
+			 m_timer = 0;
+		 }
+	 }
+	 m_timer += 40.0f * GetDeltaTimeSec();
  }
 
  void ShotMagic::DeleteMagicModel(const int& number)

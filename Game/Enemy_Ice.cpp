@@ -15,6 +15,7 @@ Enemy_Ice::~Enemy_Ice()
 
 bool Enemy_Ice::Start()
 {
+	m_rotation.SetRotationDeg(CVector3::AxisY(), atan2f(m_moveSpeed.x, m_moveSpeed.z));
 	m_effect = new GameObj::Suicider::CEffekseer;
 	m_effect->Play(L"Asset/effect/Effects/efk/enemy_ice_01.efk", 1.0f, m_position, m_rotation, m_scale);
 	//ƒRƒŠƒWƒ‡ƒ“

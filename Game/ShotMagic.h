@@ -61,6 +61,7 @@ public:
 	void Resta();
 	//覇王斬
 	void Haou();
+	void HaouUpdate();
 	//該当の番号のMagicModelの配列の色々を削除
 	void DeleteMagicModel(const int& number);
 	//魔法の番号を取得
@@ -158,7 +159,7 @@ private:
 	SuicideObj::CCollisionObj* m_collision;		        //丸いコリジョン
 	int m_modelnumber = 0;								//モデルの数
 	int m_modelcount = 0;								//生成したモデルの数
-	int m_timer = 0;									//複数のモデルとコリジョンを時間差ありで生成する場合のクールタイム
+	float m_timer = 0;									//複数のモデルとコリジョンを時間差ありで生成する場合のクールタイム
 	int m_timer1 = 0;
 	const float m_frame = 40.0f;
 	//スキンモデル、コリジョン、タイマー、削除したかどうか
@@ -225,6 +226,8 @@ private:
 	const CVector3 m_scale7 = { 2.0f,2.0f,2.0f };
 	const float m_collisionscale7 = 90.0f;
 	const float m_multiplyspeed7 = 0.0f;
+	const float m_multiply7 = 5.0f;
+	const int m_time7 = 50;
 	int m_magicnumber = 0;										//それぞれのShotMagicクラスのインスタンスを区別するための番号です
 };
 
