@@ -14,6 +14,7 @@ public:
 	void Chase();
 	void Attack();
 	void Aria();
+	void ChangeAttack();
 	void SetPlayer(Player* player)								//プレイヤーのポイントをセット
 	{
 		m_player = player;
@@ -54,11 +55,13 @@ private:
 	enum State {
 		enState_Chase,
 		enState_Pose,
-		enState_Attack,
+		enState_Attack,											//近接攻撃
+		enState_Attack2,										//遠距離攻撃
 	};
 	bool m_isaria = false;
 	const float m_chasedistance = 1400.0f * 1400.0f;
-	const float m_attackdistance = 230.0f * 230.0f;
+	const float m_attackdistance = 400.0f * 400.0f;
+	const float m_attackdistance2 = 1000.0f * 1000.0f;
 	State m_state = enState_Pose;
 	const float m_frame = 40.0f;
 	const float m_movespeedmultiply = 8.0f;
@@ -71,6 +74,11 @@ private:
 	float m_movetimer = 0.0f;
 	const int m_movetime = 130;
 	float m_attacktimer = 0.0f;
-	const int m_attacktime = 40;
+	const int m_attacktime = 20;
+	const int m_ariatime = 60;
+	const int m_attacktime2 = 30;
+	const int m_ariatime2 = 80;
+	CVector3 m_castscale = { 20.0f,20.0f,20.0f };
+	const float m_windscale = 2.0f;
 };
 

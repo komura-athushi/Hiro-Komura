@@ -74,6 +74,6 @@ private:
 	const int m_movetime = 130;
 	float m_attacktimer = 0.0f;
 	const int m_ariatime = 20;
-	const int m_attacktime = 50;
+	const int m_attacktime = 60;
 };
 

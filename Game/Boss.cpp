@@ -106,6 +106,7 @@ void Boss::Attack()
 				sm->SetDamage(m_Attack3);
 				sm->SetEnemy();
 				sm->SetId(5);
+				sm->SetName(L"MagicSphere");
 				//sm->SetSpeed(0.7f);
 				m_timer = 0;
 			}

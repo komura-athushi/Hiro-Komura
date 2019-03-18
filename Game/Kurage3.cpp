@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "Kurage3.h"
 #include "Player.h"
+#include "Enemy_Wind.h"
+#include "ShotMagic.h"
 //cppでエネミーのレア度ごとのドロップ率を設定
 const int Kurage3::m_dropChances[Weapon::m_HighestRarity] = { 0,50,0,0,0,0,0 };
 const int Kurage3::m_dropmaterialChances[Material::m_HighestRarity] = { 30.0f,0.0f,0.0f };
@@ -51,9 +53,6 @@ void Kurage3::Update()
 void Kurage3::Chase()
 {
 	CVector3 pos = m_player->GetPosition() - m_position;
-	if (pos.LengthSq() < m_attackdistance) {
-		m_state = enState_Attack;
-	}
 	if (pos.LengthSq() < m_chasedistance) {
 		switch (m_state) {
 		case enState_Chase:
@@ -63,6 +62,7 @@ void Kurage3::Chase()
 				pos *= m_movespeedmultiply;
 				m_movespeed = pos;
 				m_chasetimer = 0.0f;
+				ChangeAttack();
 			}
 			m_chasetimer += m_frame * GetDeltaTimeSec();
 			m_movetimer += m_frame * GetDeltaTimeSec();
@@ -70,6 +70,7 @@ void Kurage3::Chase()
 				m_state = enState_Pose;
 				m_chasetimer = 0.0f;
 				m_movetimer = 0.0f;
+				ChangeAttack();
 			}
 			break;
 		case enState_Pose:
@@ -78,19 +79,34 @@ void Kurage3::Chase()
 			if (m_stoptimer >= m_stoptime) {
 				m_stoptimer = 0.0f;
 				m_state = enState_Chase;
+				ChangeAttack();
 			}
 			break;
 		case enState_Attack:
 			m_movespeed = CVector3::Zero();
 			m_attacktimer += m_frame * GetDeltaTimeSec();
-			if (m_attacktimer >= m_attacktime && !m_isaria) {
+			if (m_attacktimer >= m_ariatime && !m_isaria) {
 				Aria();
 				m_attacktimer = 0.0f;
 				m_isaria = true;
 			}
-			else if (m_attacktimer >= m_attacktime / 2 && m_isaria) {
+			else if (m_attacktimer >= m_attacktime  && m_isaria) {
 				Attack();
 				m_attacktimer =0.0f;
+				m_isaria = false;
+			}
+			break;
+		case enState_Attack2:
+			m_movespeed = CVector3::Zero();
+			m_attacktimer += m_frame * GetDeltaTimeSec();
+			if (m_attacktimer >= m_ariatime2 && !m_isaria) {
+				Aria();
+				m_attacktimer = 0.0f;
+				m_isaria = true;
+			}
+			else if (m_attacktimer >= m_attacktime2 && m_isaria) {
+				Attack();
+				m_attacktimer = 0.0f;
 				m_isaria = false;
 			}
 			break;
@@ -120,12 +136,63 @@ void Kurage3::Chase()
 
 void Kurage3::Aria()
 {
-
+	GameObj::Suicider::CEffekseer* effect = new GameObj::Suicider::CEffekseer;
+	if (m_state == enState_Attack) {
+		effect->Play(L"Asset/effect/Effects/efk/cast_wind.efk", 1.0f, m_position, CQuaternion::Identity(), m_castscale);
+	}
+	else if (m_state == enState_Attack2) {
+		effect->Play(L"Asset/effect/Effects/efk/cast_sphere.efk", 1.0f, m_position, CQuaternion::Identity(), m_castscale);
+	}
+	effect->SetSpeed(2.0f);
+	//SE
+	SuicideObj::CSE* se = NewGO<SuicideObj::CSE>(L"Asset/sound/se/aria.wav");
+	se->Play(); //再生(再生が終わると削除されます)
+	se->SetVolume(m_sevolume);
+	//3D再生
+	se->SetPos(m_position);//音の位置
+	se->SetDistance(200.0f);//音が聞こえる範囲
+	se->Play(true); //第一引数をtrue
 }
 
 void Kurage3::Attack()
 {
-
+	if (m_state == enState_Attack) {
+		Enemy_Wind* ew = new Enemy_Wind;
+		ew->SetPosition(m_position);
+		ew->SetAttack(m_Attack);
+		ew->SetScale(m_windscale);
+	}
+	else if (m_state == enState_Attack2) {
+		CVector3 bulletPos = m_player->GetPosition() - m_position;
+		bulletPos.Normalize();
+		ShotMagic* sm = new ShotMagic;
+		sm->SetPosition(m_position);
+		sm->SetDirectionPlayer(bulletPos);
+		sm->SetDamage(m_Attack);
+		sm->SetEnemy();
+		sm->SetId(5);
+		sm->SetSpeed(0.7f);
+		sm->SetName(L"MagicSphere");
+	}
 	m_state = enState_Pose;
 	m_stoptimer = 0.0f;
+}
+
+void Kurage3::ChangeAttack()
+{
+	CVector3 pos = m_player->GetPosition() - m_position;
+	if (pos.LengthSq() < m_attackdistance) {
+		m_state = enState_Pose;
+		int rn = rand() % 100;
+		if (rn >= 40) {
+			m_state = enState_Attack;
+		}
+	}
+	else if (pos.LengthSq() < m_attackdistance2) {
+		m_state = enState_Pose;
+		int rn = rand() % 100;
+		if (rn >= 60) {
+			m_state = enState_Attack2;
+		}
+	}
 }

@@ -73,8 +73,8 @@ private:
 	float m_movetimer = 0.0f;
 	const int m_movetime = 180;
 	float m_attacktimer = 0.0f;
-	const int m_ariatime = 20;
-	const int m_attacktime = 50;
+	const int m_ariatime = 30;
+	const int m_attacktime = 70;
 };
 
 

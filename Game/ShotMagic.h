@@ -204,7 +204,7 @@ private:
 	const float m_deletecollisiontime5 = 10;
 	const int m_modelnumber5 = 1;
 	const CVector3 m_scale5 = { 0.5f,0.5f,0.5f };
-	const float m_collisionscale5 = 28.0f;
+	const float m_collisionscale5 = 40.0f;
 	const float m_multiplyspeed5 = 20.0f*60.0f;
 	const float m_multiply5 = 6.0f;
 	//ƒŒƒXƒ^

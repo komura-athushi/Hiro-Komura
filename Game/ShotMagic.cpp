@@ -156,7 +156,7 @@ bool ShotMagic::Start()
 			 if (param.EqualName(L"Player")) {
 				 Player* player = param.GetClass<Player>();//‘Šè‚Ì”»’è‚Éİ’è‚³‚ê‚Ä‚¢‚éCEnemy‚Ìƒ|ƒCƒ“ƒ^‚ğæ“¾
 				 if (id == 5) {
-					 ShotMagic* shotmagic = FindGO<ShotMagic>();
+					 ShotMagic* shotmagic = FindGO<ShotMagic>(L"MagicSphere");
 					 CVector3 pos = shotmagic->GetPosition(number);
 					 shotmagic->DeleteMagicModel(number);
 					 GameObj::Suicider::CEffekseer* effect = new GameObj::Suicider::CEffekseer;
@@ -268,8 +268,6 @@ bool ShotMagic::Start()
 							 PlayerStatus* playerstatus = FindGO<PlayerStatus>(L"PlayerStatus");
 							 playerstatus->PlusExp(enemy->GetExp());
 						 }
-						 ShotMagic* shotmagic = FindGO<ShotMagic>(L"ShotMagic");
-						 shotmagic->DeleteMagicModel(number);
 					 }
 				 }*/
 				 else {
@@ -284,7 +282,10 @@ bool ShotMagic::Start()
 							 PlayerStatus* playerstatus = FindGO<PlayerStatus>(L"PlayerStatus");
 							 playerstatus->PlusExp(enemy->GetExp());
 						 }
-
+						 if (id == 2) {
+							 ShotMagic* shotmagic = FindGO<ShotMagic>(L"ShotMagic");
+							 shotmagic->DeleteMagicModel(number);
+						 }
 					 }
 				 }
 			 }
