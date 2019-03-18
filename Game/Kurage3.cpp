@@ -161,6 +161,7 @@ void Kurage3::Attack()
 		ew->SetPosition(m_position);
 		ew->SetAttack(m_Attack);
 		ew->SetScale(m_windscale);
+		m_state = enState_Attack2;
 	}
 	else if (m_state == enState_Attack2) {
 		CVector3 bulletPos = m_player->GetPosition() - m_position;
@@ -173,9 +174,9 @@ void Kurage3::Attack()
 		sm->SetId(5);
 		sm->SetSpeed(0.7f);
 		sm->SetName(L"MagicSphere");
+		m_state = enState_Pose;
+		m_stoptimer = 0.0f;
 	}
-	m_state = enState_Pose;
-	m_stoptimer = 0.0f;
 }
 
 void Kurage3::ChangeAttack()
@@ -184,15 +185,8 @@ void Kurage3::ChangeAttack()
 	if (pos.LengthSq() < m_attackdistance) {
 		m_state = enState_Pose;
 		int rn = rand() % 100;
-		if (rn >= 40) {
+		if (rn >= 20) {
 			m_state = enState_Attack;
-		}
-	}
-	else if (pos.LengthSq() < m_attackdistance2) {
-		m_state = enState_Pose;
-		int rn = rand() % 100;
-		if (rn >= 60) {
-			m_state = enState_Attack2;
 		}
 	}
 }

@@ -117,7 +117,15 @@ bool Player::Start()
 	//ステータス
 	Status();
 	//武器のステータス
-	WeaponStatus();
+	m_Mattack = m_playerstatus->GetMattack();
+	m_Attack = m_playerstatus->GetAttack();
+	m_ShihutaAttack = m_Attack;
+	m_SwordId = m_playerstatus->GetSwordId();
+	m_WeaponNumber = m_playerstatus->GetWeaponNumber(m_SwordId);
+	m_SwordName = m_playerstatus->GetSwordName();
+	m_MagicId = m_playerstatus->GetMagicId();
+	m_MaxHP = m_playerstatus->GetMaxHP();
+	m_HP = m_MaxHP;
 	//魔法
 	MagicStatus();
 	if (m_cagliostro) {
@@ -534,7 +542,7 @@ void Player::AnimationController()
 
 void Player::Status()
 {
-	//プレイヤーステータスクラスの経験値をプレイヤークラスに加算
+	//プレイヤーステータスクラスの経験値をプレイヤークラスに代入
 	m_Exp = m_playerstatus->GetExp();
 	m_NextExp = m_playerstatus->GetNextExp();
 	//レベルアップしてなかったら処理を終了する
@@ -747,6 +755,8 @@ void Player::Damage(const int& attack)
 
 void Player::WeaponStatus()
 {
+	//現MaxHPにおけるHPの割合を計算する
+	float hprate = float(m_HP) / m_MaxHP;
 	m_Mattack = m_playerstatus->GetMattack();
 	m_Attack = m_playerstatus->GetAttack();
 	m_ShihutaAttack = m_Attack;
@@ -755,9 +765,10 @@ void Player::WeaponStatus()
 	m_SwordName = m_playerstatus->GetSwordName();
 	m_MagicId = m_playerstatus->GetMagicId();
 	m_MaxHP = m_playerstatus->GetMaxHP();
-	if (m_HP > m_MaxHP) {
+	m_HP = m_MaxHP * hprate;
+	/*if (m_HP > m_MaxHP) {
 		m_HP = m_MaxHP;
-	}
+	}*/
 	m_MaxPP = m_playerstatus->GetMaxPP();
 	if (m_PP > m_MaxPP) {
 		m_PP = m_MaxPP;

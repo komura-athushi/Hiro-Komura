@@ -74,10 +74,10 @@ private:
 	float m_movetimer = 0.0f;
 	const int m_movetime = 130;
 	float m_attacktimer = 0.0f;
-	const int m_attacktime = 20;
-	const int m_ariatime = 60;
-	const int m_attacktime2 = 30;
-	const int m_ariatime2 = 80;
+	const int m_ariatime = 30;
+	const int m_attacktime = 60;
+	const int m_ariatime2 = 40;
+	const int m_attacktime2 = 70;
 	CVector3 m_castscale = { 20.0f,20.0f,20.0f };
 	const float m_windscale = 2.0f;
 };
