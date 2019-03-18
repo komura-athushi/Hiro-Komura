@@ -21,6 +21,7 @@ public:
 	/*!
 	//コリジョンとモデルを設定、座標とコリジョンの大きさ
 	@brief	魔法のモデルをコリジョンを生成します
+	*int magicnumber				//撃たれた魔法の数
 	*CVector3 pos;					//座標
 	*float scale;					//コリジョンの大きさ
 	*int id;						//魔法の番号
@@ -28,7 +29,7 @@ public:
 	*bool damage;					//trueでダメージありのコリジョンを生成します
 	*float time;					//ヒットタイム
 	*/
-	void SetCollisionModel(const CVector3& pos, const float& scale, const int& id, const CVector3& scl = CVector3::Zero(), const int& number = 0, bool damage = true, float time = 0.0f);
+	void SetCollisionModel(const int& magicnumber, const CVector3& pos, const float& scale, const int& id, const CVector3& scl = CVector3::Zero(), const int& number = 0, bool damage = true, float time = 0.0f);
 	/*!
 	//複数のエフェクトを発生させる場合はこっち
 	//コリジョンとモデルを設定、座標とコリジョンの大きさ
@@ -137,6 +138,11 @@ public:
 	{
 		m_speed = speed;
 	}
+	//番号を取得
+	int GetMagicNumer() const
+	{
+		return m_magicnumber;
+	}
 private:
 	int m_id;											//魔法の番号
 	const wchar_t* m_name;								//魔法の名前
@@ -206,7 +212,7 @@ private:
 	const CVector3 m_scale5 = { 0.5f,0.5f,0.5f };
 	const float m_collisionscale5 = 40.0f;
 	const float m_multiplyspeed5 = 20.0f*60.0f;
-	const float m_multiply5 = 6.0f;
+	const float m_multiply5 = 3.0f;
 	//レスタ
 	const float m_deletetime6 = 60.0f;
 	const int m_modelnumber6 = 1;
@@ -219,5 +225,6 @@ private:
 	const CVector3 m_scale7 = { 2.0f,2.0f,2.0f };
 	const float m_collisionscale7 = 90.0f;
 	const float m_multiplyspeed7 = 0.0f;
+	int m_magicnumber = 0;
 };
 

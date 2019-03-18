@@ -4,7 +4,7 @@
 #include "Player.h"
 #include "IEnemy.h"
 #include "Effekseer.h"
-
+#include "GameData.h"
 const int ShotMagic::m_number[10] = { 0,1,2,3,4,5,6,7,8,9 };
 ShotMagic::ShotMagic(const int& id, const wchar_t* name, const float& damageRate, const int& ppCost)
 	:m_id(id), m_name(name), m_damageRate(damageRate), m_ppCost(ppCost)
@@ -51,6 +51,8 @@ bool ShotMagic::Start()
 	case 7:
 		Haou();
 	}
+	GameData* gamedata = FindGO<GameData>(L"GameData");
+	gamedata->PlusMagicNumber();
 	m_movespeed *= m_speed;
 	return true;
 }
@@ -109,7 +111,7 @@ bool ShotMagic::Start()
 		 delete this;
 	 }
 }
- void ShotMagic::SetCollisionModel(const CVector3& pos, const float& scale,const int& id, const CVector3& scl, const int& number, bool damage, float time)
+ void ShotMagic::SetCollisionModel(const int& magicnumber, const CVector3& pos, const float& scale,const int& id, const CVector3& scl, const int& number, bool damage, float time)
  {
 	 GameObj::Suicider::CEffekseer* effect = new GameObj::Suicider::CEffekseer;
 	 SuicideObj::CCollisionObj* attackCol = NewGO<SuicideObj::CCollisionObj>();
@@ -156,9 +158,16 @@ bool ShotMagic::Start()
 			 if (param.EqualName(L"Player")) {
 				 Player* player = param.GetClass<Player>();//相手の判定に設定されているCEnemyのポインタを取得
 				 if (id == 5) {
-					 ShotMagic* shotmagic = FindGO<ShotMagic>(L"MagicSphere");
-					 CVector3 pos = shotmagic->GetPosition(number);
-					 shotmagic->DeleteMagicModel(number);
+					 CVector3 pos = CVector3::Zero();
+					 QueryGOs<ShotMagic>(L"MagicSphere", [&](ShotMagic* shotmagic)
+					 {
+						 if (shotmagic->GetMagicNumer() == m_magicnumber) {
+							 pos = shotmagic->GetPosition(number);
+							 shotmagic->DeleteMagicModel(number);
+							 return false;
+						}
+						 return true;
+					 });
 					 GameObj::Suicider::CEffekseer* effect = new GameObj::Suicider::CEffekseer;
 					 effect->Play(L"Asset/effect/explosion/explosion.efk", 1.0f, pos, CQuaternion::Identity(), scl * 12);
 					 //攻撃判定の発生
@@ -210,12 +219,18 @@ bool ShotMagic::Start()
 			 if (param.EqualName(L"IEnemy")) {
 				 IEnemy* enemy = param.GetClass<IEnemy>();//相手の判定に設定されているCEnemyのポインタを取得
 				 if (id == 5) {
-					 ShotMagic* shotmagic = FindGO<ShotMagic>(L"ShotMagic");
-					 CVector3 pos = shotmagic->GetPosition(number);
-					 shotmagic->DeleteMagicModel(number);
+					 CVector3 pos = CVector3::Zero();
+					 QueryGOs<ShotMagic>(L"ShotMagic", [&](ShotMagic* shotmagic)
+					 {
+						 if (shotmagic->GetMagicNumer() == m_magicnumber) {
+							 pos = shotmagic->GetPosition(number);
+							 shotmagic->DeleteMagicModel(number);
+							 return false;
+						 }
+						 return true;
+					 });
 					 GameObj::Suicider::CEffekseer* effect = new GameObj::Suicider::CEffekseer;
 					 effect->Play(L"Asset/effect/explosion/explosion.efk", 1.0f, pos, CQuaternion::Identity(), scl * 12);
-
 					 //攻撃判定の発生
 					 SuicideObj::CCollisionObj* attackCol = NewGO<SuicideObj::CCollisionObj>();
 					 attackCol->CreateSphere(pos, CQuaternion::Identity(), scale *m_multiply5);
@@ -421,5 +436,7 @@ bool ShotMagic::Start()
 
  void ShotMagic::SetCollisionModelnoDamage(const CVector3& pos, const float& scale, const int& id, const CVector3& scl, const int& number, bool damage, float time)
  {
-	 SetCollisionModel(pos, scale, id, scl, m_number[number], damage, time);
+	 GameData* gamedata = FindGO<GameData>(L"GameData");
+	 m_magicnumber = gamedata->GetMagicNumber();
+	 SetCollisionModel(gamedata->GetMagicNumber(),pos, scale, id, scl, m_number[number], damage, time);
  }

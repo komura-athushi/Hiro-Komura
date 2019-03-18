@@ -104,6 +104,16 @@ public:
 	{
 		return m_totalabilitygroupweightlist[group - 1];
 	}
+	//魔法の撃たれた数を加算
+	void PlusMagicNumber()
+	{
+		m_magicnumber++;
+	}
+	//魔法の撃たれた数を取得
+	int GetMagicNumber() const
+	{
+		return m_magicnumber;
+	}
 	enum EnWeapon {
 		enWeapon_Sword,									//ソード
 		enWeapon_FireSword,								//ファイアソード
@@ -150,5 +160,6 @@ private:
 	int m_totalabilityweight = 0;
 	int m_abilitygroupnumber = 0;
 	std::vector<int> m_totalabilitygroupweightlist;
+	int m_magicnumber = 0;
 };
 
