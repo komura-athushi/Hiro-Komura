@@ -536,6 +536,8 @@ void Player::AnimationController()
 		CQuaternion qRot;
 		qRot.SetRotation(CVector3::AxisY(), degree);
 		m_skinModelRender->SetRot(qRot);
+		m_playerheikou = m_attacktarget;
+		m_playerheikou.Normalize();
 		break;
 	}
 }
@@ -716,7 +718,7 @@ void Player::Damage(const int& attack)
 	if (m_state == enState_GameOver || m_state==enState_GameClear) {
 		return;
 	}
-	else if (m_timer2 >= 30) {
+	else if (m_timer2 >= m_time2) {
 		m_HP -= attack;
 		//HPが0より小さくなったら0にする
 		if (m_HP < 0) {
@@ -939,29 +941,18 @@ void Player::RelationMerchant()
 		}
 		else if (Pad(0).GetDown(enButtonB)) {
 			if (!m_merchant->GetIdle()) {
-				if (m_merchant->GetBase()) {
-					m_merchant->OffTalk();
+				m_merchant->BackState();
+				if (m_merchant->GetIdle()) {
 					m_stop = false;
-					SuicideObj::CSE* se = NewGO<SuicideObj::CSE>(L"Asset/sound/se/cansel.wav");
-					se->Play(); //再生(再生が終わると削除されます)
-					se->SetVolume(m_cancelvolume);
-					//3D再生
-					se->SetPos(m_position);//音の位置
-					se->SetDistance(500.0f);//音が聞こえる範囲
-					se->Play(true); //第一引数をtru
 				}
-				else {
-					if (m_merchant->GetTalk()) {
-						m_merchant->BackState();
-						SuicideObj::CSE* se = NewGO<SuicideObj::CSE>(L"Asset/sound/se/cansel.wav");
-						se->Play(); //再生(再生が終わると削除されます)
-						se->SetVolume(m_cancelvolume);
-						//3D再生
-						se->SetPos(m_position);//音の位置
-						se->SetDistance(500.0f);//音が聞こえる範囲
-						se->Play(true); //第一引数をtru
-					}
-				}
+				SuicideObj::CSE* se = NewGO<SuicideObj::CSE>(L"Asset/sound/se/cansel.wav");
+				se->Play(); //再生(再生が終わると削除されます)
+				se->SetVolume(m_cancelvolume);
+				//3D再生
+				se->SetPos(m_position);//音の位置
+				se->SetDistance(500.0f);//音が聞こえる範囲
+				se->Play(true); //第一引数をtru
+
 			}
 		}
 	}
@@ -1116,7 +1107,7 @@ void Player::PostRender()
 	if (m_displaystatus) {
 		//プレイヤーのステータスを表示します
 		wchar_t output[256];
-		swprintf_s(output, L"unityChan\nLv. %d\nHP        %d\nPP        %d\n力        %d\n賢さ      %d\n打撃力    %d\n法撃力    %d\nEx        %d\nNex       %d\n",m_Level,m_MaxHP,m_MaxPP,m_playerstatus->GetPower(),m_playerstatus->GetClever(),m_Attack,m_Mattack,m_Exp,m_NextExp);
+		swprintf_s(output, L"unityChan\nLv. %d\nHP      %d\nPP      %d\n力      %d\n賢さ    %d\n打撃力  %d\n法撃力  %d\nEx      %d\nNex     %d\n",m_Level,m_MaxHP,m_MaxPP,m_playerstatus->GetPower(),m_playerstatus->GetClever(),m_Attack,m_Mattack,m_Exp,m_NextExp);
 		m_font.DrawScreenPos(output, { 705.0f,60.0f }, CVector4::White(), {1.0f,1.0f});
 		m_statussprite.DrawScreenPos({ 700.0f,50.0f }, {1.0f,1.0f}, CVector2::Zero(),
 			0.0f,
@@ -1244,6 +1235,9 @@ void Player::PostRender()
 			DirectX::SpriteEffects_None,
 			0.8f);
 	}
+	wchar_t output10[256];
+	swprintf_s(output10, L"%f\n%f\n%f", m_position.x,m_position.y,m_position.z);
+	m_font.Draw(output10, { 0.0f,0.0f });
 }
 
 void Player::SetStatus()

@@ -114,6 +114,26 @@ public:
 	{
 		return m_magicnumber;
 	}
+	//武器Lvの解放段階を取得
+	int GetWeaponLimitStage() const
+	{
+		return m_weaponlimitstage;
+	}
+	//武器Lvの解放段階を進める
+	void UpWeaponLimitStage()
+	{
+		m_weaponlimitstage++;
+	}
+	//武器Lvの解放段階を進めれるかどうか
+	bool isUpWeaponLimitStage() const
+	{
+		if (m_weaponlimit == m_weaponlimitstage) {
+			return false;
+		}
+		else {
+			return true;
+		}
+	}
 	enum EnWeapon {
 		enWeapon_Sword,									//ソード
 		enWeapon_FireSword,								//ファイアソード
@@ -161,5 +181,7 @@ private:
 	int m_abilitygroupnumber = 0;
 	std::vector<int> m_totalabilitygroupweightlist;
 	int m_magicnumber = 0;
+	int m_weaponlimitstage = 1;
+	const int m_weaponlimit = 3;
 };
 

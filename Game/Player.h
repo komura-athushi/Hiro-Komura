@@ -212,7 +212,7 @@ private:
 	GameCamera* m_gamecamera = nullptr;                         //カメラのポインタ
 	Town* m_town = nullptr;
 	CVector3 m_movespeed;                                       //移動速度
-	CVector3 m_position = {0.0f,100.0f,00.0f};                  //ユニティちゃんの座標
+	CVector3 m_position = {18633,0,7255};                  //ユニティちゃんの座標
 	CVector3 m_playerheikou = { 1.0f,0.0f,0.0f };               //プレイヤーと平行なベクトル
 	CVector3 m_scale = { 1.0f,1.0f,1.0f };                      //大きさ
 	CVector3 m_swordposition = CVector3::Zero();				//剣の座標
@@ -220,6 +220,7 @@ private:
 	float m_timer = 0.0f;                                       //攻撃のクールタイマー
 	const int m_attacktime = 5;								    //攻撃のクールタイム
 	float m_timer2 = 0.0f;                                      //ダメージのクールタイム
+	const float m_time2 = 30.0f;
 	CVector3 m_target = CVector3::Zero();
 	CVector3 m_attacktarget = CVector3::Zero();
 	bool m_ontarget = false;									//ターゲット表示するかどうか

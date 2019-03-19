@@ -68,6 +68,7 @@ void PlayerStatus::Update()
 		if (player != nullptr) {
 			player->SetPP(m_MaxPP);
 		}
+		PlusExp(100000);
 	}
 }
 

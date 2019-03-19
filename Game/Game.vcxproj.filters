@@ -142,6 +142,15 @@
     <ImageContentTask Include="Asset\sprite\number\number09.png">
       <Filter>Assets\sprite\number</Filter>
     </ImageContentTask>
+    <ImageContentTask Include="Asset\sprite\weaponupgrade.png">
+      <Filter>Assets\sprite</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Asset\sprite\weaponrelease.png">
+      <Filter>Assets\sprite</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Asset\sprite\cursor2.png">
+      <Filter>Assets\sprite</Filter>
+    </ImageContentTask>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Boss.cpp" />

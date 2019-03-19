@@ -476,6 +476,13 @@
     <ImageContentTask Include="Asset\sprite\number\number08.png" />
     <ImageContentTask Include="Asset\sprite\number\number09.png" />
   </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Asset\sprite\weaponrelease.png" />
+    <ImageContentTask Include="Asset\sprite\weaponupgrade.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Asset\sprite\cursor2.png" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="$(VCTargetsPath)\BuildCustomizations\ImageContentTask.targets" />

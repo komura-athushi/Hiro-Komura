@@ -29,6 +29,9 @@ bool Morugan::Start()
 
 void Morugan::Update()
 {
+	CQuaternion qRot;
+	qRot.SetRotation(CVector3::AxisY(), atan2f(-m_player->GetFront().x, -m_player->GetFront().z));
+	m_effect->SetRot(qRot);
 	m_effect->SetSpeed(m_frame * GetDeltaTimeSec());
 	if (m_timer >= m_time) {
 		//Aベクトル(単位ベクトル)、モルガンの正面のベクトル

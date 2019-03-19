@@ -41,6 +41,11 @@ public:
 	{
 		m_speed = speed;
 	}
+	//弾の削除されるタイミングを変化させる
+	void SetDeleteTime(const float& time)
+	{
+		m_time = time;
+	}
 private:
 	GameObj::Suicider::CEffekseer* m_effect = nullptr;
 	CVector3 m_position = CVector3::Zero();						//弾の座標
@@ -56,7 +61,7 @@ private:
 	const float m_collisionheight = 20.0f;
 	int m_attack = 30;							               //ファイヤーの攻撃力、デフォルトで30
 	float m_timer = 0.0f;
-	const float m_time = 120.0f;
+	float m_time = 120.0f;
 	bool m_hitplayer = false;
 };
 

@@ -43,6 +43,9 @@ bool Merchant::Start()
 	m_equipment.Init(L"Resource/sprite/equipment.dds");
 	m_base.Init(L"Resource/sprite/base.dds");
 	m_mesetasprite.Init(L"Resource/sprite/upgrade_mesetawindow.dds");
+	m_upgrade.Init(L"Resource/sprite/weaponupgrade.dds");
+	m_release.Init(L"Resource/sprite/weaponrelease.dds");
+	m_cursor2.Init(L"Resource/sprite/cursor2.dds");
 	return true;
 }
 
@@ -73,6 +76,18 @@ void Merchant::Turn()
 void Merchant::BackState()
 {
 	switch (m_state) {
+	case enState_UpgradeorRelease:
+		m_state = enState_Free;
+		break;
+	case enState_ChoiceRelease:
+		m_state = enState_UpgradeorRelease;
+			break;
+	case enState_Release:
+		m_state = enState_UpgradeorRelease;
+		break;
+	case enState_Base:
+		m_state = enState_UpgradeorRelease;
+		break;
 	case enState_Material:
 		m_state = enState_Base;
 		break;
@@ -83,6 +98,73 @@ void Merchant::BackState()
 		m_state = enState_Base;
 		break;
 	}
+}
+
+void Merchant::UpgradeorRelease()
+{
+	wchar_t output[256];
+	swprintf_s(output, L"‰½‚ðs‚¢‚Ü‚·‚©H\n");
+	m_font.DrawScreenPos(output, { 300.0f,450.0f }, CVector4::White(), { 0.6f,0.6f },
+		CVector2::Zero(),
+		0.0f,
+		DirectX::SpriteEffects_None,
+		0.7f
+	);
+	m_sprite2.DrawScreenPos({ 290.0f,440.0f }, CVector3::One(), CVector2::Zero(),
+		0.0f,
+		{ 1.0f, 1.0f, 1.0f, 0.7f },
+		DirectX::SpriteEffects_None,
+		0.8f);
+	m_upgrade.DrawScreenPos({ 450.0f,250.0f }, {0.7, 0.7f}, CVector2::Zero(),
+		0.0f,
+		{ 1.0f, 1.0f, 1.0f, 0.7f },
+		DirectX::SpriteEffects_None,
+		0.8f);
+	m_release.DrawScreenPos({ 800.0f,250.0f }, {0.7f,0.7f}, CVector2::Zero(),
+		0.0f,
+		{ 1.0f, 1.0f, 1.0f, 0.7f },
+		DirectX::SpriteEffects_None,
+		0.8f);
+	m_cursor2.DrawScreenPos(m_cursor2position, { 0.2f,0.2f }, {0.5f,0.5f},
+		0.0f,
+		{ 1.0f, 1.0f, 1.0f, 1.0f },
+		DirectX::SpriteEffects_None,
+		0.8f);
+	Button();
+	switch (m_cursorstate) {
+	case enState_onUpgrade:
+		if (Pad(0).GetButton(enButtonRight)) {
+			m_cursor2position.x += 350.0f;
+			m_button = false;
+			m_cursorstate = enState_onRelease;
+		}
+		break;
+	case enState_onRelease:
+		if (Pad(0).GetButton(enButtonLeft)) {
+			m_cursor2position.x -= 350.0f;
+			m_button = false;
+			m_cursorstate = enState_onUpgrade;
+		}
+ 		break;
+	}
+	if (Pad(0).GetButton(enButtonA) && m_button) {
+		if (m_cursorstate == enState_onUpgrade) {
+			m_state = enState_Base;
+		}
+		else if (m_cursorstate == enState_onRelease) {
+			m_state = enState_Release;
+		}
+		m_button = false;
+	}
+}
+
+void Merchant::ChoiceRelease()
+{
+
+}
+void Merchant::Release()
+{
+
 }
 
 void Merchant::Base()
@@ -102,7 +184,7 @@ void Merchant::Base()
 				0.3f);
 		}
 		wchar_t output[50];
-		if (m_playerstatus->GetEuipment(i)->GetLv() != m_limitweaponlv) {
+		if (m_playerstatus->GetEuipment(i)->GetLv() != m_limitweaponlv[m_gamedata->GetWeaponLimitStage() - 1]) {
 			swprintf_s(output, L"R%d\n%ls  \n•ŠíLv  %d\n", m_playerstatus->GetEuipment(i)->GetRarity(), m_playerstatus->GetEuipment(i)->GetName(), m_playerstatus->GetEuipment(i)->GetLv());
 		}
 		else {
@@ -145,7 +227,7 @@ void Merchant::Base()
 		}
 	}
 	if (Pad(0).GetButton(enButtonA) && m_button) {
-		if (m_playerstatus->GetEuipment(m_swordid2)->GetLv() == m_limitweaponlv) {
+		if (m_playerstatus->GetEuipment(m_swordid2)->GetLv() == m_limitweaponlv[m_gamedata->GetWeaponLimitStage() - 1]) {
 		}
 		else {
 			m_state = enState_Material;
@@ -547,6 +629,15 @@ void Merchant::PostRender()
 	}
 	State state = m_state;
 	switch (m_state) {
+	case enState_UpgradeorRelease:
+		UpgradeorRelease();
+		break;
+	case enState_ChoiceRelease:
+		ChoiceRelease();
+		break;
+	case enState_Release:
+		Release();
+		break;
 	case enState_Base:
 		Base();
 		m_isspriteInit = false;
@@ -574,3 +665,17 @@ void Merchant::PostRender()
 	}
 }
 
+void Merchant::Button()
+{
+	if (Pad(0).GetButton(enButtonUp) && m_button) {
+		m_button = false;
+	}
+	else if (Pad(0).GetButton(enButtonDown) && m_button) {
+		m_button = false;
+	}
+	else {
+		if (!Pad(0).GetButton(enButtonUp) && !Pad(0).GetButton(enButtonDown) && !Pad(0).GetButton(enButtonRight) && !Pad(0).GetButton(enButtonLeft) && !Pad(0).GetButton(enButtonA)) {
+			m_button = true;
+		}
+	}
+}

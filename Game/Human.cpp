@@ -34,9 +34,7 @@ bool Human::Start()
 	if (m_gamedata->GetTownLevel() != 2) {
 		//条件を満たし手入れば、街を発展できるようにする
 		if (m_gamedata->GetStageClear(m_townlevel)) {
-			if (m_necessarymaterial <= m_playerstatus->GetMaterial(m_townlevel) && m_necessarymaterial <= m_playerstatus->GetMaterial(m_townlevel + 1)) {
-				m_developtown = true;
-			}
+			m_developtown = true;
 		}
 	}
 	return true;
@@ -56,9 +54,6 @@ void Human::Update()
 		Turn();
 	}
 	if (m_leveluptown) {
-		//プレイヤーの指定の素材を一定数減らす
-		PlayerStatus* playerstatus = FindGO<PlayerStatus>(L"PlayerStatus");
-		playerstatus->CutMateial(m_townlevel, m_necessarymaterial);
 		//街の発展フラグをonにする
 		Town* tonw = FindGO<Town>();
 		tonw->DevelopTown();
@@ -120,22 +115,8 @@ void Human::PostRender()
 			swprintf_s(output, L"街を発展させることができます。\n街を発展させますか？\n");
 		}
 		else {
-			if (m_gamedata->GetStageClear(m_townlevel)) {
-				if (m_necessarymaterial > m_playerstatus->GetMaterial(m_townlevel) && m_necessarymaterial > m_playerstatus->GetMaterial(m_townlevel + 1)) {
-					swprintf_s(output, L"街を発展させるには%sが%d個、%sが%d個必要です\n", m_gamedata->GetMaterial(m_townlevel)->GetMaterialName(), m_necessarymaterial - m_playerstatus->GetMaterial(m_townlevel),
-						m_gamedata->GetMaterial(m_townlevel + 1)->GetMaterialName(), m_necessarymaterial - m_playerstatus->GetMaterial(m_townlevel + 1));
-				}
-				else if (m_necessarymaterial > m_playerstatus->GetMaterial(m_townlevel)) {
-					swprintf_s(output, L"街を発展させるには%sが%d個必要です\n", m_gamedata->GetMaterial(m_townlevel)->GetMaterialName(), m_necessarymaterial - m_playerstatus->GetMaterial(m_townlevel));
-				}
-				else if (m_necessarymaterial > m_playerstatus->GetMaterial(m_townlevel + 1)) {
-					swprintf_s(output, L"街を発展させるには%sが%d個必要です\n", m_gamedata->GetMaterial(m_townlevel + 1)->GetMaterialName(), m_necessarymaterial - m_playerstatus->GetMaterial(m_townlevel + 1));
-				}
-			}
-				
-			else {
-				swprintf_s(output, L"街を発展させるにはステージ%dをクリアする必要があります\n", m_townlevel + 1);
-			}
+			swprintf_s(output, L"街を発展させるにはステージ%dをクリアする必要があります\n", m_townlevel + 1);
+			
 		}
 	}
 	m_font.DrawScreenPos(output, { 300.0f,450.0f }, CVector4::White(), {0.6f,0.6f});

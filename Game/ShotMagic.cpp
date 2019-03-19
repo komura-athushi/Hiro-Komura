@@ -59,26 +59,6 @@ bool ShotMagic::Start()
 
  void ShotMagic::Update()
 {
-	 //魔法の番号によって処理を変えます
-	 switch (m_id) {
-	 case 1:
-		 FoieUpdate();
-		 break;
-	 case 2:
-		 IrugraUpdate();
-		 break;
-	 case 3:
-		 ZanbasUpdate();
-		 break;
-	 case 4:
-		 ShihutaUpdate();
-		 break;
-	 case 5:
-		 MagicSphereUpdate();
-		 break;
-	 case 7:
-		 HaouUpdate();
-	 }
 	 int i = 0;
 	 //MagciModel構造体の可変長配列にアクセスします
 	 for (auto& mgml : m_magicmocelList) {
@@ -111,6 +91,27 @@ bool ShotMagic::Start()
 	 }
 	 if (m_timer1 >= 100) {
 		 delete this;
+	 }
+
+	 //魔法の番号によって処理を変えます
+	 switch (m_id) {
+	 case 1:
+		 FoieUpdate();
+		 break;
+	 case 2:
+		 IrugraUpdate();
+		 break;
+	 case 3:
+		 ZanbasUpdate();
+		 break;
+	 case 4:
+		 ShihutaUpdate();
+		 break;
+	 case 5:
+		 MagicSphereUpdate();
+		 break;
+	 case 7:
+		 HaouUpdate();
 	 }
 }
  void ShotMagic::SetCollisionModel(const int& magicnumber, const CVector3& pos, const float& scale,const int& id, const CVector3& scl, const int& number, bool damage, float time)
@@ -344,6 +345,8 @@ bool ShotMagic::Start()
 	 m_deletetime = m_deletetime1;
 	 m_modelnumber = m_modelnumber1;
 	 m_scale = m_scale1;
+	 m_scale *= m_multiplyscale;
+	 m_collisionscale1 *= m_multiplyscale;
 	 m_position = m_position + CVector3::AxisY()*60.0f;
 	 m_movespeed = m_directionplayer * m_multiplyspeed1;
 	 SetCollisionModelnoDamage(m_position, m_collisionscale1, m_id, m_scale, m_modelcount, true);
@@ -359,6 +362,8 @@ bool ShotMagic::Start()
 	 m_deletetime = m_deletetime2;
 	 m_modelnumber = m_modelnumber2;
 	 m_scale = m_scale2;
+	 m_scale *= m_multiplyscale;
+	 m_collisionscale2 *= m_multiplyscale;
 	 m_movespeed = m_directionplayer * m_multiplyspeed2;
 	 m_position = m_position + CVector3::AxisY()*60.0f;
 	 m_damage /= m_modelnumber;
@@ -380,6 +385,8 @@ bool ShotMagic::Start()
 	 m_deletetime = m_deletetime3;
 	 m_modelnumber = m_modelnumber3;
 	 m_scale = m_scale3;
+	 m_scale *= m_multiplyscale;
+	 m_collisionscale3 *= m_multiplyscale;
 	 //m_position = m_position; //+CVector3::AxisY()*60.0f;
 	 m_movespeed = m_directionplayer * m_multiplyspeed3;
 	 m_directionplayer.y = 0.0f;
@@ -400,6 +407,8 @@ bool ShotMagic::Start()
 	 m_deletetime = m_deletetime4;
 	 m_modelnumber = m_modelnumber4;
 	 m_scale = m_scale4;
+	 m_scale *= m_multiplyscale;
+	 m_collisionscale4 *= m_multiplyscale;
 	 m_position = m_position; //+CVector3::AxisY()*60.0f;
 	 m_movespeed = m_directionplayer * m_multiplyspeed4;
 	 SetCollisionModelnoDamage(m_position, m_collisionscale4, m_id, m_scale, m_modelcount, false);
@@ -418,6 +427,8 @@ bool ShotMagic::Start()
 	 m_deletetime = m_deletetime5;
 	 m_modelnumber = m_modelnumber5;
 	 m_scale = m_scale5;
+	 m_scale *= m_multiplyscale;
+	 m_collisionscale5 *= m_multiplyscale;
 	 m_position = m_position + CVector3::AxisY()*60.0f;
 	 m_movespeed = m_directionplayer * m_multiplyspeed5;
 	 SetCollisionModelnoDamage(m_position, m_collisionscale5, m_id,m_scale, m_modelcount, false);
@@ -435,6 +446,8 @@ bool ShotMagic::Start()
 	 m_deletetime = m_deletetime6;
 	 m_modelnumber = m_modelnumber6;
 	 m_scale = m_scale6;
+	 m_scale *= m_multiplyscale;
+	 m_collisionscale6 *= m_multiplyscale;
 	 m_position = m_position; //+CVector3::AxisY()*60.0f;
 	 m_movespeed = m_directionplayer * m_multiplyspeed6;
 	 SetCollisionModelnoDamage(m_position, m_collisionscale6, m_id, m_scale, m_modelcount,false);
@@ -448,6 +461,8 @@ bool ShotMagic::Start()
 	 m_deletetime = m_deletetime7;
 	 m_modelnumber = m_modelnumber7;
 	 m_scale = m_scale7;
+	 m_scale *= m_multiplyscale;
+	 m_collisionscale7 *= m_multiplyscale;
 	 m_position = m_position;
 	 m_movespeed = m_directionplayer * m_multiplyspeed7;
 	 m_damage /= m_modelnumber;
@@ -457,8 +472,15 @@ bool ShotMagic::Start()
  {
 	 if (m_modelcount != m_modelnumber) {
 		 if (m_timer >= m_time7) {
-			 SetCollisionModelnoDamage(m_position, m_collisionscale2, m_id, m_scale, m_modelcount, true);
-			 m_timer = 0;
+			 Player* player = FindGO<Player>(L"Player");
+			 if (player != nullptr && player->GetisTarget()) {
+					 m_position = player->GetTarget();
+					 SetCollisionModelnoDamage(m_position, m_collisionscale2, m_id, m_scale, m_modelcount, true);
+					 m_timer = 0;
+			 }
+			 else {
+				 delete this;
+			 }
 		 }
 	 }
 	 m_timer += 40.0f * GetDeltaTimeSec();

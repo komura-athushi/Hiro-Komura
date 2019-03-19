@@ -140,7 +140,7 @@ bool Game::Start()
 			//Unityちゃん。
 			//プレイヤーのインスタンスを生成する。
 			m_player = new Player;
-			m_player->SetPosition(objData.position);
+			//m_player->SetPosition(objData.position);
 			m_player->SetName(L"Player");
 			m_player->SetRotation(objData.rotation);
 			//フックした場合はtrueを返す。

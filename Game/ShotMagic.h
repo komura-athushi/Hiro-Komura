@@ -99,7 +99,7 @@ public:
 	{
 		m_movespeed = movespeed;
 	}
-	//大きさを設定
+	//大きさを変更
 	void SetScale(const CVector3& scale)
 	{
 		m_scale = scale;
@@ -144,12 +144,18 @@ public:
 	{
 		return m_magicnumber;
 	}
+	//大きさを変更
+	void SetMultiplyScale(const float& scale)
+	{
+		m_multiplyscale = scale;
+	}
 private:
+	float m_multiplyscale = 1.0f;
 	int m_id;											//魔法の番号
 	const wchar_t* m_name;								//魔法の名前
 	float m_damageRate;									//魔法のダメージ倍率
 	int m_ppCost;										//魔法を放つのに必要なPP
-	CVector3 m_scale{ CVector3::One() };				//エフェクトの大きさ
+	CVector3 m_scale = CVector3::One();				//エフェクトの大きさ
 	CVector3 m_position{ CVector3::Zero() };            //エフェクトの座標
 	CVector3 m_movespeed{ CVector3::Zero() };			//エフェクトの移動速度
 	CVector3 m_directionplayer{ CVector3::Zero() };		//プレイヤーの向きに平行なベクトル
@@ -183,20 +189,20 @@ private:
 	const float m_deletetime1 = 60.0f;
 	static const int m_modelnumber1 = 1;
 	const CVector3 m_scale1 = { 2.0f,2.0f,2.0f };
-	const float m_collisionscale1 = 90.0f;
+	float m_collisionscale1 = 90.0f;
 	const float m_multiplyspeed1 = 25.0f * 60.0f;
 	//イルグラ
 	const float m_deletetime2 = 60.0f;
 	static const int m_modelnumber2 = 3;
 	const CVector3 m_scale2 = { 1.0f,1.0f,1.0f };
-	const float m_collisionscale2 = 50.0f;
+	float m_collisionscale2 = 50.0f;
  	const float m_multiplyspeed2 = 35.0f*60.0f;
-	static const int m_time2 = 18;
+	static const int m_time2 = 13;
 	//ザンバース
 	const float m_deletetime3 = 60.0f;
 	static const int m_modelnumber3 = 1;
 	const CVector3 m_scale3 = { 3.5f,3.5f,3.5f };
-	const float m_collisionscale3 = 225.0f;
+	float m_collisionscale3 = 225.0f;
 	const float m_multiplyspeed3 = 0.0f;
 	const int m_multihit = 1;
 	const float m_hittime3 = 25.0f;
@@ -204,30 +210,30 @@ private:
 	const float m_deletetime4 = 30.0f;
 	const int m_modelnumber4 = 1;
 	const CVector3 m_scale4 = { 3.0f,3.0f,3.0f };
-	const float m_collisionscale4 = 0.0f;
+	float m_collisionscale4 = 0.0f;
 	const float m_multiplyspeed4 = 0.0f;
 	//マジスフィ
 	const float m_deletetime5 = 70.0f;
 	const float m_deletecollisiontime5 = 10;
 	const int m_modelnumber5 = 1;
 	const CVector3 m_scale5 = { 0.5f,0.5f,0.5f };
-	const float m_collisionscale5 = 40.0f;
+	float m_collisionscale5 = 40.0f;
 	const float m_multiplyspeed5 = 20.0f*60.0f;
 	const float m_multiply5 = 3.0f;
 	//レスタ
 	const float m_deletetime6 = 60.0f;
 	const int m_modelnumber6 = 1;
 	const CVector3 m_scale6 = { 3.0f,3.0f,3.0f };
-	const float m_collisionscale6 = 0.0f;
+	float m_collisionscale6 = 0.0f;
 	const float m_multiplyspeed6 = 0.0f;
 	//覇王斬
-	const float m_deletetime7 = 50.0f;
+	const float m_deletetime7 = 40.0f;
 	static const int m_modelnumber7 = 1;
 	const CVector3 m_scale7 = { 2.0f,2.0f,2.0f };
-	const float m_collisionscale7 = 90.0f;
+	float m_collisionscale7 = 90.0f;
 	const float m_multiplyspeed7 = 0.0f;
 	const float m_multiply7 = 5.0f;
-	const int m_time7 = 50;
+	const int m_time7 = 60;
 	int m_magicnumber = 0;										//それぞれのShotMagicクラスのインスタンスを区別するための番号です
 };
 
