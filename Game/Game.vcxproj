@@ -278,6 +278,7 @@
     </ClCompile>
     <ClCompile Include="Title.cpp" />
     <ClCompile Include="Ground.cpp" />
+    <ClCompile Include="Wall.cpp" />
     <ClCompile Include="Weapon.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -324,6 +325,7 @@
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Title.h" />
     <ClInclude Include="Ground.h" />
+    <ClInclude Include="Wall.h" />
     <ClInclude Include="Weapon.h" />
   </ItemGroup>
   <ItemGroup>
@@ -349,6 +351,7 @@
     <MeshContentTask Include="Asset\modelData\skydome.FBX" />
     <MeshContentTask Include="Asset\modelData\stage1_ground.FBX" />
     <MeshContentTask Include="Asset\modelData\stage1_teleport.FBX" />
+    <MeshContentTask Include="Asset\modelData\stage2_ground.FBX" />
     <MeshContentTask Include="Asset\modelData\stage2_teleport\stage2_teleport.FBX" />
     <MeshContentTask Include="Asset\modelData\stage3_teleport\stage3_teleport.FBX" />
     <MeshContentTask Include="Asset\modelData\stone.FBX" />
@@ -371,6 +374,7 @@
     <MeshContentTask Include="Asset\modelData\sword_drop\Sword_drop.FBX" />
     <MeshContentTask Include="Asset\modelData\sword_drop\WindSword_drop.FBX" />
     <MeshContentTask Include="Asset\modelData\unityChan.fbx" />
+    <MeshContentTask Include="Asset\modelData\wall\wall.FBX" />
     <MeshContentTask Include="Asset\modelData\zunko\zunko.FBX" />
   </ItemGroup>
   <ItemGroup>

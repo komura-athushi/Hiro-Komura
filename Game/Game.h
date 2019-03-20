@@ -8,6 +8,7 @@ class Skeleton2;
 class Boss;
 class Fade;
 class GameData;
+class Wall;
 //ステージに関係するものを生成したり、管理したりするクラスです
 class Game:public IGameObject
 {
@@ -35,6 +36,7 @@ private:
 	Level m_level;                                     //レベルデザインのためのクラス
 	PlayerStatus* m_playerstatus;                      //プレイヤーステータスクラスのポインタ
 	CSprite m_sprite;								   //スプライトクラス
+	Wall* m_wall;
 	CascadeShadowHandler* m_CascadeShadowmap;
 	std::vector<Oni*> m_oniList;
 	std::vector<Skeleton2*> m_sk2List;

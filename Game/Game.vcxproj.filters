@@ -198,6 +198,7 @@
     <ClCompile Include="Enemy_Wind.cpp" />
     <ClCompile Include="FontNumber.cpp" />
     <ClCompile Include="Enemy_Ice.cpp" />
+    <ClCompile Include="Wall.cpp" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Asset\modelData\Sword\AncientWarriorBlade.FBX">
@@ -335,6 +336,12 @@
     <MeshContentTask Include="Asset\modelData\kurage\kurage3.FBX">
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
+    <MeshContentTask Include="Asset\modelData\wall\wall.FBX">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Asset\modelData\stage2_ground.FBX">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Boss.h" />
@@ -381,6 +388,7 @@
     <ClInclude Include="Enemy_Wind.h" />
     <ClInclude Include="FontNumber.h" />
     <ClInclude Include="Enemy_Ice.h" />
+    <ClInclude Include="Wall.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Assets">

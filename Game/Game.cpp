@@ -20,6 +20,7 @@
 #include "Kurage.h"
 #include "Kurage2.h"
 #include "Kurage3.h"
+#include "Wall.h"
 Game::Game()
 {
 }
@@ -81,6 +82,7 @@ Game::~Game()
 		delete tl;
 		return true;
 	});
+	delete m_wall;
 }
 
 bool Game::Start()
@@ -130,17 +132,24 @@ bool Game::Start()
 			m_ground->SetScale(objData.scale);
 			return true;
 		}
-		if (objData.EqualObjectName(L"stage2_ground") == true) {
+		else if (objData.EqualObjectName(L"stage2_ground") == true) {
 			m_ground = new Ground;
 			m_ground->SetStage(2);
 			m_ground->SetPosition(objData.position);
+			m_ground->SetRot(objData.rotation);
+			m_ground->SetScale(objData.scale);
+			return true;
+		}
+		else if (objData.EqualObjectName(L"wall") == true) {
+			m_wall = new Wall;
+			m_wall->SetPosition(objData.position);
 			return true;
 		}
 		else if (objData.EqualObjectName(L"unityChan") == true) {
 			//Unityちゃん。
 			//プレイヤーのインスタンスを生成する。
 			m_player = new Player;
-			//m_player->SetPosition(objData.position);
+			m_player->SetPosition(objData.position);
 			m_player->SetName(L"Player");
 			m_player->SetRotation(objData.rotation);
 			//フックした場合はtrueを返す。

@@ -149,6 +149,12 @@ public:
 	{
 		m_multiplyscale = scale;
 	}
+	//削除時間を変更
+	void SetDeleteTime(const float& time)
+	{
+		m_ischangedeletetime = true;
+		m_changedeletetime = time;
+	}
 private:
 	float m_multiplyscale = 1.0f;
 	int m_id;											//魔法の番号
@@ -213,7 +219,7 @@ private:
 	float m_collisionscale4 = 0.0f;
 	const float m_multiplyspeed4 = 0.0f;
 	//マジスフィ
-	const float m_deletetime5 = 70.0f;
+	const float m_deletetime5 = 60.0f;
 	const float m_deletecollisiontime5 = 10;
 	const int m_modelnumber5 = 1;
 	const CVector3 m_scale5 = { 0.5f,0.5f,0.5f };
@@ -235,5 +241,7 @@ private:
 	const float m_multiply7 = 5.0f;
 	const int m_time7 = 60;
 	int m_magicnumber = 0;										//それぞれのShotMagicクラスのインスタンスを区別するための番号です
+	bool m_ischangedeletetime = false;
+	float m_changedeletetime = 0.0f;
 };
 

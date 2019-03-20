@@ -45,6 +45,11 @@ public:
 	{
 		m_oldpos = pos;
 	}
+	//行動を開始したかどうか
+	bool GetisStart() const
+	{
+		return m_start;
+	}
 private:
 	enum State {
 		enState_One,						//一番目の行動パターン
@@ -68,7 +73,7 @@ private:
 	CQuaternion m_rotation;
 	Game* m_stage1;
 	float m_r = 150.0f;                                         //コリジョンの半径
-	const float m_height = 270.0f;                              //コリジョンをm_positionからどれだけ上にあげるか
+	const float m_height = 220.0f;                              //コリジョンをm_positionからどれだけ上にあげるか
 	//Bossの色々なステータス
 	static const int m_MaxHP = 5000;                            //最大HP
 	static const int m_AttackMG = 75;							//マジスフィ
@@ -109,6 +114,8 @@ private:
 	CVector3 m_EBposition = CVector3::Zero();
 	bool m_isdecisionposition = false;
 	CVector3 m_playerposition = CVector3::Zero();
+	const float m_y = -50.0f;
+	const float m_MGdeletetime = 180.0f;
 
 };
 

@@ -54,6 +54,9 @@ bool ShotMagic::Start()
 	GameData* gamedata = FindGO<GameData>(L"GameData");
 	gamedata->PlusMagicNumber();
 	m_movespeed *= m_speed;
+	if (m_ischangedeletetime) {
+		m_deletetime = m_changedeletetime;
+	}
 	return true;
 }
 

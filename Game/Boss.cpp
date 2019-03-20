@@ -31,7 +31,9 @@ bool Boss::Start()
 	m_skinModelRender = new GameObj::CSkinModelRender;
 	m_skinModelRender->Init(L"Resource/modelData/boss.cmo");
 	m_skinModelRender->SetScale(m_scale);
-	m_skinModelRender->SetPos(m_position);
+	CVector3 po = m_position;
+	po.y += m_y;
+	m_skinModelRender->SetPos(po);
 	CQuaternion rot = CQuaternion::Identity();
 	CVector3 pos = m_position;
 	pos.y += 500.0f;
@@ -50,16 +52,20 @@ void Boss::Turn()
 	//‰ñ“]ˆ—
 	m_degree += sdegree;
 	//m_movespeed‚©‚çƒLƒƒƒ‰ƒNƒ^[‚ð‰ñ“]‚³‚¹‚é
-	auto moveSpeedXZ = m_movespeed;
+	auto moveSpeedXZ = m_player->GetPosition() - m_position;
 	moveSpeedXZ.y = 0.0f;
 	moveSpeedXZ.Normalize();
-	moveSpeedXZ.y = 0;
 	if (moveSpeedXZ.LengthSq() < 0.5f) {
 		return;
 	}
 	m_parallel = moveSpeedXZ;
-	m_rotation.SetRotation({ 0.0f,1.0f,0.0f }, atan2f(moveSpeedXZ.x, moveSpeedXZ.z));
-	m_skinModelRender->SetRot(m_rotation);
+	if (m_isaria && !m_ismagic) {
+
+	}
+	else {
+		m_rotation.SetRotation({ 0.0f,1.0f,0.0f }, atan2f(-moveSpeedXZ.x, -moveSpeedXZ.z));
+		m_skinModelRender->SetRot(m_rotation);
+	}
 }
 
 void Boss::One()
@@ -378,6 +384,9 @@ void Boss::Three()
 		if (po.LengthSq() >= m_attackchanceEB && !m_isEB) {
 			po.y = 0.0f;
 			po.Normalize();
+			CQuaternion qRot;
+			qRot.SetRotation(CVector3::AxisY(), atan2f(-po.x, -po.z));
+			m_skinModelRender->SetRot(qRot);
 			m_movespeed = po * m_speedmultiply * GetDeltaTimeSec();
 			m_position += m_movespeed;
 		}
@@ -427,6 +436,7 @@ void Boss::Update()
 			m_start = true;
 		}
 		if (m_start) {
+			Turn();
 			switch (m_state) {
 			case enState_One:
 				One();
@@ -438,12 +448,14 @@ void Boss::Update()
 				Three();
 				break;
 			}
-			Turn();
 		}
 		CQuaternion rot;
 		CVector3 pos = m_position;
 		pos.y += m_height;
 		m_staticobject.SetPositionAndRotation(pos, rot);
+		CVector3 ps = m_position;
+		ps.y += m_y;
+		m_skinModelRender->SetPos(ps);
 		m_skinModelRender->SetPos(m_position);
 		IEnemy::SetCCollision(m_position, m_height);
 	}
@@ -473,9 +485,13 @@ void Boss::MG()
 	sm->SetEnemy();
 	sm->SetId(5);
 	sm->SetSpeed(0.8f);
+	sm->SetDeleteTime(m_MGdeletetime);
 	sm->SetName(L"MagicSphere");
 	m_timer2 = 0.0f;
 	m_mgcounter++;
+	CQuaternion qRot;
+	qRot.SetRotation(CVector3::AxisY(), atan2f(-m_magicdirection.x, -m_magicdirection.z));
+	m_skinModelRender->SetRot(qRot);
 }
 
 void Boss::FS()
@@ -490,6 +506,9 @@ void Boss::FS()
 	ei->SetSpeed(1.5f);
 	m_timer2 = 0.0f;
 	m_fscounter++;
+	CQuaternion qRot;
+	qRot.SetRotation(CVector3::AxisY(), atan2f(-m_magicdirection.x, -m_magicdirection.z));
+	m_skinModelRender->SetRot(qRot);
 }
 
 void Boss::EB()
@@ -505,6 +524,9 @@ void Boss::EB()
 	sm->SetId(3);
 	m_timer2 = 0.0f;
 	m_timer = 0.0f;
+	CQuaternion qRot;
+	qRot.SetRotation(CVector3::AxisY(), atan2f(-m_magicdirection.x, -m_magicdirection.z));
+	m_skinModelRender->SetRot(qRot);
 }
 
 void Boss::Aria()
