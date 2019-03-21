@@ -4,11 +4,11 @@
 #include "DemolisherWeapon/physics/PhysicsStaticObject.h"
 class Player;
 class Game;
-class Oni : public IEnemy
+class Skeleton1 : public IEnemy
 {
 public:
-	Oni();
-	~Oni();
+	Skeleton1();
+	~Skeleton1();
 	bool Start() override;
 	void Update() override;
 	void Chase();												//追跡
@@ -26,6 +26,11 @@ public:
 	void SetPosition(const CVector3& pos)
 	{
 		m_position = pos;
+	}
+	//回転を設定
+	void SetRotation(const CQuaternion& rot)
+	{
+		m_rotation = rot;
 	}
 	void SetGame(Game* game)
 	{
@@ -71,9 +76,9 @@ private:
 	const float m_attackr = 90.0f;                              //攻撃したときに発生させるコリジョンの半径
 	const float m_collisionheight = 50.0f;                      //コリジョンをm_positionからどれだけ上にあげるか
 	//Oniの色々なステータス
-	static const int m_MaxHP = 150;                             //最大HP
-	static const int m_Attack=20;                               //攻撃力
-	static const int m_EXP = 20;                                //経験値
+	static const int m_MaxHP = 450;                             //最大HP
+	static const int m_Attack = 140;                               //攻撃力
+	static const int m_EXP = 480;                                //経験値
 	//ヘッダーファイルでは宣言だけ、定義はcppファイルに書いてください
 	static const int m_dropChances[];                           //エネミーのドロップするアイテム、[1]が10ならレア度1が10%でドロップするみたいな
 	static const int m_dropmaterialChances[];					//エネミーのドロップする素材の確率

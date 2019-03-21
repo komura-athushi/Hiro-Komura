@@ -61,7 +61,7 @@ private:
 	float m_degreexz = -90.0f, m_degreey = 0.0f;             //角度
 	float m_targetdegreexz = 0.0f, m_targetdegreey = 0.0f;	
 	float m_radianx = 0.0f, m_radiany = 0.0f;              //角度をラジアン単位に直したやつ
-	float m_r = 180.0f;								       //キャラクターとカメラの距離
+	float m_r = 190.0f;								       //キャラクターとカメラの距離
 	float m_tr;
 	const CVector3 m_axisY={ 0.0f,1.0f,0.0f };             //Y方向のベクトル   
 	CVector3 m_playerposition;                             //プレイヤーの座標

@@ -1,24 +1,24 @@
 #include "stdafx.h"
-#include "Oni.h"
+#include "Skeleton1.h"
 #define _USE_MATH_DEFINES //M_PI 円周率呼び出し
 #include <math.h> 
 #include "Game.h"
 #include "Player.h"
 //cppでエネミーのレア度ごとのドロップ率を設定
-const int Oni::m_dropChances[Weapon::m_HighestRarity] = { 0,40,0,0,0,0,0 };
-const int Oni::m_dropmaterialChances[Material::m_HighestRarity] = { 70.0f,0.0f,0.0f };
+const int Skeleton1::m_dropChances[Weapon::m_HighestRarity] = { 0,40,0,0,0,0,0 };
+const int Skeleton1::m_dropmaterialChances[Material::m_HighestRarity] = { 70.0f,0.0f,0.0f };
 //鬼（見た目はスケルトン）です
-Oni::Oni():IEnemy(m_MaxHP,m_Attack,m_EXP,m_dropChances,m_dropmaterialChances,m_meseta)
+Skeleton1::Skeleton1():IEnemy(m_MaxHP,m_Attack,m_EXP,m_dropChances,m_dropmaterialChances,m_meseta)
 {
 
 }
 
-Oni::~Oni()
+Skeleton1::~Skeleton1()
 {
 	delete m_skinModelRender;
 }
 
-bool Oni::Start()
+bool Skeleton1::Start()
 {
 	IEnemy::CCollision({ m_position }, m_collisionheight, m_r);
 	//アニメーション
@@ -38,6 +38,7 @@ bool Oni::Start()
 	});
 	m_skinModelRender->SetScale(m_scale);
 	m_skinModelRender->SetPos(m_position);
+	m_skinModelRender->SetRot(m_rotation);
 	CQuaternion rot = CQuaternion::Identity();
 	CVector3 pos = m_position;
 	pos.y += 55.0f;
@@ -45,7 +46,7 @@ bool Oni::Start()
 	return true;
 }
 
-void Oni::Chase()
+void Skeleton1::Chase()
 {
 	m_movespeed = { 0.0f,0.0f,0.0f };
 	//プレイヤーの座標を取得
@@ -84,7 +85,7 @@ void Oni::Chase()
 	m_skinModelRender->SetPos(m_position);
 }
 
-void Oni::AnimationController()
+void Skeleton1::AnimationController()
 {
 	m_skinModelRender->GetAnimCon().SetSpeed(1.0f);
 	//ステート分岐によってアニメーションを再生させる
@@ -132,7 +133,7 @@ void Oni::AnimationController()
 	}
 }
 
-void Oni::Turn()
+void Skeleton1::Turn()
 {
 	CVector3 rotation = { 0.0f,0.0f,0.0f };
 	//自機の角度の差分
@@ -153,7 +154,7 @@ void Oni::Turn()
 	m_skinModelRender->SetRot(m_rotation);
 }
 
-void Oni::Damage() 
+void Skeleton1::Damage() 
 {
 	if (IEnemy::m_damage) {
 		m_state = enState_Damage;
@@ -161,14 +162,14 @@ void Oni::Damage()
 	}
 }
 
-void Oni::Dead()
+void Skeleton1::Dead()
 {
 	if (IEnemy::m_death) {
 		m_state = enState_Dead;
 	}
 }
 
-void Oni::Update()
+void Skeleton1::Update()
 {
 	m_timer++;
 	AnimationController();
@@ -186,7 +187,7 @@ void Oni::Update()
 	}
 }
 
-void Oni::OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventName)
+void Skeleton1::OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventName)
 {
 	(void)clipName;
 	if (wcscmp(eventName, L"attack") == 0) {

@@ -134,6 +134,11 @@ public:
 			return true;
 		}
 	}
+	//武器Lvの上限解放に必要な素材の種類を取得
+	int GetWeaponLimitStageMaterialType() const
+	{
+		return m_weaponlimitstagematerialtype[m_weaponlimitstage];
+	}
 	enum EnWeapon {
 		enWeapon_Sword,									//ソード
 		enWeapon_FireSword,								//ファイアソード
@@ -181,7 +186,21 @@ private:
 	int m_abilitygroupnumber = 0;
 	std::vector<int> m_totalabilitygroupweightlist;
 	int m_magicnumber = 0;
-	int m_weaponlimitstage = 1;
-	const int m_weaponlimit = 3;
+	int m_weaponlimitstage = 0;							//武器Lvの上限解放段階
+	int m_weaponlimit = 0;						//武器の上限解放段階の上限
+	/*!
+	@brief	MaterialNumer
+	*int limitstage;					 武器の解放段階(1ならば解放段階が1の時に必要なる、初期段階は1)		
+	*int s_rarity;				   素材レアリティ
+	*int s_number;						  素材の必要数
+	*/
+	struct MaterialNumber {
+		int s_llimitstage;							   //武器の解放段階(1ならば解放段階を1にする時に必要なる、初期段階は0)
+		int s_rarity;								   //素材レアリティ
+		int s_number;								   //素材の必要数
+	};
+	std::vector<MaterialNumber>  m_weaponreleaserequirednumber;			//各武器の上限解放に必要な素材とその数
+	std::vector<int> m_weaponlimitstagematerialtype;					//各武器の上限解放に必要な素材の種類
+
 };
 

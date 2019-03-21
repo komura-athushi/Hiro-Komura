@@ -4,11 +4,11 @@
 class Player;
 class Game;
 //大き目のクラゲ
-class Kurage3 :public IEnemy
+class Kurage5 :public IEnemy
 {
 public:
-	Kurage3();
-	~Kurage3();
+	Kurage5();
+	~Kurage5();
 	bool Start();
 	void Update();
 	void Chase();
@@ -42,9 +42,9 @@ private:
 	const float m_r = 110.0f;                                    //コリジョンの半径
 	const float m_collisionheight = 80.0f;                      //コリジョンをm_positionからどれだけ上にあげるか
 	//クラゲの色々なステータス
-	static const int m_MaxHP = 600;                             //最大HP
-	static const int m_Attack = 60;                             //攻撃力
-	static const int m_EXP = 240;                               //経験値
+	static const int m_MaxHP = 2000;                             //最大HP
+	static const int m_Attack = 450;                             //攻撃力
+	static const int m_EXP = 2790;                               //経験値
 	//ヘッダーファイルでは宣言だけ、定義はcppファイルに書いてください
 	static const int m_dropChances[];                           //エネミーのドロップするアイテム、[1]が10ならレア度1が10%でドロップするみたいな
 	static const int m_dropmaterialChances[];					//エネミーのドロップする素材の確率
@@ -81,4 +81,3 @@ private:
 	CVector3 m_castscale = { 20.0f,20.0f,20.0f };
 	const float m_windscale = 2.0f;
 };
-

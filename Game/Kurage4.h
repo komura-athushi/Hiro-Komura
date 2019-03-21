@@ -3,12 +3,12 @@
 #include "DemolisherWeapon/physics/PhysicsStaticObject.h"
 class Player;
 class Game;
-//大き目のクラゲ
-class Kurage3 :public IEnemy
+//ランダムに移動して魔法で攻撃してくるステージ2の小さい赤いクラゲ
+class Kurage4 :public IEnemy
 {
 public:
-	Kurage3();
-	~Kurage3();
+	Kurage4();
+	~Kurage4();
 	bool Start();
 	void Update();
 	void Chase();
@@ -39,12 +39,12 @@ private:
 	CVector3 m_scale = CVector3::One();					        //鬼のスケール
 	CVector3 m_movespeed = CVector3::Zero();					//移動速度
 	CVector3 m_protposition = CVector3::Zero();
-	const float m_r = 110.0f;                                    //コリジョンの半径
-	const float m_collisionheight = 80.0f;                      //コリジョンをm_positionからどれだけ上にあげるか
+	const float m_r = 60.0f;                                    //コリジョンの半径
+	const float m_collisionheight = 40.0f;                      //コリジョンをm_positionからどれだけ上にあげるか
 	//クラゲの色々なステータス
 	static const int m_MaxHP = 600;                             //最大HP
-	static const int m_Attack = 60;                             //攻撃力
-	static const int m_EXP = 240;                               //経験値
+	static const int m_Attack = 210;                             //攻撃力
+	static const int m_EXP = 1240;                                //経験値
 	//ヘッダーファイルでは宣言だけ、定義はcppファイルに書いてください
 	static const int m_dropChances[];                           //エネミーのドロップするアイテム、[1]が10ならレア度1が10%でドロップするみたいな
 	static const int m_dropmaterialChances[];					//エネミーのドロップする素材の確率
@@ -55,30 +55,26 @@ private:
 	enum State {
 		enState_Chase,
 		enState_Pose,
-		enState_Attack,											//近接攻撃
-		enState_Attack2,										//遠距離攻撃
+		enState_Attack,
 	};
-	bool m_isaria = false;
-	const float m_chasedistance = 1400.0f * 1400.0f;
-	const float m_attackdistance = 400.0f * 400.0f;
-	const float m_attackdistance2 = 1000.0f * 1000.0f;
 	State m_state = enState_Pose;
+	const float m_chasedistance = 2000.0f * 2000.0f;
+	const float m_attackdistance = 1500.0f * 1500.0f;
+	const float m_magicspeed = 0.4f;
+	bool m_isaria = false;
 	const float m_frame = 40.0f;
-	const float m_movespeedmultiply = 8.0f;
+	const float m_movespeedmultiply = 4.0f;
 	float m_dethtimer = 0.0f;
 	const int m_dethtime = 5;
 	float m_chasetimer = 0.0f;
-	const int m_chasetime = 30;
+	const int m_chasetime = 50;
 	float m_stoptimer = 0.0f;
 	const int m_stoptime = 20;
 	float m_movetimer = 0.0f;
-	const int m_movetime = 130;
+	const int m_movetime = 180;
 	float m_attacktimer = 0.0f;
 	const int m_ariatime = 30;
-	const int m_attacktime = 60;
-	const int m_ariatime2 = 40;
-	const int m_attacktime2 = 70;
-	CVector3 m_castscale = { 20.0f,20.0f,20.0f };
-	const float m_windscale = 2.0f;
+	const int m_attacktime = 70;
 };
+
 

@@ -5,7 +5,7 @@
 #include "Ground.h"
 #include "Town.h"
 #include "PlayerStatus.h"
-#include "Oni.h"
+#include "Skeleton1.h"
 #include "Skeleton2.h"
 #include "Boss.h"
 #include "Boss2.h"
@@ -32,7 +32,7 @@ Game::~Game()
 	delete m_ground;
 	delete m_lig;
 	delete m_CascadeShadowmap;
-	QueryGOs<Oni>(L"Enemy", [&](Oni* oni)
+	QueryGOs<Skeleton1>(L"Enemy", [&](Skeleton1* oni)
 	{
 		delete oni;
 		return true;
@@ -155,31 +155,29 @@ bool Game::Start()
 			//フックした場合はtrueを返す。
 			return true;
 		}
-		else if (objData.EqualObjectName(L"enemy") == true) {
+		else if (objData.EqualObjectName(L"skeleton1") == true) {
 			//スケルトン
 			//プレイヤーのインスタンスを生成する。
-			Oni* oni = new Oni;
-			oni->SetPosition(objData.position);
-			oni->SetOldPosition(objData.position);
-			oni->SetName(L"Enemy");
-			//後で削除するのでリストに積んで記憶しておく。
-			m_oniList.push_back(oni);
-			oni->SetPlayer(m_player);
-			oni->SetGame(this);
-			oni->SetNumber(number);
+			Skeleton1* sk1 = new Skeleton1;
+			sk1->SetPosition(objData.position);
+			sk1->SetOldPosition(objData.position);
+			sk1->SetRotation(objData.rotation);
+			sk1->SetName(L"Enemy");
+			sk1->SetPlayer(m_player);
+			sk1->SetGame(this);
+			sk1->SetNumber(number);
 			number++;
 			//フックした場合はtrueを返す。
 			return true;
 		}
-		else if (objData.EqualObjectName(L"enemy2") == true) {
+		else if (objData.EqualObjectName(L"skeleton2") == true) {
 			//スケルトン
 			//プレイヤーのインスタンスを生成する。
 			Skeleton2* sk2 = new Skeleton2;
 			sk2->SetPosition(objData.position);
 			sk2->SetOldPosition(objData.position);
+			sk2->SetRotation(objData.rotation);
 			sk2->SetName(L"Enemy");
-			//後で削除するのでリストに積んで記憶しておく。
-			m_sk2List.push_back(sk2);
 			sk2->SetPlayer(m_player);
 			sk2->SetGame(this);
 			sk2->SetNumber(number);

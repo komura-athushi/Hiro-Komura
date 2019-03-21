@@ -170,7 +170,6 @@
     <ClCompile Include="Material.cpp" />
     <ClCompile Include="Merchant.cpp" />
     <ClCompile Include="Morugan.cpp" />
-    <ClCompile Include="Oni.cpp" />
     <ClCompile Include="PlayerStatus.cpp" />
     <ClCompile Include="ShotMagic.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -199,6 +198,9 @@
     <ClCompile Include="FontNumber.cpp" />
     <ClCompile Include="Enemy_Ice.cpp" />
     <ClCompile Include="Wall.cpp" />
+    <ClCompile Include="Kurage4.cpp" />
+    <ClCompile Include="Kurage5.cpp" />
+    <ClCompile Include="Skeleton1.cpp" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Asset\modelData\Sword\AncientWarriorBlade.FBX">
@@ -342,6 +344,12 @@
     <MeshContentTask Include="Asset\modelData\stage2_ground.FBX">
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
+    <MeshContentTask Include="Asset\modelData\kurage\kurage4.FBX">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Asset\modelData\kurage\kurage5.FBX">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Boss.h" />
@@ -361,7 +369,6 @@
     <ClInclude Include="Material.h" />
     <ClInclude Include="Merchant.h" />
     <ClInclude Include="Morugan.h" />
-    <ClInclude Include="Oni.h" />
     <ClInclude Include="PlayerStatus.h" />
     <ClInclude Include="ShotMagic.h" />
     <ClInclude Include="Game.h" />
@@ -389,6 +396,9 @@
     <ClInclude Include="FontNumber.h" />
     <ClInclude Include="Enemy_Ice.h" />
     <ClInclude Include="Wall.h" />
+    <ClInclude Include="Kurage4.h" />
+    <ClInclude Include="Kurage5.h" />
+    <ClInclude Include="Skeleton1.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Assets">

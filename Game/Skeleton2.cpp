@@ -20,7 +20,7 @@ Skeleton2::~Skeleton2()
 
 bool Skeleton2::Start()
 {
-	IEnemy::CCollision({ m_position }, m_collisionheight, m_r);
+	IEnemy::CCollision(m_position, m_collisionheight, m_r);
 	//アニメーション
 	m_animClip[enAnimationClip_idle].Load(L"Asset/animData/enemy/idle.tka");
 	m_animClip[enAnimationClip_attack].Load(L"Asset/animData/enemy/attack.tka");
@@ -39,10 +39,11 @@ bool Skeleton2::Start()
 	});
 	m_skinModelRender->SetScale(m_scale);
 	m_skinModelRender->SetPos(m_position);
+	m_skinModelRender->SetRot(m_rotation);
 	CQuaternion rot = CQuaternion::Identity();
 	CVector3 pos = m_position;
-	pos.y += 55.0f;
-	m_staticobject.CreateCapsule(pos, rot, 40.0f, 50.0f);
+	pos.y += m_collisionheight;
+	m_staticobject.CreateCapsule(pos, rot, m_staticr, m_collisionheight);
 	return true;
 }
 
@@ -179,7 +180,7 @@ void Skeleton2::Update()
 	if (!IEnemy::m_death) {
 		CQuaternion rot;
 		CVector3 pos = m_position;
-		pos.y += 55.0f;
+		pos.y += m_collisionheight;
 		m_staticobject.SetPositionAndRotation(pos, rot);
 	}
 	if (m_gekiha) {

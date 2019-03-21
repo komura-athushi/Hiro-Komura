@@ -87,6 +87,23 @@ bool GameData::Start()
 		sprite->Init(m_filepathlist[i]);
 		m_numberspritelist.push_back(sprite);
 	}
+	//•Ší‚ÌLvãŒÀ‰ğ•ú‚É•K—v‚È‘fŞ”‚ğİ’è
+	m_weaponreleaserequirednumber.push_back(MaterialNumber{ 1, 1, 15 });
+	m_weaponreleaserequirednumber.push_back(MaterialNumber{ 1, 2, 10 });
+	m_weaponreleaserequirednumber.push_back(MaterialNumber{ 2, 2, 15 });
+	m_weaponreleaserequirednumber.push_back(MaterialNumber{ 2, 3, 10 });
+	m_weaponreleaserequirednumber.push_back(MaterialNumber{ 3, 3, 20 });
+	for (int i = 0; i < m_weaponreleaserequirednumber.size(); i++) {
+		if (m_weaponlimitstagematerialtype.size() != m_weaponreleaserequirednumber[i].s_llimitstage) {
+			m_weaponlimitstagematerialtype.push_back(1);
+		}
+		else {
+			m_weaponlimitstagematerialtype[m_weaponreleaserequirednumber[i].s_llimitstage - 1] += 1;
+		}
+		if (m_weaponlimit < m_weaponreleaserequirednumber[i].s_llimitstage) {
+			m_weaponlimit = m_weaponreleaserequirednumber[i].s_llimitstage;
+		}
+	}
 	return true;
 }
 
