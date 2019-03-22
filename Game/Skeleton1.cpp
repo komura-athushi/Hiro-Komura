@@ -5,8 +5,8 @@
 #include "Game.h"
 #include "Player.h"
 //cppでエネミーのレア度ごとのドロップ率を設定
-const int Skeleton1::m_dropChances[Weapon::m_HighestRarity] = { 0,40,0,0,0,0,0 };
-const int Skeleton1::m_dropmaterialChances[Material::m_HighestRarity] = { 70.0f,0.0f,0.0f };
+const int Skeleton1::m_dropChances[Weapon::m_HighestRarity] = { 0,15,5,0,0,0,0 };
+const int Skeleton1::m_dropmaterialChances[Material::m_HighestRarity] = { 20.0f,20.0f,0.0f };
 //鬼（見た目はスケルトン）です
 Skeleton1::Skeleton1():IEnemy(m_MaxHP,m_Attack,m_EXP,m_dropChances,m_dropmaterialChances,m_meseta)
 {
@@ -56,11 +56,11 @@ void Skeleton1::Chase()
 	//敵の初期位置と現在位置の距離
 	CVector3 oldpos = m_oldpos - m_position;
 	//接触したら攻撃
-	if (pos.LengthSq() < 100.0f*100.0f) {
+	if (pos.LengthSq() < 140.0f*140.0f) {
 		m_state = enState_Attack;
 	}
 	//もしプレイヤーと鬼の距離が近くなったら
-	else if (pos.LengthSq() < 1000.0f*1000.0f) {
+	else if (pos.LengthSq() < 1100.0f*1100.0f) {
 		//近づいてくる
 		CVector3 EnemyPos = m_playerposition - m_position;
 		EnemyPos.Normalize();
@@ -207,5 +207,8 @@ void Skeleton1::OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventNa
 			}
 		}
 		);
+		GameObj::Suicider::CEffekseer* effect = new GameObj::Suicider::CEffekseer;
+		effect->Play(L"Asset/effect/Effects/efk/enemy_slash_01.efk", 1.0f, pos, m_rotation, m_effectscale);
+		effect->SetSpeed(1.3f);
 	}
 }

@@ -3,9 +3,10 @@
 #include "Player.h"
 #include "Enemy_Wind.h"
 #include "ShotMagic.h"
+#include "Enemy_Fire.h"
 //cppでエネミーのレア度ごとのドロップ率を設定
-const int Kurage5::m_dropChances[Weapon::m_HighestRarity] = { 0,50,0,0,0,0,0 };
-const int Kurage5::m_dropmaterialChances[Material::m_HighestRarity] = { 30.0f,0.0f,0.0f };
+const int Kurage5::m_dropChances[Weapon::m_HighestRarity] = { 0,0,15,15,0,0,0 };
+const int Kurage5::m_dropmaterialChances[Material::m_HighestRarity] = { 0.0f,0.0f,10.0f };
 Kurage5::Kurage5() :IEnemy(m_MaxHP, m_Attack, m_EXP, m_dropChances, m_dropmaterialChances, m_meseta)
 {
 }
@@ -52,68 +53,8 @@ void Kurage5::Update()
 
 void Kurage5::Chase()
 {
-	CVector3 pos = m_player->GetPosition() - m_position;
-	if (pos.LengthSq() < m_chasedistance) {
-		switch (m_state) {
-		case enState_Chase:
-			if (m_chasetimer >= m_chasetime) {
-				CVector3 pos = m_player->GetPosition() - m_position;
-				pos.Normalize();
-				pos *= m_movespeedmultiply;
-				m_movespeed = pos;
-				m_chasetimer = 0.0f;
-				ChangeAttack();
-			}
-			m_chasetimer += m_frame * GetDeltaTimeSec();
-			m_movetimer += m_frame * GetDeltaTimeSec();
-			if (m_movetimer >= m_movetime) {
-				m_state = enState_Pose;
-				m_chasetimer = 0.0f;
-				m_movetimer = 0.0f;
-				ChangeAttack();
-			}
-			break;
-		case enState_Pose:
-			m_stoptimer += m_frame * GetDeltaTimeSec();
-			m_movespeed = CVector3::Zero();
-			if (m_stoptimer >= m_stoptime) {
-				m_stoptimer = 0.0f;
-				m_state = enState_Chase;
-				ChangeAttack();
-			}
-			break;
-		case enState_Attack:
-			m_movespeed = CVector3::Zero();
-			m_attacktimer += m_frame * GetDeltaTimeSec();
-			if (m_attacktimer >= m_ariatime && !m_isaria) {
-				Aria();
-				m_attacktimer = 0.0f;
-				m_isaria = true;
-			}
-			else if (m_attacktimer >= m_attacktime && m_isaria) {
-				Attack();
-				m_attacktimer = 0.0f;
-				m_isaria = false;
-			}
-			break;
-		case enState_Attack2:
-			m_movespeed = CVector3::Zero();
-			m_attacktimer += m_frame * GetDeltaTimeSec();
-			if (m_attacktimer >= m_ariatime2 && !m_isaria) {
-				Aria();
-				m_attacktimer = 0.0f;
-				m_isaria = true;
-			}
-			else if (m_attacktimer >= m_attacktime2 && m_isaria) {
-				Attack();
-				m_attacktimer = 0.0f;
-				m_isaria = false;
-			}
-			break;
-		}
-	}
-	else {
-		CVector3 pos = m_protposition - m_position;
+	CVector3 pos = m_protposition - m_position;
+	if (pos.LengthSq() > m_chasedistance) {
 		if (pos.LengthSq() > 100.0f * 100.0f) {
 			pos.Normalize();
 			pos *= m_movespeedmultiply;
@@ -121,6 +62,76 @@ void Kurage5::Chase()
 		}
 		else {
 			m_movespeed = CVector3::Zero();
+		}
+	}
+	else {
+		CVector3 pos = m_player->GetPosition() - m_position;
+		if (pos.LengthSq() < m_chasedistance) {
+			switch (m_state) {
+			case enState_Chase:
+				if (m_chasetimer >= m_chasetime) {
+					CVector3 pos = CVector3::Zero();
+					int rn = rand();
+					if (rn % 10 > 5) {
+						pos.x += m_movespeedmultiply;
+					}
+					else {
+						pos.x -= m_movespeedmultiply;
+					}
+					if (rn % 23 > 12) {
+						pos.z += m_movespeedmultiply;
+					}
+					else {
+						pos.z -= m_movespeedmultiply;
+					}
+					m_movespeed = pos;
+					m_chasetimer = 0.0f;
+					ChangeAttack();
+				}
+				m_chasetimer += m_frame * GetDeltaTimeSec();
+				m_movetimer += m_frame * GetDeltaTimeSec();
+				if (m_movetimer >= m_movetime) {
+					m_state = enState_Pose;
+					m_chasetimer = 0.0f;
+					m_movetimer = 0.0f;
+					ChangeAttack();
+				}
+				break;
+			case enState_Pose:
+				m_stoptimer += m_frame * GetDeltaTimeSec();
+				m_movespeed = CVector3::Zero();
+				if (m_stoptimer >= m_stoptime) {
+					m_stoptimer = 0.0f;
+					m_state = enState_Chase;
+					ChangeAttack();
+				}
+				break;
+			case enState_Attack:
+				m_movespeed = CVector3::Zero();
+				m_attacktimer += m_frame * GetDeltaTimeSec();
+				if (m_attacktimer >= m_ariatime && !m_isaria) {
+					Aria();
+					m_attacktimer = 0.0f;
+					m_isaria = true;
+				}
+				else if (m_attacktimer >= m_attacktime && m_isaria) {
+					Attack();
+					m_attacktimer = 0.0f;
+					m_isaria = false;
+				}
+				break;
+			}
+		}
+		else {
+			CVector3 pos = m_protposition - m_position;
+			if (pos.LengthSq() > 100.0f * 100.0f) {
+				pos.Normalize();
+				pos *= m_movespeedmultiply;
+				m_movespeed = pos;
+			}
+			else {
+				m_movespeed = CVector3::Zero();
+			}
 		}
 	}
 	if (IEnemy::m_damage) {
@@ -137,12 +148,7 @@ void Kurage5::Chase()
 void Kurage5::Aria()
 {
 	GameObj::Suicider::CEffekseer* effect = new GameObj::Suicider::CEffekseer;
-	if (m_state == enState_Attack) {
-		effect->Play(L"Asset/effect/Effects/efk/cast_wind.efk", 1.0f, m_position, CQuaternion::Identity(), m_castscale);
-	}
-	else if (m_state == enState_Attack2) {
-		effect->Play(L"Asset/effect/Effects/efk/cast_sphere.efk", 1.0f, m_position, CQuaternion::Identity(), m_castscale);
-	}
+	effect->Play(L"Asset/effect/Effects/efk/cast_fire.efk", 1.0f, m_position, CQuaternion::Identity(), m_castscale);
 	effect->SetSpeed(2.0f);
 	//SE
 	SuicideObj::CSE* se = NewGO<SuicideObj::CSE>(L"Asset/sound/se/aria.wav");
@@ -156,37 +162,31 @@ void Kurage5::Aria()
 
 void Kurage5::Attack()
 {
-	if (m_state == enState_Attack) {
-		Enemy_Wind* ew = new Enemy_Wind;
-		ew->SetPosition(m_position);
-		ew->SetAttack(m_Attack);
-		ew->SetScale(m_windscale);
-		m_state = enState_Attack2;
-	}
-	else if (m_state == enState_Attack2) {
-		CVector3 bulletPos = m_player->GetPosition() - m_position;
-		bulletPos.Normalize();
-		ShotMagic* sm = new ShotMagic;
-		sm->SetPosition(m_position);
-		sm->SetDirectionPlayer(bulletPos);
-		sm->SetDamage(m_Attack);
-		sm->SetEnemy();
-		sm->SetId(5);
-		sm->SetSpeed(0.7f);
-		sm->SetName(L"MagicSphere");
-		m_state = enState_Pose;
-		m_stoptimer = 0.0f;
-	}
+	CVector3 bulletPos = m_player->GetPosition() - m_position;
+	bulletPos.Normalize();
+	Enemy_Fire* sm = new Enemy_Fire;
+	sm->SetPosition(m_position);
+	sm->SetMoveSpeed(bulletPos);
+	sm->SetAttack(m_Attack);
+	sm->SetSpeed(0.5f);
+	sm->SetDeleteTime(170.0f);
+	m_state = enState_Pose;
+	m_stoptimer = 0.0f;
+	m_movetimer = 0.0f;
+	m_attacktimer = 0.0f;
 }
 
 void Kurage5::ChangeAttack()
 {
 	CVector3 pos = m_player->GetPosition() - m_position;
 	if (pos.LengthSq() < m_attackdistance) {
-		m_state = enState_Pose;
+		m_state = enState_Chase;
 		int rn = rand() % 100;
-		if (rn >= 20) {
+		if (rn >= 70) {
 			m_state = enState_Attack;
 		}
 	}
+	m_stoptimer = 0.0f;
+	m_movetimer = 0.0f;
+	m_attacktimer = 0.0f;
 }

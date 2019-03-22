@@ -48,7 +48,7 @@ private:
 	//ヘッダーファイルでは宣言だけ、定義はcppファイルに書いてください
 	static const int m_dropChances[];                           //エネミーのドロップするアイテム、[1]が10ならレア度1が10%でドロップするみたいな
 	static const int m_dropmaterialChances[];					//エネミーのドロップする素材の確率
-	static const int m_meseta = 80;								//ドロップするメセタの大体の額
+	static const int m_meseta = 150;							//ドロップするメセタの大体の額
 	bool m_gekiha = false;                                      //deleteするかどうか
 	Player* m_player;											//プレイヤークラスのポインタ
 	Game* m_game;
@@ -58,7 +58,7 @@ private:
 		enState_Attack,
 	};
 	State m_state = enState_Pose;
-	const float m_chasedistance = 2000.0f * 2000.0f;
+	const float m_chasedistance = 1800.0f * 1800.0f;
 	const float m_attackdistance = 1500.0f * 1500.0f;
 	const float m_magicspeed = 0.4f;
 	bool m_isaria = false;

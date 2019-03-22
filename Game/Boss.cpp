@@ -9,7 +9,7 @@
 #include "ShotMagic.h"
 #include "Enemy_Ice.h"
 //cppでエネミーのレア度ごとのドロップ率を設定
-const int Boss::m_dropChances[Weapon::m_HighestRarity] = { 0,0,100,0,0,0,0 };
+const int Boss::m_dropChances[Weapon::m_HighestRarity] = { 0,0,50,0,0,0,0 };
 const int Boss::m_dropmaterialChances[Material::m_HighestRarity] = { 0,100,0 };
 //ボスです
 Boss::Boss() : IEnemy(m_MaxHP, m_Attack, m_EXP, m_dropChances, m_dropmaterialChances, m_meseta)

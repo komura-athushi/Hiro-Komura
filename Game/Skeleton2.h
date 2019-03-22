@@ -62,7 +62,7 @@ private:
 	EnState m_state = enState_Idle_Run;
 	CVector3 m_oldpos = { 30.0f,100.0f,1500.0f };               //鬼の初期位置
 	CVector3 m_position = { 30.0f,100.0f,1500.0f };				//鬼の座標
-	CVector3 m_scale = { 14.0f,14.0f,14.0f };					//鬼のスケール
+	CVector3 m_scale = { 16.0f,16.0f,16.0f };					//鬼のスケール
 	CVector3 m_movespeed = { 0.0f,  0.0f,  0.0f };				//移動速度
 	CVector3 m_heikou = { 0.0f,0.0f,0.0f };                     //鬼の向いている方向に平行なベクトル
 	Player* m_player;											//プレイヤークラスのポインタ
@@ -73,10 +73,10 @@ private:
 	Game* m_game;
 	int m_timer = 0;											//攻撃のクールタイムのためにフレーム数を数える
 	//コリジョンとか
-	const float m_r = 110.0f;                                    //コリジョンの半径
-	const float m_staticr = 85.0f;
-	const float m_collisionheight = 85.0f;                      //コリジョンをm_positionからどれだけ上にあげるか
-	const float m_attackr = 110.0f;                              //攻撃したときに発生させるコリジョンの半径
+	const float m_r = 125.0f;                                    //コリジョンの半径
+	const float m_staticr = 95.0f;
+	const float m_collisionheight = 95.0f;                      //コリジョンをm_positionからどれだけ上にあげるか
+	const float m_attackr = 125.0f;                              //攻撃したときに発生させるコリジョンの半径
 	//Oniの色々なステータス
 	static const int m_MaxHP = 1200;                             //最大HP
 	static const int m_Attack = 330;                               //攻撃力
@@ -84,7 +84,8 @@ private:
 	//ヘッダーファイルでは宣言だけ、定義はcppファイルに書いてください
 	static const int m_dropChances[];                           //エネミーのドロップするアイテム、[1]が10ならレア度1が10%でドロップするみたいな
 	static const int m_dropmaterialChances[];					//エネミーのドロップする素材の確率
-	static const int m_meseta = 200;							//ドロップするメセタの大体の額
+	static const int m_meseta = 400;							//ドロップするメセタの大体の額
 	bool m_gekiha = false;                                      //deleteするかどうか
+	const CVector3 m_effectscale = { 20.0f,20.0f,15.0f };
 };
 

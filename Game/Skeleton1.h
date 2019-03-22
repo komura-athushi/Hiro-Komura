@@ -77,12 +77,13 @@ private:
 	const float m_collisionheight = 50.0f;                      //コリジョンをm_positionからどれだけ上にあげるか
 	//Oniの色々なステータス
 	static const int m_MaxHP = 450;                             //最大HP
-	static const int m_Attack = 140;                               //攻撃力
-	static const int m_EXP = 480;                                //経験値
+	static const int m_Attack = 140;                            //攻撃力
+	static const int m_EXP = 480;                               //経験値
 	//ヘッダーファイルでは宣言だけ、定義はcppファイルに書いてください
 	static const int m_dropChances[];                           //エネミーのドロップするアイテム、[1]が10ならレア度1が10%でドロップするみたいな
 	static const int m_dropmaterialChances[];					//エネミーのドロップする素材の確率
-	static const int m_meseta = 50;								//ドロップするメセタの大体の額
+	static const int m_meseta = 100;							//ドロップするメセタの大体の額
 	bool m_gekiha = false;                                      //deleteするかどうか
+	CVector3 m_effectscale = { 20.0f,20.0f,15.0f };				//エフェクトの大きさ
 };
 

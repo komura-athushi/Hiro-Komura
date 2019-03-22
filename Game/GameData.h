@@ -178,7 +178,7 @@ private:
 	std::vector<CSprite*> m_numberspritelist;           //数字の画像の可変長配列
 	std::vector<const wchar_t*> m_filepathlist;
 	bool m_stage[3] = { false,false,false };			//各ステージをクリアしたかどうか
-	int m_townlevel = 0;								//街の発展レベル
+	int m_townlevel = 1;								//街の発展レベル
 	bool m_isgameclear = false;							//ゲームをクリアしたかどうか
 	bool m_isgameend = false;							//ゲームが一旦終わったかどうか
 	CSprite* m_sprite;

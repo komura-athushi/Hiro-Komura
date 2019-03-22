@@ -3,8 +3,8 @@
 #include "Player.h"
 #include "ShotMagic.h"
 //cppでエネミーのレア度ごとのドロップ率を設定
-const int Kurage4::m_dropChances[Weapon::m_HighestRarity] = { 0,50,0,0,0,0,0 };
-const int Kurage4::m_dropmaterialChances[Material::m_HighestRarity] = { 30.0f,0.0f,0.0f };
+const int Kurage4::m_dropChances[Weapon::m_HighestRarity] = { 0,25,5,0,0,0,0 };
+const int Kurage4::m_dropmaterialChances[Material::m_HighestRarity] = { 20.0f,20.0f,0.0f };
 Kurage4::Kurage4() :IEnemy(m_MaxHP, m_Attack, m_EXP, m_dropChances, m_dropmaterialChances, m_meseta)
 {
 }
@@ -146,7 +146,7 @@ void Kurage4::Chase()
 void Kurage4::Aria()
 {
 	GameObj::Suicider::CEffekseer* effect = new GameObj::Suicider::CEffekseer;
-	effect->Play(L"Asset/effect/Effects/efk/cast_ice.efk", 1.0f, m_position, CQuaternion::Identity(), { 12.0f,12.0f,12.0f });
+	effect->Play(L"Asset/effect/Effects/efk/cast_fire.efk", 1.0f, m_position, CQuaternion::Identity(), { 12.0f,12.0f,12.0f });
 	effect->SetSpeed(2.0f);
 	//SE
 	SuicideObj::CSE* se = NewGO<SuicideObj::CSE>(L"Asset/sound/se/aria.wav");
@@ -168,7 +168,8 @@ void Kurage4::Attack()
 	sm->SetDamage(m_Attack);
 	sm->SetEnemy();
 	sm->SetId(1);
-	sm->SetSpeed(0.8f);
+	sm->SetSpeed(0.7f);
+	sm->SetDeleteTime(90.0f);
 	m_state = enState_Pose;
 	m_stoptimer = 0.0f;
 	m_movetimer = 0.0f;

@@ -21,7 +21,7 @@ public:
 	{
 		m_position = pos;
 	}
-	//弾の速度をセット
+	//弾の移動方向をセット
 	void SetMoveSpeed(const CVector3& pos)
 	{
 		m_moveSpeed = pos;
@@ -36,6 +36,16 @@ public:
 	{
 		m_attack = attack;
 	}
+	//削除する時間を変更
+	void SetDeleteTime(const float& time)
+	{
+		m_time = time;
+	}
+	//移動速度を変更
+	void SetSpeed(const float& speed)
+	{
+		m_speed = speed;
+	}
 private:
 	GameObj::Suicider::CEffekseer* m_effect = nullptr;
 	CVector3 m_position = CVector3::Zero();						//弾の座標
@@ -49,5 +59,6 @@ private:
 	const float m_attack3r = 90.0f;                            //攻撃したときに発生させるコリジョンの半径
 	int m_attack = 30;							               //ファイヤーの攻撃力、デフォルトで30
 	float m_timer = 0.0f;
-	const float m_time = 50.0f;
+	float m_time = 50.0f;
+	float m_speed = 1.0f;
 };

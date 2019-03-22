@@ -3,8 +3,8 @@
 #include "Player.h"
 #include "Enemy_Ice.h"
 //cppでエネミーのレア度ごとのドロップ率を設定
-const int Kurage2::m_dropChances[Weapon::m_HighestRarity] = { 0,50,0,0,0,0,0 };
-const int Kurage2::m_dropmaterialChances[Material::m_HighestRarity] = { 30.0f,0.0f,0.0f };
+const int Kurage2::m_dropChances[Weapon::m_HighestRarity] = { 5,15,0,0,0,0,0 };
+const int Kurage2::m_dropmaterialChances[Material::m_HighestRarity] = { 20.0f,0.0f,0.0f };
 Kurage2::Kurage2() :IEnemy(m_MaxHP, m_Attack, m_EXP, m_dropChances, m_dropmaterialChances, m_meseta)
 {
 }

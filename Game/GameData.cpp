@@ -20,8 +20,8 @@ bool GameData::Start()
 	m_weaponlist.push_back(Weapon(1 , L"ファイアソード"			, 2, 45, 80, 1,  500));
 	m_weaponlist.push_back(Weapon(2 , L"アイスソード"			, 2, 45, 80, 2,  500));
 	m_weaponlist.push_back(Weapon(3 , L"ウィンドソード"			, 2, 45, 80, 3,  500));
-	m_weaponlist.push_back(Weapon(4 , L"グレイトソード"			, 3, 50, 50, 4, 1000));
-	m_weaponlist.push_back(Weapon(5 , L"クリスタルエッジ"		, 4, 60, 70, 5, 1500));
+	m_weaponlist.push_back(Weapon(4 , L"グレイトソード"			, 3, 60,100, 4, 1000));
+	m_weaponlist.push_back(Weapon(5 , L"クリスタルエッジ"		, 4, 80,120, 5, 1500));
 	m_weaponlist.push_back(Weapon(6 , L"バトルブレード"         , 5, 80, 80, 6, 2000));
 	m_weaponlist.push_back(Weapon(7 , L"バンデッドソード"       , 6,120, 70, 7, 5000));
 	m_weaponlist.push_back(Weapon(8 , L"エクスカリバーモルガン" , 7,150,150, 8,10000));
@@ -30,8 +30,8 @@ bool GameData::Start()
 	m_magiclist.push_back(Magic(1 , L"フレイムアロー"		  	, 1.2f, 30));
 	m_magiclist.push_back(Magic(2 , L"フリーズショット"			, 1.8f, 30));
 	m_magiclist.push_back(Magic(3 , L"エアルバースト"			, 1.0f, 30));
-	m_magiclist.push_back(Magic(4 , L"シフタ"					, 0.0f, 50));
-	m_magiclist.push_back(Magic(5 , L"マジックスフィア"		    , 2.0f, 60));
+	m_magiclist.push_back(Magic(4 , L"シフタ"					, 0.0f, 30));
+	m_magiclist.push_back(Magic(5 , L"マジックスフィア"		    , 2.0f, 40));
 	m_magiclist.push_back(Magic(6 , L"ヒール"                   , 0.5f, 30));
 	m_magiclist.push_back(Magic(7 , L"覇王斬"                   , 2.0f, 60));
 	m_magiclist.push_back(Magic(8 , L"約束された勝利の剣"       , 2.3f, 60));

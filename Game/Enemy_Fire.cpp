@@ -16,7 +16,7 @@ Enemy_Fire::~Enemy_Fire()
 bool Enemy_Fire::Start()
 {
 	m_effect = new GameObj::Suicider::CEffekseer;
-	m_effect->Play(L"Asset/effect/efk/magic_proj02.efk", 1.0f, m_position, m_rotation, m_scale);
+	m_effect->Play(L"Asset/effect/Effects/efk/enemy_fire_01.efk", 1.0f, m_position, m_rotation, m_scale);
 	//ƒRƒŠƒWƒ‡ƒ“
 	//UŒ‚”»’è‚Ì”­¶
 	m_attackCol = NewGO<SuicideObj::CCollisionObj>();
@@ -32,6 +32,8 @@ bool Enemy_Fire::Start()
 		}
 	}
 	);
+	m_moveSpeed *= 2.0f * 20.0f;
+	m_moveSpeed *= m_speed;
 	return true;
 }
 

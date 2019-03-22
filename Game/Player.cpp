@@ -291,16 +291,15 @@ void Player::Animation()
 		}
 	}
 	if (m_town == nullptr) {
-		//LT押したらゲームオーバー
+		/*//LT押したらゲームオーバー
 		if (m_HP <= 0 || Pad(0).GetButton(enButtonLT)) {
 			m_state = enState_GameOver;
 		}
 		//LB1押したらゲームクリア
 		else if (Pad(0).GetButton(enButtonRT)) {
 			m_state = enState_GameClear;
-		}
+		}*/
 		if (m_state == enState_Idle) {
-			;
 			if (!m_isbackchoice) {
 				if (Pad(0).GetDown(enButtonBack)) {
 					m_isbackchoice = true;
@@ -1235,9 +1234,9 @@ void Player::PostRender()
 			DirectX::SpriteEffects_None,
 			0.8f);
 	}
-	wchar_t output10[256];
-	swprintf_s(output10, L"%f\n%f\n%f", m_position.x,m_position.y,m_position.z);
-	m_font.Draw(output10, { 0.0f,0.0f });
+	//wchar_t output10[256];
+	//swprintf_s(output10, L"%f\n%f\n%f", m_position.x,m_position.y,m_position.z);
+	//m_font.Draw(output10, { 0.0f,0.0f });
 }
 
 void Player::SetStatus()
