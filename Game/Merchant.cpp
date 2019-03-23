@@ -559,7 +559,9 @@ void Merchant::Decision()
 		m_spritelist.erase(m_spritelist.begin() + m_swordid3);
 		delete sp;
 		m_swordid1 = m_playerstatus->GetSwordId();
-		m_swordid2 = m_swordid1;
+		if (m_swordid2 > m_swordid3) {
+			m_swordid2 -= 1;
+		}
 		m_swordid3 = m_swordid1;
 		m_button = false;
 		m_state = enState_Upgrade;

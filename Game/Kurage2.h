@@ -67,11 +67,11 @@ private:
 	float m_dethtimer = 0.0f;
 	const int m_dethtime = 5;
 	float m_chasetimer = 0.0f;
-	const int m_chasetime = 50;
+	const int m_chasetime = 40;
 	float m_stoptimer = 0.0f;
-	const int m_stoptime = 20;
+	const int m_stoptime = 80;
 	float m_movetimer = 0.0f;
-	const int m_movetime = 180;
+	const int m_movetime = 240;
 	float m_attacktimer = 0.0f;
 	const int m_ariatime = 30;
 	const int m_attacktime = 70;

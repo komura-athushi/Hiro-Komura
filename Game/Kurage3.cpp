@@ -158,16 +158,16 @@ void Kurage3::Attack()
 {
 	if (m_state == enState_Attack) {
 		Enemy_Wind* ew = new Enemy_Wind;
-		ew->SetPosition(m_position);
+		ew->SetPosition(m_position + CVector3::AxisY());
 		ew->SetAttack(m_Attack);
 		ew->SetScale(m_windscale);
 		m_state = enState_Attack2;
 	}
 	else if (m_state == enState_Attack2) {
-		CVector3 bulletPos = m_player->GetPosition() - m_position;
+		CVector3 bulletPos = (m_player->GetPosition() + CVector3::AxisY()*40.0f) - (m_position + CVector3::AxisY() * m_collisionheight);
 		bulletPos.Normalize();
 		ShotMagic* sm = new ShotMagic;
-		sm->SetPosition(m_position);
+		sm->SetPosition(m_position + CVector3::AxisY() * m_collisionheight);
 		sm->SetDirectionPlayer(bulletPos);
 		sm->SetDamage(m_Attack);
 		sm->SetEnemy();

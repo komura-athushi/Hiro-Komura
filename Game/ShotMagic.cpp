@@ -350,7 +350,6 @@ bool ShotMagic::Start()
 	 m_scale = m_scale1;
 	 m_scale *= m_multiplyscale;
 	 m_collisionscale1 *= m_multiplyscale;
-	 m_position = m_position + CVector3::AxisY()*60.0f;
 	 m_movespeed = m_directionplayer * m_multiplyspeed1;
 	 SetCollisionModelnoDamage(m_position, m_collisionscale1, m_id, m_scale, m_modelcount, true);
 	 m_damage /= m_modelnumber;
@@ -368,7 +367,6 @@ bool ShotMagic::Start()
 	 m_scale *= m_multiplyscale;
 	 m_collisionscale2 *= m_multiplyscale;
 	 m_movespeed = m_directionplayer * m_multiplyspeed2;
-	 m_position = m_position + CVector3::AxisY()*60.0f;
 	 m_damage /= m_modelnumber;
  }
 
@@ -394,7 +392,7 @@ bool ShotMagic::Start()
 	 m_movespeed = m_directionplayer * m_multiplyspeed3;
 	 m_directionplayer.y = 0.0f;
 	 m_position += m_directionplayer * 250.0f;
-	 m_position.y += 100.0f;
+	 m_position.y += 40.0f;
 	 SetCollisionModelnoDamage(m_position, m_collisionscale3, m_id, m_scale, m_modelcount, true,m_hittime3);
 	 m_damage /= m_modelnumber;
 	 m_damage /= m_multihit;
@@ -414,6 +412,7 @@ bool ShotMagic::Start()
 	 m_collisionscale4 *= m_multiplyscale;
 	 m_position = m_position; //+CVector3::AxisY()*60.0f;
 	 m_movespeed = m_directionplayer * m_multiplyspeed4;
+	 m_position -= CVector3::AxisY() * 60.0f;
 	 SetCollisionModelnoDamage(m_position, m_collisionscale4, m_id, m_scale, m_modelcount, false);
 	 m_damage /= m_modelnumber;
 	 Player* player = FindGO<Player>(L"Player");
@@ -432,7 +431,6 @@ bool ShotMagic::Start()
 	 m_scale = m_scale5;
 	 m_scale *= m_multiplyscale;
 	 m_collisionscale5 *= m_multiplyscale;
-	 m_position = m_position + CVector3::AxisY()*60.0f;
 	 m_movespeed = m_directionplayer * m_multiplyspeed5;
 	 SetCollisionModelnoDamage(m_position, m_collisionscale5, m_id,m_scale, m_modelcount, false);
 	 m_damage /= m_modelnumber;
@@ -453,6 +451,7 @@ bool ShotMagic::Start()
 	 m_collisionscale6 *= m_multiplyscale;
 	 m_position = m_position; //+CVector3::AxisY()*60.0f;
 	 m_movespeed = m_directionplayer * m_multiplyspeed6;
+	 m_position -= CVector3::AxisY() * 60.0f;
 	 SetCollisionModelnoDamage(m_position, m_collisionscale6, m_id, m_scale, m_modelcount,false);
 	 m_damage /= m_modelnumber;
 	 Player* player = FindGO<Player>(L"Player");

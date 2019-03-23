@@ -84,10 +84,9 @@ void Kurage2::Chase()
 					}
 					m_movespeed = pos;
 					m_chasetimer = 0.0f;
-					ChangeAttack();
 				}
 				m_chasetimer += m_frame * GetDeltaTimeSec();
-				m_movetimer += m_frame * GetDeltaTimeSec();
+				m_movetimer += m_frame * GetDeltaTimeSec()*(rand() % 2 + 1);
 				if (m_movetimer >= m_movetime) {
 					m_state = enState_Pose;
 					m_chasetimer = 0.0f;
@@ -96,12 +95,12 @@ void Kurage2::Chase()
 				}
 				break;
 			case enState_Pose:
-				m_stoptimer += m_frame * GetDeltaTimeSec();
+				m_stoptimer += m_frame * GetDeltaTimeSec()*(rand() %2 + 1);
 				m_movespeed = CVector3::Zero();
 				if (m_stoptimer >= m_stoptime) {
 					m_stoptimer = 0.0f;
 					m_state = enState_Chase;
-					ChangeAttack();
+					//ChangeAttack();
 				}
 				break;
 			case enState_Attack:
@@ -132,14 +131,14 @@ void Kurage2::Chase()
 			}
 		}
 	}
-	if (IEnemy::m_damage) {
+	/*if (IEnemy::m_damage) {
 		m_state = enState_Pose;
 		m_stoptimer = 0.0f;
 		m_movetimer = 0.0f;
 		m_attacktimer = 0.0f;
 		m_isaria = false;
 		IEnemy::m_damage = false;
-	}
+	}*/
 	m_position += m_movespeed * GetDeltaTimeSec() * m_frame;
 }
 
@@ -161,10 +160,11 @@ void Kurage2::Aria()
 void Kurage2::Attack()
 {
 	Enemy_Ice* ei = new Enemy_Ice;
-	CVector3 pos = m_player->GetPosition() - m_position;
-	pos.Normalize();
-	ei->SetPosition(m_position);
-	ei->SetMoveSpeed(pos);
+	CVector3 pos = m_position + CVector3::AxisY() * 60.0f;
+	CVector3 pos2 = (m_player->GetPosition() + CVector3::AxisY()*40.0f) - pos;
+	pos2.Normalize();
+	ei->SetPosition(pos);
+	ei->SetMoveSpeed(pos2);
 	ei->SetAttack(m_Attack);
 	//ei->SetSpeed(m_magicspeed);
 	m_state = enState_Pose;
@@ -177,11 +177,7 @@ void Kurage2::ChangeAttack()
 {
 	CVector3 pos = m_player->GetPosition() - m_position;
 	if (pos.LengthSq() < m_attackdistance) {
-		m_state = enState_Chase;
-		int rn = rand() % 100;
-		if (rn >= 80) {
-			m_state = enState_Attack;
-		}
+		m_state = enState_Attack;
 	}
 	m_stoptimer = 0.0f;
 	m_movetimer = 0.0f;

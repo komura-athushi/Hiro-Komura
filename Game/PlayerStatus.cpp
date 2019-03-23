@@ -46,7 +46,7 @@ bool PlayerStatus::Start()
 void PlayerStatus::Update()
 {
 	//LSBボタンを押すと全部武器所持状態に移行
-	/*if (Pad(0).GetDown(enButtonLSB)) {
+	if (Pad(0).GetDown(enButtonLSB)) {
 		Town* town = FindGO<Town>();
 		if (town == nullptr) {
 			for (int i = 1; i < GameData::enWeapon_num; i++) {
@@ -68,8 +68,8 @@ void PlayerStatus::Update()
 		if (player != nullptr) {
 			player->SetPP(m_MaxPP);
 		}
-		PlusExp(10000);
-	}*/
+		PlusExp(100000);
+	}
 }
 
 void PlayerStatus::PlusExp(const int& exp)

@@ -86,10 +86,9 @@ void Kurage5::Chase()
 					}
 					m_movespeed = pos;
 					m_chasetimer = 0.0f;
-					ChangeAttack();
 				}
 				m_chasetimer += m_frame * GetDeltaTimeSec();
-				m_movetimer += m_frame * GetDeltaTimeSec();
+				m_movetimer += m_frame * GetDeltaTimeSec()*(rand() % 2 + 1);
 				if (m_movetimer >= m_movetime) {
 					m_state = enState_Pose;
 					m_chasetimer = 0.0f;
@@ -98,12 +97,11 @@ void Kurage5::Chase()
 				}
 				break;
 			case enState_Pose:
-				m_stoptimer += m_frame * GetDeltaTimeSec();
+				m_stoptimer += m_frame * GetDeltaTimeSec()*(rand() % 2 + 1);
 				m_movespeed = CVector3::Zero();
 				if (m_stoptimer >= m_stoptime) {
 					m_stoptimer = 0.0f;
 					m_state = enState_Chase;
-					ChangeAttack();
 				}
 				break;
 			case enState_Attack:
@@ -134,14 +132,14 @@ void Kurage5::Chase()
 			}
 		}
 	}
-	if (IEnemy::m_damage) {
+	/*if (IEnemy::m_damage) {
 		m_state = enState_Pose;
 		m_stoptimer = 0.0f;
 		m_movetimer = 0.0f;
 		m_attacktimer = 0.0f;
 		m_isaria = false;
 		IEnemy::m_damage = false;
-	}
+	}*/
 	m_position += m_movespeed * GetDeltaTimeSec() * m_frame;
 }
 
@@ -162,10 +160,11 @@ void Kurage5::Aria()
 
 void Kurage5::Attack()
 {
-	CVector3 bulletPos = m_player->GetPosition() - m_position;
+	CVector3 pos = m_position + CVector3::AxisY() * m_collisionheight;
+	CVector3 bulletPos = (m_player->GetPosition() + CVector3::AxisY()*40.0f) - pos;
 	bulletPos.Normalize();
 	Enemy_Fire* sm = new Enemy_Fire;
-	sm->SetPosition(m_position);
+	sm->SetPosition(pos);
 	sm->SetMoveSpeed(bulletPos);
 	sm->SetAttack(m_Attack);
 	sm->SetSpeed(0.5f);
@@ -180,11 +179,7 @@ void Kurage5::ChangeAttack()
 {
 	CVector3 pos = m_player->GetPosition() - m_position;
 	if (pos.LengthSq() < m_attackdistance) {
-		m_state = enState_Chase;
-		int rn = rand() % 100;
-		if (rn >= 70) {
-			m_state = enState_Attack;
-		}
+		m_state = enState_Attack;
 	}
 	m_stoptimer = 0.0f;
 	m_movetimer = 0.0f;

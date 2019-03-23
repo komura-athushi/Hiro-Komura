@@ -291,14 +291,17 @@ void Player::Animation()
 		}
 	}
 	if (m_town == nullptr) {
-		/*//LT押したらゲームオーバー
+		//if (m_HP <= 0) {
+		//	m_state = enState_GameOver;
+		//}
+		//LT押したらゲームオーバー
 		if (m_HP <= 0 || Pad(0).GetButton(enButtonLT)) {
 			m_state = enState_GameOver;
 		}
 		//LB1押したらゲームクリア
 		else if (Pad(0).GetButton(enButtonRT)) {
 			m_state = enState_GameClear;
-		}*/
+		}
 		if (m_state == enState_Idle) {
 			if (!m_isbackchoice) {
 				if (Pad(0).GetDown(enButtonBack)) {
@@ -701,7 +704,7 @@ void Player::OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventName)
 				shotmagic->SetPosition(m_target);
 			}
 			else {
-				shotmagic->SetPosition(m_position);
+				shotmagic->SetPosition(m_position + CVector3::AxisY() * 60.0f);
 			}
 			shotmagic->SetDirectionPlayer(m_attacktarget);
 			shotmagic->SetId(m_MagicId);

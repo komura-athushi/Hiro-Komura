@@ -83,7 +83,7 @@ void Boss::One()
 						if (m_fscounter == 0) {
 							CVector3 pos = m_position;
 							pos.y += m_height;
-							m_magicdirection = m_player->GetPosition() - pos;
+							m_magicdirection = (m_player->GetPosition() + CVector3::AxisY()*40.0f) - pos;
 							m_magicdirection.Normalize();
 							CQuaternion qRot;
 							qRot.SetRotationDeg(CVector3::AxisY(), m_plusdegree * 2);
@@ -133,7 +133,7 @@ void Boss::One()
 					if (m_timer2 >= 0.5f * m_timemultiply) {
 						CVector3 pos = m_position;
 						pos.y += m_height;
-						m_magicdirection = m_player->GetPosition() - pos;
+						m_magicdirection = (m_player->GetPosition() + CVector3::AxisY()*40.0f) - pos;
 						m_magicdirection.Normalize();
 						MG();
 					}
@@ -175,7 +175,7 @@ void Boss::Two()
 						if (m_fscounter == 0) {
 							CVector3 pos = m_position;
 							pos.y += m_height;
-							m_magicdirection = m_player->GetPosition() - pos;
+							m_magicdirection = (m_player->GetPosition() + CVector3::AxisY()*40.0f) - pos;
 							m_magicdirection.Normalize();
 							CQuaternion qRot;
 							qRot.SetRotationDeg(CVector3::AxisY(), m_plusdegree * 2);
@@ -241,7 +241,7 @@ void Boss::Two()
 					if (m_timer2 >= 0.3f * m_timemultiply) {
 						CVector3 pos = m_position;
 						pos.y += m_height;
-						m_magicdirection = m_player->GetPosition() - pos;
+						m_magicdirection = (m_player->GetPosition() + CVector3::AxisY()*40.0f) - pos;
 						m_magicdirection.Normalize();
 						MG();
 					}
@@ -283,7 +283,7 @@ void Boss::Three()
 						if (m_fscounter == 0) {
 							CVector3 pos = m_position;
 							pos.y += m_height;
-							m_magicdirection = m_player->GetPosition() - pos;
+							m_magicdirection = (m_player->GetPosition()+CVector3::AxisY()*40.0f) - pos;
 							m_magicdirection.Normalize();
 							CQuaternion qRot;
 							qRot.SetRotationDeg(CVector3::AxisY(), m_plusdegree * 2);
@@ -329,7 +329,7 @@ void Boss::Three()
 						if (m_timer2 >= 0.2f * m_timemultiply) {
 							CVector3 pos = m_position;
 							pos.y += m_height;
-							m_magicdirection = m_player->GetPosition() - pos;
+							m_magicdirection = (m_player->GetPosition() + CVector3::AxisY()*40.0f) - pos;
 							m_magicdirection.Normalize();
 							MG();
 						}
@@ -356,7 +356,7 @@ void Boss::Three()
 					if (m_timer >= 1.0f * m_timemultiply) {
 						CVector3 pos = m_position;
 						pos.y += m_height;
-						m_magicdirection = m_player->GetPosition() - pos;
+						m_magicdirection = (m_player->GetPosition() + CVector3::AxisY()*40.0f) - pos;
 						m_magicdirection.Normalize();
 						MG();
 						m_ismagic = true;
