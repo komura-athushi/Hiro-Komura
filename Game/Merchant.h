@@ -122,8 +122,8 @@ private:
 	const float m_sevolume = 2.0f;
 	CVector2 m_FontSize = { 0.5f,0.5f };
 	static const int m_limitstage = 3;
-	const int m_limitweaponlv[m_limitstage] = {4, 7, 10};
 	CSprite m_upgrade, m_release,m_cursor2;
 	CVector2 m_cursor2position = { 380.0f,320.0f };
+	bool m_isweaponlimitrelease = true;
 };
 

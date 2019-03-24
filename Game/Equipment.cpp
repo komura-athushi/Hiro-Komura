@@ -160,8 +160,11 @@ void Equipment::PlusExp(const int& exp)
 		m_LevelExp += m_NextExp;
 		m_SwordAttack = m_protSwordAattack * (1 + (m_weaponextend + 4) * (m_weaponextend - 1) * 0.01) + 5 * (m_weaponextend - 1);
 		m_SwordMattack = m_protSwordMattack * (1 + (m_weaponextend + 4) * (m_weaponextend - 1) * 0.01) + 5 * (m_weaponextend - 1);
+		SetWeaponStatus();
+		if (m_gamedata->GetWeaponLimitLv() == m_weaponextend) {
+			return;
+		}
 	}
-	SetWeaponStatus();
 	m_NextExp -= ep;
 }
 
@@ -188,6 +191,9 @@ void Equipment::KariPlusExp(const int& exp)
 		m_kariSwordMattack = m_protSwordMattack * (1 + (m_kariweaponextend + 4) * (m_kariweaponextend - 1) * 0.01) + 5 * (m_kariweaponextend - 1);
 		m_kariAttack = m_kariSwordAttack;
 		m_kariMattack = m_kariSwordMattack;
+		if (m_gamedata->GetWeaponLimitLv() == m_kariweaponextend) {
+			return;
+		}
 	}
 	m_kariNextExp -= ep;
 }

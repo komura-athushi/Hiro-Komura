@@ -39,6 +39,11 @@ public:
 	{
 		return &m_materiallist[number];
 	}
+	//引数のレアリティの素材のポインタを取得
+	Material* GetRarityMaterial(const int& number)
+	{
+		return &m_materiallist[number - 1];
+	}
 	//ステージをクリア
 	void SetClear(const int& number)
 	{
@@ -125,7 +130,7 @@ public:
 		m_weaponlimitstage++;
 	}
 	//武器Lvの解放段階を進めれるかどうか
-	bool isUpWeaponLimitStage() const
+	bool GetisUpWeaponLimitStage() const
 	{
 		if (m_weaponlimit == m_weaponlimitstage) {
 			return false;
@@ -137,7 +142,27 @@ public:
 	//武器Lvの上限解放に必要な素材の種類を取得
 	int GetWeaponLimitStageMaterialType() const
 	{
-		return m_weaponlimitstagematerialtype[m_weaponlimitstage];
+		return m_weaponlimitstagematerialtype[m_weaponlimitstage - 1];
+	}
+	//武器のLv上限を取得
+	int GetWeaponLimitLv() const
+	{
+		return m_limitweaponlv[m_weaponlimitstage - 1];
+	}
+	//次の武器のLv上限を取得
+	int GetNextWeaponLimitLv() const
+	{
+		return m_limitweaponlv[m_weaponlimitstage];
+	}
+	struct MaterialNumber {
+		int s_llimitstage;							   //武器の解放段階(1ならば解放段階を1にする時に必要なる、初期段階は0)
+		int s_rarity;								   //素材レアリティ
+		int s_number;								   //素材の必要数
+	};
+	//該当の構造体を取得
+	MaterialNumber* GetMaterialNumber(const int& number) const
+	{
+		return m_weaponreleaserequirednumber[number];
 	}
 	enum EnWeapon {
 		enWeapon_Sword,									//ソード
@@ -185,7 +210,7 @@ private:
 	int m_abilitygroupnumber = 0;
 	std::vector<int> m_totalabilitygroupweightlist;
 	int m_magicnumber = 0;
-	int m_weaponlimitstage = 0;							//武器Lvの上限解放段階
+	int m_weaponlimitstage = 1;							//武器Lvの上限解放段階
 	int m_weaponlimit = 0;						//武器の上限解放段階の上限
 	/*!
 	@brief	MaterialNumer
@@ -193,12 +218,8 @@ private:
 	*int s_rarity;				   素材レアリティ
 	*int s_number;						  素材の必要数
 	*/
-	struct MaterialNumber {
-		int s_llimitstage;							   //武器の解放段階(1ならば解放段階を1にする時に必要なる、初期段階は0)
-		int s_rarity;								   //素材レアリティ
-		int s_number;								   //素材の必要数
-	};
-	std::vector<MaterialNumber>  m_weaponreleaserequirednumber;			//各武器の上限解放に必要な素材とその数
+	const int m_limitweaponlv[4] = { 5, 10, 15, 20};            
+	std::vector<MaterialNumber*>  m_weaponreleaserequirednumber;		//各武器の上限解放に必要な素材とその数
 	std::vector<int> m_weaponlimitstagematerialtype;					//各武器の上限解放に必要な素材の種類
 
 };

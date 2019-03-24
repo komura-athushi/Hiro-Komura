@@ -152,7 +152,7 @@ void Merchant::UpgradeorRelease()
 			m_state = enState_Base;
 		}
 		else if (m_cursorstate == enState_onRelease) {
-			m_state = enState_Release;
+			m_state = enState_ChoiceRelease;
 		}
 		m_button = false;
 	}
@@ -160,11 +160,113 @@ void Merchant::UpgradeorRelease()
 
 void Merchant::ChoiceRelease()
 {
-
+	if (!m_gamedata->GetisUpWeaponLimitStage()) {
+		wchar_t output2[256];
+		swprintf_s(output2, L"これ以上武器の上限解放はできません\n");
+		m_font.DrawScreenPos(output2, { 300.0f,450.0f }, CVector4::White(), { 0.5f,0.5f },
+			CVector2::Zero(),
+			0.0f,
+			DirectX::SpriteEffects_None,
+			0.7f
+		);
+	}
+	else {
+		wchar_t output[256];
+		swprintf_s(output, L"現在の武器の上限Lvは%dです、%dまであげることが出来ます\n", m_gamedata->GetWeaponLimitLv(), m_gamedata->GetNextWeaponLimitLv());
+		m_font.DrawScreenPos(output, { 300.0f,450.0f }, CVector4::White(), { 0.5f,0.5f },
+			CVector2::Zero(),
+			0.0f,
+			DirectX::SpriteEffects_None,
+			0.7f
+		);
+		CVector2 pos = { 300.0f,470.0f };
+		int count = 0;
+		int i = 0;
+		while (true) {
+			GameData::MaterialNumber* mn;
+			mn = m_gamedata->GetMaterialNumber(i);
+			if (mn->s_llimitstage == m_gamedata->GetWeaponLimitStage()) {
+				count++;
+				wchar_t output2[256];
+				swprintf_s(output2, L"%ls    所持 %d  /  必要 %d\n",m_gamedata->GetMaterial(mn->s_rarity - 1)->GetMaterialName(),m_playerstatus->GetMaterial(mn->s_rarity - 1),mn->s_number);
+				m_font.DrawScreenPos(output2, pos, CVector4::White(), { 0.5f,0.5f },
+					CVector2::Zero(),
+					0.0f,
+					DirectX::SpriteEffects_None,
+					0.7f
+				);
+				pos.y += 20.0f;
+			}
+			if (m_playerstatus->GetMaterial(mn->s_rarity) < mn->s_number) {
+				m_isweaponlimitrelease = false;
+			}
+			if (m_gamedata->GetWeaponLimitStageMaterialType() == count) {
+				break;
+			}
+			i++;
+		}
+		wchar_t output2[256];
+		if (m_isweaponlimitrelease) {
+			swprintf_s(output2, L"武器の上限解放ができます、上限解放しますか？\n");
+		}
+		else {
+			swprintf_s(output2, L"素材が足りません\n");
+		}
+		m_font.DrawScreenPos(output2, pos, CVector4::White(), { 0.5f,0.5f },
+			CVector2::Zero(),
+			0.0f,
+			DirectX::SpriteEffects_None,
+			0.7f
+		);
+	}
+	m_sprite2.DrawScreenPos({ 290.0f,440.0f }, CVector3::One(), CVector2::Zero(),
+		0.0f,
+		{ 1.0f, 1.0f, 1.0f, 0.7f },
+		DirectX::SpriteEffects_None,
+		0.8f);
+	Button();
+	if (Pad(0).GetButton(enButtonA) && m_button) {
+		if (m_isweaponlimitrelease) {
+			int count = 0;
+			int i = 0;
+			while (true) {
+				GameData::MaterialNumber* mn;
+				mn = m_gamedata->GetMaterialNumber(i);
+				if (mn->s_llimitstage == m_gamedata->GetWeaponLimitStage()) {
+					count++;
+					m_playerstatus->CutMateial(mn->s_rarity - 1, mn->s_number);
+				}
+				if (m_gamedata->GetWeaponLimitStageMaterialType() == count) {
+					break;
+				}
+				i++;
+			}
+			m_gamedata->UpWeaponLimitStage();
+			m_state = enState_Release;
+		}
+		m_button = false;
+	}
 }
 void Merchant::Release()
 {
-
+	wchar_t output[256];
+	swprintf_s(output, L"武器の上限Lvが%dまで上がりました\n", m_gamedata->GetWeaponLimitLv());
+	m_font.DrawScreenPos(output, { 300.0f,450.0f }, CVector4::White(), { 0.6f,0.6f },
+		CVector2::Zero(),
+		0.0f,
+		DirectX::SpriteEffects_None,
+		0.7f
+	);
+	Button();
+	m_sprite2.DrawScreenPos({ 290.0f,440.0f }, CVector3::One(), CVector2::Zero(),
+		0.0f,
+		{ 1.0f, 1.0f, 1.0f, 0.7f },
+		DirectX::SpriteEffects_None,
+		0.8f);
+	if (Pad(0).GetButton(enButtonA) && m_button) {
+		m_state = enState_UpgradeorRelease;
+		m_button = false;
+	}
 }
 
 void Merchant::Base()
@@ -184,7 +286,7 @@ void Merchant::Base()
 				0.3f);
 		}
 		wchar_t output[50];
-		if (m_playerstatus->GetEuipment(i)->GetLv() != m_limitweaponlv[m_gamedata->GetWeaponLimitStage() - 1]) {
+		if (m_playerstatus->GetEuipment(i)->GetLv() != m_gamedata->GetWeaponLimitLv()) {
 			swprintf_s(output, L"R%d\n%ls  \n武器Lv  %d\n", m_playerstatus->GetEuipment(i)->GetRarity(), m_playerstatus->GetEuipment(i)->GetName(), m_playerstatus->GetEuipment(i)->GetLv());
 		}
 		else {
@@ -227,7 +329,7 @@ void Merchant::Base()
 		}
 	}
 	if (Pad(0).GetButton(enButtonA) && m_button) {
-		if (m_playerstatus->GetEuipment(m_swordid2)->GetLv() == m_limitweaponlv[m_gamedata->GetWeaponLimitStage() - 1]) {
+		if (m_playerstatus->GetEuipment(m_swordid2)->GetLv() == m_gamedata->GetWeaponLimitLv()) {
 		}
 		else {
 			m_state = enState_Material;
