@@ -311,13 +311,13 @@ bool Game::Start()
 	//ステージに応じて流すBGMを変化させます
 	MainSound* ms = FindGO<MainSound>();
 	if (m_stagenumber == 1) {
-		ms->SetBGM(2);
+		ms->SetBGM(MainSound::enBGM_Stage1);
 	}
 	else if (m_stagenumber == 2) {
-		ms->SetBGM(3);
+		ms->SetBGM(MainSound::enBGM_Stage2);
 	}
 	else if (m_stagenumber == 3) {
-		ms->SetBGM(4);
+		ms->SetBGM(MainSound::enBGM_Stage3);
 	}
 	//SE
 	SuicideObj::CSE* se = NewGO<SuicideObj::CSE>(L"Asset/sound/unityChan/start.wav");

@@ -78,7 +78,7 @@ bool Town::Start()
 	m_fade = FindGO<Fade>();
 	m_fade->StartFadeIn();
 	MainSound* ms = FindGO<MainSound>();
-	ms->SetBGM(1);
+	ms->SetBGM(MainSound::enBGM_Town);
 	return true;
 }
 

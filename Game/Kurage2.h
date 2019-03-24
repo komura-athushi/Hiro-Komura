@@ -58,8 +58,8 @@ private:
 		enState_Attack,
 	};
 	State m_state = enState_Pose;
-	const float m_chasedistance = 2000.0f * 2000.0f;
-	const float m_attackdistance = 1600.0f * 1600.0f;
+	const float m_chasedistance = 2500.0f * 2500.0f;
+	const float m_attackdistance = 2200.0f * 2200.0f;
 	const float m_magicspeed = 0.4f;
 	bool m_isaria = false;
 	const float m_frame = 40.0f;
@@ -75,7 +75,7 @@ private:
 	float m_attacktimer = 0.0f;
 	const int m_ariatime = 30;
 	const int m_attacktime = 70;
-	const float m_magicdeletetime = 140.0f;
+	const float m_magicdeletetime = 280.0f;
 };
 
 
