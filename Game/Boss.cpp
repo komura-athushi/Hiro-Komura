@@ -483,7 +483,7 @@ void Boss::MG()
 		sm->SetDamage(m_AttackMG);
 	}
 	sm->SetEnemy();
-	sm->SetId(5);
+	sm->SetId(ShotMagic::enMagic_MagicSphere);
 	sm->SetSpeed(0.8f);
 	sm->SetDeleteTime(m_MGdeletetime);
 	sm->SetName(L"MagicSphere");
@@ -521,7 +521,7 @@ void Boss::EB()
 	sm->SetDamage(m_AttackEB);
 	sm->SetEnemy();
 	sm->SetMultiplyScale(2.0f);
-	sm->SetId(3);
+	sm->SetId(ShotMagic::enMagic_Wind);
 	m_timer2 = 0.0f;
 	m_timer = 0.0f;
 	CQuaternion qRot;

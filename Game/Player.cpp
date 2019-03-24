@@ -491,8 +491,11 @@ void Player::AnimationController()
 		break;
 	case enState_Aria:
 		if (m_skinModelRender->GetAnimCon().IsPlaying() || m_isjump == true) {
-			if (m_MagicId == 6) {
+			if (m_MagicId == ShotMagic::enMagic_Heal) {
 				m_skinModelRender->GetAnimCon().SetSpeed(1.0f * m_ariaspeed * GetDeltaTimeSec() * 0.5f);
+			}
+			else if (m_MagicId == ShotMagic::enMagic_Wind) {
+				m_skinModelRender->GetAnimCon().SetSpeed(1.0f * m_ariaspeed * GetDeltaTimeSec() * 1.3f);
 			}
 			else {
 				m_skinModelRender->GetAnimCon().SetSpeed(1.0f * m_ariaspeed * GetDeltaTimeSec());
@@ -506,8 +509,20 @@ void Player::AnimationController()
 		else {
 			//アニメーションの再生が終わったら、アニメーション分岐
 			m_timer += m_frame * GetDeltaTimeSec();
-			if (m_MagicId == 8) {
+			if (m_MagicId == ShotMagic::enMagic_ExcaliburMorgan) {
 				if (m_timer >= m_morugantime) {
+					if (m_movespeed.LengthSq() > 40.0f * 40.0f) {
+						m_state = enState_Run;
+					}
+					else if (m_movespeed.LengthSq() < 40.0f * 40.0f) {
+						m_state = enState_Idle;
+					}
+					m_timer = 0;
+					m_aria = false;
+				}
+			}
+			else if (m_MagicId == ShotMagic::enMagic_Wind) {
+				if (m_timer >= m_windtime) {
 					if (m_movespeed.LengthSq() > 40.0f * 40.0f) {
 						m_state = enState_Run;
 					}
@@ -643,28 +658,28 @@ void Player::OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventName)
 		//呪文詠唱のエフェクトを発生させる
 		GameObj::Suicider::CEffekseer* effect = new GameObj::Suicider::CEffekseer;
 		switch (m_MagicId) {
-		case 1:
+		case ShotMagic::enMagic_Fire:
 			effect->Play(L"Asset/effect/Effects/efk/cast_fire.efk", 1.0f, m_position, CQuaternion::Identity(), { 12.0f,12.0f,12.0f });
 			break;
-		case 2:
+		case ShotMagic::enMagic_Ice:
 			effect->Play(L"Asset/effect/Effects/efk/cast_ice.efk", 1.0f, m_position, CQuaternion::Identity(), { 12.0f,12.0f,12.0f });
 			break;
-		case 3:
+		case ShotMagic::enMagic_Wind:
 			effect->Play(L"Asset/effect/Effects/efk/cast_wind.efk", 1.0f, m_position, CQuaternion::Identity(), { 12.0f,12.0f,12.0f });
 			break;
-		case 4:
+		case ShotMagic::enMagic_Shihuta:
 			effect->Play(L"Asset/effect/Effects/efk/cast_sphere.efk", 1.0f, m_position, CQuaternion::Identity(), { 12.0f,12.0f,12.0f });
 			break;
-		case 5:
+		case ShotMagic::enMagic_MagicSphere:
 			effect->Play(L"Asset/effect/Effects/efk/cast_sphere.efk", 1.0f, m_position, CQuaternion::Identity(), { 12.0f,12.0f,12.0f });
 			break;
-		case 6:
+		case ShotMagic::enMagic_Heal:
 			effect->Play(L"Asset/effect/Effects/efk/cast_sphere.efk", 1.0f, m_position, CQuaternion::Identity(), { 12.0f,12.0f,12.0f });
 			break;
-		case 7:
+		case ShotMagic::enMagic_Haouzan:
 			effect->Play(L"Asset/effect/Effects/efk/cast_sword.efk", 1.0f, m_position, CQuaternion::Identity(), { 12.0f,12.0f,12.0f });
 			break;
-		case 8:
+		case ShotMagic::enMagic_ExcaliburMorgan:
 			effect->Play(L"Asset/effect/Effects/efk/cast_laser.efk", 1.0f, m_position, CQuaternion::Identity(), { 12.0f,12.0f,12.0f });
 			break;
 		}
@@ -692,7 +707,7 @@ void Player::OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventName)
 	//魔法を発生させる
 	else if (wcscmp(eventName, L"aria") == 0) {
 		//この魔法だけは他と違うクラスを使う
-		if (m_MagicId == 8) {
+		if (m_MagicId == ShotMagic::enMagic_ExcaliburMorgan) {
 			Morugan* morugan = new Morugan;
 			morugan->SetDamage(m_Mattack, m_DamageRate);
 			morugan->SetPosition(m_position + CVector3::AxisY() * m_height);
@@ -700,7 +715,7 @@ void Player::OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventName)
 		}
 		else {
 			ShotMagic* shotmagic = new ShotMagic;
-			if (m_MagicId == 7) {
+			if (m_MagicId == ShotMagic::enMagic_Haouzan) {
 				shotmagic->SetPosition(m_target);
 			}
 			else {
@@ -845,7 +860,7 @@ void Player::SwitchWeapon()
 
 void Player::RecoveryPP()
 {
-	m_PP += m_AttackRecoveryPP;
+	m_PP += m_MaxPP * 0.1f;
 	if (m_PP > m_MaxPP) {
 		m_PP = m_MaxPP;
 	}

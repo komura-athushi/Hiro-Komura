@@ -155,6 +155,17 @@ public:
 		m_ischangedeletetime = true;
 		m_changedeletetime = time;
 	}
+	enum EnMagic {
+		enMagic_Fire = 1,								//フォイエ
+		enMagic_Ice,									//イル・グランツ
+		enMagic_Wind,									//ザンバース
+		enMagic_Shihuta,							    //シフタ
+		enMagic_MagicSphere,							//マジックスフィア
+		enMagic_Heal,									//ヒール								
+		enMagic_Haouzan,								//覇王斬
+		enMagic_ExcaliburMorgan,						//エクスカリバーモルガン
+		enMagic_num										//魔法の種類
+	};
 private:
 	float m_multiplyscale = 1.0f;
 	int m_id;											//魔法の番号

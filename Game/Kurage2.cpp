@@ -166,6 +166,7 @@ void Kurage2::Attack()
 	ei->SetPosition(pos);
 	ei->SetMoveSpeed(pos2);
 	ei->SetAttack(m_Attack);
+	ei->SetDeleteTime(m_magicdeletetime);
 	//ei->SetSpeed(m_magicspeed);
 	m_state = enState_Pose;
 	m_stoptimer = 0.0f;

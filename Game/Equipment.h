@@ -96,7 +96,7 @@ public:
 	//強化コスト(メセタ)を取得
 	int GetCost() const
 	{
-		return pow(2.0f, m_Rarity) * m_weaponextend * 50 + 50;
+		return (pow(2.0f, m_Rarity) + m_Rarity) * (m_weaponextend + 3) * 10 + 30;
 	}
 	//特殊能力の数を取得
 	int GetAbilityNumber() const

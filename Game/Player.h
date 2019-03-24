@@ -311,7 +311,9 @@ private:
 	const float m_length2 = 128.0f;
 	const CVector2 m_protspriteposition = { 0.0f,0.0f };
 	CVector2 m_spriteposition = { 0.0f ,0.0f };
+	const int m_ariaposetime = 20;
 	const float m_morugantime = 400.0f;
+	const float m_windtime = 15;
 	const float m_height = 60.0f;
 	bool m_aria = false;										//éÙï∂ârè•íÜÇ©Ç«Ç§Ç©
 	IEnemy* m_enemy = nullptr;
@@ -320,7 +322,6 @@ private:
 	bool m_isbackchoice = false;
 	CSprite m_window;
 	const int m_randDamage = 95;
-	int m_ariaposetime = 20;
 	const float m_ariaspeed = 30.0f;
 };
 

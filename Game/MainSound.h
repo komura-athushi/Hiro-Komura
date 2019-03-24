@@ -22,6 +22,13 @@ public:
 	{
 		m_state2 = state;
 	}
+	enum State {
+		enBGM_Title,										//タイトル
+		enBGM_Town,										    //拠点
+		enBGM_Stage1,										//ステージ1
+		enBGM_Stage2,										//ステージ2
+		enBGM_Stage3,										//ステージ3
+	};
 private:
 	SuicideObj::CBGM* m_bgm = nullptr;
 	int m_state1 = 0;				//現在再生している曲	

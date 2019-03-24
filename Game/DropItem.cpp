@@ -40,7 +40,7 @@ bool DropItem::Start()
 		m_state += m_number;
 		//•Ší‚Ì”Ô†‚É‚æ‚Á‚Ä“Ç‚Ýž‚Þfbxƒtƒ@ƒCƒ‹‚ðŒˆ‚ß‚Ü‚·
 		switch (m_state) {
-		case 1:
+		/*case 1:
 			m_skinModelRender->Init(L"Resource/modelData/FireSword_drop.cmo");
 			break;
 		case 2:
@@ -62,6 +62,33 @@ bool DropItem::Start()
 			m_skinModelRender->Init(L"Resource/modelData/AncientWarriorBlade_drop.cmo");
 			break;
 		case 8:
+			m_skinModelRender->Init(L"Resource/modelData/excaliburmorgan_drop.cmo");
+			break;*/
+		case GameData::enWeapon_Sword:
+			m_skinModelRender->Init(L"Resource/modelData/Sword_drop.cmo");
+			break;
+		case GameData::enWeapon_FireSword:
+			m_skinModelRender->Init(L"Resource/modelData/FireSword_drop.cmo");
+			break;
+		case GameData::enWeapon_IceSword:
+			m_skinModelRender->Init(L"Resource/modelData/IceSword_drop.cmo");
+			break;
+		case GameData::enWeapon_WindSword:
+			m_skinModelRender->Init(L"Resource/modelData/WindSword_drop.cmo");
+			break;
+		case GameData::enWeapon_GreatSword:
+			m_skinModelRender->Init(L"Resource/modelData/GreatSword_drop.cmo");
+			break;
+		case GameData::enWeapon_BlueLightSword:
+			m_skinModelRender->Init(L"Resource/modelData/BlueLightSword_drop.cmo");
+			break;
+		case GameData::enWeapon_BattleReadyBlade:
+			m_skinModelRender->Init(L"Resource/modelData/BattleReadyBlade_drop.cmo");
+			break;
+		case GameData::enWeapon_AncientWarriorBlade:
+			m_skinModelRender->Init(L"Resource/modelData/AncientWarriorBlade_drop.cmo");
+			break;
+		case GameData::enWeapon_LegendalySword:
 			m_skinModelRender->Init(L"Resource/modelData/excaliburmorgan_drop.cmo");
 			break;
 		}

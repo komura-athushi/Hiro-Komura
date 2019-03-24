@@ -41,7 +41,7 @@ public:
 	{
 		m_speed = speed;
 	}
-	//弾の削除されるタイミングを変化させる
+	//弾の削除されるタイミングを変化させる、デフォルトは120
 	void SetDeleteTime(const float& time)
 	{
 		m_time = time;

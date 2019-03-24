@@ -152,15 +152,14 @@ public:
 		enWeapon_num									//ウェポンの種類
 	};
 	enum EnMagic {
-		enMagic_Zangeki,								//無し
-		enMagic_Fire,									//フォイエ
+		enMagic_Fire = 1,								//フォイエ
 		enMagic_Ice,									//イル・グランツ
 		enMagic_Wind,									//ザンバース
-		enMagic_SuperZangeki,							//シフタ
-		enMagic_TwincleStar,							//マジックスフィア
-		enMagic_1,										
-		enMagic_2,
-		enMagic_3,
+		enMagic_Shihuta,							    //シフタ
+		enMagic_MagicSphere,							//マジックスフィア
+		enMagic_Heal,									//ヒール								
+		enMagic_Haouzan,								//覇王斬
+		enMagic_ExcaliburMorgan,						//エクスカリバーモルガン
 		enMagic_num										//魔法の種類
 	};
 	enum EnMaterial {

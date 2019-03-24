@@ -171,7 +171,7 @@ void Kurage3::Attack()
 		sm->SetDirectionPlayer(bulletPos);
 		sm->SetDamage(m_Attack);
 		sm->SetEnemy();
-		sm->SetId(5);
+		sm->SetId(ShotMagic::enMagic_MagicSphere);
 		sm->SetSpeed(0.7f);
 		sm->SetName(L"MagicSphere");
 		m_state = enState_Pose;

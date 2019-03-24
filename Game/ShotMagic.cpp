@@ -30,25 +30,25 @@ bool ShotMagic::Start()
 {
 	//–‚–@‚Ì”Ô†‚É‚æ‚Á‚Äˆ—‚ğ•Ï‚¦‚Ü‚·
 	switch (m_id) {
-	case 1:
+	case enMagic_Fire:
 		Foie();
 		break;
-	case 2:
+	case enMagic_Ice:
 		Irugra();
 		break;
-	case 3:
+	case enMagic_Wind:
 		Zanbas();
 		break;
-	case 4:
+	case enMagic_Shihuta:
 		Shihuta();
 		break;
-	case 5:
+	case enMagic_MagicSphere:
 		MagicSphere();
 		break;
-	case 6:
+	case enMagic_Heal:
 		Resta();
 		break;
-	case 7:
+	case enMagic_Haouzan:
 		Haou();
 	}
 	GameData* gamedata = FindGO<GameData>(L"GameData");
@@ -98,22 +98,22 @@ bool ShotMagic::Start()
 
 	 //–‚–@‚Ì”Ô†‚É‚æ‚Á‚Äˆ—‚ğ•Ï‚¦‚Ü‚·
 	 switch (m_id) {
-	 case 1:
+	 case enMagic_Fire:
 		 FoieUpdate();
 		 break;
-	 case 2:
+	 case enMagic_Ice:
 		 IrugraUpdate();
 		 break;
-	 case 3:
+	 case enMagic_Wind:		 
 		 ZanbasUpdate();
 		 break;
-	 case 4:
+	 case enMagic_Shihuta:
 		 ShihutaUpdate();
 		 break;
-	 case 5:
+	 case enMagic_MagicSphere:
 		 MagicSphereUpdate();
 		 break;
-	 case 7:
+	 case enMagic_Haouzan:
 		 HaouUpdate();
 	 }
 }

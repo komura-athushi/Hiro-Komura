@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Sword.h"
 #include "Player.h"
+#include "GameData.h"
 Sword::Sword()
 {
 }
@@ -43,31 +44,31 @@ void Sword::Update()
 		m_skinModelRender = new GameObj::CSkinModelRender;
 		//Žó‚¯Žæ‚Á‚½”Ô†‚É‚æ‚Á‚Ä“Ç‚Ýž‚Þƒtƒ@ƒCƒ‹‚ð•Ï‚¦‚é
 		switch (m_SwordId) {
-		case 0:
+		case GameData::enWeapon_Sword:
 			m_skinModelRender->Init(L"Resource/modelData/Sword.cmo");
 			break;
-		case 1:
+		case GameData::enWeapon_FireSword:
 			m_skinModelRender->Init(L"Resource/modelData/FireSword.cmo");
 			break;
-		case 2:
+		case GameData::enWeapon_IceSword:
 			m_skinModelRender->Init(L"Resource/modelData/IceSword.cmo");
 			break;
-		case 3:
+		case GameData::enWeapon_WindSword:
 			m_skinModelRender->Init(L"Resource/modelData/WindSword.cmo");
 			break;
-		case 4:
+		case GameData::enWeapon_GreatSword:
 			m_skinModelRender->Init(L"Resource/modelData/GreatSword.cmo");
 			break;
-		case 5:
+		case GameData::enWeapon_BlueLightSword:
 			m_skinModelRender->Init(L"Resource/modelData/BlueLightSword.cmo");
 			break;
-		case 6:
+		case GameData::enWeapon_BattleReadyBlade:
 			m_skinModelRender->Init(L"Resource/modelData/BattleReadyBlade.cmo");
 			break;
-		case 7:
+		case GameData::enWeapon_AncientWarriorBlade:
 			m_skinModelRender->Init(L"Resource/modelData/AncientWarriorBlade.cmo");
 			break;
-		case 8:
+		case GameData::enWeapon_LegendalySword:
 			m_skinModelRender->Init(L"Resource/modelData/excaliburmorgan.cmo");
 			break;
 		}

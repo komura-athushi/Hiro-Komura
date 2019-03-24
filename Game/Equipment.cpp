@@ -81,7 +81,7 @@ Equipment::Equipment(const int& number):m_SwordId(number)
 		}
 	}
 	//レベルアップに必要な経験値を設定します
-	m_NextExp = pow(2.0f, m_Rarity) * m_weaponextend * (m_weaponextend + 1);
+	m_NextExp = pow(2.0f, m_Rarity) * m_weaponextend * (m_weaponextend + 9) / 2;
 	m_LevelExp = m_NextExp;
 	int attack = 0, mattack = 0, hp = 0, pp = 0;
 	//付与された特殊能力の値をまとめたAbilityクラスを生成します
@@ -156,10 +156,10 @@ void Equipment::PlusExp(const int& exp)
 	while (m_LevelExp <= m_Exp) {
 		ep -= m_NextExp;
 		m_weaponextend += 1;
-		m_NextExp = pow(2.0f, m_Rarity) * m_weaponextend * (m_weaponextend + 1);
+		m_NextExp = pow(2.0f, m_Rarity) * m_weaponextend * (m_weaponextend + 9) / 2;
 		m_LevelExp += m_NextExp;
-		m_SwordAttack = m_protSwordAattack * (1 + m_weaponextend * (m_weaponextend - 1) * 0.05f) + 10 * (m_weaponextend - 1);
-		m_SwordMattack = m_protSwordMattack * (1 + m_weaponextend * (m_weaponextend - 1) * 0.05f) + 10 * (m_weaponextend - 1);
+		m_SwordAttack = m_protSwordAattack * (1 + (m_weaponextend + 4) * (m_weaponextend - 1) * 0.01) + 5 * (m_weaponextend - 1);
+		m_SwordMattack = m_protSwordMattack * (1 + (m_weaponextend + 4) * (m_weaponextend - 1) * 0.01) + 5 * (m_weaponextend - 1);
 	}
 	SetWeaponStatus();
 	m_NextExp -= ep;
@@ -182,10 +182,10 @@ void Equipment::KariPlusExp(const int& exp)
 	while (m_kariLevelExp <= m_kariExp) {
 		ep -= m_kariNextExp;
 		m_kariweaponextend += 1;
-		m_kariNextExp = pow(2.0f, m_Rarity) * m_kariweaponextend * (m_kariweaponextend + 1);
+		m_kariNextExp = pow(2.0f, m_Rarity) * m_kariweaponextend * (m_kariweaponextend + 9) / 2;
 		m_kariLevelExp += m_kariNextExp;
-		m_kariSwordAttack = m_protSwordAattack * (1 + m_kariweaponextend * (m_kariweaponextend - 1) * 0.05f) + 10 * (m_kariweaponextend - 1);
-		m_kariSwordMattack = m_protSwordMattack * (1 + m_kariweaponextend * (m_kariweaponextend - 1) * 0.05f) + 10 * (m_kariweaponextend - 1);
+		m_kariSwordAttack = m_protSwordAattack * (1 + (m_kariweaponextend + 4) * (m_kariweaponextend - 1) * 0.01) + 5 * (m_kariweaponextend - 1);
+		m_kariSwordMattack = m_protSwordMattack * (1 + (m_kariweaponextend + 4) * (m_kariweaponextend - 1) * 0.01) + 5 * (m_kariweaponextend - 1);
 		m_kariAttack = m_kariSwordAttack;
 		m_kariMattack = m_kariSwordMattack;
 	}
@@ -194,10 +194,10 @@ void Equipment::KariPlusExp(const int& exp)
 
 int Equipment::GetMaterialExp(const int& id) const
 {
-	if(m_SwordId==id) {
-		return pow(2.0f, m_Rarity) * (m_weaponextend * 2 - 1) * 2.0f;
+	if(m_SwordId == id) {
+		return pow(2.0f, m_Rarity) * (20 + 5 * m_weaponextend) * 2.0f;
 	}
 	else {
-		return pow(2.0f, m_Rarity) * (m_weaponextend * 2 - 1);
+		return pow(2.0f, m_Rarity) * (20 + 5 * m_weaponextend);
 	}
 }
