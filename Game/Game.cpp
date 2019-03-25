@@ -7,6 +7,7 @@
 #include "PlayerStatus.h"
 #include "Oni.h"
 #include "Boss.h"
+#include "Boss2.h"
 #include "Boss3.h"
 #include "DropItem.h"
 #include "DropMaterial.h"
@@ -134,7 +135,7 @@ bool Game::Start()
 	//プレイヤーのインスタンスを生成する。
 	Boss3* boss3 = new Boss3;
 	boss3->SetName(L"Enemy");
-	//boss3->SetPlayer(m_player);
+	boss3->SetPlayer(m_player);
 	//ここまで
 	m_gamecamera = new GameCamera;
 	m_gamecamera->SetPlayer(m_player);

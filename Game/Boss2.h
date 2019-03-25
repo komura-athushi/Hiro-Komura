@@ -16,12 +16,12 @@ public:
 	void Update() override;
 	void Attack();       										//攻撃
 	void Chase();												//追跡
-	void Damage();												//ダメージを受けた時のアクション
 	void Turn();												//キャラクターの向きを計算
 	void AnimationController();									//アニメーションの再生
+	void Damage();												//ダメージを受けた時のアクション
 	void Dead();												//ドラゴンが死んだときの処理
 	//文字表示
-	void PostRender()override;
+	//void PostRender()override;
 	//アニメーションイベント
 	void OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventName);
 

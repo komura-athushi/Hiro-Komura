@@ -31,7 +31,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	//MainSoundクラスのインスタンスを静的な関数をつかって生成
 	MainSound* mainsound = &MainSound::GetInstance();
 	Title* titel = new Title;
-	GameObj::CSkybox* cs = new GameObj::CSkybox(L"Preset/modelData/skyCubeMap.dds",100000.0f);
+	//GameObj::CSkybox* cs = new GameObj::CSkybox(L"Preset/modelData/skyCubeMap.dds",100000.0f);
 	SetPhysicsDebugDrawMode(btIDebugDraw::DBG_DrawWireframe);
 	//ゲームループ。
 	GetEngine().RunGameLoop();
