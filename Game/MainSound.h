@@ -28,6 +28,7 @@ public:
 		enBGM_Stage1,										//ステージ1
 		enBGM_Stage2,										//ステージ2
 		enBGM_Stage3,										//ステージ3
+		enBGM_End,										    //終わり
 	};
 private:
 	SuicideObj::CBGM* m_bgm = nullptr;

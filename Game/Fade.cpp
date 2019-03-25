@@ -25,8 +25,22 @@ void Fade::Update()
 			m_state = enState_Idle;
 		}
 		break;
+	case enState_FadeSlowIn:
+		m_currentAlpha -= 0.4f * GetDeltaTimeSec();
+		if (m_currentAlpha <= 0.0f) {
+			m_currentAlpha = 0.0f;
+			m_state = enState_Idle;
+		}
+		break;
 	case enState_FadeOut:
 		m_currentAlpha += 2.0f * GetDeltaTimeSec();
+		if (m_currentAlpha >= 1.0f) {
+			m_currentAlpha = 1.0f;
+			m_state = enState_Idle;
+		}
+		break;
+	case enState_FadeSlowOut:
+		m_currentAlpha += 0.4f * GetDeltaTimeSec();
 		if (m_currentAlpha >= 1.0f) {
 			m_currentAlpha = 1.0f;
 			m_state = enState_Idle;

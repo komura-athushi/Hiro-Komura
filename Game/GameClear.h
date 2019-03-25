@@ -10,9 +10,14 @@ public:
 	void Update();
 	void PostRender()override;
 private:
-	CSprite m_sprite,m_sprite2;
-	CVector2 m_position = { 0.0f, 0.0f };
-	CVector2 m_scale = { 1.0f,1.0f };
+	CSprite m_sprite;
+	CVector2 m_position = CVector2::Zero();
+	CVector2 m_scale = CVector2::One();
+	const float m_stopY = -6200.0f;
+	const float m_speedmultiply = -95.0f;
+	float m_timer = 0.0f;
+	const int m_time = 3.0f;
+	bool m_isgo = false;
 	Fade* m_fade;
 	//trueÇ»ÇÁâÊñ êÿÇËë÷Ç¶Ç∑ÇÈ
 	bool m_isWaitFadeout = false;
