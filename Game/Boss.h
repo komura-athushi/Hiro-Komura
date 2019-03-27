@@ -5,7 +5,6 @@
 #include "DemolisherWeapon/physics/PhysicsStaticObject.h"
 class Game;
 class Player;
-class BossAttack;
 class Boss : public IEnemy
 {
 public:
@@ -31,10 +30,6 @@ public:
 	void SetPlayer(Player* player)								//プレイヤーのポイントをセット
 	{
 		m_player = player;
-	}
-	void SetBossAttack(BossAttack* bossattack)					//BossAttackのポイントをセット
-	{
-		m_bossattack = bossattack;
 	}
 	//座標を設定
 	void SetPosition(const CVector3& pos)
@@ -69,7 +64,6 @@ private:
 	CVector3 m_movespeed = { 0.0f,  0.0f,  0.0f };				//移動速度
 	CVector3 m_parallel = { 0.0f,0.0f,0.0f };					//ユニティちゃんの向きと平行なベクトル
 	Player* m_player;											//プレイヤークラスのポインタ
-	BossAttack* m_bossattack;									//BossAttackクラスのポインタ
 	CFont m_font;												//文字表示クラス
 	//自機の角度　初期は180度
 	float m_degree = 180.0f;                                    //ユニティちゃんの向いてる角度

@@ -6,8 +6,8 @@ class Ground : public IGameObject
 public:
 	Ground();
 	~Ground();
-	bool Start();
-	void Update();
+	bool Start() override;
+	void Update() override;
 	//座標を設定
 	void SetPosition(const CVector3& pos)
 	{
@@ -32,10 +32,10 @@ private:
 	GameObj::CSkinModelRender* m_skinModelRender = nullptr;		//スキンモデルレンダラー。
 	GameObj::CSkinModelRender* m_skinModelRender2 = nullptr;	//スキンモデルレンダラー。
 	CVector3 m_position;                                        //座標
-	CVector3 m_scale = CVector3::One();                      //大きさ
+	CVector3 m_scale = CVector3::One();                         //大きさ
 	CQuaternion m_rotation = CQuaternion::Identity();           //クオンテーション
 	PhysicsStaticObject m_staticobject;                         //静的オブジェクト
 	PhysicsStaticObject m_staticobject2;                        //静的オブジェクト
-	int m_stage = 0;                //ステージ情報
-};
+	int m_stage = 0;											//ステージ情報
+};																
 

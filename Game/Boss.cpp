@@ -3,7 +3,6 @@
 #define _USE_MATH_DEFINES //M_PI ‰~ü—¦ŒÄ‚Ño‚µ
 #include <math.h> 
 #include "Player.h"
-#include "BossAttack.h"
 #include "GameCamera.h"
 #include "Teleport.h"
 #include "ShotMagic.h"

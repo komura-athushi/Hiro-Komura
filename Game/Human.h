@@ -8,8 +8,8 @@ class Human:public IGameObject
 public:
 	Human();
 	~Human();
-	bool Start();
-	void Update();
+	bool Start() override;
+	void Update() override;
 	//アニメーション
 	void AnimationController();
 	//回転

@@ -4,8 +4,6 @@ class GameCamera;
 class Player;
 class Human;
 class Merchant;
-class Stone;
-class House;
 class Stage1_Teleport;
 class Stage2_Teleport;
 class Stage3_Teleport;
@@ -43,9 +41,6 @@ private:
 	PlayerStatus* m_playerstatus;                      //プレイヤーステータスクラスのポインタ
 	GameData* m_gamedata;
 	CascadeShadowHandler* m_CascadeShadowmap;
-	//各オブジェクトの可変長配列
-	std::vector<Stone*> m_stoneList;                   //Stoneクラスのポインタを格納するための可変長配列
-	std::vector<House*> m_houseList;				   //Houseクラスのポインタの可変長配列
 	Fade* m_fade;
 	//trueなら画面切り替えする
 	bool m_isWaitFadeout = false;

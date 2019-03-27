@@ -3,8 +3,6 @@
 #include "Ground.h"
 #include "GameCamera.h"
 #include "Player.h"
-#include "Stone.h"
-#include "House.h"
 #include "Stage1_Teleport.h"
 #include "Stage2_Teleport.h"
 #include "Stage3_Teleport.h"
@@ -38,12 +36,6 @@ Town::~Town()
 	}
 	if (m_stage3_teleport != nullptr) {
 		delete m_stage3_teleport;
-	}
-	for (auto& stone : m_stoneList) {
-		delete stone;
-	}
-	for (auto& house : m_houseList) {
-		delete house;
 	}
 }
 
@@ -189,25 +181,6 @@ void Town::BuildLevel()
 			m_ground = new Ground;
 			m_ground->SetStage(0);
 			m_ground->SetPosition(objData.position);
-			return true;
-		}
-		else if (objData.EqualObjectName(L"stone") == true) {
-			//Starオブジェクト。
-			Stone* stone = new Stone;
-			stone->SetPosition(objData.position);
-			//後で削除するのでリストに積んで記憶しておく。
-			m_stoneList.push_back(stone);
-			//フックしたのでtrueを返す。
-			return true;
-		}
-		else if (objData.EqualObjectName(L"house") == true) {
-			//Starオブジェクト。
-			House* house = new House;
-			house->SetPosition(objData.position);
-			house->SetRotation(objData.rotation);
-			//後で削除するのでリストに積んで記憶しておく。
-			m_houseList.push_back(house);
-			//フックしたのでtrueを返す。
 			return true;
 		}
 		else if (objData.EqualObjectName(L"stage1_teleport") == true) {

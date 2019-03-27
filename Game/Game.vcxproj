@@ -234,7 +234,6 @@
     <ClCompile Include="Boss.cpp" />
     <ClCompile Include="Boss2.cpp" />
     <ClCompile Include="Enemy_Fire.cpp" />
-    <ClCompile Include="BossAttack.cpp" />
     <ClCompile Include="Cagliostro_view.cpp" />
     <ClCompile Include="DropItem.cpp" />
     <ClCompile Include="DropMaterial.cpp" />
@@ -244,7 +243,6 @@
     <ClCompile Include="FontNumber.cpp" />
     <ClCompile Include="GameClear.cpp" />
     <ClCompile Include="GameData.cpp" />
-    <ClCompile Include="House.cpp" />
     <ClCompile Include="Human.cpp" />
     <ClCompile Include="IEnemy.cpp" />
     <ClCompile Include="Equipment.cpp" />
@@ -266,7 +264,6 @@
     <ClCompile Include="Stage1_Teleport.cpp" />
     <ClCompile Include="Stage2_Teleport.cpp" />
     <ClCompile Include="Stage3_Teleport.cpp" />
-    <ClCompile Include="Stone.cpp" />
     <ClCompile Include="Sword.cpp" />
     <ClCompile Include="Teleport.cpp" />
     <ClCompile Include="Town.cpp" />
@@ -288,7 +285,6 @@
     <ClInclude Include="Boss.h" />
     <ClInclude Include="Boss2.h" />
     <ClInclude Include="Enemy_Fire.h" />
-    <ClInclude Include="BossAttack.h" />
     <ClInclude Include="Cagliostro_view.h" />
     <ClInclude Include="DropItem.h" />
     <ClInclude Include="DropMaterial.h" />
@@ -298,7 +294,6 @@
     <ClInclude Include="FontNumber.h" />
     <ClInclude Include="GameClear.h" />
     <ClInclude Include="GameData.h" />
-    <ClInclude Include="House.h" />
     <ClInclude Include="Human.h" />
     <ClInclude Include="IEnemy.h" />
     <ClInclude Include="Equipment.h" />
@@ -320,7 +315,6 @@
     <ClInclude Include="Stage1_Teleport.h" />
     <ClInclude Include="Stage2_Teleport.h" />
     <ClInclude Include="Stage3_Teleport.h" />
-    <ClInclude Include="Stone.h" />
     <ClInclude Include="Sword.h" />
     <ClInclude Include="Teleport.h" />
     <ClInclude Include="Town.h" />

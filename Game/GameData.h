@@ -22,8 +22,8 @@ public:
 		return inst;
 	}
 public:
-	bool Start();
-	void Update();
+	bool Start() override;
+	void Update() override;
 	//武器Lvの解放段階を進めれるかどうか
 	bool GetisUpWeaponLimitStage() const; 
 	//引数の番号の武器のポインタを取得
@@ -207,9 +207,9 @@ private:
 	bool m_isgameclear = false;							//ゲームをクリアしたかどうか
 	bool m_isgameend = false;							//ゲームが一旦終わったかどうか
 	int m_totalabilityweight = 0;						//全アビリティのウェイトの合計値
-	int m_abilitygroupnumber = 0;
-	std::vector<int> m_totalabilitygroupweightlist;
-	int m_magicnumber = 0;
+	int m_abilitygroupnumber = 0;						//アビリティのグループの数
+	std::vector<int> m_totalabilitygroupweightlist;		//アビリティのグループごとにウェイトの合計値
+	int m_magicnumber = 0;								//撃たれた魔法の数
 	int m_weaponlimitstage = 1;							//武器Lvの上限解放段階
 	int m_weaponlimit = 0;						//武器の上限解放段階の上限
 	const int m_limitweaponlv[4] = { 5, 10, 15, 20};            

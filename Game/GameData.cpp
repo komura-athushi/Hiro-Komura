@@ -111,7 +111,6 @@ void GameData::Update()
 
 }
 
-//•ŠíLv‚Ì‰ğ•ú’iŠK‚ği‚ß‚ê‚é‚©‚Ç‚¤‚©
 bool GameData::GetisUpWeaponLimitStage() const
 {
 	if (m_weaponlimit == m_weaponlimitstage) {
