@@ -74,32 +74,32 @@ public:
 		return m_number;
 	}
 protected:
-	SuicideObj::CCollisionObj* m_collision;                   //丸いコリジョン
-	float m_r;												  //コリジョンの半径
-	CVector3 m_position;									  //座標
-	CVector3 m_collisionposition;
-	CVector3 m_fontposition;
+	SuicideObj::CCollisionObj* m_collision;                     //丸いコリジョン
+	float m_r;												    //コリジョンの半径
+	CVector3 m_position;									    //座標
+	CVector3 m_collisionposition;								//コリジョンの座標
+	CVector3 m_fontposition;									//ダメ表示の座標
 	//エネミーの色々なステータス
-	int m_MaxHP;                                              //最大HP
-	int m_HP;                                                 //HP
-	int m_MaxPP;                                              //最大PP
-	int m_PP;                                                 //PP
-	int m_Attack;                                             //攻撃力
-	int m_damagecount;										  //受けたダメージ
-	int m_Exp;                                                //経験値
-	float m_timer = 0.0f;                                     //当たり判定にクールタイム
-	float m_timer8 = 0.0f;									  //モルガンの	
-	float m_fonttimer = 0.0f;								  //文字表示のタイマー
-	bool m_damage = false;                                    //ダメージを受けたかどうか
-	bool m_death = false;                                     //HPが0以下になったかどうか
-	bool m_displayfont = false;								  //ダメ表示するかどうか
-	CFont m_font;                                             //文字表示クラス
-	int m_dropmeseta;										  //ドロップするメセタの大体の額
-	int m_dropChances[Weapon::m_HighestRarity];			      //エネミーのドロップするアイテム、[1]が0.4fならレア度1が40%でドロップするみたいな
-	int m_dropmaterialChances[Material::m_HighestRarity];	  //エネミーのドロップする素材の確率
-	bool m_isdropWeapon = false;							  //武器がドロップしたかどうか
+	int m_MaxHP;                                                //最大HP
+	int m_HP;                                                   //HP
+	int m_MaxPP;                                                //最大PP
+	int m_PP;                                                   //PP
+	int m_Attack;                                               //攻撃力
+	int m_damagecount;										    //受けたダメージ
+	int m_Exp;                                                  //経験値
+	float m_timer = 0.0f;                                       //当たり判定にクールタイム
+	float m_timer8 = 0.0f;									    //モルガンの	
+	float m_fonttimer = 0.0f;								    //文字表示のタイマー
+	bool m_damage = false;                                      //ダメージを受けたかどうか
+	bool m_death = false;                                       //HPが0以下になったかどうか
+	bool m_displayfont = false;								    //ダメ表示するかどうか
+	CFont m_font;                                               //文字表示クラス
+	int m_dropmeseta;										    //ドロップするメセタの大体の額
+	int m_dropChances[Weapon::m_HighestRarity];			        //エネミーのドロップするアイテム、[1]が0.4fならレア度1が40%でドロップするみたいな
+	int m_dropmaterialChances[Material::m_HighestRarity];	    //エネミーのドロップする素材の確率
+	bool m_isdropWeapon = false;							    //武器がドロップしたかどうか
 	static const int m_mesetarand = 2;
-	static const float m_frame;								  //fps
+	static const float m_frame;								    //fps
 	GameCamera* m_gamecamera;
 	const float m_sevolume = 2.0f;
 	int m_number = 0;

@@ -6,8 +6,8 @@ class Wall:public IGameObject
 public:
 	Wall();
 	~Wall();
-	bool Start();
-	void Update();
+	bool Start() override;
+	void Update() override;
 	//座標をセット
 	void SetPosition(const CVector3& pos)
 	{

@@ -5,9 +5,9 @@ class Title:public IGameObject
 public:
 	Title();
 	~Title();
-	bool Start();
-	void Update();
-	void PostRender()override;
+	bool Start() override;
+	void Update() override;
+	void PostRender() override;
 private:
 	CSprite m_sprite,m_sprite2;
 	CVector2 m_position = { 0.0f, 0.0f };

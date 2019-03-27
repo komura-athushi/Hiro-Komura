@@ -4,6 +4,7 @@
 #include "DemolisherWeapon/physics/PhysicsStaticObject.h"
 class Player;
 class Game;
+//一番弱いスケルトン
 class Skeleton1 : public IEnemy
 {
 public:
@@ -11,11 +12,16 @@ public:
 	~Skeleton1();
 	bool Start() override;
 	void Update() override;
-	void Chase();												//追跡
-	void AnimationController();									//アニメーションの再生
-	void Damage();												//ダメージを受けた時のアクション
-	void Turn();												//キャラクターの向きを計算
-	void Dead();												//エネミーが死んだときの処理
+	//追跡
+	void Chase();			
+	//アニメーションの再生
+	void AnimationController();					
+	//ダメージを受けた時のアクション
+	void Damage();						
+	//キャラクターの向きを計算
+	void Turn();								
+	//エネミーが死んだときの処理
+	void Dead();											
 	//アニメーションイベント
 	void OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventName);
 	void SetPlayer(Player* player)								//プレイヤーのポイントをセット

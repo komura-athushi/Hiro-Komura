@@ -34,8 +34,6 @@ IEnemy::~IEnemy()
 
 void IEnemy::CCollision(const CVector3& pos,const float& l,const float& r)
 {
-	//Ç≠ÇÁÇ¢îªíËÇÃçÏê¨
-	//m_collision = std::make_unique<SuicideObj::CCollisionObj>();
 	m_collision = new SuicideObj::CCollisionObj;
 	//å`èÛÇÃçÏê¨
 	m_collision->CreateSphere(pos + CVector3::AxisY()*l, CQuaternion::Identity(),r);

@@ -15,8 +15,8 @@ public:
 		static MainSound inst;
 		return inst;
 	}
-	bool Start();
-	void Update();
+	bool Start() override;
+	void Update() override;
 	//Ä¶‚·‚éBGM‚ğİ’è‚µ‚Ü‚·
 	void SetBGM(const int& state)
 	{

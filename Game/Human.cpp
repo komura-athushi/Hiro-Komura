@@ -18,9 +18,8 @@ bool Human::Start()
 {
 	//アニメーションファイルをロード
 	m_animClip[enAnimationClip_idle].Load(L"Asset/animData/unityChan/idle.tka", true);//, enZtoY);
-	//m_animClip[enAnimationClip_idle].Load(L"Asset/animData/idle.tka", true);//, enZtoY);
 	m_skinModelRender = new GameObj::CSkinModelRender;
-	m_skinModelRender->Init(L"Resource/modelData/unityChan.cmo", m_animClip, enAnimationClip_num,enFbxUpAxisY);//, enFbxUpAxisZ);
+	m_skinModelRender->Init(L"Resource/modelData/unityChan.cmo", m_animClip, enAnimationClip_num,enFbxUpAxisY);
 	m_skinModelRender->SetPos(m_position);
 	m_skinModelRender->SetScale(m_scale);
 	m_skinModelRender->GetAnimCon().SetSpeed(m_animationspeed);

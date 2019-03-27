@@ -33,7 +33,7 @@ bool Kurage3::Start()
 
 void Kurage3::Update()
 {
-	Chase();
+	Move();
 	if (!IEnemy::m_death) {
 		m_skinModelRender->SetPos(m_position);
 		IEnemy::SetCCollision(m_position, m_collisionheight);
@@ -50,7 +50,7 @@ void Kurage3::Update()
 	}
 }
 
-void Kurage3::Chase()
+void Kurage3::Move()
 {
 	CVector3 pos = m_player->GetPosition() - m_position;
 	if (pos.LengthSq() < m_chasedistance) {
@@ -159,13 +159,13 @@ void Kurage3::Attack()
 {
 	if (m_state == enState_Attack) {
 		Enemy_Wind* ew = new Enemy_Wind;
-		ew->SetPosition(m_position + CVector3::AxisY());
+		ew->SetPosition(m_position + CVector3::AxisY() * m_collisionheight);
 		ew->SetAttack(m_Attack);
 		ew->SetScale(m_windscale);
 		m_state = enState_Attack2;
 	}
 	else if (m_state == enState_Attack2) {
-		CVector3 bulletPos = (m_player->GetPosition() + CVector3::AxisY()*40.0f) - (m_position + CVector3::AxisY() * m_collisionheight);
+		CVector3 bulletPos = (m_player->GetPosition() + CVector3::AxisY() * m_playerheight) - (m_position + CVector3::AxisY() * m_collisionheight);
 		bulletPos.Normalize();
 		ShotMagic* sm = new ShotMagic;
 		sm->SetPosition(m_position + CVector3::AxisY() * m_collisionheight);

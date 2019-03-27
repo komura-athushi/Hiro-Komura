@@ -2,17 +2,19 @@
 #include "IEnemy.h"
 #include "DemolisherWeapon/physics/PhysicsStaticObject.h"
 class Player;
-class Game;
 //プレイヤーに近づいて攻撃してくる一番弱い緑のクラゲ
 class Kurage:public IEnemy
 {
 public:
 	Kurage();
 	~Kurage();
-	bool Start();
-	void Update();
-	void Chase();
+	bool Start() override;
+	void Update() override;
+	//移動
+	void Move();
+	//攻撃
 	void Attack();
+	//詠唱
 	void Aria();
 	//攻撃に移行？
 	void ChangeAttack();
@@ -25,10 +27,7 @@ public:
 	{
 		m_position = pos;
 	}
-	void SetGame(Game* game)
-	{
-		m_game = game;
-	}
+	//大きさを設定
 	void SetScale(const CVector3& scale)
 	{
 		m_scale = scale;
@@ -39,7 +38,7 @@ private:
 	CVector3 m_position = CVector3::Zero();				        //鬼の座標
 	CVector3 m_scale = CVector3::One();					        //鬼のスケール
 	CVector3 m_movespeed = CVector3::Zero();					//移動速度
-	CVector3 m_protposition = CVector3::Zero();
+	CVector3 m_protposition = CVector3::Zero();					//最初に居た座標
 	const float m_r = 60.0f;                                    //コリジョンの半径
 	const float m_collisionheight = 40.0f;                      //コリジョンをm_positionからどれだけ上にあげるか
 	//クラゲの色々なステータス
@@ -52,21 +51,21 @@ private:
 	static const int m_meseta = 30;								//ドロップするメセタの大体の額
 	bool m_gekiha = false;                                      //deleteするかどうか
 	Player* m_player;											//プレイヤークラスのポインタ
-	Game* m_game;
+	//行動パターン
 	enum State {
-		enState_Chase,
-		enState_Pose,
-		enState_Attack,
+		enState_Chase,											//移動
+		enState_Pose,											//待機
+		enState_Attack,											//攻撃
 	};
-	bool m_isaria = false;
-	const float m_chasedistance = 1200.0f * 1200.0f;
-	const float m_attackdistance = 130.0f * 130.0f;
-	State m_state = enState_Pose;
+	bool m_isaria = false;										//詠唱したかどうか
+	const float m_chasedistance = 1200.0f * 1200.0f;			//プレイヤーとの距離が一定以下になれば移動する
+	const float m_attackdistance = 130.0f * 130.0f;				//プレイヤーとの距離が一定以下になれば攻撃する
+	State m_state = enState_Pose;								//ステート
 	const float m_frame = 40.0f;
-	const float m_movespeedmultiply = 7.0f;
-	float m_dethtimer = 0.0f;
+	const float m_movespeedmultiply = 7.0f;						//移動速度
+	float m_dethtimer = 0.0f;									//倒されるまでちょっと時間あける
 	const int m_dethtime = 5;
-	float m_chasetimer = 0.0f;
+	float m_chasetimer = 0.0f;									
 	const int m_chasetime = 30;
 	float m_stoptimer = 0.0f;
 	const int m_stoptime = 20;

@@ -9,11 +9,15 @@ class Kurage4 :public IEnemy
 public:
 	Kurage4();
 	~Kurage4();
-	bool Start();
-	void Update();
-	void Chase();
+	bool Start() override;
+	void Update() override;
+	//移動
+	void Move();
+	//攻撃
 	void Attack();
+	//詠唱
 	void Aria();
+	//攻撃に転じる
 	void ChangeAttack();
 	void SetPlayer(Player* player)								//プレイヤーのポイントをセット
 	{
@@ -38,13 +42,13 @@ private:
 	CVector3 m_position = CVector3::Zero();				        //鬼の座標
 	CVector3 m_scale = CVector3::One();					        //鬼のスケール
 	CVector3 m_movespeed = CVector3::Zero();					//移動速度
-	CVector3 m_protposition = CVector3::Zero();
+	CVector3 m_protposition = CVector3::Zero();					//最初に居た座標
 	const float m_r = 60.0f;                                    //コリジョンの半径
 	const float m_collisionheight = 40.0f;                      //コリジョンをm_positionからどれだけ上にあげるか
 	//クラゲの色々なステータス
 	static const int m_MaxHP = 600;                             //最大HP
-	static const int m_Attack = 210;                             //攻撃力
-	static const int m_EXP = 1240;                                //経験値
+	static const int m_Attack = 210;                            //攻撃力
+	static const int m_EXP = 1240;                              //経験値
 	//ヘッダーファイルでは宣言だけ、定義はcppファイルに書いてください
 	static const int m_dropChances[];                           //エネミーのドロップするアイテム、[1]が10ならレア度1が10%でドロップするみたいな
 	static const int m_dropmaterialChances[];					//エネミーのドロップする素材の確率
@@ -52,10 +56,11 @@ private:
 	bool m_gekiha = false;                                      //deleteするかどうか
 	Player* m_player;											//プレイヤークラスのポインタ
 	Game* m_game;
+	//行動パターン
 	enum State {
-		enState_Chase,
-		enState_Pose,
-		enState_Attack,
+		enState_Chase,											//移動
+		enState_Pose,											//待機	
+		enState_Attack,											//攻撃
 	};
 	State m_state = enState_Pose;
 	const float m_chasedistance = 1800.0f * 1800.0f;

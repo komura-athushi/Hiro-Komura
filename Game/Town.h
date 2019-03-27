@@ -16,8 +16,8 @@ class Town:public IGameObject
 public:
 	Town();
 	~Town();
-	bool Start();
-	void Update();
+	bool Start() override;
+	void Update() override;
 	//ƒŒƒxƒ‹\’z
 	void BuildLevel();
 	//ŠX‚ğ”­“W

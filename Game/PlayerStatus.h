@@ -18,8 +18,8 @@ public:
 		return inst;
 	}
 public:
-	bool Start();
-	void Update();
+	bool Start() override;
+	void Update() override;
 	//武器のステータスを設定
 	void SetWeaponStatus();
 	//魔法のステータスを設定

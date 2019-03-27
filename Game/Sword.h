@@ -6,8 +6,8 @@ class Sword:public IGameObject
 public:
 	Sword();
 	~Sword();
-	bool Start();
-	void Update();
+	bool Start() override;
+	void Update() override;
 	//À•W‚ğİ’è
 	void SetPosition(const CVector3& pos)
 	{

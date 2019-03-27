@@ -132,14 +132,6 @@ void Kurage5::Chase()
 			}
 		}
 	}
-	/*if (IEnemy::m_damage) {
-		m_state = enState_Pose;
-		m_stoptimer = 0.0f;
-		m_movetimer = 0.0f;
-		m_attacktimer = 0.0f;
-		m_isaria = false;
-		IEnemy::m_damage = false;
-	}*/
 	m_position += m_movespeed * GetDeltaTimeSec() * m_frame;
 }
 

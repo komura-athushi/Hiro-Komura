@@ -6,9 +6,9 @@ class Teleport:public IGameObject
 public:
 	Teleport();
 	~Teleport();
-	bool Start();
-	void Update();
-	void PostRender();
+	bool Start() override;
+	void Update() override;
+	void PostRender() override;
 	//À•W‚ğİ’è
 	void SetPosition(const CVector3& pos)
 	{

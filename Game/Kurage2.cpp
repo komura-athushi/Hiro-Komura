@@ -32,7 +32,7 @@ bool Kurage2::Start()
 
 void Kurage2::Update()
 {
-	Chase();
+	Move();
 	if (!IEnemy::m_death) {
 		m_skinModelRender->SetPos(m_position);
 		IEnemy::SetCCollision(m_position, m_collisionheight);
@@ -49,7 +49,7 @@ void Kurage2::Update()
 	}
 }
 
-void Kurage2::Chase()
+void Kurage2::Move()
 {
 	CVector3 pos = m_protposition - m_position;
 	if (pos.LengthSq() > m_chasedistance) {
@@ -100,7 +100,6 @@ void Kurage2::Chase()
 				if (m_stoptimer >= m_stoptime) {
 					m_stoptimer = 0.0f;
 					m_state = enState_Chase;
-					//ChangeAttack();
 				}
 				break;
 			case enState_Attack:
@@ -131,14 +130,6 @@ void Kurage2::Chase()
 			}
 		}
 	}
-	/*if (IEnemy::m_damage) {
-		m_state = enState_Pose;
-		m_stoptimer = 0.0f;
-		m_movetimer = 0.0f;
-		m_attacktimer = 0.0f;
-		m_isaria = false;
-		IEnemy::m_damage = false;
-	}*/
 	m_position += m_movespeed * GetDeltaTimeSec() * m_frame;
 }
 
@@ -160,8 +151,8 @@ void Kurage2::Aria()
 void Kurage2::Attack()
 {
 	Enemy_Ice* ei = new Enemy_Ice;
-	CVector3 pos = m_position + CVector3::AxisY() * 60.0f;
-	CVector3 pos2 = (m_player->GetPosition() + CVector3::AxisY()*40.0f) - pos;
+	CVector3 pos = m_position + CVector3::AxisY() * m_collisionheight;
+	CVector3 pos2 = (m_player->GetPosition() + CVector3::AxisY() * m_playerheight) - pos;
 	pos2.Normalize();
 	ei->SetPosition(pos);
 	ei->SetMoveSpeed(pos2);
