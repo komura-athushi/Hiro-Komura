@@ -58,7 +58,7 @@ bool Boss3::Start()
 	m_skinModelRender->SetPos(m_position);
 	CQuaternion rot = CQuaternion::Identity();
 	CVector3 pos = m_position;
-	//pos.y += 500.0f;
+	//pos.y += 50.0f;
 	m_staticobject.CreateSphere(pos, rot, 150.0f);
 	//m_player = FindGO<Player>(L"player");
 	//unityChanのボーンを検索
@@ -67,29 +67,28 @@ bool Boss3::Start()
 }
 void Boss3::Attack()
 {
-	m_state = enState_tuki;
-	//int t = rand() % 100;
+	int t = rand() % 100;
 
-	//if (t < 20) {
-	//	//突きのステート
-	//	m_state = enState_tuki;
-	//}
-	//else if (t < 40) {
-	//	//払いのステート
-	//	m_state = enState_harai;
-	//}
-	//else if (t < 60) {
-	//	//二段突きのステート
-	//	m_state = enState_nidan;
-	//}
-	//else if (t < 80) {
-	//	//シールドバッシュのステート
-	//	m_state = enState_bash;
-	//}
-	//else {
-	//	//回転突きのステート
-	//	m_state = enState_kaiten;
-	//}
+	if (t < 20) {
+		//突きのステート
+		m_state = enState_tuki;
+	}
+	else if (t < 40) {
+		//払いのステート
+		m_state = enState_harai;
+	}
+	else if (t < 60) {
+		//二段突きのステート
+		m_state = enState_nidan;
+	}
+	else if (t < 80) {
+		//シールドバッシュのステート
+		m_state = enState_bash;
+	}
+	else {
+		//回転突きのステート
+		m_state = enState_kaiten;
+	}
 }
 
 void Boss3::Chase()
@@ -111,7 +110,7 @@ void Boss3::Chase()
 			//近づいてくる
 			CVector3 EnemyPos = m_playerposition - m_position;
 			EnemyPos.Normalize();
-			m_movespeed = EnemyPos * 2.5f;
+			m_movespeed = EnemyPos * 5.0f;
 			m_movespeed.y = 0.0f;
 			m_position += m_movespeed;
 			m_ischase = true;
@@ -265,22 +264,106 @@ void Boss3::OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventName)
 	(void)clipName;
 	//突き
 	if (wcscmp(eventName, L"tuki") == 0) {
-		m_gekiha = true;
+		//攻撃判定の発生
+		SuicideObj::CCollisionObj* attackCol = NewGO<SuicideObj::CCollisionObj>();
+		//形状の作成
+		CVector3 atkpos = m_position;
+		//atkpos.z += 50.0f;
+		CVector3 pos = atkpos + CVector3::AxisY() * (m_collisionheight - 30.0f);
+		pos += m_parallel * 250.0f;
+		pos.y += 20.0f;
+		attackCol->CreateBox(pos, m_rotation, m_size);
+		//寿命を設定
+		attackCol->SetTimer(30);//フレーム後削除される
+		attackCol->SetCallback([&](SuicideObj::CCollisionObj::SCallbackParam& param) {
+			//衝突した判定の名前が"Player"ならm_Attack1分だけダメージ与える
+			if (param.EqualName(L"Player")) {
+				Player* player = param.GetClass<Player>();
+				player->Damage(m_Attack);
+			}
+		}
+		);
+	//はらい
+	}else if (wcscmp(eventName, L"harai") == 0) {
 		//攻撃判定の発生
 		SuicideObj::CCollisionObj* attackCol = NewGO<SuicideObj::CCollisionObj>();
 		//形状の作成
 		CVector3 atkpos = m_position;
 		atkpos.z += 50.0f;
 		CVector3 pos = atkpos + CVector3::AxisY() * (m_collisionheight - 30.0f);
-		pos += m_parallel * 30.0f;
-		attackCol->CreateSphere(pos, CQuaternion::Identity(), m_tuki_r);
+		pos += m_parallel * 70.0f;
+		attackCol->CreateSphere(pos, CQuaternion::Identity(), m_harai_r);
 		//寿命を設定
 		attackCol->SetTimer(30);//フレーム後削除される
 		attackCol->SetCallback([&](SuicideObj::CCollisionObj::SCallbackParam& param) {
 			//衝突した判定の名前が"Player"ならm_Attack分だけダメージ与える
 			if (param.EqualName(L"Player")) {
 				Player* player = param.GetClass<Player>();
-				player->Damage(m_Attack_tuki);
+				player->Damage(m_Attack);
+			}
+		}
+		);
+	}
+	//突きと二段突きは同じ
+	//二段突き
+	else if (wcscmp(eventName, L"nidan") == 0) {
+		//攻撃判定の発生
+		SuicideObj::CCollisionObj* attackCol = NewGO<SuicideObj::CCollisionObj>();
+		//形状の作成
+		CVector3 atkpos = m_position;
+		//atkpos.z += 50.0f;
+		CVector3 pos = atkpos + CVector3::AxisY() * (m_collisionheight - 30.0f);
+		pos += m_parallel * 250.0f;
+		pos.y += 20.0f;
+		attackCol->CreateBox(pos, m_rotation, m_size);
+		//寿命を設定
+		attackCol->SetTimer(30);//フレーム後削除される
+		attackCol->SetCallback([&](SuicideObj::CCollisionObj::SCallbackParam& param) {
+		//衝突した判定の名前が"Player"ならm_Attack分だけダメージ与える
+			if (param.EqualName(L"Player")) {
+				Player* player = param.GetClass<Player>();
+				player->Damage(m_Attack);
+			}
+		});
+	}//シールドバッシュ
+	else if (wcscmp(eventName, L"bash") == 0) {
+		//攻撃判定の発生
+		SuicideObj::CCollisionObj* attackCol = NewGO<SuicideObj::CCollisionObj>();
+		//形状の作成
+		CVector3 atkpos = m_position;
+		//atkpos.z += 50.0f;
+		CVector3 pos = atkpos + CVector3::AxisY() * (m_collisionheight - 30.0f);
+		pos += m_parallel * 200.0f;
+		attackCol->CreateSphere(pos, CQuaternion::Identity(), m_harai_r);
+		//寿命を設定
+		attackCol->SetTimer(30);//フレーム後削除される
+		attackCol->SetCallback([&](SuicideObj::CCollisionObj::SCallbackParam& param) {
+			//衝突した判定の名前が"Player"ならm_Attack分だけダメージ与える
+			if (param.EqualName(L"Player")) {
+				Player* player = param.GetClass<Player>();
+				player->Damage(m_Attack);
+			}
+		}
+		);
+	//回転
+	}else if (wcscmp(eventName, L"kaiten") == 0) {
+		//攻撃判定の発生
+		SuicideObj::CCollisionObj* attackCol = NewGO<SuicideObj::CCollisionObj>();
+		//形状の作成
+		CVector3 atkpos = m_position;
+		//atkpos.z += 50.0f;
+		CVector3 pos = atkpos + CVector3::AxisY() * (m_collisionheight - 30.0f);
+		pos += m_parallel * 500.0f;
+		m_position = pos;
+		m_position.y = 0.0f;
+		attackCol->CreateSphere(pos, CQuaternion::Identity(), m_harai_r);
+		//寿命を設定
+		attackCol->SetTimer(30);//フレーム後削除される
+		attackCol->SetCallback([&](SuicideObj::CCollisionObj::SCallbackParam& param) {
+			//衝突した判定の名前が"Player"ならm_Attack分だけダメージ与える
+			if (param.EqualName(L"Player")) {
+				Player* player = param.GetClass<Player>();
+				player->Damage(m_Attack);
 			}
 		}
 		);
@@ -289,6 +372,7 @@ void Boss3::OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventName)
 
 void Boss3::Update()
 {
+	m_Ctimer++;
 	m_timer++;
 	AnimationController();
 	if (!IEnemy::m_death) {

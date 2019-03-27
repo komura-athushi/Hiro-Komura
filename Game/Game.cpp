@@ -130,13 +130,7 @@ bool Game::Start()
 		}
 		return false;
 	});
-	//仮ここから
-	//ボス3
-	//プレイヤーのインスタンスを生成する。
-	Boss3* boss3 = new Boss3;
-	boss3->SetName(L"Enemy");
-	boss3->SetPlayer(m_player);
-	//ここまで
+	
 	m_gamecamera = new GameCamera;
 	m_gamecamera->SetPlayer(m_player);
 	m_player->SetCamera(m_gamecamera);

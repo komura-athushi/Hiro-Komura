@@ -74,12 +74,13 @@ private:
 	CVector3 m_parallel = { 0.0f,0.0f,0.0f };					//騎士の向きと平行なベクトル
 	int m_idlecount = 0;
 	int m_timer = 0;											//待機モーションのクールタイムのためにフレーム数を数える
+	int m_Ctimer = 0;											//二段突きの二手目のためにフレーム数を数える
 	int m_cooltime = 500;
 	Player* m_player;											//プレイヤークラスのポインタ
 	bool m_ischase = true;										//プレイヤーを追尾しているかどうか
 	//Bossの色々なステータス
 	static const int m_MaxHP = 100;                             //最大HP
-	static const int m_Attack_tuki = 20;						//突きの攻撃力
+	static const int m_Attack =50;								//突きの攻撃力
 	static const int m_EXP = 500;                               //経験値
 	static const int m_dropChances[];				            //ドラゴンのドロップするアイテム、[1]が10ならレア度1が10%でドロップするみたいな
 	static const int m_dropmaterialChances[];
@@ -87,8 +88,10 @@ private:
 	bool m_gekiha = false;                                      //deleteするかどうか
 	//コリジョン関係
 	float m_collisionheight = 70.0f;							//コリジョンをm_positionからどれだけ上にあげるか
-	float m_r = 150.0f;                                         //コリジョンの半径
-	const float m_tuki_r = 50.0f;								//突きしたときに発生させるコリジョンの半径
-	const float m_attack2r = 350.0f;                            //プレスしたときに発生させるコリジョンの半径
+	CVector3 m_size = { 130.0f, 120.0f, 400.0f};				//突きのコリジョンの半径
+	const float m_harai_r = 150.0f;								//はらいをしたときに発生させるコリジョンの半径
+	//二段
+//	const float m_harai_r = 150.0f;								//二段突きをしたときに発生させるコリジョンの半径
+	bool deletefirst = false;									//二段突きの初撃を行ったかどうか
 };
 
