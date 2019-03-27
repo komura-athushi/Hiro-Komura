@@ -48,7 +48,7 @@ bool Boss3::Start()
 	m_animClip[enAnimationClip_kaiten].SetLoopFlag(false);
 	m_animClip[enAnimationClip_damage].SetLoopFlag(false);
 	m_animClip[enAnimationClip_death].SetLoopFlag(false);
-	//ドラゴンのスキンモデルレンダーを表示
+	//騎士のスキンモデルレンダーを表示
 	m_skinModelRender = new GameObj::CSkinModelRender;
 	m_skinModelRender->Init(L"Resource/modelData/boss3.cmo", m_animClip, enAnimationClip_num);
 	m_skinModelRender->GetAnimCon().AddAnimationEventListener([&](const wchar_t* clipName, const wchar_t* eventName) {
@@ -105,7 +105,7 @@ void Boss3::Chase()
 		Attack();
 	}
 	//もしプレイヤーと鬼の距離が近くなったら
-	if (pos.LengthSq() < 1000.0f * 1000.0f) {
+	if (pos.LengthSq() < 2000.0f * 2000.0f) {
 		if (pos.LengthSq() > 200.0f * 200.0f) {
 			//近づいてくる
 			CVector3 EnemyPos = m_playerposition - m_position;
