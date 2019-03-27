@@ -198,6 +198,7 @@
     <ClCompile Include="Kurage4.cpp" />
     <ClCompile Include="Kurage5.cpp" />
     <ClCompile Include="Skeleton1.cpp" />
+    <ClCompile Include="Boss3.cpp" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Asset\modelData\Sword\AncientWarriorBlade.FBX">
@@ -393,6 +394,7 @@
     <ClInclude Include="Kurage4.h" />
     <ClInclude Include="Kurage5.h" />
     <ClInclude Include="Skeleton1.h" />
+    <ClInclude Include="Boss3.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Assets">
