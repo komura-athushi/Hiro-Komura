@@ -4,6 +4,7 @@
 #include "DropMaterial.h"
 #include "Player.h"
 #include "GameCamera.h"
+#include "FontNumber.h"
 const float IEnemy::m_frame = 40.0f; 
 IEnemy::IEnemy(const int& h,const int& a,const int& e,const int dropchances[Weapon::m_HighestRarity],const int dropmaterialchances[Material::m_HighestRarity],const int& meseta):m_HP(h),m_Attack(a),m_Exp(e),m_dropmeseta(meseta)
 {
@@ -49,16 +50,7 @@ void IEnemy::CCollision(const CVector3& pos,const float& l,const float& r)
 
 void IEnemy::SetCCollision(const CVector3& pos,const float& l)
 {
-	if (m_displayfont) {
-		m_fonttimer += m_frame * GetDeltaTimeSec();
-		if (m_fonttimer >= 20) {
-			m_fonttimer = 0;
-			m_displayfont = false;
-		}
-	}
-	else {
-		m_fontposition = pos + CVector3::AxisY()*l;
-	}
+	m_fontposition = pos + CVector3::AxisY()*l;
 	if (m_death) {
 		return;
 	}
@@ -66,11 +58,6 @@ void IEnemy::SetCCollision(const CVector3& pos,const float& l)
 	m_position = pos;
 	m_collisionposition = pos + CVector3::AxisY()*l;
 	m_timer += m_frame * GetDeltaTimeSec();
-	m_timer1 += m_frame * GetDeltaTimeSec();
-	m_timer2 += m_frame * GetDeltaTimeSec();
-	m_timer3 += m_frame * GetDeltaTimeSec();
-	m_timer5 += m_frame * GetDeltaTimeSec();
-	m_timer7 += m_frame * GetDeltaTimeSec();
 	m_timer8 += m_frame * GetDeltaTimeSec();
 }
 
@@ -88,51 +75,16 @@ void IEnemy::Damage(const int& attack,int number)
 			player->RecoveryPP();
 		}
 		break;
-	case 1:
-		if (m_timer1 >= 40) {		//フォイエ
-			m_HP -= attack;
-			m_timer1 = 0;
-			m_damage = true;
-		}
-		break;
-	case 2:
-		if (m_timer2 >= 12) {		//イルグランツ
-			m_HP -= attack;
-			m_timer2 = 0;
-			m_damage = true;
-		}
-		break;
-	case 3:
-		if (m_timer3 >= 25) {		//ザンバース
-			m_HP -= attack;
-			m_timer3 = 0;
-			m_damage = true;
-		}
-		break;
-	case 4:							//シフタ(ダメージ無し)
-		break;
-	case 5:							
-		if (m_timer5 >= 50) {		//マジスフィ
-			m_HP -= attack;
-			m_timer5 = 0;
-			m_damage = true;
-		}
-		break;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
-	case 6:
-		break;						//レスタ(ダメージ無し)
-	case 7:
-		if (m_timer7 >= 50) {		//覇王斬
-			m_HP -= attack;
-			m_timer7 = 0;
-			m_damage = true;
-		}
-		break;
 	case 8:
 		if (m_timer8 >= 100) {		//モルガン
 			m_HP -= attack;
 			m_timer8 = 0;
 			m_damage = true;
 		}
+		break;
+	default:
+		m_HP -= attack;
+		m_damage = true;
 		break;
 	}
 	if (HP != m_HP) {
@@ -147,33 +99,32 @@ void IEnemy::Damage(const int& attack,int number)
 		GameObj::Suicider::CEffekseer* effect = new GameObj::Suicider::CEffekseer;
 		effect->Play(L"Asset/effect/hit/hit.efk", 1.0f, m_collisionposition, CQuaternion::Identity(), { 15.0f,15.0f,15.0f });
 		effect->SetSpeed(1.0f);
+		m_displayfont = true;
+		m_damagecount = attack;
 	}
 	if (m_HP <= 0) {
 		m_death = true;
 		m_collision->Delete();
 	}
-	if (m_damage) {
-		m_damagecount = attack;
-		m_displayfont = true;
+	if (!m_displayfont) {
+		return;
+	}
+	else {
+		FontNumber* fn = new FontNumber;
+		fn->SetNumber(m_damagecount);
+		fn->SetPosition(m_fontposition);
+		m_displayfont = false;
+	}
+	//ランダムでエネミーの被ダメ時の行動を制限する
+	int rn = rand() % 100 + 1;
+	if (rn <= 70) {
+		m_damage = false;
 	}
 }
 
 void IEnemy::PostRender()
 {
-	if (!m_displayfont) {
-		return;
-	}
-	if (m_gamecamera == nullptr) {
-		m_gamecamera = FindGO<GameCamera>();
-	}
-	else {
-	    wchar_t output[256];
-	    //swprintf_s(output, L"HP   %d\natk  %d\nドロップ  %d\n", m_HP,m_Attack,m_dropChances[1]);
-	    swprintf_s(output, L"%d\n", m_damagecount);
-		CVector2 pos = m_gamecamera->GetCamera()->CalcScreenPosFromWorldPos(m_fontposition);
-		//m_font.DrawScreenPos(output,pos);
-		m_font.Draw(output, pos, CVector4(225.0f, 00.0f, 00.0f, 0.8f));
-	}
+	
 }
 
 void IEnemy::Drop()

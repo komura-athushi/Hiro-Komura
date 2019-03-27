@@ -69,6 +69,8 @@ public:
 	void OutTarget();
 	//クリアボイス
 	void ClearVoice();
+	//武器のステータスをセット
+	void SetStatus();
 	//プレイヤーの座標をセット
 	void SetPosition(const CVector3& pos)
 	{
@@ -180,6 +182,11 @@ public:
 	{
 		m_state = enState_GameClear;
 	}
+	//ゲームクリアのモーション中かどうかを取得
+	bool GetisClearAnimation() const
+	{
+		return m_state == enState_GameClear;
+	}
 private:
 	bool m_cagliostro = false;
 	GameObj::CSkinModelRender* m_skinModelRender = nullptr;		//スキンモデルレンダラー
@@ -205,7 +212,7 @@ private:
 	GameCamera* m_gamecamera = nullptr;                         //カメラのポインタ
 	Town* m_town = nullptr;
 	CVector3 m_movespeed;                                       //移動速度
-	CVector3 m_position = {0.0f,100.0f,00.0f};                  //ユニティちゃんの座標
+	CVector3 m_position = {18633,0,7255};                  //ユニティちゃんの座標
 	CVector3 m_playerheikou = { 1.0f,0.0f,0.0f };               //プレイヤーと平行なベクトル
 	CVector3 m_scale = { 1.0f,1.0f,1.0f };                      //大きさ
 	CVector3 m_swordposition = CVector3::Zero();				//剣の座標
@@ -213,6 +220,7 @@ private:
 	float m_timer = 0.0f;                                       //攻撃のクールタイマー
 	const int m_attacktime = 5;								    //攻撃のクールタイム
 	float m_timer2 = 0.0f;                                      //ダメージのクールタイム
+	const float m_time2 = 30.0f;
 	CVector3 m_target = CVector3::Zero();
 	CVector3 m_attacktarget = CVector3::Zero();
 	bool m_ontarget = false;									//ターゲット表示するかどうか
@@ -276,6 +284,7 @@ private:
 	float m_DamageRate;								       	    //魔法のダメージ倍率
 	int m_PPCost;										        //魔法を放つのに必要なPP
 	bool m_damage = false;                                      //ダメージを受けた！
+	bool m_isattack = false;									//攻撃中かどうか
 	bool m_isbutton = false;                                    //武器切り替えの時に使うやつ
 	float m_PPtimer = 0.0f;										//PP自動回復のクールタイム
 	int m_PPtime = 40;											//PP自動回復のタイム
@@ -289,6 +298,7 @@ private:
 	bool m_clear_over_voice = false;							//ゲームオーバーあるいはゲームクリアのボイスを発生させたかどうか
 	const float m_voicevolume = 3.5f;							//ボイスの音量
 	const float m_lvupvollume = 2.0f;							//レベルアップのSEの音量
+	const float m_cancelvolume = 5.0f;
 	bool m_targetdisplay = false;								//ターゲッティング状態かどうか
 	const float m_distancetarget = 1400.0f * 1400.0f;			//ターゲットが有効な距離
 	const float m_degreemultiply = 0.3f;						//ターゲットの距離補正
@@ -301,11 +311,18 @@ private:
 	const float m_length2 = 128.0f;
 	const CVector2 m_protspriteposition = { 0.0f,0.0f };
 	CVector2 m_spriteposition = { 0.0f ,0.0f };
+	const int m_ariaposetime = 20;
 	const float m_morugantime = 400.0f;
+	const float m_windtime = 15;
 	const float m_height = 60.0f;
 	bool m_aria = false;										//呪文詠唱中かどうか
 	IEnemy* m_enemy = nullptr;
 	bool m_targetlock = false;									//ターゲットロック中かどうか
 	bool m_displaystatus = false;
+	bool m_isbackchoice = false;
+	CSprite m_window;
+	const int m_randDamage = 95;
+	const float m_ariaspeed = 30.0f;
+	CVector4 m_statuscolor = { 1.0f,1.0f,1.0f,0.5f };
 };
 

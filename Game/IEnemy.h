@@ -2,8 +2,8 @@
 #include "Weapon.h"
 #include "Material.h"
 class GameCamera;
-//エネミーの基本クラスです
-//HPやドロップ、削除の処理などはこのクラスで処理します
+//全エネミーの基本クラスです
+//HPやドロップ、コリジョンの処理などはこのクラスで処理します
 class IEnemy : public IGameObject
 {
 public:
@@ -33,7 +33,7 @@ public:
 	*/
 	void SetCCollision(const CVector3& pos,const float& l);
 	//プレイヤーがエネミーにダメージを与える時の処理
-	void Damage(const int& attack,int number=0);
+	void Damage(const int& attack,int number = 0);
 	//ドロップするアイテムの処理
 	void Drop();
 	//文字表示
@@ -63,6 +63,16 @@ public:
 	{
 		return m_r;
 	}
+	//エネミーの番号を設定
+	void SetNumber(const int& number)
+	{
+		m_number = number;
+	}
+	//エネミーの番号を取得
+	int GetNumber() const 
+	{
+		return m_number;
+	}
 protected:
 	SuicideObj::CCollisionObj* m_collision;                   //丸いコリジョン
 	float m_r;												  //コリジョンの半径
@@ -78,11 +88,6 @@ protected:
 	int m_damagecount;										  //受けたダメージ
 	int m_Exp;                                                //経験値
 	float m_timer = 0.0f;                                     //当たり判定にクールタイム
-	float m_timer1 = 0.0f;									  //フォイエの当たり判定のクールタイム
-	float m_timer2 = 0.0f;									  //イルグランツの
-	float m_timer3 = 0.0f;									  //ザンバースの
-	float m_timer5 = 0.0f;									  //マジスフィの
-	float m_timer7 = 0.0f;									  //覇王斬の
 	float m_timer8 = 0.0f;									  //モルガンの	
 	float m_fonttimer = 0.0f;								  //文字表示のタイマー
 	bool m_damage = false;                                    //ダメージを受けたかどうか
@@ -96,6 +101,7 @@ protected:
 	static const int m_mesetarand = 2;
 	static const float m_frame;								  //fps
 	GameCamera* m_gamecamera;
-	const float m_sevolume = 2.5f;
+	const float m_sevolume = 2.0f;
+	int m_number = 0;
 };
 

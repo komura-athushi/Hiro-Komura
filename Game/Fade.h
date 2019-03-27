@@ -26,7 +26,14 @@ public:
 	{
 		m_state = enState_FadeOut;
 	}
-
+	void StartFadeSlowIn()
+	{
+		m_state = enState_FadeSlowIn;
+	}
+	void StartFadeSlowOut()
+	{
+		m_state = enState_FadeSlowOut;
+	}
 	bool IsFade() const
 	{
 		return m_state != enState_Idle;
@@ -38,8 +45,10 @@ public:
 
 private:
 	enum EnState {
-		enState_FadeIn,		//!<フェードイン中。
+		enState_FadeIn,			//!<フェードイン中。
+		enState_FadeSlowIn,     //フェードイン中(スロウ)
 		enState_FadeOut,		//!<フェードアウト中。
+		enState_FadeSlowOut,    //フェードアウト中(スロウ)
 		enState_Idle,		//!<アイドル中。
 	};
 	CSprite m_sprite;

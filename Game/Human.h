@@ -8,8 +8,8 @@ class Human:public IGameObject
 public:
 	Human();
 	~Human();
-	bool Start();
-	void Update();
+	bool Start() override;
+	void Update() override;
 	//アニメーション
 	void AnimationController();
 	//回転
@@ -32,10 +32,7 @@ public:
 		return m_developtown;
 	}
 	//街を発展させる！
-	void SetLevelUpTown()
-	{
-		m_leveluptown = true;
-	}
+	void SetLevelUpTown();
 	//トークをオンにする
 	void OnTalk()
 	{
@@ -55,6 +52,7 @@ private:
 	GameObj::CSkinModelRender* m_skinModelRender = nullptr;		//スキンモデルレンダラー。
 	CVector3 m_scale = { 2.0f,2.0f,2.0f };
 	CVector3 m_position = { 300.0f,200.0f,0.0f };
+	CSprite m_sprite;
 	float m_animationspeed = 0.7f;
 	CQuaternion m_rotation;
 	bool m_developtown = false;								   //街を発展できるかどうか

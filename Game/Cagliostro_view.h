@@ -10,8 +10,8 @@ class Cagliostro_view:public IGameObject
 public:
 	Cagliostro_view();
 	~Cagliostro_view();
-	bool Start();
-	void Update();
+	bool Start() override;
+	void Update() override;
 private:
 	Ground* m_ground;                                  //Groundクラスのポインタ
 	GameCamera* m_gamecamera;                          //GameCameraクラスのポインタ

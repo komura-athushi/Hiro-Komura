@@ -40,35 +40,40 @@ bool DropItem::Start()
 		m_state += m_number;
 		//武器の番号によって読み込むfbxファイルを決めます
 		switch (m_state) {
-		case 1:
+		case GameData::enWeapon_Sword:
+			m_skinModelRender->Init(L"Resource/modelData/Sword_drop.cmo");
+			break;
+		case GameData::enWeapon_FireSword:
 			m_skinModelRender->Init(L"Resource/modelData/FireSword_drop.cmo");
 			break;
-		case 2:
+		case GameData::enWeapon_IceSword:
 			m_skinModelRender->Init(L"Resource/modelData/IceSword_drop.cmo");
 			break;
-		case 3:
+		case GameData::enWeapon_WindSword:
 			m_skinModelRender->Init(L"Resource/modelData/WindSword_drop.cmo");
 			break;
-		case 4:
+		case GameData::enWeapon_GreatSword:
 			m_skinModelRender->Init(L"Resource/modelData/GreatSword_drop.cmo");
 			break;
-		case 5:
+		case GameData::enWeapon_BlueLightSword:
 			m_skinModelRender->Init(L"Resource/modelData/BlueLightSword_drop.cmo");
 			break;
-		case 6:
+		case GameData::enWeapon_BattleReadyBlade:
 			m_skinModelRender->Init(L"Resource/modelData/BattleReadyBlade_drop.cmo");
 			break;
-		case 7:
+		case GameData::enWeapon_AncientWarriorBlade:
 			m_skinModelRender->Init(L"Resource/modelData/AncientWarriorBlade_drop.cmo");
 			break;
-		case 8:
+		case GameData::enWeapon_LegendalySword:
 			m_skinModelRender->Init(L"Resource/modelData/excaliburmorgan_drop.cmo");
 			break;
 		}
 		m_position.y += m_height_weapon;
+		//該当の番号の武器のデータを生成します
 		m_equipment = new Equipment(m_state);
 	}
 	else {
+		//武器でなかった場合、メセタを生成します
 		m_skinModelRender->Init(L"Resource/modelData/meseta.cmo");
 		m_position.y += m_height;
 		m_issetweapon = true;
@@ -82,6 +87,7 @@ bool DropItem::Start()
 
 void DropItem::Update()
 {
+	//毎フレーム回転させます
 	m_degree += 200.0f * GetDeltaTimeSec();
 	m_rotation.SetRotationDeg(CVector3::AxisY(), m_degree);
 	m_skinModelRender->SetRot(m_rotation);
@@ -90,7 +96,7 @@ void DropItem::Update()
 	if (pos.Length() <= 80.0f) {
 		PlayerStatus* playerstatus = FindGO<PlayerStatus>(L"PlayerStatus");
 		if (m_isweapon) {
-			//自身が武器の場合プレイヤーに追加、既に所持している場合は設定したメセタの額をプレイヤーに追加
+			//自身が武器の場合プレイヤーに追加
 			playerstatus->SetWeapon(m_equipment);
 			m_issetweapon = true;
 		}
@@ -98,6 +104,14 @@ void DropItem::Update()
 			//設定したメセタの額をプレイヤーに追加
 			playerstatus->AddMeseta(m_meseta);
 		}
+		//SE
+		SuicideObj::CSE* se = NewGO<SuicideObj::CSE>(L"Asset/sound/se/get.wav");
+		se->Play(); //再生(再生が終わると削除されます)
+		se->SetVolume(m_sevolume);
+		//3D再生
+		se->SetPos(m_position);//音の位置
+		se->SetDistance(200.0f);//音が聞こえる範囲
+		se->Play(true); //第一引数をtrue
 		delete this;
 	}
 }

@@ -7,6 +7,7 @@
 #include <time.h>
 #include "GameData.h"
 #include "MainSound.h"
+#include "GameClear.h"
 #include "DemolisherWeapon/Graphic/Sky/CSkybox.h"
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nCmdShow)
 {
@@ -31,7 +32,8 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	//MainSoundクラスのインスタンスを静的な関数をつかって生成
 	MainSound* mainsound = &MainSound::GetInstance();
 	Title* titel = new Title;
-	//GameObj::CSkybox* cs = new GameObj::CSkybox(L"Preset/modelData/skyCubeMap.dds",100000.0f);
+	//GameClear* gc = new GameClear;
+	GameObj::CSkybox* cs = new GameObj::CSkybox(L"Preset/modelData/skyCubeMap.dds",100000.0f);
 	SetPhysicsDebugDrawMode(btIDebugDraw::DBG_DrawWireframe);
 	//ゲームループ。
 	GetEngine().RunGameLoop();

@@ -4,6 +4,11 @@
 
 #include"MotionBlurHeader.h"
 
+#if defined(ALL)
+#define MOTIONBLUR 1
+#define NORMAL_MAP 1
+#endif
+
 /////////////////////////////////////////////////////////////
 // Shader Resource View
 /////////////////////////////////////////////////////////////
@@ -14,12 +19,16 @@ Texture2D<float4> albedoTexture : register(t0);
 //スカイボックス用キューブマップ
 TextureCube<float4> skyCubeMap : register(t0);
 #endif
+#if NORMAL_MAP
+//ノーマルマップ
+Texture2D<float3> NormalTexture : register(t1);
+#endif
 //ボーン行列
-StructuredBuffer<float4x4> boneMatrix : register(t1);
-StructuredBuffer<float4x4> boneMatrixOld : register(t2);
+StructuredBuffer<float4x4> boneMatrix : register(t2);
+StructuredBuffer<float4x4> boneMatrixOld : register(t3);
 //インスタンシング用ワールド行列
-StructuredBuffer<float4x4> InstancingWorldMatrix : register(t3);
-StructuredBuffer<float4x4> InstancingWorldMatrixOld : register(t4);
+StructuredBuffer<float4x4> InstancingWorldMatrix : register(t4);
+StructuredBuffer<float4x4> InstancingWorldMatrixOld : register(t5);
 
 /////////////////////////////////////////////////////////////
 // SamplerState
@@ -54,7 +63,9 @@ cbuffer VSPSCb : register(b0){
 //マテリアルパラメーター
 cbuffer MaterialCb : register(b1) {
 	float4 albedoScale;	//アルベドにかけるスケール
-	float4 emissive;	//エミッシブ(自己発光) wがライティングするか
+	float  emissive;	//自己発光
+	float  isLighting;	//ライティングするか
+	float2 uvOffset;
 }
 
 /////////////////////////////////////////////////////////////
@@ -68,6 +79,7 @@ struct VSInputNmTxVcTangent
     float4 Position : SV_Position;			//頂点座標。
     float3 Normal   : NORMAL;				//法線。
     float3 Tangent  : TANGENT;				//接ベクトル。
+	float3 Binormal : BINORMAL;				//従法線。
     float2 TexCoord : TEXCOORD0;			//UV座標。
 };
 /*!
@@ -79,7 +91,8 @@ struct VSInputNmTxWeights
     float3 Normal   : NORMAL;				//法線。
     float2 TexCoord	: TEXCOORD0;			//UV座標。
     float3 Tangent	: TANGENT;				//接ベクトル。
-    uint4  Indices  : BLENDINDICES0;		//この頂点に関連付けされているボーン番号。x,y,z,wの要素に入っている。4ボーンスキニング。
+	float3 Binormal : BINORMAL;				//従法線。
+	uint4  Indices  : BLENDINDICES0;		//この頂点に関連付けされているボーン番号。x,y,z,wの要素に入っている。4ボーンスキニング。
     float4 Weights  : BLENDWEIGHT0;			//この頂点に関連付けされているボーンへのスキンウェイト。x,y,z,wの要素に入っている。4ボーンスキニング。
 };
 
@@ -90,6 +103,7 @@ struct PSInput{
 	float4 Position 	: SV_POSITION;
 	float3 Normal		: NORMAL;
 	float3 Tangent		: TANGENT;
+	float3 Binormal		: BINORMAL;
 	float2 TexCoord 	: TEXCOORD0;
 	float3 Viewpos		: TEXCOORD1;
 
@@ -135,16 +149,22 @@ PSInput VSMain( VSInputNmTxVcTangent In
 
 #if defined(INSTANCING)
 	psInput.Normal = normalize(mul(InstancingWorldMatrix[instanceID], In.Normal));
+#if NORMAL_MAP
 	psInput.Tangent = normalize(mul(InstancingWorldMatrix[instanceID], In.Tangent));
+	psInput.Binormal = normalize(mul(InstancingWorldMatrix[instanceID], In.Binormal));
+#endif
 #else
 	psInput.Normal = normalize(mul(mWorld, In.Normal));
+#if NORMAL_MAP
 	psInput.Tangent = normalize(mul(mWorld, In.Tangent));
+	psInput.Binormal = normalize(mul(mWorld, In.Binormal));
+#endif
 #endif
 
 	psInput.curPos = pos;
 
 	//ベロシティマップ用情報
-#if !defined(NO_MOTIONBLUR)
+#if MOTIONBLUR
 
 #if defined(INSTANCING)
 		float4 oldpos = mul(InstancingWorldMatrixOld[instanceID], In.Position);
@@ -255,7 +275,10 @@ PSInput VSMainSkin( VSInputNmTxWeights In
 	//mulは乗算命令。
 	pos = mul(skinning, In.Position);
 	psInput.Normal = normalize( mul(skinning, In.Normal) );
+#if NORMAL_MAP
 	psInput.Tangent = normalize( mul(skinning, In.Tangent) );
+	psInput.Binormal = normalize( mul(skinning, In.Binormal) );
+#endif
 
 	float3 posW = pos.xyz; psInput.cubemapPos = normalize(posW - camWorldPos);
 
@@ -267,7 +290,7 @@ PSInput VSMainSkin( VSInputNmTxWeights In
 	psInput.curPos = pos;
 
 	//ベロシティマップ用情報
-#if !defined(NO_MOTIONBLUR)
+#if MOTIONBLUR
 		float4x4 oldskinning = 0;
 		float4 oldpos = 0;
 		{
@@ -373,7 +396,7 @@ PSOutput_RenderGBuffer PSMain_RenderGBuffer(PSInput In)
 	//アルベド
 #if !defined(SKY_CUBE)
 	//通常
-	Out.albedo = albedoTexture.Sample(Sampler, In.TexCoord);	
+	Out.albedo = albedoTexture.Sample(Sampler, In.TexCoord + uvOffset);	
 #else
 	//スカイボックス
 	Out.albedo = skyCubeMap.SampleLevel(Sampler, In.cubemapPos, 0);
@@ -390,16 +413,24 @@ PSOutput_RenderGBuffer PSMain_RenderGBuffer(PSInput In)
 	}
 
 	//法線
+#if NORMAL_MAP
+	Out.normal = NormalTexture.Sample(Sampler, In.TexCoord + uvOffset);
+	Out.normal = Out.normal.x * In.Tangent + Out.normal.y * In.Binormal + Out.normal.z * In.Normal;
+#else
 	Out.normal = In.Normal;
+#endif
 
 	//ビュー座標
 	Out.viewpos = float4(In.Viewpos.x, In.Viewpos.y, In.Viewpos.z + depthBias.y, In.curPos.z / In.curPos.w + depthBias.x);
 
 	//ライティング用パラメーター
-	Out.lightingParam = emissive;
+	Out.lightingParam.x = emissive;//エミッシブ
+	Out.lightingParam.y = isLighting;//ライティングするか?
+	Out.lightingParam.z = 0.0f;//メタリック
+	Out.lightingParam.w = 0.38f;//シャイニネス
 
 	//速度
-#if !defined(NO_MOTIONBLUR)
+#if MOTIONBLUR
 		float2	current = In.curPos.xy / In.curPos.w;
 		float2	last = In.lastPos.xy / In.lastPos.w;		
 
@@ -454,16 +485,18 @@ PSOutput_RenderGBuffer PSMain_RenderGBuffer(PSInput In)
 //Z値出力
 float4 PSMain_RenderZ(ZPSInput In) : SV_Target0
 {
+#if defined(TEXTURE)
 	//アルベド
-	float alpha = albedoTexture.Sample(Sampler, In.TexCoord).a * albedoScale.a;
-
+	float alpha = albedoTexture.Sample(Sampler, In.TexCoord + uvOffset).a * albedoScale.a;
+#else
+	float alpha = albedoScale.a;
+#endif
 	//αテスト
 	if (alpha > 0.5f) {
 	}
 	else {
 		discard;
 	}
-
 	return In.posInProj.z / In.posInProj.w + depthBias.x ;// +1.0f*max(abs(ddx(In.posInProj.z / In.posInProj.w)), abs(ddy(In.posInProj.z / In.posInProj.w)));
 }
 #endif

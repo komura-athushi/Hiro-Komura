@@ -21,15 +21,17 @@ public:
 	/*!
 	//コリジョンとモデルを設定、座標とコリジョンの大きさ
 	@brief	魔法のモデルをコリジョンを生成します
+	*int magicnumber				//撃たれた魔法の数
 	*CVector3 pos;					//座標
 	*float scale;					//コリジョンの大きさ
 	*int id;						//魔法の番号
 	*int number						//ダメージ無しの時にいる 
 	*bool damage;					//trueでダメージありのコリジョンを生成します
+	*float time;					//ヒットタイム
 	*/
-	void SetCollisionModel(const CVector3& pos, const float& scale,const int& id, const CVector3& scl = CVector3::Zero(),const int& number=0,bool damage = true); //こ↑こ↓をfalseにするとダメージ無しのコリジョンを生成します
+	void SetCollisionModel(const int& magicnumber, const CVector3& pos, const float& scale, const int& id, const CVector3& scl = CVector3::Zero(), const int& number = 0, bool damage = true, float time = 0.0f);
 	/*!
-	//ダメ無しコリジョンを発生させたい場合はこっち
+	//複数のエフェクトを発生させる場合はこっち
 	//コリジョンとモデルを設定、座標とコリジョンの大きさ
 	@brief	魔法のモデルをコリジョンを生成します
 	*CVector3 pos;					//座標
@@ -37,8 +39,9 @@ public:
 	*int id;						//魔法の番号
 	*int number						//m_modelcountを代入してください
 	*bool damage;					//trueでダメージありのコリジョンを生成します
+	*float time;					//ヒットタイム
 	*/
-	void SetCollisionModelnoDamage(const CVector3& pos, const float& scale, const int& id, const CVector3& scl = CVector3::Zero(), const int& number = 0, bool damage = true);
+	void SetCollisionModelnoDamage(const CVector3& pos, const float& scale, const int& id, const CVector3& scl = CVector3::Zero(), const int& number = 0, bool damage = true ,float time = 0.0f);
 	//フォイエ
 	void Foie();
 	void FoieUpdate();
@@ -58,6 +61,9 @@ public:
 	void Resta();
 	//覇王斬
 	void Haou();
+	void HaouUpdate();
+	//該当の番号のMagicModelの配列の色々を削除
+	void DeleteMagicModel(const int& number);
 	//魔法の番号を取得
 	int GetId() const
 	{
@@ -88,12 +94,12 @@ public:
 	{
 		m_position = position;
 	}
-	//移動速度を設定
+	//移動方向を設定
 	void SetMoveSpeed(const CVector3& movespeed)
 	{
 		m_movespeed = movespeed;
 	}
-	//大きさを設定
+	//大きさを変更
 	void SetScale(const CVector3& scale)
 	{
 		m_scale = scale;
@@ -102,6 +108,11 @@ public:
 	void SetDamage(const int& mattack, const float& damagerate)
 	{
 		m_damage = int(mattack*damagerate);
+	}
+	//ダメージを設定(エネミー用)
+	void SetDamage(const int& attack)
+	{
+		m_damage = attack;
 	}
 	//ダメージを取得
 	int GetDamage()
@@ -118,23 +129,60 @@ public:
 	{
 		return m_magicmocelList[number].s_position;
 	}
-	//該当の番号のMagicModelの配列の色々を削除
-	void DeleteMagicModel(const int& number);
+	//エネミーからの魔法であることを設定
+	void SetEnemy()
+	{
+		m_isenemy = true;
+	}
+	//魔法の速度を変化させる
+	void SetSpeed(const float speed)
+	{
+		m_speed = speed;
+	}
+	//番号を取得
+	int GetMagicNumer() const
+	{
+		return m_magicnumber;
+	}
+	//大きさを変更
+	void SetMultiplyScale(const float& scale)
+	{
+		m_multiplyscale = scale;
+	}
+	//削除時間を変更
+	void SetDeleteTime(const float& time)
+	{
+		m_ischangedeletetime = true;
+		m_changedeletetime = time;
+	}
+	enum EnMagic {
+		enMagic_Fire = 1,								//フォイエ
+		enMagic_Ice,									//イル・グランツ
+		enMagic_Wind,									//ザンバース
+		enMagic_Shihuta,							    //シフタ
+		enMagic_MagicSphere,							//マジックスフィア
+		enMagic_Heal,									//ヒール								
+		enMagic_Haouzan,								//覇王斬
+		enMagic_ExcaliburMorgan,						//エクスカリバーモルガン
+		enMagic_num										//魔法の種類
+	};
 private:
+	float m_multiplyscale = 1.0f;
 	int m_id;											//魔法の番号
 	const wchar_t* m_name;								//魔法の名前
 	float m_damageRate;									//魔法のダメージ倍率
 	int m_ppCost;										//魔法を放つのに必要なPP
-	CVector3 m_scale{ CVector3::One() };				//エフェクトの大きさ
+	CVector3 m_scale = CVector3::One();				//エフェクトの大きさ
 	CVector3 m_position{ CVector3::Zero() };            //エフェクトの座標
 	CVector3 m_movespeed{ CVector3::Zero() };			//エフェクトの移動速度
 	CVector3 m_directionplayer{ CVector3::Zero() };		//プレイヤーの向きに平行なベクトル
+	float m_speed = 1.0f;
 	int m_damage;										//当たった場合にエネミーに与えるダメージ
 	float m_deletetime = 0;								//魔法を消すまでの時間
 	SuicideObj::CCollisionObj* m_collision;		        //丸いコリジョン
 	int m_modelnumber = 0;								//モデルの数
 	int m_modelcount = 0;								//生成したモデルの数
-	int m_timer = 0;									//複数のモデルとコリジョンを時間差ありで生成する場合のクールタイム
+	float m_timer = 0;									//複数のモデルとコリジョンを時間差ありで生成する場合のクールタイム
 	int m_timer1 = 0;
 	const float m_frame = 40.0f;
 	//スキンモデル、コリジョン、タイマー、削除したかどうか
@@ -142,57 +190,69 @@ private:
 		GameObj::Suicider::CEffekseer* s_effect;		//エフェクト
 		SuicideObj::CCollisionObj* s_collision;			//コリジョン
 		float s_timer = 0.0f;							//デリートタイム
-		CVector3 s_position = {CVector3::Zero()};		//座標
+		CVector3 s_position = { CVector3::Zero() };		//座標
 		bool s_delete = false;							//モデルとコリジョンを削除したかどうか
+		std::unordered_map<int, float> s_enemyidlist;   //ヒットしたエネミーのIDとフレーム数
+		float s_hittimer = 0.0f;                        //ヒットした時間
+		float s_hittime = 0.0f;						    //ヒットのクールタイム
 	};
+	const int PLAYERNUMBER = 1;							//エネミーからの魔法がエネミーにヒットした場合のunordered_mapのキー
 	std::vector<MagicModel> m_magicmocelList;			//MagicModel構造体の可変長配列
 	static const int m_number[];						//構造体の配列の添え字を記憶するのに使います
+	bool m_isenemy = false;								//trueならエネミーからプレイヤーに向けた魔法になります
+	const int m_randDamage = 95;
 	//各魔法の色々なやつ
 	//フォイエ
 	const float m_deletetime1 = 60.0f;
 	static const int m_modelnumber1 = 1;
 	const CVector3 m_scale1 = { 2.0f,2.0f,2.0f };
-	const float m_collisionscale1 = 90.0f;
+	float m_collisionscale1 = 90.0f;
 	const float m_multiplyspeed1 = 25.0f * 60.0f;
 	//イルグラ
 	const float m_deletetime2 = 60.0f;
 	static const int m_modelnumber2 = 3;
 	const CVector3 m_scale2 = { 1.0f,1.0f,1.0f };
-	const float m_collisionscale2 = 50.0f;
+	float m_collisionscale2 = 50.0f;
  	const float m_multiplyspeed2 = 35.0f*60.0f;
-	static const int m_time2 = 18;
+	static const int m_time2 = 13;
 	//ザンバース
 	const float m_deletetime3 = 60.0f;
 	static const int m_modelnumber3 = 1;
-	const CVector3 m_scale3 = { 5.0f,5.0f,5.0f };
-	const float m_collisionscale3 = 225.0f;
+	const CVector3 m_scale3 = { 3.5f,3.5f,3.5f };
+	float m_collisionscale3 = 225.0f;
 	const float m_multiplyspeed3 = 0.0f;
-	const int m_multihit = 2;
+	const int m_multihit = 1;
+	const float m_hittime3 = 25.0f;
 	//シフタ
 	const float m_deletetime4 = 30.0f;
 	const int m_modelnumber4 = 1;
 	const CVector3 m_scale4 = { 3.0f,3.0f,3.0f };
-	const float m_collisionscale4 = 0.0f;
+	float m_collisionscale4 = 0.0f;
 	const float m_multiplyspeed4 = 0.0f;
 	//マジスフィ
-	const float m_deletetime5 = 70.0f;
+	const float m_deletetime5 = 60.0f;
 	const float m_deletecollisiontime5 = 10;
 	const int m_modelnumber5 = 1;
 	const CVector3 m_scale5 = { 0.5f,0.5f,0.5f };
-	const float m_collisionscale5 = 28.0f;
+	float m_collisionscale5 = 40.0f;
 	const float m_multiplyspeed5 = 20.0f*60.0f;
-	const float m_multiply5 = 6.0f;
+	const float m_multiply5 = 3.0f;
 	//レスタ
 	const float m_deletetime6 = 60.0f;
 	const int m_modelnumber6 = 1;
 	const CVector3 m_scale6 = { 3.0f,3.0f,3.0f };
-	const float m_collisionscale6 = 0.0f;
+	float m_collisionscale6 = 0.0f;
 	const float m_multiplyspeed6 = 0.0f;
 	//覇王斬
-	const float m_deletetime7 = 50.0f;
+	const float m_deletetime7 = 40.0f;
 	static const int m_modelnumber7 = 1;
 	const CVector3 m_scale7 = { 2.0f,2.0f,2.0f };
-	const float m_collisionscale7 = 90.0f;
+	float m_collisionscale7 = 90.0f;
 	const float m_multiplyspeed7 = 0.0f;
+	const float m_multiply7 = 5.0f;
+	const int m_time7 = 60;
+	int m_magicnumber = 0;										//それぞれのShotMagicクラスのインスタンスを区別するための番号です
+	bool m_ischangedeletetime = false;
+	float m_changedeletetime = 0.0f;
 };
 

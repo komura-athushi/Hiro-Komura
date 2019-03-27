@@ -28,21 +28,6 @@ bool Cagliostro_view::Start()
 	m_color.Normalize();
 	m_lig->SetDirection(m_color);
 	m_lig->SetColor({ 1.0f, 1.0f, 1.0f });
-	m_shadowMap = new ShadowMapHandler;
-
-	//初期化
-
-	m_shadowMap->Init(12048,//解像度(幅
-
-		12048,//解像度(高さ
-
-		m_lig->GetDirection()//ライトの方向
-
-	);
-
-	m_shadowMap->SetArea({ 20000.0f,20000.0f,20000.0f });//シャドウマップの範囲(Zがライトの方向)
-
-	m_shadowMap->SetTarget({ 0.0f,0.0f,0.0f });//シャドウマップの範囲の中心位置*/
 	m_ground = new Ground;
 	m_ground->SetStage(-1);
 	m_player = new Player;
@@ -65,7 +50,7 @@ void Cagliostro_view::Update()
 		}
 	}
 	else {
-		if (Pad(0).GetButton(enButtonBack)) {
+		if (Pad(0).GetDown(enButtonBack)) {
 			m_isWaitFadeout = true;
 			m_fade->StartFadeOut();
 		}

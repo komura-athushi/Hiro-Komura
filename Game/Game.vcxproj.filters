@@ -1,51 +1,165 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ImageContentTask Include="Asset\sprite\Red.png" />
-    <ImageContentTask Include="Asset\sprite\Title.png" />
-    <ImageContentTask Include="Asset\sprite\MokoTitle.png" />
-    <ImageContentTask Include="Asset\sprite\Weapon\ancientwarriorblade.png" />
-    <ImageContentTask Include="Asset\sprite\Weapon\battlereadyblade.png" />
-    <ImageContentTask Include="Asset\sprite\Weapon\bluelightsword.png" />
-    <ImageContentTask Include="Asset\sprite\Weapon\firesword.png" />
-    <ImageContentTask Include="Asset\sprite\Weapon\greatsword.png" />
-    <ImageContentTask Include="Asset\sprite\Weapon\icesword.png" />
-    <ImageContentTask Include="Asset\sprite\Weapon\sword.png" />
-    <ImageContentTask Include="Asset\sprite\Weapon\windsword.png" />
-    <ImageContentTask Include="Asset\sprite\Weapon\excaliburmorgan.png" />
-    <ImageContentTask Include="Asset\sprite\Weapon\cursor.png" />
-    <ImageContentTask Include="Asset\sprite\loading.png" />
-    <ImageContentTask Include="Asset\sprite\clear.png" />
-    <ImageContentTask Include="Asset\sprite\gameover.png" />
-    <ImageContentTask Include="Asset\sprite\target.png" />
-    <ImageContentTask Include="Asset\sprite\locktarget.png" />
-    <ImageContentTask Include="Asset\sprite\target2.png" />
-    <ImageContentTask Include="Asset\sprite\status.png" />
-    <ImageContentTask Include="Asset\sprite\hud.png" />
-    <ImageContentTask Include="Asset\sprite\logo.png" />
-    <ImageContentTask Include="Asset\sprite\hpframe.png" />
-    <ImageContentTask Include="Asset\sprite\hpgage.png" />
-    <ImageContentTask Include="Asset\sprite\ppframe.png" />
-    <ImageContentTask Include="Asset\sprite\ppgage.png" />
-    <ImageContentTask Include="Asset\sprite\weaponstatus.png" />
-    <ImageContentTask Include="Asset\sprite\inventorystatus.png" />
-    <ImageContentTask Include="Asset\sprite\gameclear.png" />
-    <ImageContentTask Include="Asset\sprite\credit.png" />
-    <ImageContentTask Include="Asset\sprite\pressstart.png" />
+    <ImageContentTask Include="Asset\sprite\clear.png">
+      <Filter>Assets\sprite</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Asset\sprite\Weapon\cursor.png">
+      <Filter>Assets\sprite</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Asset\sprite\Weapon\bluelightsword.png">
+      <Filter>Assets\sprite</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Asset\sprite\Weapon\battlereadyblade.png">
+      <Filter>Assets\sprite</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Asset\sprite\Weapon\ancientwarriorblade.png">
+      <Filter>Assets\sprite</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Asset\sprite\Weapon\excaliburmorgan.png">
+      <Filter>Assets\sprite</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Asset\sprite\Weapon\firesword.png">
+      <Filter>Assets\sprite</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Asset\sprite\gameover.png">
+      <Filter>Assets\sprite</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Asset\sprite\Weapon\greatsword.png">
+      <Filter>Assets\sprite</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Asset\sprite\hpframe.png">
+      <Filter>Assets\sprite</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Asset\sprite\hpgage.png">
+      <Filter>Assets\sprite</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Asset\sprite\hud.png">
+      <Filter>Assets\sprite</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Asset\sprite\Weapon\icesword.png">
+      <Filter>Assets\sprite</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Asset\sprite\inventorystatus.png">
+      <Filter>Assets\sprite</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Asset\sprite\loading.png">
+      <Filter>Assets\sprite</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Asset\sprite\locktarget.png">
+      <Filter>Assets\sprite</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Asset\sprite\logo.png">
+      <Filter>Assets\sprite</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Asset\sprite\MokoTitle.png">
+      <Filter>Assets\sprite</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Asset\sprite\ppframe.png">
+      <Filter>Assets\sprite</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Asset\sprite\ppgage.png">
+      <Filter>Assets\sprite</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Asset\sprite\Red.png">
+      <Filter>Assets\sprite</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Asset\sprite\status.png">
+      <Filter>Assets\sprite</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Asset\sprite\Weapon\sword.png">
+      <Filter>Assets\sprite</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Asset\sprite\target.png">
+      <Filter>Assets\sprite</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Asset\sprite\target2.png">
+      <Filter>Assets\sprite</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Asset\sprite\Title.png">
+      <Filter>Assets\sprite</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Asset\sprite\weaponstatus.png">
+      <Filter>Assets\sprite</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Asset\sprite\Weapon\windsword.png">
+      <Filter>Assets\sprite</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Asset\sprite\gameclear.png">
+      <Filter>Assets\sprite</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Asset\sprite\credit.png">
+      <Filter>Assets\sprite</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Asset\sprite\pressstart.png">
+      <Filter>Assets\sprite</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Asset\sprite\window.png">
+      <Filter>Assets\sprite</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Asset\sprite\upgradewindow.png">
+      <Filter>Assets\sprite</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Asset\sprite\upgrade_back.png">
+      <Filter>Assets\sprite</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Asset\sprite\equipment.png">
+      <Filter>Assets\sprite</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Asset\sprite\base.png">
+      <Filter>Assets\sprite</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Asset\sprite\upgrade_mesetawindow.png">
+      <Filter>Assets\sprite</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Asset\sprite\number\number00.png">
+      <Filter>Assets\sprite\number</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Asset\sprite\number\number01.png">
+      <Filter>Assets\sprite\number</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Asset\sprite\number\number02.png">
+      <Filter>Assets\sprite\number</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Asset\sprite\number\number03.png">
+      <Filter>Assets\sprite\number</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Asset\sprite\number\number04.png">
+      <Filter>Assets\sprite\number</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Asset\sprite\number\number05.png">
+      <Filter>Assets\sprite\number</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Asset\sprite\number\number06.png">
+      <Filter>Assets\sprite\number</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Asset\sprite\number\number07.png">
+      <Filter>Assets\sprite\number</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Asset\sprite\number\number08.png">
+      <Filter>Assets\sprite\number</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Asset\sprite\number\number09.png">
+      <Filter>Assets\sprite\number</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Asset\sprite\weaponupgrade.png">
+      <Filter>Assets\sprite</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Asset\sprite\weaponrelease.png">
+      <Filter>Assets\sprite</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Asset\sprite\cursor2.png">
+      <Filter>Assets\sprite</Filter>
+    </ImageContentTask>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Boss.cpp" />
     <ClCompile Include="Boss2.cpp" />
-    <ClCompile Include="Boss2_Fire.cpp" />
-    <ClCompile Include="Boss3.cpp" />
-    <ClCompile Include="BossAttack.cpp" />
     <ClCompile Include="Cagliostro_view.cpp" />
     <ClCompile Include="DropItem.cpp" />
     <ClCompile Include="DropMaterial.cpp" />
     <ClCompile Include="Fade.cpp" />
-    <ClCompile Include="GameClear.cpp" />
     <ClCompile Include="GameData.cpp" />
-    <ClCompile Include="House.cpp" />
     <ClCompile Include="Human.cpp" />
     <ClCompile Include="IEnemy.cpp" />
     <ClCompile Include="Equipment.cpp" />
@@ -54,14 +168,12 @@
     <ClCompile Include="Material.cpp" />
     <ClCompile Include="Merchant.cpp" />
     <ClCompile Include="Morugan.cpp" />
-    <ClCompile Include="Oni.cpp" />
     <ClCompile Include="PlayerStatus.cpp" />
     <ClCompile Include="ShotMagic.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Stage1_Teleport.cpp" />
     <ClCompile Include="Stage2_Teleport.cpp" />
     <ClCompile Include="Stage3_Teleport.cpp" />
-    <ClCompile Include="Stone.cpp" />
     <ClCompile Include="Sword.cpp" />
     <ClCompile Include="Teleport.cpp" />
     <ClCompile Include="Town.cpp" />
@@ -72,65 +184,178 @@
     <ClCompile Include="Title.cpp" />
     <ClCompile Include="Ground.cpp" />
     <ClCompile Include="Weapon.cpp" />
+    <ClCompile Include="GameClear.cpp" />
+    <ClCompile Include="Skeleton2.cpp" />
+    <ClCompile Include="Ability.cpp" />
+    <ClCompile Include="Kurage.cpp" />
+    <ClCompile Include="Enemy_Fire.cpp" />
+    <ClCompile Include="Kurage2.cpp" />
+    <ClCompile Include="Kurage3.cpp" />
+    <ClCompile Include="Enemy_Wind.cpp" />
+    <ClCompile Include="FontNumber.cpp" />
+    <ClCompile Include="Enemy_Ice.cpp" />
+    <ClCompile Include="Wall.cpp" />
+    <ClCompile Include="Kurage4.cpp" />
+    <ClCompile Include="Kurage5.cpp" />
+    <ClCompile Include="Skeleton1.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <MeshContentTask Include="Asset\modelData\boss2\DarkDragon.FBX" />
-    <MeshContentTask Include="Asset\modelData\boss\boss.FBX" />
-    <MeshContentTask Include="Asset\modelData\boss\bullet2.FBX" />
-    <MeshContentTask Include="Asset\modelData\boss\bullet3.FBX" />
-    <MeshContentTask Include="Asset\modelData\cagliostro\cagliostro.fbx" />
-    <MeshContentTask Include="Asset\modelData\enemy\enemy.FBX" />
-    <MeshContentTask Include="Asset\modelData\ground.FBX" />
-    <MeshContentTask Include="Asset\modelData\ground2.FBX" />
-    <MeshContentTask Include="Asset\modelData\ground3.FBX" />
-    <MeshContentTask Include="Asset\modelData\human\human.FBX" />
-    <MeshContentTask Include="Asset\modelData\Magic_Sample.FBX" />
-    <MeshContentTask Include="Asset\modelData\material\brick.FBX" />
-    <MeshContentTask Include="Asset\modelData\material\ishi.FBX" />
-    <MeshContentTask Include="Asset\modelData\material\wood.FBX" />
-    <MeshContentTask Include="Asset\modelData\meseta\meseta.FBX" />
-    <MeshContentTask Include="Asset\modelData\sky.FBX" />
-    <MeshContentTask Include="Asset\modelData\skydome.FBX" />
-    <MeshContentTask Include="Asset\modelData\stage1_ground.FBX" />
-    <MeshContentTask Include="Asset\modelData\stage1_teleport.FBX" />
-    <MeshContentTask Include="Asset\modelData\stage2_teleport\stage2_teleport.FBX" />
-    <MeshContentTask Include="Asset\modelData\stage3_teleport\stage3_teleport.FBX" />
-    <MeshContentTask Include="Asset\modelData\stone.FBX" />
-    <MeshContentTask Include="Asset\modelData\Sword\AncientWarriorBlade.FBX" />
-    <MeshContentTask Include="Asset\modelData\Sword\BattleReadyBlade.FBX" />
-    <MeshContentTask Include="Asset\modelData\Sword\BlueLightSword.FBX" />
-    <MeshContentTask Include="Asset\modelData\Sword\excaliburmorgan.FBX" />
-    <MeshContentTask Include="Asset\modelData\Sword\FireSword.FBX" />
-    <MeshContentTask Include="Asset\modelData\Sword\GreatSword.fbx" />
-    <MeshContentTask Include="Asset\modelData\Sword\IceSword.FBX" />
-    <MeshContentTask Include="Asset\modelData\Sword\Sword.FBX" />
-    <MeshContentTask Include="Asset\modelData\Sword\WindSword.FBX" />
-    <MeshContentTask Include="Asset\modelData\sword_drop\AncientWarriorBlade_drop.FBX" />
-    <MeshContentTask Include="Asset\modelData\sword_drop\BattleReadyBlade_drop.FBX" />
-    <MeshContentTask Include="Asset\modelData\sword_drop\BlueLightSword_drop.FBX" />
-    <MeshContentTask Include="Asset\modelData\sword_drop\excaliburmorgan_drop.FBX" />
-    <MeshContentTask Include="Asset\modelData\sword_drop\FireSword_drop.FBX" />
-    <MeshContentTask Include="Asset\modelData\sword_drop\GreatSword_drop.fbx" />
-    <MeshContentTask Include="Asset\modelData\sword_drop\IceSword_drop.FBX" />
-    <MeshContentTask Include="Asset\modelData\sword_drop\Sword_drop.FBX" />
-    <MeshContentTask Include="Asset\modelData\sword_drop\WindSword_drop.FBX" />
-    <MeshContentTask Include="Asset\modelData\unityChan.fbx" />
-    <MeshContentTask Include="Asset\modelData\zunko\zunko.FBX" />
-    <MeshContentTask Include="Asset\modelData\boss3\boss3.FBX" />
+    <MeshContentTask Include="Asset\modelData\Sword\AncientWarriorBlade.FBX">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Asset\modelData\Sword\BattleReadyBlade.FBX">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Asset\modelData\Sword\BlueLightSword.FBX">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Asset\modelData\boss\boss.FBX">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Asset\modelData\material\brick.FBX">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Asset\modelData\boss\bullet2.FBX">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Asset\modelData\boss\bullet3.FBX">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Asset\modelData\cagliostro\cagliostro.fbx">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Asset\modelData\boss2\DarkDragon.FBX">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Asset\modelData\enemy\enemy.FBX">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Asset\modelData\Sword\excaliburmorgan.FBX">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Asset\modelData\Sword\FireSword.FBX">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Asset\modelData\Sword\GreatSword.fbx">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Asset\modelData\ground.FBX">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Asset\modelData\ground2.FBX">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Asset\modelData\ground3.FBX">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Asset\modelData\human\human.FBX">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Asset\modelData\Sword\IceSword.FBX">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Asset\modelData\material\ishi.FBX">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Asset\modelData\meseta\meseta.FBX">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Asset\modelData\sky.FBX">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Asset\modelData\skydome.FBX">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Asset\modelData\stage1_ground.FBX">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Asset\modelData\stage1_teleport.FBX">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Asset\modelData\stage2_teleport\stage2_teleport.FBX">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Asset\modelData\stage3_teleport\stage3_teleport.FBX">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Asset\modelData\stone.FBX">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Asset\modelData\Sword\Sword.FBX">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Asset\modelData\unityChan.fbx">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Asset\modelData\Sword\WindSword.FBX">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Asset\modelData\material\wood.FBX">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Asset\modelData\zunko\zunko.FBX">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Asset\modelData\sword_drop\excaliburmorgan_drop.FBX">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Asset\modelData\sword_drop\FireSword_drop.FBX">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Asset\modelData\sword_drop\GreatSword_drop.fbx">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Asset\modelData\sword_drop\IceSword_drop.FBX">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Asset\modelData\sword_drop\Sword_drop.FBX">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Asset\modelData\sword_drop\WindSword_drop.FBX">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Asset\modelData\sword_drop\AncientWarriorBlade_drop.FBX">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Asset\modelData\sword_drop\BattleReadyBlade_drop.FBX">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Asset\modelData\sword_drop\BlueLightSword_drop.FBX">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Asset\modelData\enemy2\enemy2.FBX">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Asset\modelData\kurage\kurage.FBX">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Asset\modelData\kurage\kurage2.FBX">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Asset\modelData\kurage\kurage3.FBX">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Asset\modelData\wall\wall.FBX">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Asset\modelData\stage2_ground.FBX">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Asset\modelData\kurage\kurage4.FBX">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Asset\modelData\kurage\kurage5.FBX">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Boss.h" />
     <ClInclude Include="Boss2.h" />
-    <ClInclude Include="Boss2_Fire.h" />
-    <ClInclude Include="Boss3.h" />
-    <ClInclude Include="BossAttack.h" />
     <ClInclude Include="Cagliostro_view.h" />
     <ClInclude Include="DropItem.h" />
     <ClInclude Include="DropMaterial.h" />
     <ClInclude Include="Fade.h" />
-    <ClInclude Include="GameClear.h" />
     <ClInclude Include="GameData.h" />
-    <ClInclude Include="House.h" />
     <ClInclude Include="Human.h" />
     <ClInclude Include="IEnemy.h" />
     <ClInclude Include="Equipment.h" />
@@ -139,14 +364,12 @@
     <ClInclude Include="Material.h" />
     <ClInclude Include="Merchant.h" />
     <ClInclude Include="Morugan.h" />
-    <ClInclude Include="Oni.h" />
     <ClInclude Include="PlayerStatus.h" />
     <ClInclude Include="ShotMagic.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Stage1_Teleport.h" />
     <ClInclude Include="Stage2_Teleport.h" />
     <ClInclude Include="Stage3_Teleport.h" />
-    <ClInclude Include="Stone.h" />
     <ClInclude Include="Sword.h" />
     <ClInclude Include="Teleport.h" />
     <ClInclude Include="Town.h" />
@@ -156,5 +379,33 @@
     <ClInclude Include="Title.h" />
     <ClInclude Include="Ground.h" />
     <ClInclude Include="Weapon.h" />
+    <ClInclude Include="GameClear.h" />
+    <ClInclude Include="Skeleton2.h" />
+    <ClInclude Include="Ability.h" />
+    <ClInclude Include="Kurage.h" />
+    <ClInclude Include="Enemy_Fire.h" />
+    <ClInclude Include="Kurage2.h" />
+    <ClInclude Include="Kurage3.h" />
+    <ClInclude Include="Enemy_Wind.h" />
+    <ClInclude Include="FontNumber.h" />
+    <ClInclude Include="Enemy_Ice.h" />
+    <ClInclude Include="Wall.h" />
+    <ClInclude Include="Kurage4.h" />
+    <ClInclude Include="Kurage5.h" />
+    <ClInclude Include="Skeleton1.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Assets">
+      <UniqueIdentifier>{27297f34-9270-498d-b68e-1326f13083d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\modelData">
+      <UniqueIdentifier>{77a31ba2-a030-4653-9b7b-7c0302994deb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\sprite">
+      <UniqueIdentifier>{5f3793c4-dea4-4ffe-8b70-6a47bb0400a8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\sprite\number">
+      <UniqueIdentifier>{92542737-b049-4a29-b25a-158d8e212878}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

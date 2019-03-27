@@ -14,7 +14,7 @@ MainSound::~MainSound()
 bool MainSound::Start()
 {
 	//マスターボリュームを設定
-	//SetMasterVolume(0.0f);
+	SetMasterVolume(0.0f);
 	m_bgm = NewGO<SuicideObj::CBGM>(L"Asset/sound/bgm/title.wav");
 	m_bgm->Play(false, true); //ループで再生(第二引数)
 	return true;
@@ -26,24 +26,28 @@ void MainSound::Update()
 		DeleteGO(m_bgm);
 		m_bgm = nullptr;
 		switch (m_state2) {
-		case 0:
+	    case enBGM_Title:
 			m_bgm = NewGO<SuicideObj::CBGM>(L"Asset/sound/bgm/title.wav");
 			m_bgm->Play(false, true); //ループで再生(第二引数)
 			break;
-		case 1:
+		case enBGM_Town:
 			m_bgm = NewGO<SuicideObj::CBGM>(L"Asset/sound/bgm/town.wav");
 			m_bgm->Play(false, true); //ループで再生(第二引数)
 			break;
-		case 2:
+		case enBGM_Stage1:
 			m_bgm = NewGO<SuicideObj::CBGM>(L"Asset/sound/bgm/stage1.wav");
 			m_bgm->Play(false, true); //ループで再生(第二引数)
 			break;
-		case 3:
+		case enBGM_Stage2:
 			m_bgm = NewGO<SuicideObj::CBGM>(L"Asset/sound/bgm/stage2.wav");
 			m_bgm->Play(false, true); //ループで再生(第二引数)
 			break;
-		case 4:
+		case enBGM_Stage3:
 			m_bgm = NewGO<SuicideObj::CBGM>(L"Asset/sound/bgm/stage3.wav");
+			m_bgm->Play(false, true); //ループで再生(第二引数)
+			break;
+		case enBGM_End:
+			m_bgm = NewGO<SuicideObj::CBGM>(L"Asset/sound/bgm/end_.wav");
 			m_bgm->Play(false, true); //ループで再生(第二引数)
 			break;
 		}

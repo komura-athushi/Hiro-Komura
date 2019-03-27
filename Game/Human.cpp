@@ -29,9 +29,11 @@ bool Human::Start()
 	m_gamedata = FindGO<GameData>(L"GameData");
 	m_playerstatus = FindGO<PlayerStatus>(L"PlayerStatus");
 	m_townlevel = m_gamedata->GetTownLevel();
-	//ğŒ‚ğ–‚½‚µè“ü‚ê‚ÎAŠX‚ğ”­“W‚Å‚«‚é‚æ‚¤‚É‚·‚é
-	if (m_gamedata->GetStageClear(m_townlevel)) {
-		if (m_necessarymaterial <= m_playerstatus->GetMaterial(m_townlevel)) {
+	m_sprite.Init(L"Resource/sprite/window.dds");
+	//ŠX‚Ì”­“WƒŒƒxƒ‹‚ª2‚Å‚ ‚ê‚Î‚±‚êˆÈã‚Í”­“W‚µ‚È‚¢‚æ‚¤‚É‚·‚é
+	if (m_gamedata->GetTownLevel() != 2) {
+		//ğŒ‚ğ–‚½‚µè“ü‚ê‚ÎAŠX‚ğ”­“W‚Å‚«‚é‚æ‚¤‚É‚·‚é
+		if (m_gamedata->GetStageClear(m_townlevel)) {
 			m_developtown = true;
 		}
 	}
@@ -52,9 +54,6 @@ void Human::Update()
 		Turn();
 	}
 	if (m_leveluptown) {
-		//ƒvƒŒƒCƒ„[‚Ìw’è‚Ì‘fŞ‚ğˆê’è”Œ¸‚ç‚·
-		PlayerStatus* playerstatus = FindGO<PlayerStatus>(L"PlayerStatus");
-		playerstatus->CutMateial(m_townlevel, m_necessarymaterial);
 		//ŠX‚Ì”­“Wƒtƒ‰ƒO‚ğon‚É‚·‚é
 		Town* tonw = FindGO<Town>();
 		tonw->DevelopTown();
@@ -91,6 +90,14 @@ void Human::AnimationController()
 	}
 }
 
+void Human::SetLevelUpTown()
+{
+	if (m_gamedata->GetTownLevel() == 2) {
+		return;
+	}
+	m_leveluptown = true;
+}
+
 void Human::PostRender()
 {
 	if (!m_istalk) {
@@ -99,17 +106,23 @@ void Human::PostRender()
 	if (!m_ontalk) {
 		return;
 	}
-	wchar_t output[256];
-	if (m_developtown) {
-		swprintf_s(output, L"ŠX‚ğ”­“W‚³‚¹‚é‚±‚Æ‚ª‚Å‚«‚Ü‚·B\nŠX‚ğ”­“W‚³‚¹‚Ü‚·‚©H\n");
+	wchar_t output[100];
+	if (m_gamedata->GetTownLevel() == 2) {
+		swprintf_s(output, L"‚±‚êˆÈãŠX‚ğ”­“W‚³‚¹‚é‚±‚Æ‚Ío—ˆ‚Ü‚¹‚ñ\n");
 	}
 	else {
-		if (m_gamedata->GetStageClear(m_townlevel)) {
-			swprintf_s(output, L"ŠX‚ğ”­“W‚³‚¹‚é‚É‚Í%s‚ª%dŒÂ•K—v‚Å‚·\n",m_gamedata->GetMaterial(m_townlevel)->GetMaterialName(), m_necessarymaterial-m_playerstatus->GetMaterial(m_townlevel));
+		if (m_developtown) {
+			swprintf_s(output, L"ŠX‚ğ”­“W‚³‚¹‚é‚±‚Æ‚ª‚Å‚«‚Ü‚·B\nŠX‚ğ”­“W‚³‚¹‚Ü‚·‚©H\n");
 		}
 		else {
 			swprintf_s(output, L"ŠX‚ğ”­“W‚³‚¹‚é‚É‚ÍƒXƒe[ƒW%d‚ğƒNƒŠƒA‚·‚é•K—v‚ª‚ ‚è‚Ü‚·\n", m_townlevel + 1);
+			
 		}
 	}
-	m_font.DrawScreenPos(output, { 00.0f,00.0f }, CVector4::White());
+	m_font.DrawScreenPos(output, { 300.0f,450.0f }, CVector4::White(), {0.6f,0.6f});
+	m_sprite.DrawScreenPos({ 290.0f,440.0f }, CVector3::One(), CVector2::Zero(),
+		0.0f,
+		{ 1.0f, 1.0f, 1.0f, 0.7f },
+		DirectX::SpriteEffects_None,
+		0.8f);
 }

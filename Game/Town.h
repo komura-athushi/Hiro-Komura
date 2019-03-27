@@ -4,8 +4,6 @@ class GameCamera;
 class Player;
 class Human;
 class Merchant;
-class Stone;
-class House;
 class Stage1_Teleport;
 class Stage2_Teleport;
 class Stage3_Teleport;
@@ -42,20 +40,17 @@ private:
 	Level m_level;                                     //レベルデザインのためのクラス
 	PlayerStatus* m_playerstatus;                      //プレイヤーステータスクラスのポインタ
 	GameData* m_gamedata;
-	ShadowMapHandler* m_shadowMap;					   //シャドウマップ
-	//各オブジェクトの可変長配列
-	std::vector<Stone*> m_stoneList;                   //Stoneクラスのポインタを格納するための可変長配列
-	std::vector<House*> m_houseList;				   //Houseクラスのポインタの可変長配列
+	CascadeShadowHandler* m_CascadeShadowmap;
 	Fade* m_fade;
 	//trueなら画面切り替えする
 	bool m_isWaitFadeout = false;
 	//画面の切り替え先を分岐させる
 	enum State {
-		enTown,
-		enCga,
-		enSt1,
+		enSt1 = 1,
 		enSt2,
 		enSt3,
+		enTown,
+		enCga,
 	};
 	State m_state;
 };

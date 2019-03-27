@@ -3,8 +3,6 @@
 #include "Ground.h"
 #include "GameCamera.h"
 #include "Player.h"
-#include "Stone.h"
-#include "House.h"
 #include "Stage1_Teleport.h"
 #include "Stage2_Teleport.h"
 #include "Stage3_Teleport.h"
@@ -24,26 +22,20 @@ Town::Town()
 
 Town::~Town()
 {
-	//各クラスを削除
+	//各インスタンスを削除
 	delete m_player;
 	delete m_human;
 	delete m_merchant;
 	delete m_ground;
 	delete m_gamecamera;
 	delete m_lig;
-	delete m_shadowMap;
+	delete m_CascadeShadowmap;
 	delete m_stage1_teleport;
 	if (m_stage2_teleport != nullptr) {
 		delete m_stage2_teleport;
 	}
 	if (m_stage3_teleport != nullptr) {
 		delete m_stage3_teleport;
-	}
-	for (auto& stone : m_stoneList) {
-		delete stone;
-	}
-	for (auto& house : m_houseList) {
-		delete house;
 	}
 }
 
@@ -56,21 +48,21 @@ bool Town::Start()
 	m_color.Normalize();
 	m_lig->SetDirection(m_color);
 	m_lig->SetColor({ 1.0f, 1.0f, 1.0f });
-	m_shadowMap=new ShadowMapHandler;
+	m_CascadeShadowmap = new CascadeShadowHandler;
 
 	//初期化
 
-	m_shadowMap->Init(8048,//解像度(幅
+	m_CascadeShadowmap->Init(5,//分割数
 
-		8048,//解像度(高さ
+		m_lig->GetDirection(),//ライトの方向
 
-		m_lig->GetDirection()//ライトの方向
+		0.1f//シャドウマップの範囲(メインカメラのFarにかかる係数です)
 
 	);
 
-	m_shadowMap->SetArea({ 20000.0f,20000.0f,20000.0f });//シャドウマップの範囲(Zがライトの方向)
+	m_CascadeShadowmap->SetNear(30.0f);
 
-	m_shadowMap->SetTarget({0.0f,0.0f,0.0f});//シャドウマップの範囲の中心位置*/
+	m_CascadeShadowmap->SetFar(50000.0f);
 	BuildLevel();
 	m_gamecamera = new GameCamera;
 	m_gamecamera->SetPlayer(m_player);
@@ -78,7 +70,7 @@ bool Town::Start()
 	m_fade = FindGO<Fade>();
 	m_fade->StartFadeIn();
 	MainSound* ms = FindGO<MainSound>();
-	ms->SetBGM(1);
+	ms->SetBGM(MainSound::enBGM_Town);
 	return true;
 }
 
@@ -89,17 +81,17 @@ void Town::Update()
 			//m_stateによって次のモードを分岐させる
 			if (m_state == enSt1) {
 				Game* game = new Game;
-				game->SetStageNumber(1);
+				game->SetStageNumber(enSt1);
 				delete this;
 			}
 			else if (m_state == enSt2) {
 				Game* game = new Game;
-				game->SetStageNumber(2);
+				game->SetStageNumber(enSt2);
 				delete this;
  			}
 			else if (m_state == enSt3) {
 				Game* game = new Game;
-				game->SetStageNumber(3);
+				game->SetStageNumber(enSt3);
 				delete this;
 			}
 			else if (m_state == enCga) {
@@ -141,12 +133,12 @@ void Town::Update()
 			m_isWaitFadeout = true;
 			m_fade->StartFadeOut();
 		}
-		/*//拠点に居る時にSTARTボタンを押すとカリオストロちゃん☆モードに遷移する
-		else if (Pad(0).GetDown(enButtonStart)) {
+		//拠点に居る時にSTARTボタンを押すとカリオストロちゃん☆モードに遷移する
+		else if (Pad(0).GetDown(enButtonBack)) {
 			m_state = enCga;
 			m_isWaitFadeout = true;
 			m_fade->StartFadeOut();
-		}*/
+		}
 		//街を再構築
 		else if (m_developtown) {
 			m_state = enTown;
@@ -189,25 +181,6 @@ void Town::BuildLevel()
 			m_ground = new Ground;
 			m_ground->SetStage(0);
 			m_ground->SetPosition(objData.position);
-			return true;
-		}
-		else if (objData.EqualObjectName(L"stone") == true) {
-			//Starオブジェクト。
-			Stone* stone = new Stone;
-			stone->SetPosition(objData.position);
-			//後で削除するのでリストに積んで記憶しておく。
-			m_stoneList.push_back(stone);
-			//フックしたのでtrueを返す。
-			return true;
-		}
-		else if (objData.EqualObjectName(L"house") == true) {
-			//Starオブジェクト。
-			House* house = new House;
-			house->SetPosition(objData.position);
-			house->SetRotation(objData.rotation);
-			//後で削除するのでリストに積んで記憶しておく。
-			m_houseList.push_back(house);
-			//フックしたのでtrueを返す。
 			return true;
 		}
 		else if (objData.EqualObjectName(L"stage1_teleport") == true) {

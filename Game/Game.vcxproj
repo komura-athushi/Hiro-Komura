@@ -230,34 +230,40 @@
     </ImageContentTask>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Ability.cpp" />
     <ClCompile Include="Boss.cpp" />
     <ClCompile Include="Boss2.cpp" />
-    <ClCompile Include="Boss2_Fire.cpp" />
-    <ClCompile Include="Boss3.cpp" />
-    <ClCompile Include="BossAttack.cpp" />
+    <ClCompile Include="Enemy_Fire.cpp" />
     <ClCompile Include="Cagliostro_view.cpp" />
     <ClCompile Include="DropItem.cpp" />
     <ClCompile Include="DropMaterial.cpp" />
+    <ClCompile Include="Enemy_Ice.cpp" />
+    <ClCompile Include="Enemy_Wind.cpp" />
     <ClCompile Include="Fade.cpp" />
+    <ClCompile Include="FontNumber.cpp" />
     <ClCompile Include="GameClear.cpp" />
     <ClCompile Include="GameData.cpp" />
-    <ClCompile Include="House.cpp" />
     <ClCompile Include="Human.cpp" />
     <ClCompile Include="IEnemy.cpp" />
     <ClCompile Include="Equipment.cpp" />
+    <ClCompile Include="Kurage.cpp" />
+    <ClCompile Include="Kurage2.cpp" />
+    <ClCompile Include="Kurage3.cpp" />
+    <ClCompile Include="Kurage4.cpp" />
+    <ClCompile Include="Kurage5.cpp" />
     <ClCompile Include="Magic.cpp" />
     <ClCompile Include="MainSound.cpp" />
     <ClCompile Include="Material.cpp" />
     <ClCompile Include="Merchant.cpp" />
     <ClCompile Include="Morugan.cpp" />
-    <ClCompile Include="Oni.cpp" />
+    <ClCompile Include="Skeleton1.cpp" />
     <ClCompile Include="PlayerStatus.cpp" />
     <ClCompile Include="ShotMagic.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="Skeleton2.cpp" />
     <ClCompile Include="Stage1_Teleport.cpp" />
     <ClCompile Include="Stage2_Teleport.cpp" />
     <ClCompile Include="Stage3_Teleport.cpp" />
-    <ClCompile Include="Stone.cpp" />
     <ClCompile Include="Sword.cpp" />
     <ClCompile Include="Teleport.cpp" />
     <ClCompile Include="Town.cpp" />
@@ -271,37 +277,44 @@
     </ClCompile>
     <ClCompile Include="Title.cpp" />
     <ClCompile Include="Ground.cpp" />
+    <ClCompile Include="Wall.cpp" />
     <ClCompile Include="Weapon.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Ability.h" />
     <ClInclude Include="Boss.h" />
     <ClInclude Include="Boss2.h" />
-    <ClInclude Include="Boss2_Fire.h" />
-    <ClInclude Include="Boss3.h" />
-    <ClInclude Include="BossAttack.h" />
+    <ClInclude Include="Enemy_Fire.h" />
     <ClInclude Include="Cagliostro_view.h" />
     <ClInclude Include="DropItem.h" />
     <ClInclude Include="DropMaterial.h" />
+    <ClInclude Include="Enemy_Ice.h" />
+    <ClInclude Include="Enemy_Wind.h" />
     <ClInclude Include="Fade.h" />
+    <ClInclude Include="FontNumber.h" />
     <ClInclude Include="GameClear.h" />
     <ClInclude Include="GameData.h" />
-    <ClInclude Include="House.h" />
     <ClInclude Include="Human.h" />
     <ClInclude Include="IEnemy.h" />
     <ClInclude Include="Equipment.h" />
+    <ClInclude Include="Kurage.h" />
+    <ClInclude Include="Kurage2.h" />
+    <ClInclude Include="Kurage3.h" />
+    <ClInclude Include="Kurage4.h" />
+    <ClInclude Include="Kurage5.h" />
     <ClInclude Include="Magic.h" />
     <ClInclude Include="MainSound.h" />
     <ClInclude Include="Material.h" />
     <ClInclude Include="Merchant.h" />
     <ClInclude Include="Morugan.h" />
-    <ClInclude Include="Oni.h" />
+    <ClInclude Include="Skeleton1.h" />
     <ClInclude Include="PlayerStatus.h" />
     <ClInclude Include="ShotMagic.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="Skeleton2.h" />
     <ClInclude Include="Stage1_Teleport.h" />
     <ClInclude Include="Stage2_Teleport.h" />
     <ClInclude Include="Stage3_Teleport.h" />
-    <ClInclude Include="Stone.h" />
     <ClInclude Include="Sword.h" />
     <ClInclude Include="Teleport.h" />
     <ClInclude Include="Town.h" />
@@ -310,21 +323,26 @@
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Title.h" />
     <ClInclude Include="Ground.h" />
+    <ClInclude Include="Wall.h" />
     <ClInclude Include="Weapon.h" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Asset\modelData\boss2\DarkDragon.FBX" />
-    <MeshContentTask Include="Asset\modelData\boss3\boss3.FBX" />
     <MeshContentTask Include="Asset\modelData\boss\boss.FBX" />
     <MeshContentTask Include="Asset\modelData\boss\bullet2.FBX" />
     <MeshContentTask Include="Asset\modelData\boss\bullet3.FBX" />
     <MeshContentTask Include="Asset\modelData\cagliostro\cagliostro.fbx" />
+    <MeshContentTask Include="Asset\modelData\enemy2\enemy2.FBX" />
     <MeshContentTask Include="Asset\modelData\enemy\enemy.FBX" />
     <MeshContentTask Include="Asset\modelData\ground.FBX" />
     <MeshContentTask Include="Asset\modelData\ground2.FBX" />
     <MeshContentTask Include="Asset\modelData\ground3.FBX" />
     <MeshContentTask Include="Asset\modelData\human\human.FBX" />
-    <MeshContentTask Include="Asset\modelData\Magic_Sample.FBX" />
+    <MeshContentTask Include="Asset\modelData\kurage\kurage.FBX" />
+    <MeshContentTask Include="Asset\modelData\kurage\kurage2.FBX" />
+    <MeshContentTask Include="Asset\modelData\kurage\kurage3.FBX" />
+    <MeshContentTask Include="Asset\modelData\kurage\kurage4.FBX" />
+    <MeshContentTask Include="Asset\modelData\kurage\kurage5.FBX" />
     <MeshContentTask Include="Asset\modelData\material\brick.FBX" />
     <MeshContentTask Include="Asset\modelData\material\ishi.FBX" />
     <MeshContentTask Include="Asset\modelData\material\wood.FBX" />
@@ -333,6 +351,7 @@
     <MeshContentTask Include="Asset\modelData\skydome.FBX" />
     <MeshContentTask Include="Asset\modelData\stage1_ground.FBX" />
     <MeshContentTask Include="Asset\modelData\stage1_teleport.FBX" />
+    <MeshContentTask Include="Asset\modelData\stage2_ground.FBX" />
     <MeshContentTask Include="Asset\modelData\stage2_teleport\stage2_teleport.FBX" />
     <MeshContentTask Include="Asset\modelData\stage3_teleport\stage3_teleport.FBX" />
     <MeshContentTask Include="Asset\modelData\stone.FBX" />
@@ -355,6 +374,7 @@
     <MeshContentTask Include="Asset\modelData\sword_drop\Sword_drop.FBX" />
     <MeshContentTask Include="Asset\modelData\sword_drop\WindSword_drop.FBX" />
     <MeshContentTask Include="Asset\modelData\unityChan.fbx" />
+    <MeshContentTask Include="Asset\modelData\wall\wall.FBX" />
     <MeshContentTask Include="Asset\modelData\zunko\zunko.FBX" />
   </ItemGroup>
   <ItemGroup>
@@ -431,6 +451,41 @@
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Asset\sprite\pressstart.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Asset\sprite\window.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Asset\sprite\upgradewindow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Asset\sprite\upgrade_back.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Asset\sprite\base.png" />
+    <ImageContentTask Include="Asset\sprite\equipment.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Asset\sprite\upgrade_mesetawindow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Asset\sprite\number\number00.png" />
+    <ImageContentTask Include="Asset\sprite\number\number01.png" />
+    <ImageContentTask Include="Asset\sprite\number\number02.png" />
+    <ImageContentTask Include="Asset\sprite\number\number03.png" />
+    <ImageContentTask Include="Asset\sprite\number\number04.png" />
+    <ImageContentTask Include="Asset\sprite\number\number05.png" />
+    <ImageContentTask Include="Asset\sprite\number\number06.png" />
+    <ImageContentTask Include="Asset\sprite\number\number07.png" />
+    <ImageContentTask Include="Asset\sprite\number\number08.png" />
+    <ImageContentTask Include="Asset\sprite\number\number09.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Asset\sprite\weaponrelease.png" />
+    <ImageContentTask Include="Asset\sprite\weaponupgrade.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Asset\sprite\cursor2.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -91,7 +91,6 @@ void GameCamera::cagliostro()
 	toPos *= m_r;
 	m_position = m_target + toPos;
 	toPos *= 2;
-	//m_target -= toPos;
 	//Ž‹“_
 	m_camera->SetTarget(m_target);
 	//À•W
@@ -139,7 +138,6 @@ void GameCamera::Hutu()
 		m_locktarget = m_target;
 		CVector3 pos = m_target - m_player->GetPosition();
 		float r = pos.Length() + 200.0f;
-		//float r = 160.0f;
 		pos.y = 0.0f;
 		pos.Normalize();
 		m_position = m_target - pos * r;
@@ -207,9 +205,6 @@ void GameCamera::Hutu()
 		toPos *= m_r;
 		m_position = m_target + toPos;
 		toPos *= 2;
-		//m_target -= toPos;
-	    /*m_target.y = m_playerposition.y;
-	    m_target.y += 140.0f;*/
 		if (m_timer > 0.001f) {
 			CVector3 target = m_locktarget;
 			CVector3 pos = target - m_player->GetPosition();

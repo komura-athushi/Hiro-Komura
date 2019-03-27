@@ -16,6 +16,12 @@ bool PlayerStatus::Start()
 {
 	//Å‰‚Ì•Ší‚¾‚¯ŠŽó‹µ‚ðtrue‚ÉÝ’è‚·‚é
 	m_equipmentlist.push_back(new Equipment(0));
+	m_NextExp = m_Level * (m_Level + 1) * (m_Level + 4);
+	m_LevelExp += m_NextExp;
+	m_MaxHP = m_ProtHP + m_Level * (m_Level + 34) * (m_Level + 100) / 100;
+	m_MaxPP = m_ProtPP + m_Level * (m_Level + 10) / 20;
+	m_Power = m_ProtPower + m_Level * (m_Level + 10);
+	m_Clever = m_ProtMpower + m_Level * (m_Level + 10);
 	SetWeaponStatus();
 	SetMagicStatus();
 	//ŠY“–‚·‚éddsƒtƒ@ƒCƒ‹‚ð“Ç‚Ýž‚ñ‚Å‚¨‚­
@@ -32,6 +38,8 @@ bool PlayerStatus::Start()
 	CSprite* sprite = new CSprite;
 	sprite->Init(m_spritenamelist[0]);
 	m_spritelist.push_back(sprite);
+	m_NextExp = m_Level * (m_Level + 1) * (m_Level + 2) * 5 - 10;
+	m_LevelExp = m_Level * (m_Level + 1) * (m_Level + 2) * 5 - 10;
 	return true;
 }
 
@@ -54,14 +62,13 @@ void PlayerStatus::Update()
 		for (int i = 0; i < m_gamedata->m_stagenumber; i++) {
 			//m_gamedata->SetClear(i);
 		}
-		m_MaxPP = 1000000000;
-		m_havemeseta = 10000000;
+		m_MaxPP = 1000;
+		m_havemeseta = 10000;
 		Player* player = FindGO<Player>(L"Player");
 		if (player != nullptr) {
 			player->SetPP(m_MaxPP);
 		}
-		//PlusExp(1000000000);
-		
+		PlusExp(100000);
 	}
 }
 
@@ -74,18 +81,17 @@ void PlayerStatus::PlusExp(const int& exp)
 	while (m_LevelExp <= m_Exp) {
 		ep -= m_NextExp;
 		m_Level += 1;
-		m_NextExp = (int)((1 + (float)(m_Level * m_Level * 0.1f)) * 60);
+		m_NextExp = m_Level * (m_Level + 1) * (m_Level + 2) * 5 - 10;
 		m_LevelExp += m_NextExp;
-		m_Power += 5 + rand() % 3;
-		m_Attack = m_Power + m_SwordAttack;
-		m_MaxHP += 10;
-		m_MaxPP += 10;
-		m_Clever += 10;
+		m_MaxHP = m_ProtHP + m_Level * (m_Level + 34) * (m_Level + 100) / 100;
+		m_MaxPP = m_ProtPP + m_Level * (m_Level + 10) / 20;
+		m_Power = m_ProtPower + m_Level * (m_Level + 10);
+		m_Clever = m_ProtMpower + m_Level * (m_Level +10);
 		m_Attack = m_Power + m_SwordAttack;
 		m_Mattack = m_Clever + m_SwordMattack;
 		m_levelup = true;
 	}
-		m_NextExp -= ep;
+	m_NextExp -= ep;
 }
 
 void PlayerStatus::SetWeaponStatus()
@@ -97,6 +103,7 @@ void PlayerStatus::SetWeaponStatus()
 	m_SwordName = m_equipmentlist[m_SwordId]->GetName();
 	m_Mattack = m_Clever + m_SwordMattack;
 	m_Attack = m_Power + m_SwordAttack;
+	m_ability = m_equipmentlist[m_SwordId]->GetAbility();
 }
 
 void PlayerStatus::SetMagicStatus()
@@ -181,14 +188,21 @@ void PlayerStatus::PostRender()
 
 }
 
-void PlayerStatus::WeaponStrengthen(const int& number)
+void PlayerStatus::SetStatus()
 {
-	if (m_havemeseta >= m_equipmentlist[number]->GetCost()) {
-		m_havemeseta -= m_equipmentlist[number]->GetCost();
-		m_equipmentlist[number]->Strengthen();
-		if (m_SwordId == number) {
-			SetWeaponStatus();
-			SetMagicStatus();
-		}
+	SetWeaponStatus();
+	SetMagicStatus();
+}
+
+void PlayerStatus::DeleteEquipment(const int& number)
+{
+	Equipment* eq = m_equipmentlist[number];
+	CSprite* sp = m_spritelist[number];
+ 	m_equipmentlist.erase(m_equipmentlist.begin() + number);
+	m_spritelist.erase(m_spritelist.begin() + number);
+	delete eq;
+	delete sp;
+	if (m_SwordId > number) {
+		m_SwordId -= 1;
 	}
 }

@@ -4,9 +4,8 @@
 #include <math.h> 
 #include "Game.h"
 #include "Player.h"
-#include "BossAttack.h"
 #include "GameCamera.h"
-#include "Boss2_Fire.h"
+#include "Enemy_Fire.h"
 #include "Teleport.h"
 //cppでエネミーのレア度ごとのドロップ率を設定
 const int Boss2::m_dropChances[Weapon::m_HighestRarity] = { 0,0,0,100,0,0,0 };
@@ -228,7 +227,10 @@ void Boss2::Turn()
 void Boss2::Damage()
 {
 	if (IEnemy::m_damage) {
-		m_state = enState_Damage;
+		int ran = rand() % 10+1;
+		if (ran > 7) {
+			m_state = enState_Damage;
+		}
 		IEnemy::m_damage = false;
 	}
 }
@@ -240,40 +242,6 @@ void Boss2::Dead()
 	}
 }
 
-//void Boss2::PostRender()
-//{
-//	GameCamera* gc = FindGO<GameCamera>();
-//	//もしFindGOでカメラを見つけられたら
-//	if (gc != nullptr) {
-//		if (m_atktype == 1 || m_atktype == 2) {
-//			if (m_timer >= m_cooltime - m_posttiming) {
-//				wchar_t output[256];
-//				swprintf_s(output, L"！\n");
-//				CVector3 drawpos = m_player->GetPosition();
-//				drawpos.y += 150.0f;
-//				drawpos.x += 40.0f;
-//				//3Dの座標を2Dに変換
-//				CVector2 pos = gc->GetCamera()->CalcScreenPosFromWorldPos(drawpos);
-//				CVector2 scale = { 3.0f,3.0f };
-//				m_font.Draw(output, pos, CVector4(225.0f, 00.0f, 00.0f, 0.8f), scale);
-//			}
-//		}
-//		else if (m_atktype == 3) {
-//			if (m_timer >= m_atk3cooltime - m_posttiming) {
-//				wchar_t output[256];
-//				swprintf_s(output, L"！\n");
-//				CVector3 drawpos = m_player->GetPosition();
-//				drawpos.y += 150.0f;
-//				drawpos.x += 40.0f;
-//				//3Dの座標を2Dに変換
-//				CVector2 pos = gc->GetCamera()->CalcScreenPosFromWorldPos(drawpos);
-//				CVector2 scale = { 3.0f,3.0f };
-//				m_font.Draw(output, pos, CVector4(225.0f, 00.0f, 00.0f, 0.8f), scale);
-//			}
-//
-//		}
-//	}
-//}
 
 void Boss2::OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventName)
 {
@@ -326,14 +294,15 @@ void Boss2::OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventName)
 		CVector3 b_pos = m_skinModelRender->GetBonePos(m_bonehead);
 		//プレイヤーとボスの距離
 		CVector3 pos = m_player->GetPosition() - m_position;
-		m_fire = new Boss2_Fire;
+		Enemy_Fire* fire = new Enemy_Fire;
 		//弾丸の座標にボスの座標を代入する。
-		m_fire->SetPosition(b_pos);
+		fire->SetPosition(b_pos);
+		fire->SetAttack(m_attackfire);
 		CVector3 bulletPos = m_playerposition - b_pos;
 		bulletPos.Normalize();
 		bulletPos = bulletPos * 20.0f;
 		//弾のスピードを変える
-		m_fire->SetMoveSpeed(bulletPos);
+		fire->SetMoveSpeed(bulletPos);
 	}
 }
 

@@ -32,8 +32,10 @@ public:
 	void SetWeapon(Equipment* number);
 	//文字表示
 	void PostRender()override;
-	//該当の武器の強化費用より所持メセタが多い場合、武器の強化を実行します
-	void WeaponStrengthen(const int& number);
+	//該当の番号の武器を削除
+	void DeleteEquipment(const int& number);
+	//武器強化によるステータスを更新
+	void SetStatus();
 	//GameDataクラスのインスタンスのポインタを設定
 	void SetGameData(GameData* gamedata)
 	{
@@ -47,22 +49,22 @@ public:
 	//最大HPを取得
 	int GetMaxHP() const
 	{
-		return m_MaxHP;
+		return m_MaxHP * (1 + 0.01f * float(m_ability->GetHP()));
 	}
 	//最大PPを取得
 	int GetMaxPP() const
 	{
-		return m_MaxPP;
+		return m_MaxPP * (1 + 0.01f * float(m_ability->GetPP()));
 	}
 	//攻撃力を取得
 	int GetAttack() const
 	{
-		return m_Attack;
+		return m_Attack * (1 + 0.01f * float(m_ability->GetPower()));
 	}
 	//魔法攻撃力を取得
 	int GetMattack() const
 	{
-		return m_Mattack;
+		return m_Mattack * (1 + 0.01f * float(m_ability->GetMpower()));
 	}
 	//使用する魔法の番号を取得
 	int GetMagicId() const
@@ -153,11 +155,19 @@ public:
 	void AddMeseta(const int& meseta) 
 	{
 		m_havemeseta += meseta;
+		if (m_havemeseta > 99999) {
+			m_havemeseta = 99999;
+		}
+	}
+	//引数文のメセタをプレイヤーのメセタから減産
+	void CutMeseta(const int& meseta)
+	{
+		m_havemeseta -= meseta;
 	}
 	//該当のEquipmentクラスのインスタンスにアクセス
-	Equipment GetEuipment(const int& number) const
+	Equipment* GetEuipment(const int& number) const
 	{
-		return *m_equipmentlist[number];
+		return m_equipmentlist[number];
 	}
 	//所持武器の個数
 	int GetEquipmentNumber() const
@@ -194,18 +204,23 @@ public:
 	{
 		return m_SwordMattack;
 	}
+	//該当の番号の武器を装備しているかどうかを取得
+	bool GetisEquippedto(const int& number) const
+	{
+		return m_SwordId == number;
+	}
 private:  
-	int m_Level = 1;                                        //レベル
-	int m_Exp = 0;                                          //経験値
+	int m_Level = 1;                                      //レベル
+	int m_Exp = 0;                                        //経験値
 	int m_NextExp = 40;                                   //次のレベルアップに必要な経験値
-	int m_LevelExp = 40;                                    //レベルごとに必要な累計経験値
-	int m_MaxHP = 100;                                      //最大HP
-	int m_MaxPP = 100;                                      //最大PP(魔法撃つのに必要)
-	int m_Mattack = 10;                                   //魔法攻撃力(賢さ+武器の魔法攻撃力)
-	int m_Clever = 10;                                    ///賢さ
+	int m_LevelExp = 40;                                  //レベルごとに必要な累計経験値
+	int m_MaxHP = 65;                                    //最大HP
+	int m_MaxPP = 100;                                    //最大PP(魔法撃つのに必要)
+	int m_Mattack = 40;                                   //魔法攻撃力(賢さ+武器の魔法攻撃力)
+	int m_Clever = 20;                                    //賢さ
 	int m_SwordMattack = 10;                              //武器の魔法攻撃力
-	int m_Attack = 20;                                    //攻撃力(力＋武器の攻撃力)
-	int m_Power = 10;                                       //力
+	int m_Attack = 40;                                    //攻撃力(力＋武器の攻撃力)
+	int m_Power = 20;                                     //力
 	int m_SwordAttack = 10;                               //武器の攻撃力
 	int m_MagicId = 0;                                    //使える魔法の番号
 	int m_SwordId = 0;                                    //装備中の武器の番号
@@ -227,4 +242,9 @@ private:
 	GameData* m_gamedata;                                 //GameDataクラスのポインタ
 	Weapon* m_weapon;									  //Weaponクラスのポインタ
 	Magic* m_magic;										  //Magicクラスのポインタ
+	Ability* m_ability;
+	const int m_ProtHP = 65;
+	const int m_ProtPP = 100;
+	const int m_ProtPower = 20;
+	const int m_ProtMpower = 20;
 };
