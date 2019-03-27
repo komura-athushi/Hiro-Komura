@@ -29,6 +29,7 @@ Game::Game()
 
 Game::~Game()
 {
+	//なんか色々消す
 	delete m_player;
 	delete m_gamecamera;
 	delete m_ground;
@@ -124,6 +125,7 @@ bool Game::Start()
 	m_CascadeShadowmap->SetFar(50000.0f);
 	//レベルを構築する。
 	const wchar_t* levelpath = nullptr;
+	//ステージの番号によって読み込むレベルファイルを変える
 	switch (m_stagenumber) {
 	case 1:
 		levelpath = L"Asset/level/stage1.tkl";
@@ -134,6 +136,7 @@ bool Game::Start()
 	case 3:
 		levelpath = L"Asset/level/stage2.tkl";
 	}
+	//エネミーごとに番号を付ける
 	int number = 0;
 	m_level.Init(levelpath, [&](LevelObjectData& objData) {
 		if (objData.EqualObjectName(L"stage1_ground") == true) {
@@ -284,12 +287,12 @@ bool Game::Start()
 		else if (objData.EqualObjectName(L"boss2") == true) {
 			//ボス
 			//プレイヤーのインスタンスを生成する。
-			Boss2* boss = new Boss2;
-			boss->SetPosition(objData.position);
-			boss->SetOldPosition(objData.position);
-			boss->SetName(L"Enemy");
-			boss->SetPlayer(m_player);
-			boss->SetNumber(number);
+			Boss2* boss2 = new Boss2;
+			boss2->SetPosition(objData.position);
+			boss2->SetOldPosition(objData.position);
+			boss2->SetName(L"Enemy");
+			boss2->SetPlayer(m_player);
+			boss2->SetNumber(number);
 			number++;
 			//フックした場合はtrueを返す。
 			return true;

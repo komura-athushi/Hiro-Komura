@@ -47,18 +47,18 @@ public:
 		m_speed = speed;
 	}
 private:
-	GameObj::Suicider::CEffekseer* m_effect = nullptr;
+	GameObj::Suicider::CEffekseer* m_effect = nullptr;			//エフェクト
 	CVector3 m_position = CVector3::Zero();						//弾の座標
-	CQuaternion m_rotation;
+	CQuaternion m_rotation;										//エフェクトの回転
 	const CVector3 m_scale = { 24.0f,24.0f,24.0f };				//弾の大きさ
 	CVector3 m_moveSpeed = { 0.0f,0.0f,0.0f };					//移動速度。
-	int m_damage = 0;
+	int m_damage = 0;											//接触した際に与えるダメージ
 	const float m_frame = 40.0f;
 	//コリジョン関係
-	SuicideObj::CCollisionObj* m_attackCol;
-	const float m_attack3r = 90.0f;                            //攻撃したときに発生させるコリジョンの半径
-	int m_attack = 30;							               //ファイヤーの攻撃力、デフォルトで30
-	float m_timer = 0.0f;
-	float m_time = 50.0f;
-	float m_speed = 1.0f;
+	SuicideObj::CCollisionObj* m_attackCol;						//コリジョン
+	const float m_attack3r = 90.0f;                             //攻撃したときに発生させるコリジョンの半径
+	int m_attack = 30;							                //ファイヤーの攻撃力、デフォルトで30
+	float m_timer = 0.0f;									    //タイマー
+	float m_time = 50.0f;									    //削除するタイミング
+	float m_speed = 1.0f;									    //速さ
 };

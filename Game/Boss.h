@@ -14,8 +14,11 @@ public:
 	bool Start() override;
 	void Update() override;
 	void Turn();												//キャラクターの向きを計算
+	//パターン1
 	void One();
+	//パターン2
 	void Two();
+	//パターン3
 	void Three();
 	//マジックスフィア
 	void MG();			
@@ -33,6 +36,7 @@ public:
 	{
 		m_bossattack = bossattack;
 	}
+	//座標を設定
 	void SetPosition(const CVector3& pos)
 	{
 		m_position = pos;

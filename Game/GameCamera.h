@@ -6,8 +6,8 @@ class GameCamera:public IGameObject
 public:
 	GameCamera();
 	~GameCamera();
-	bool Start();
-	void Update();
+	bool Start() override;
+	void Update() override;
 	//三人称視点の座標と注視点を計算する関数
 	void Hutu();
 	//unityChanのモード
@@ -55,21 +55,21 @@ public:
 		return m_right;
 	}
 private:
-	GameObj::PerspectiveCamera* m_camera;                  //3Dカメラのインスタンス
-	CVector3 m_position = { 0.0f,200.0f,400.0f};           //カメラの座標
-	CVector3 m_target;                                     //カメラの注視点
-	float m_degreexz = -90.0f, m_degreey = 0.0f;             //角度
+	GameObj::PerspectiveCamera* m_camera;                   //3Dカメラのインスタンス
+	CVector3 m_position = { 0.0f,200.0f,400.0f};            //カメラの座標
+	CVector3 m_target;                                      //カメラの注視点
+	float m_degreexz = -90.0f, m_degreey = 0.0f;            //角度
 	float m_targetdegreexz = 0.0f, m_targetdegreey = 0.0f;	
-	float m_radianx = 0.0f, m_radiany = 0.0f;              //角度をラジアン単位に直したやつ
-	float m_r = 190.0f;								       //キャラクターとカメラの距離
+	float m_radianx = 0.0f, m_radiany = 0.0f;               //角度をラジアン単位に直したやつ
+	float m_r = 190.0f;								        //キャラクターとカメラの距離
 	float m_tr;
-	const CVector3 m_axisY={ 0.0f,1.0f,0.0f };             //Y方向のベクトル   
-	CVector3 m_playerposition;                             //プレイヤーの座標
-	Player* m_player;                                      //プレイヤークラスのポインタ
-	float m_topos = 80.0f;
-	CVector3 m_front = CVector3::Zero();				   //カメラの正面のベクトル
-	CVector3 m_right = CVector3::Zero();				   //カメラの右方向のベクトル
-	float m_timer = 0.0f;								  //時間経過で変動させる変数、ロック時は1、非ロック時は0にする
-	CVector3 m_locktarget = CVector3::Zero();			   //ターゲット中の座標
+	const CVector3 m_axisY={ 0.0f,1.0f,0.0f };              //Y方向のベクトル   
+	CVector3 m_playerposition;                              //プレイヤーの座標
+	Player* m_player;                                       //プレイヤークラスのポインタ
+	float m_topos = 80.0f;									//注視点をプレイヤーの上にする
+	CVector3 m_front = CVector3::Zero();				    //カメラの正面のベクトル
+	CVector3 m_right = CVector3::Zero();				    //カメラの右方向のベクトル
+	float m_timer = 0.0f;								    //時間経過で変動させる変数、ロック時は1、非ロック時は0にする
+	CVector3 m_locktarget = CVector3::Zero();			    //ターゲット中の座標
 };
 

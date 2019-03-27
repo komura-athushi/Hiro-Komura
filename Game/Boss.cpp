@@ -26,6 +26,7 @@ Boss::~Boss()
 
 bool Boss::Start()
 {
+	//コリジョンを設定
 	IEnemy::CCollision(m_position , m_height, m_r);
 	//ボスのスキンモデルレンダーを表示
 	m_skinModelRender = new GameObj::CSkinModelRender;
@@ -37,6 +38,7 @@ bool Boss::Start()
 	CQuaternion rot = CQuaternion::Identity();
 	CVector3 pos = m_position;
 	pos.y += 500.0f;
+	//静的オブジェクトを設定
 	m_staticobject.CreateSphere(pos, rot, 150.0f);
 	m_player = FindGO<Player>(L"Player");
 	return true;
@@ -51,7 +53,6 @@ void Boss::Turn()
 	m_radian = M_PI / 180 * m_degree;
 	//回転処理
 	m_degree += sdegree;
-	//m_movespeedからキャラクターを回転させる
 	auto moveSpeedXZ = m_player->GetPosition() - m_position;
 	moveSpeedXZ.y = 0.0f;
 	moveSpeedXZ.Normalize();

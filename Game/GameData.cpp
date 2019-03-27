@@ -7,9 +7,7 @@ GameData::GameData()
 
 GameData::~GameData()
 {
-	for (int i = 0; i < m_abilitylist.size(); i++) {
-		delete m_abilitylist[i];
-	}
+	
 }
 
 bool GameData::Start()
@@ -93,6 +91,7 @@ bool GameData::Start()
 	m_weaponreleaserequirednumber.push_back(new MaterialNumber{ 2, 2, 15 });
 	m_weaponreleaserequirednumber.push_back(new MaterialNumber{ 2, 3, 10 });
 	m_weaponreleaserequirednumber.push_back(new MaterialNumber{ 3, 3, 25 });
+	//上記の様々な値を計算
 	for (int i = 0; i < m_weaponreleaserequirednumber.size(); i++) {
 		if (m_weaponlimitstagematerialtype.size() != m_weaponreleaserequirednumber[i]->s_llimitstage) {
 			m_weaponlimitstagematerialtype.push_back(1);
@@ -110,4 +109,15 @@ bool GameData::Start()
 void GameData::Update()
 {
 
+}
+
+//武器Lvの解放段階を進めれるかどうか
+bool GameData::GetisUpWeaponLimitStage() const
+{
+	if (m_weaponlimit == m_weaponlimitstage) {
+		return false;
+	}
+	else {
+		return true;
+	}
 }

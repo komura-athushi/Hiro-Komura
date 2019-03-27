@@ -167,7 +167,7 @@ void Kurage4::Attack()
 	sm->SetDamage(m_Attack);
 	sm->SetEnemy();
 	sm->SetId(ShotMagic::enMagic_Fire);
-	sm->SetSpeed(0.7f);
+	sm->SetSpeed(0.6f);
 	sm->SetDeleteTime(90.0f);
 	m_state = enState_Pose;
 	m_stoptimer = 0.0f;

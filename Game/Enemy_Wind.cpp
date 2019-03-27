@@ -25,9 +25,9 @@ bool Enemy_Wind::Start()
 	pos.y += m_collisionheight;
 	m_attackCol->CreateSphere(pos, CQuaternion::Identity(), m_attack3r);
 	////寿命を設定
-	m_attackCol->SetTimer(enNoTimer);//フレーム後削除される
+	m_attackCol->SetTimer(enNoTimer);
 	m_attackCol->SetCallback([&](SuicideObj::CCollisionObj::SCallbackParam& param) {
-		//衝突した判定の名前が"Player"ならm_Attack3分だけダメージ与える
+		//衝突した判定の名前が"Player"ならダメージを与える
 		if (param.EqualName(L"Player")) {
 			if (!m_hitplayer) {
 				Player* player = param.GetClass<Player>();
@@ -50,7 +50,7 @@ void Enemy_Wind::Update()
 	CVector3 pos = m_position;
 	pos.y += m_collisionheight;
 	m_attackCol->SetPosition(pos);
-	//弾丸の消去...まだどのタイミングで消すか決めてない
+	//弾丸の消去
 	if (m_timer >= m_time) {
 		delete this;
 	}

@@ -323,5 +323,6 @@ private:
 	CSprite m_window;
 	const int m_randDamage = 95;
 	const float m_ariaspeed = 30.0f;
+	CVector4 m_statuscolor = { 1.0f,1.0f,1.0f,0.5f };
 };
 

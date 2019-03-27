@@ -57,6 +57,7 @@ void Kurage::Chase()
 		case enState_Chase:
 			if (m_chasetimer >= m_chasetime) {
 				CVector3 pos = m_player->GetPosition() - m_position;
+				pos.y = 0.0f;
 				pos.Normalize();
 				pos *= m_movespeedmultiply;
 				m_movespeed = pos;

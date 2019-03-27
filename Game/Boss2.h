@@ -19,8 +19,6 @@ public:
 	void Turn();												//キャラクターの向きを計算
 	void AnimationController();									//アニメーションの再生
 	void Dead();												//ドラゴンが死んだときの処理
-	//文字表示
-	void PostRender()override;
 	//アニメーションイベント
 	void OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventName);
 

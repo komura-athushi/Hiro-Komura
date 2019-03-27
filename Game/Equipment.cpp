@@ -200,6 +200,7 @@ void Equipment::KariPlusExp(const int& exp)
 
 int Equipment::GetMaterialExp(const int& id) const
 {
+	//強化する予定の武器と自身が同じ種類の武器だった場合、素材としての経験値を二倍にします
 	if(m_SwordId == id) {
 		return pow(2.0f, m_Rarity) * (20 + 5 * m_weaponextend) * 2.0f;
 	}

@@ -24,6 +24,8 @@ public:
 public:
 	bool Start();
 	void Update();
+	//武器Lvの解放段階を進めれるかどうか
+	bool GetisUpWeaponLimitStage() const; 
 	//引数の番号の武器のポインタを取得
 	Weapon* GetWeapon(const int& number) 
 	{
@@ -129,16 +131,6 @@ public:
 	{
 		m_weaponlimitstage++;
 	}
-	//武器Lvの解放段階を進めれるかどうか
-	bool GetisUpWeaponLimitStage() const
-	{
-		if (m_weaponlimit == m_weaponlimitstage) {
-			return false;
-		}
-		else {
-			return true;
-		}
-	}
 	//武器Lvの上限解放に必要な素材の種類を取得
 	int GetWeaponLimitStageMaterialType() const
 	{
@@ -154,6 +146,12 @@ public:
 	{
 		return m_limitweaponlv[m_weaponlimitstage];
 	}
+	/*!
+	@brief	MaterialNumer
+	*int limitstage;					 武器の解放段階(1ならば解放段階が1の時に必要なる、初期段階は1)
+	*int s_rarity;				   素材レアリティ
+	*int s_number;						  素材の必要数
+	*/
 	struct MaterialNumber {
 		int s_llimitstage;							   //武器の解放段階(1ならば解放段階を1にする時に必要なる、初期段階は0)
 		int s_rarity;								   //素材レアリティ
@@ -164,6 +162,7 @@ public:
 	{
 		return m_weaponreleaserequirednumber[number];
 	}
+	//武器
 	enum EnWeapon {
 		enWeapon_Sword,									//ソード
 		enWeapon_FireSword,								//ファイアソード
@@ -176,6 +175,7 @@ public:
 		enWeapon_LegendalySword,						//レジェンダリーソード
 		enWeapon_num									//ウェポンの種類
 	};
+	//魔法
 	enum EnMagic {
 		enMagic_Fire = 1,								//フォイエ
 		enMagic_Ice,									//イル・グランツ
@@ -187,6 +187,7 @@ public:
 		enMagic_ExcaliburMorgan,						//エクスカリバーモルガン
 		enMagic_num										//魔法の種類
 	};
+	//素材
 	enum EnMaterial {
 		enMaterial_Wood,								//木
 		enMaterial_Ishi,								//石
@@ -200,24 +201,17 @@ private:
 	std::vector<Material> m_materiallist;				//Materialクラスの可変長配列
 	std::vector<Ability*> m_abilitylist;				//アビリティクラスの可変長配列
 	std::vector<CSprite*> m_numberspritelist;           //数字の画像の可変長配列
-	std::vector<const wchar_t*> m_filepathlist;
+	std::vector<const wchar_t*> m_filepathlist;			//数字の画像のファイルパスの可変長配列
 	bool m_stage[3] = { false,false,false };			//各ステージをクリアしたかどうか
 	int m_townlevel = 0;								//街の発展レベル
 	bool m_isgameclear = false;							//ゲームをクリアしたかどうか
 	bool m_isgameend = false;							//ゲームが一旦終わったかどうか
-	CSprite* m_sprite;
-	int m_totalabilityweight = 0;
+	int m_totalabilityweight = 0;						//全アビリティのウェイトの合計値
 	int m_abilitygroupnumber = 0;
 	std::vector<int> m_totalabilitygroupweightlist;
 	int m_magicnumber = 0;
 	int m_weaponlimitstage = 1;							//武器Lvの上限解放段階
 	int m_weaponlimit = 0;						//武器の上限解放段階の上限
-	/*!
-	@brief	MaterialNumer
-	*int limitstage;					 武器の解放段階(1ならば解放段階が1の時に必要なる、初期段階は1)		
-	*int s_rarity;				   素材レアリティ
-	*int s_number;						  素材の必要数
-	*/
 	const int m_limitweaponlv[4] = { 5, 10, 15, 20};            
 	std::vector<MaterialNumber*>  m_weaponreleaserequirednumber;		//各武器の上限解放に必要な素材とその数
 	std::vector<int> m_weaponlimitstagematerialtype;					//各武器の上限解放に必要な素材の種類

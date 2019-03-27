@@ -6,8 +6,8 @@ class DropMaterial:public IGameObject
 public:
 	DropMaterial();
 	~DropMaterial();
-	bool Start();
-	void Update();
+	bool Start() override;
+	void Update() override;
 	//座標を設定
 	void SetPosition(const CVector3 pos)
 	{
@@ -32,7 +32,7 @@ private:
 	Player* m_player;                                           //プレイヤークラスのポインタ
 	int m_rarity;												//素材のレアリティ
 	int m_number;												//素材のレアリティの中の番号
-	float m_degree = 0.0f;
-	const float m_sevolume = 1.7f;
+	float m_degree = 0.0f;										//角度
+	const float m_sevolume = 1.7f;								//SEのボリューム
 };
 

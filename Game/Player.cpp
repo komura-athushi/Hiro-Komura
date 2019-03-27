@@ -919,7 +919,7 @@ void Player::RelationHuman()
 	}
 	CVector3 pos = m_human->GetPosition() - m_position;
 	//待機状態かつ距離が一定以内の時にBボタンを押すと話せる
-	if (pos.LengthSq() <= 300.0f * 300.0f && m_state==enState_Idle) {
+	if (pos.LengthSq() <= 300.0f * 300.0f && m_state==enState_Idle && !m_displaystatus) {
 		if (Pad(0).GetDown(enButtonA)) {
 			if (m_human->GetTalk() && m_human->isLevelUpTown()) {
 				m_human->SetLevelUpTown();
@@ -942,7 +942,7 @@ void Player::RelationMerchant()
 	}
 	CVector3 pos = m_merchant->GetPosition() - m_position;
 	//プレイヤーとの距離が一定以内なら話せます
-	if (pos.LengthSq() <= 300.0f * 300.0f && m_state == enState_Idle) {
+	if (pos.LengthSq() <= 300.0f * 300.0f && m_state == enState_Idle && !m_displaystatus) {
 		if (Pad(0).GetDown(enButtonA)) {
 			if (m_merchant->GetIdle()) {
 				SuicideObj::CSE* se = NewGO<SuicideObj::CSE>(L"Asset/sound/se/kettei.wav");
@@ -1128,7 +1128,7 @@ void Player::PostRender()
 		m_font.DrawScreenPos(output, { 705.0f,60.0f }, CVector4::White(), {1.0f,1.0f});
 		m_statussprite.DrawScreenPos({ 700.0f,50.0f }, {1.0f,1.0f}, CVector2::Zero(),
 			0.0f,
-			{ 1.0f, 1.0f, 1.0f, 1.0f },
+			m_statuscolor,
 			DirectX::SpriteEffects_None,
 			1.0f);
 		//武器関連のステータスを表示します
@@ -1137,7 +1137,7 @@ void Player::PostRender()
 		m_font.DrawScreenPos(output2, { 230.0f,60.0f }, CVector4::White(), { 0.7f,0.7f });
 		m_weaponstatussprite.DrawScreenPos({ 227.0f,50.0f }, { 1.0f,1.0f }, CVector2::Zero(),
 			0.0f,
-			{ 1.0f, 1.0f, 1.0f, 1.0f },
+			m_statuscolor,
 			DirectX::SpriteEffects_None,
 			1.0f);
 		//インベントリ関連のステータスを表示します
@@ -1146,7 +1146,7 @@ void Player::PostRender()
 		m_font.DrawScreenPos(output3, { 445.0f,438.0f }, CVector4::White(), { 0.7f,0.7f });
 		m_inventorystatussprite.DrawScreenPos({ 442.0f,428.0f }, { 1.0f,1.0f }, CVector2::Zero(),
 			0.0f,
-			{ 1.0f, 1.0f, 1.0f, 1.0f },
+			m_statuscolor,
 			DirectX::SpriteEffects_None,
 			1.0f);
 	}

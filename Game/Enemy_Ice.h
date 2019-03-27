@@ -4,8 +4,8 @@ class Enemy_Ice:public IGameObject
 public:
 	Enemy_Ice();
 	~Enemy_Ice();
-	bool Start();
-	void Update();
+	bool Start() override;
+	void Update() override;
 	//ダメージを設定
 	void SetDamage(const int& mattack, const float& damagerate)
 	{
@@ -47,21 +47,20 @@ public:
 		m_time = time;
 	}
 private:
-	GameObj::Suicider::CEffekseer* m_effect = nullptr;
+	GameObj::Suicider::CEffekseer* m_effect = nullptr;			//エフェクト
 	CVector3 m_position = CVector3::Zero();						//弾の座標
-	CQuaternion m_rotation;
+	CQuaternion m_rotation;										//エフェクトの回転
 	const CVector3 m_scale = { 24.0f,24.0f,24.0f };				//弾の大きさ
 	CVector3 m_moveSpeed = { 0.0f,0.0f,0.0f };					//移動速度。
 	float m_speed = 1.0f;							            //弾のスピード
-	int m_damage = 0;
+	int m_damage = 0;											//接触した際に与えるダメージ
 	const float m_frame = 60.0f;
 	//コリジョン関係
-	SuicideObj::CCollisionObj* m_attackCol;
-	const float m_attack3r = 75.0f;                            //攻撃したときに発生させるコリジョンの半径
-	const float m_collisionheight = 20.0f;
-	int m_attack = 30;							               //ファイヤーの攻撃力、デフォルトで30
-	float m_timer = 0.0f;
-	float m_time = 120.0f;
-	bool m_hitplayer = false;
-};
+	SuicideObj::CCollisionObj* m_attackCol;						//コリジョン
+	const float m_attack3r = 75.0f;                             //攻撃したときに発生させるコリジョンの半径
+	int m_attack = 30;							                //ファイヤーの攻撃力、デフォルトで30
+	float m_timer = 0.0f;										//タイマー
+	float m_time = 120.0f;										//削除するタイミング
+	bool  m_hitplayer = false;									//プレイヤーに当たったかどうか			
+};		
 

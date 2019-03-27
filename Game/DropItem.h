@@ -7,8 +7,8 @@ class DropItem:public IGameObject
 public:
 	DropItem();
 	~DropItem();
-	bool Start();
-	void Update();
+	bool Start() override;
+	void Update() override;
 	//プレイヤーのポインタを設定
 	void SetPlayer(Player* player)
 	{
@@ -46,15 +46,15 @@ private:
 	CQuaternion m_rotation=CQuaternion::Identity();             //クオンテーション
 	int m_state;                                                //ドロップ品の番号
 	Player* m_player;                                           //プレイヤークラスのポインタ
-	Equipment* m_equipment = nullptr;
+	Equipment* m_equipment = nullptr;							//武器のデータ
 	int m_rarity;												//武器のレアリティ
 	int m_number;												//武器のレアリティの中の番号
 	int m_meseta;												//メメタの額
 	bool m_isweapon = false;									//自身が武器かどうか
-	bool m_issetweapon = false;
+	bool m_issetweapon = false;									//プレイヤーが所持したかどうか
 	static const float m_height;								//ドロップ時に+するy座標
 	static const float m_height_weapon;							//ドロップ時に+するy座標(武器)
-	float m_degree = 0.0f;
-	const float m_sevolume = 1.7f;
+	float m_degree = 0.0f;										//角度
+	const float m_sevolume = 1.7f;								//SEのボリューム
 };
 
