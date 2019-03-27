@@ -90,8 +90,5 @@ private:
 	float m_collisionheight = 70.0f;							//コリジョンをm_positionからどれだけ上にあげるか
 	CVector3 m_size = { 130.0f, 120.0f, 400.0f};				//突きのコリジョンの半径
 	const float m_harai_r = 150.0f;								//はらいをしたときに発生させるコリジョンの半径
-	//二段
-//	const float m_harai_r = 150.0f;								//二段突きをしたときに発生させるコリジョンの半径
-	bool deletefirst = false;									//二段突きの初撃を行ったかどうか
 };
 
