@@ -348,6 +348,9 @@
     <MeshContentTask Include="Asset\modelData\kurage\kurage5.FBX">
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
+    <MeshContentTask Include="Asset\modelData\boss3\boss3.FBX">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Boss.h" />

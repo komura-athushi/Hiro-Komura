@@ -4,7 +4,6 @@
 #include <math.h> 
 #include "Game.h"
 #include "Player.h"
-#include "BossAttack.h"
 #include "GameCamera.h"
 #include "Teleport.h"
 //cppでエネミーのレア度ごとのドロップ率を設定

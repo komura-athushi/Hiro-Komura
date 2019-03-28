@@ -330,6 +330,7 @@
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Asset\modelData\boss2\DarkDragon.FBX" />
+    <MeshContentTask Include="Asset\modelData\boss3\boss3.FBX" />
     <MeshContentTask Include="Asset\modelData\boss\boss.FBX" />
     <MeshContentTask Include="Asset\modelData\boss\bullet2.FBX" />
     <MeshContentTask Include="Asset\modelData\boss\bullet3.FBX" />
