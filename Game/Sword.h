@@ -6,8 +6,8 @@ class Sword:public IGameObject
 public:
 	Sword();
 	~Sword();
-	bool Start();
-	void Update();
+	bool Start() override;
+	void Update() override;
 	//À•W‚ğİ’è
 	void SetPosition(const CVector3& pos)
 	{
@@ -37,6 +37,6 @@ private:
 	int m_SwordId;                                              //•Ší‚Ì”Ô†
 	int m_SwordId2;                                             //Ø‚è‘Ö‚¦—\’è‚Ì•Ší‚Ì”Ô†
 	bool m_delete = true;                                       //•Ší‚ğØ‚è‘Ö‚¦‚é‘O‚É‘•”õ‚µ‚Ä‚¢‚é•Ší‚ğíœ‚µ‚Ä‚¢‚é‚©‚Ç‚¤‚©
-	bool m_switch = false;
+	bool m_switch = false;										//•ŠíØ‚è‘Ö‚¦‚ğ‚·‚é‚©‚Ç‚¤‚©
 };
 

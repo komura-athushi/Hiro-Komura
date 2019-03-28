@@ -32,7 +32,7 @@ bool Kurage::Start()
 
 void Kurage::Update()
 {
-	Chase();
+	Move();
 	if (!IEnemy::m_death) {
 		m_skinModelRender->SetPos(m_position);
 		IEnemy::SetCCollision(m_position, m_collisionheight);
@@ -49,7 +49,7 @@ void Kurage::Update()
 	}
 }
 
-void Kurage::Chase()
+void Kurage::Move()
 {
 	CVector3 pos = m_player->GetPosition() - m_position;
 	if (pos.LengthSq() < m_chasedistance) {

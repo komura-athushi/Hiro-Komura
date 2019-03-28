@@ -14,6 +14,8 @@ public:
 	void AnimationController();
 	//回転
 	void Turn();
+	//街を発展させる！
+	void SetLevelUpTown();
 	//文字表示
 	void PostRender() override;
 	//座標を設定
@@ -31,8 +33,6 @@ public:
 	{
 		return m_developtown;
 	}
-	//街を発展させる！
-	void SetLevelUpTown();
 	//トークをオンにする
 	void OnTalk()
 	{
@@ -50,16 +50,16 @@ public:
 	}
 private:
 	GameObj::CSkinModelRender* m_skinModelRender = nullptr;		//スキンモデルレンダラー。
-	CVector3 m_scale = { 2.0f,2.0f,2.0f };
-	CVector3 m_position = { 300.0f,200.0f,0.0f };
-	CSprite m_sprite;
-	float m_animationspeed = 0.7f;
-	CQuaternion m_rotation;
-	bool m_developtown = false;								   //街を発展できるかどうか
-	bool m_leveluptown = false;								   //街を発展させます
-	int m_townlevel = 0;									   //街の発展レベル
-	CFont m_font;                                              //文字表示クラス
-	bool m_ontalk = false;									   //トークオン
+	CVector3 m_scale = { 2.0f,2.0f,2.0f };						//モデルの大きさ
+	CVector3 m_position = { 300.0f,200.0f,0.0f };			    //モデルの座標
+	CSprite m_sprite;											//画像
+	float m_animationspeed = 0.7f;								//アニメーションの再生速度
+	CQuaternion m_rotation;										//回転
+	bool m_developtown = false;								    //街を発展できるかどうか
+	bool m_leveluptown = false;								    //街を発展させます
+	int m_townlevel = 0;									    //街の発展レベル
+	CFont m_font;                                               //文字表示クラス
+	bool m_ontalk = false;									    //トークオン
 	//アニメーション関係
 	enum EnAnimationClip {
 		enAnimationClip_idle,
@@ -70,11 +70,11 @@ private:
 		enState_Idle,
 	};
 	static const int m_necessarymaterial = 10;						   //街の発展に必要な素材の数
-	AnimationClip m_animClip[enAnimationClip_num];
-	EnState m_state = enState_Idle;
-	Player* m_player;
-	PlayerStatus* m_playerstatus;
-	GameData* m_gamedata;
-	bool m_istalk = true;
+	AnimationClip m_animClip[enAnimationClip_num];	
+	EnState m_state = enState_Idle;								//ステート
+	Player* m_player;											//プレイヤー
+	PlayerStatus* m_playerstatus;								//プレイヤーステータス
+	GameData* m_gamedata;										//ゲームデータ
+	bool m_istalk = true;										//話してる？
 };
 

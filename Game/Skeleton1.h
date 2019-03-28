@@ -4,6 +4,7 @@
 #include "DemolisherWeapon/physics/PhysicsStaticObject.h"
 class Player;
 class Game;
+//一番弱いスケルトン
 class Skeleton1 : public IEnemy
 {
 public:
@@ -11,11 +12,16 @@ public:
 	~Skeleton1();
 	bool Start() override;
 	void Update() override;
-	void Chase();												//追跡
-	void AnimationController();									//アニメーションの再生
-	void Damage();												//ダメージを受けた時のアクション
-	void Turn();												//キャラクターの向きを計算
-	void Dead();												//エネミーが死んだときの処理
+	//追跡
+	void Chase();			
+	//アニメーションの再生
+	void AnimationController();					
+	//ダメージを受けた時のアクション
+	void Damage();						
+	//キャラクターの向きを計算
+	void Turn();								
+	//エネミーが死んだときの処理
+	void Dead();											
 	//アニメーションイベント
 	void OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventName);
 	void SetPlayer(Player* player)								//プレイヤーのポイントをセット
@@ -58,8 +64,8 @@ private:
 		enState_Damage,
 		enState_Dead,
 	};
-	AnimationClip m_animClip[enAnimationClip_num];				
-	EnState m_state = enState_Idle_Run;
+	AnimationClip m_animClip[enAnimationClip_num];				//アニメーションクリップの配列
+	EnState m_state = enState_Idle_Run;							//ステート
 	CVector3 m_oldpos = { 30.0f,100.0f,1500.0f };               //鬼の初期位置
 	CVector3 m_position = { 30.0f,100.0f,1500.0f };				//鬼の座標
 	CVector3 m_scale = { 10.0f,10.0f,10.0f };					//鬼のスケール

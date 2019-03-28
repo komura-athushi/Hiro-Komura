@@ -16,8 +16,8 @@ public:
 	//コピーコンストラクタ
 	ShotMagic(const ShotMagic& magic);
 	~ShotMagic();
-	bool Start();
-	void Update();
+	bool Start() override;
+	void Update() override;
 	/*!
 	//コリジョンとモデルを設定、座標とコリジョンの大きさ
 	@brief	魔法のモデルをコリジョンを生成します
@@ -155,6 +155,7 @@ public:
 		m_ischangedeletetime = true;
 		m_changedeletetime = time;
 	}
+	//魔法の種類
 	enum EnMagic {
 		enMagic_Fire = 1,								//フォイエ
 		enMagic_Ice,									//イル・グランツ

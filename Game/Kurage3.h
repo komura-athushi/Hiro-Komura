@@ -9,11 +9,15 @@ class Kurage3 :public IEnemy
 public:
 	Kurage3();
 	~Kurage3();
-	bool Start();
-	void Update();
-	void Chase();
+	bool Start() override;
+	void Update() override;
+	//移動
+	void Move();
+	//攻撃
 	void Attack();
+	//詠唱
 	void Aria();
+	//攻撃に転じる
 	void ChangeAttack();
 	void SetPlayer(Player* player)								//プレイヤーのポイントをセット
 	{
@@ -39,7 +43,7 @@ private:
 	CVector3 m_scale = CVector3::One();					        //鬼のスケール
 	CVector3 m_movespeed = CVector3::Zero();					//移動速度
 	CVector3 m_protposition = CVector3::Zero();
-	const float m_r = 110.0f;                                    //コリジョンの半径
+	const float m_r = 110.0f;                                   //コリジョンの半径
 	const float m_collisionheight = 80.0f;                      //コリジョンをm_positionからどれだけ上にあげるか
 	//クラゲの色々なステータス
 	static const int m_MaxHP = 600;                             //最大HP
@@ -52,9 +56,10 @@ private:
 	bool m_gekiha = false;                                      //deleteするかどうか
 	Player* m_player;											//プレイヤークラスのポインタ
 	Game* m_game;
+	//行動パターン
 	enum State {
-		enState_Chase,
-		enState_Pose,
+		enState_Chase,											//移動
+		enState_Pose,											//待機
 		enState_Attack,											//近接攻撃
 		enState_Attack2,										//遠距離攻撃
 	};
@@ -80,5 +85,6 @@ private:
 	const int m_attacktime2 = 70;
 	CVector3 m_castscale = { 20.0f,20.0f,20.0f };
 	const float m_windscale = 2.0f;
+	const float m_playerheight = 40.0f;
 };
 

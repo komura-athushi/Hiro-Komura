@@ -6,9 +6,9 @@ class Teleport:public IGameObject
 public:
 	Teleport();
 	~Teleport();
-	bool Start();
-	void Update();
-	void PostRender();
+	bool Start() override;
+	void Update() override;
+	void PostRender() override;
 	//座標を設定
 	void SetPosition(const CVector3& pos)
 	{
@@ -20,17 +20,17 @@ public:
 		return m_position;
 	}
 private:
-	GameObj::Suicider::CEffekseer* m_effect;		//エフェクト
-	bool m_isdisplay = false;
-	bool m_isaccess = false;
-	bool m_isbutton = false;
-	CSprite m_sprite,m_sprite2;
-	CVector3 m_scale;
-	CVector3 m_position;
-	CVector2 m_displayposition;
+	GameObj::Suicider::CEffekseer* m_effect;					//エフェクト
+	bool m_isdisplay = false;									//ターゲット表示するかどうか
+	bool m_isaccess = false;									//アクセスしたかどうか
+	bool m_isbutton = false;									//ボタン
+	CSprite m_sprite,m_sprite2;									//スプライト
+	CVector3 m_scale;											//エフェクトの大きさ
+	CVector3 m_position;										//座標
+	CVector2 m_displayposition;									//スプライトの座標
 	CFont m_font;                                               //文字表示クラス
 	const float m_frame = 40.0f;
-	Player* m_player;
-	GameCamera* m_gamecamera;
+	Player* m_player;											//プレイヤー
+	GameCamera* m_gamecamera;									//ゲーム中のカメラ
 };
 

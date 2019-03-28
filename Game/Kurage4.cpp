@@ -32,7 +32,7 @@ bool Kurage4::Start()
 
 void Kurage4::Update()
 {
-	Chase();
+	Move();
 	if (!IEnemy::m_death) {
 		m_skinModelRender->SetPos(m_position);
 		IEnemy::SetCCollision(m_position, m_collisionheight);
@@ -49,7 +49,7 @@ void Kurage4::Update()
 	}
 }
 
-void Kurage4::Chase()
+void Kurage4::Move()
 {
 	CVector3 pos = m_protposition - m_position;
 	if (pos.LengthSq() > m_chasedistance) {
@@ -130,14 +130,6 @@ void Kurage4::Chase()
 			}
 		}
 	}
-	/*if (IEnemy::m_damage) {
-		m_state = enState_Pose;
-		m_stoptimer = 0.0f;
-		m_movetimer = 0.0f;
-		m_attacktimer = 0.0f;
-		m_isaria = false;
-		IEnemy::m_damage = false;
-	}*/
 	m_position += m_movespeed * GetDeltaTimeSec() * m_frame;
 }
 

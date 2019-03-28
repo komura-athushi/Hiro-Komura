@@ -4,6 +4,7 @@
 #include "DemolisherWeapon/physics/PhysicsStaticObject.h"
 class Player;
 class Game;
+//赤いスケルトン
 class Skeleton2:public IEnemy
 {
 public:
@@ -11,11 +12,16 @@ public:
 	~Skeleton2();
 	bool Start() override;
 	void Update() override;
-	void Chase();												//追跡
-	void AnimationController();									//アニメーションの再生
-	void Damage();												//ダメージを受けた時のアクション
-	void Turn();												//キャラクターの向きを計算
-	void Dead();												//エネミーが死んだときの処理
+	//追跡
+	void Chase();								
+	//アニメーションの再生
+	void AnimationController();						
+	//ダメージを受けた時のアクション
+	void Damage();						
+	//キャラクターの向きを計算
+	void Turn();										
+	//エネミーが死んだときの処理
+	void Dead();											
 	//アニメーションイベント
 	void OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventName);
 	void SetPlayer(Player* player)								//プレイヤーのポイントをセット
@@ -58,8 +64,8 @@ private:
 		enState_Damage,
 		enState_Dead,
 	};
-	AnimationClip m_animClip[enAnimationClip_num];
-	EnState m_state = enState_Idle_Run;
+	AnimationClip m_animClip[enAnimationClip_num];				//アニメーションクリップの配列
+	EnState m_state = enState_Idle_Run;							//ステート
 	CVector3 m_oldpos = { 30.0f,100.0f,1500.0f };               //鬼の初期位置
 	CVector3 m_position = { 30.0f,100.0f,1500.0f };				//鬼の座標
 	CVector3 m_scale = { 16.0f,16.0f,16.0f };					//鬼のスケール
@@ -73,19 +79,19 @@ private:
 	Game* m_game;
 	int m_timer = 0;											//攻撃のクールタイムのためにフレーム数を数える
 	//コリジョンとか
-	const float m_r = 125.0f;                                    //コリジョンの半径
+	const float m_r = 125.0f;                                   //コリジョンの半径
 	const float m_staticr = 95.0f;
 	const float m_collisionheight = 95.0f;                      //コリジョンをm_positionからどれだけ上にあげるか
-	const float m_attackr = 125.0f;                              //攻撃したときに発生させるコリジョンの半径
+	const float m_attackr = 125.0f;                             //攻撃したときに発生させるコリジョンの半径
 	//Oniの色々なステータス
-	static const int m_MaxHP = 1200;                             //最大HP
-	static const int m_Attack = 330;                               //攻撃力
-	static const int m_EXP = 2450;                                //経験値
+	static const int m_MaxHP = 1200;                            //最大HP
+	static const int m_Attack = 330;                            //攻撃力
+	static const int m_EXP = 2450;                              //経験値
 	//ヘッダーファイルでは宣言だけ、定義はcppファイルに書いてください
 	static const int m_dropChances[];                           //エネミーのドロップするアイテム、[1]が10ならレア度1が10%でドロップするみたいな
 	static const int m_dropmaterialChances[];					//エネミーのドロップする素材の確率
 	static const int m_meseta = 400;							//ドロップするメセタの大体の額
 	bool m_gekiha = false;                                      //deleteするかどうか
-	const CVector3 m_effectscale = { 20.0f,20.0f,15.0f };
+	const CVector3 m_effectscale = { 20.0f,20.0f,15.0f };		//斬撃エフェクトの大きさ
 };
 

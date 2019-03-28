@@ -23,8 +23,8 @@ public:
 	}
 	Player();
 	~Player();
-	bool Start();
-	void Update();
+	bool Start() override;
+	void Update() override;
 	//文字表示
 	void PostRender()override;
 	//ユニティちゃんを表示する時の処理
@@ -188,13 +188,13 @@ public:
 		return m_state == enState_GameClear;
 	}
 private:
-	bool m_cagliostro = false;
+	bool m_cagliostro = false;									//カリオストロちゃんモードかどうか
 	GameObj::CSkinModelRender* m_skinModelRender = nullptr;		//スキンモデルレンダラー
 	CSprite m_sprite2;											//ゲームクリアとかゲームオーバーの
 	CSprite m_targetsprite;										//ターゲットのスプライト
-	CSprite m_locktargetsprite;
+	CSprite m_locktargetsprite;									//ロックオンしたときの画像
 	CSprite m_hud ,m_hpframe ,m_hpgage ,m_ppframe ,m_ppgage;	//HUD関係のテクスチャ
-	CFont m_lvf, m_hpf, m_ppf;
+	CFont m_lvf, m_hpf, m_ppf;									//HUDの各画像
 	CFont m_name;
 	CSprite m_logo;
 	CSprite m_statussprite,m_weaponstatussprite,m_inventorystatussprite;
@@ -212,7 +212,7 @@ private:
 	GameCamera* m_gamecamera = nullptr;                         //カメラのポインタ
 	Town* m_town = nullptr;
 	CVector3 m_movespeed;                                       //移動速度
-	CVector3 m_position = {18633,0,7255};                  //ユニティちゃんの座標
+	CVector3 m_position = {18633,0,7255};                       //ユニティちゃんの座標
 	CVector3 m_playerheikou = { 1.0f,0.0f,0.0f };               //プレイヤーと平行なベクトル
 	CVector3 m_scale = { 1.0f,1.0f,1.0f };                      //大きさ
 	CVector3 m_swordposition = CVector3::Zero();				//剣の座標

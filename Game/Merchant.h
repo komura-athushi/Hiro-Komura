@@ -8,17 +8,26 @@ class Merchant :public IGameObject
 public:
 	Merchant();
 	~Merchant();
-	bool Start();
-	void Update();
+	bool Start() override;
+	void Update() override;
 	void PostRender() override;
+	//回転
 	void Turn();
+	//武器強化か上限解放か
 	void UpgradeorRelease();
+	//上限解放するかどうか
 	void ChoiceRelease();
+	//上限解放した
 	void Release();
+	//武器強化のベース選択
 	void Base();
+	//武器強化の素材選択中
 	void Material();
+	//強化しますか？
 	void Decision();
+	//強化しました！
 	void Upgrade();
+	//ボタン
 	void Button();
 	//Bボタンでステートを一つ前の状態に戻す
 	void BackState();

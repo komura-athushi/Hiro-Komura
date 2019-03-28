@@ -150,73 +150,63 @@ void Town::Update()
 
 void Town::BuildLevel()
 {
-	//レベルを構築する。
-	const wchar_t* levelname = nullptr;
-	//街のレベルにより読み込むレベルファイルを決定する
-	switch (m_gamedata->GetTownLevel()) {
-	case 0:
-		levelname = L"Asset/level/town00.tkl";
-		break;
-	case 1:
-		levelname = L"Asset/level/town01.tkl";
-		break;
-	case 2:
-		levelname = L"Asset/level/town02.tkl";
-		break;
-	}
+	//読み込むファイルを決める
+	wchar_t levelname[50];
+	swprintf_s(levelname, L"Asset/level/town0%d.tkl",m_gamedata->GetTownLevel());
 	m_level.Init(levelname, [&](LevelObjectData& objData) {
 		if (objData.EqualObjectName(L"ground") == true) {
+			//地面とか壁とか
 			m_ground = new Ground;
 			m_ground->SetStage(0);
 			m_ground->SetPosition(objData.position);
 			return true;
 		}
 		else if (objData.EqualObjectName(L"ground2") == true) {
+			//地面とか壁とか
 			m_ground = new Ground;
 			m_ground->SetStage(0);
 			m_ground->SetPosition(objData.position);
 			return true;
 		}
 		else if (objData.EqualObjectName(L"ground3") == true) {
+			//地面とか壁とか
 			m_ground = new Ground;
 			m_ground->SetStage(0);
 			m_ground->SetPosition(objData.position);
 			return true;
 		}
 		else if (objData.EqualObjectName(L"stage1_teleport") == true) {
-			//Starオブジェクト。
+			//近づいたらステージ1に移動する
 			m_stage1_teleport = new Stage1_Teleport;
 			m_stage1_teleport->SetPosition(objData.position);
-			//フックしたのでtrueを返す。
 			return true;
 		}
 		else if (objData.EqualObjectName(L"stage2_teleport") == true) {
-			//Starオブジェクト。
+			//近づいたらステージ2に移動する
 			m_stage2_teleport = new Stage2_Teleport;
 			m_stage2_teleport->SetPosition(objData.position);
-			//フックしたのでtrueを返す。
+		
 			return true;
 		}
 		else if (objData.EqualObjectName(L"stage3_teleport") == true) {
-			//Starオブジェクト。
+			//近づいたらステージ3に移動する
 			m_stage3_teleport = new Stage3_Teleport;
 			m_stage3_teleport->SetPosition(objData.position);
-			//フックしたのでtrueを返す。
 			return true;
 		}
 		else if (objData.EqualObjectName(L"human") == true) {
+			//拠点発展
 			m_human = new Human;
 			m_human->SetPosition(objData.position);
 			m_human->SetName(L"Human");
-			//フックした場合はtrueを返す。
 			return true;
 		}
 		else if (objData.EqualObjectName(L"merchant") == true) {
+			//武器強化する人
 			m_merchant = new Merchant;
 			m_merchant->SetPosition(objData.position);
 			m_merchant->SetRotation(objData.rotation);
 			m_merchant->SetName(L"Merchant");
-			//フックした場合はtrueを返す。
 			return true;
 		}
 		else if (objData.EqualObjectName(L"unityChan") == true) {
@@ -226,7 +216,6 @@ void Town::BuildLevel()
 			m_player->SetPosition(objData.position);
 			m_player->SetRotation(objData.rotation);
 			m_player->SetName(L"Player");
-			//フックした場合はtrueを返す。
 			return true;
 		}
 		return false;

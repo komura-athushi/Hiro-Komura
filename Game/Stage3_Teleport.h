@@ -5,8 +5,8 @@ class Stage3_Teleport:IGameObject
 public:
 	Stage3_Teleport();
 	~Stage3_Teleport();
-	bool Start();
-	void Update();
+	bool Start() override;
+	void Update() override;
 	//座標を設定
 	void SetPosition(const CVector3& pos)
 	{
@@ -19,7 +19,7 @@ public:
 	}
 private:
 	GameObj::CSkinModelRender* m_skinModelRender = nullptr;		//スキンモデルレンダラー。
-	GameObj::Suicider::CEffekseer* m_effect;		//エフェクト
+	GameObj::Suicider::CEffekseer* m_effect;					//エフェクト
 	const float m_frame = 40.0f;
 	CVector3 m_position;                                        //座標
 	CVector3 m_scale = { 1.0f,1.0f,1.0f };                      //大きさ

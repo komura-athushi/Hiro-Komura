@@ -15,8 +15,8 @@ public:
 		static MainSound inst;
 		return inst;
 	}
-	bool Start();
-	void Update();
+	bool Start() override;
+	void Update() override;
 	//Ä¶‚·‚éBGM‚ğİ’è‚µ‚Ü‚·
 	void SetBGM(const int& state)
 	{
@@ -32,7 +32,7 @@ public:
 	};
 private:
 	SuicideObj::CBGM* m_bgm = nullptr;
-	int m_state1 = 0;				//Œ»İÄ¶‚µ‚Ä‚¢‚é‹È	
-	int m_state2 = 0;				//Ä¶—\’è‚Ì‹È
+	int m_state1 = 0;										//Œ»İÄ¶‚µ‚Ä‚¢‚é‹È	
+	int m_state2 = 0;										//Ä¶—\’è‚Ì‹È
 };
 

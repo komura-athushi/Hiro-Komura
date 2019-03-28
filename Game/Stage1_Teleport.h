@@ -6,8 +6,8 @@ class Stage1_Teleport:public IGameObject
 public:
 	Stage1_Teleport();
 	~Stage1_Teleport();
-	bool Start();
-	void Update();
+	bool Start() override;
+	void Update() override;
 	//À•W‚ğİ’è
 	void SetPosition(const CVector3& pos)
 	{

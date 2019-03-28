@@ -208,7 +208,6 @@ bool Game::Start()
 			kr->SetName(L"Enemy");
 			//後で削除するのでリストに積んで記憶しておく。
 			kr->SetPlayer(m_player);
-			kr->SetGame(this);
 			kr->SetNumber(number);
 			number++;
 			//フックした場合はtrueを返す。
