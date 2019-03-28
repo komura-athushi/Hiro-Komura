@@ -32,7 +32,7 @@ public:
 	};
 private:
 	SuicideObj::CBGM* m_bgm = nullptr;
-	int m_state1 = 0;				//Œ»İÄ¶‚µ‚Ä‚¢‚é‹È	
-	int m_state2 = 0;				//Ä¶—\’è‚Ì‹È
+	int m_state1 = 0;										//Œ»İÄ¶‚µ‚Ä‚¢‚é‹È	
+	int m_state2 = 0;										//Ä¶—\’è‚Ì‹È
 };
 

@@ -21,6 +21,14 @@ bool FontNumber::Start()
 	int digit = (int)log10((double)m_number) + 1;
 	//Œ…”•ª‚¾‚¯ŠeŒ…‚Ì”š‚ğ‹‚ß‚é
 	for (int i = 0; i < digit; i++) {
+		/*1156‚ªó‚¯æ‚Á‚½”š‚Æ‚µ‚Ä
+		1156 % 10 / 1 = 6 ©ˆêŒ…–Ú‚Ì”š
+		1150 = 1156 - 6 * 1
+
+		1150 % 100 / 10 = 5 ©“ñŒ…–Ú‚Ì”š
+		1100 = 1150 - 5 * 10 
+		‚Æ‚¢‚¤‚æ‚¤‚È–‚ğŒJ‚è•Ô‚µ‚ÄŠeŒ…‚Ì”š‚ğ‹‚ß‚Ä‚¢‚«‚Ü‚·
+ 		*/
 		int Divide = std::pow(10, (i + 1));
 		int Divide2 = std::pow(10, i);
 		int remainder = nm % Divide / Divide2;

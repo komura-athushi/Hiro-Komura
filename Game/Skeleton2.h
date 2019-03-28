@@ -64,8 +64,8 @@ private:
 		enState_Damage,
 		enState_Dead,
 	};
-	AnimationClip m_animClip[enAnimationClip_num];
-	EnState m_state = enState_Idle_Run;
+	AnimationClip m_animClip[enAnimationClip_num];				//アニメーションクリップの配列
+	EnState m_state = enState_Idle_Run;							//ステート
 	CVector3 m_oldpos = { 30.0f,100.0f,1500.0f };               //鬼の初期位置
 	CVector3 m_position = { 30.0f,100.0f,1500.0f };				//鬼の座標
 	CVector3 m_scale = { 16.0f,16.0f,16.0f };					//鬼のスケール
