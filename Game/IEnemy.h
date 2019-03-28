@@ -25,7 +25,6 @@ public:
 	* float r        コリジョンの半径
 	*/
     void CCollision(const CVector3& pos,const float& l,const float& r);
-
 	/*!
 	* @brief	コリジョンの移動。
 	* CVector3 pos    コリジョンの座標

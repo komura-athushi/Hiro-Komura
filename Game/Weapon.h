@@ -6,13 +6,13 @@ public:
 	Weapon() {}
 	/*!
 	@brief	Weaponのコンストラクタ
-	*int id;							//武器の番号
-	*const wchar_t* name;				//武器の名前
-	*int rarity;						//武器のレアリティ
-	*int atk;							//武器の物理攻撃力
-	*int matk;							//武器の魔法攻撃力
-	*int mnumber;						//武器の魔法の番号
-	*int meseta							//売却時の価格
+	*int id;							武器の番号
+	*const wchar_t* name;				武器の名前
+	*int rarity;						武器のレアリティ
+	*int atk;							武器の物理攻撃力
+	*int matk;							武器の魔法攻撃力
+	*int mnumber;						武器の魔法の番号
+	*int meseta							売却時の価格
 	*/
 	Weapon(const int& id, const wchar_t* name,const int& rarity,const int& atk,const int& matk,const int& mnumber,int const& meseta);
 	//コピーコンストラクタ

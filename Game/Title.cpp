@@ -26,7 +26,6 @@ bool Title::Start()
 
 void Title::Update()
 {
-	
 	if (m_isWaitFadeout) {
 		if (!m_fade->IsFade()) {
 			Town* town = new Town;
@@ -75,7 +74,7 @@ void Title::PostRender()
 {
 	m_sprite.DrawScreenPos(m_position,m_scale, CVector2::Zero(),
 		0.0f,
-		{ 1.0f, 1.0f, 1.0f, 1.0f },
+		CVector4::White(),
 		DirectX::SpriteEffects_None,
 		0.2f);
 	m_sprite2.DrawScreenPos(m_position, m_scale, CVector2::Zero(),

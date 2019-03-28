@@ -33,7 +33,6 @@ bool Skeleton2::Start()
 	//鬼のスキンモデルレンダーを表示
 	m_skinModelRender = new GameObj::CSkinModelRender;
 	m_skinModelRender->Init(L"Resource/modelData/enemy2.cmo", m_animClip, enAnimationClip_num, enFbxUpAxisZ);
-	//m_skinModelRender->Init(L"Resource/modelData/enemy2.cmo");
 	m_skinModelRender->GetAnimCon().AddAnimationEventListener([&](const wchar_t* clipName, const wchar_t* eventName) {
 		OnAnimationEvent(clipName, eventName);
 	});
@@ -93,14 +92,11 @@ void Skeleton2::AnimationController()
 	switch (m_state) {
 	case enState_Idle_Run:
 		if (m_movespeed.LengthSq() > 300.0f * 300.0f) {
-			//走りモーション。
-			//m_skinModelRender->GetAnimCon().Play(enAnimationClip_run, 0.2f);
 		}
 		else {
 			//待機モーション
 			m_skinModelRender->GetAnimCon().Play(enAnimationClip_idle, 0.2f);
 		}
-		//m_state = enState_Idle_Run;
 		Chase();
 		Turn();
 		break;
@@ -199,7 +195,7 @@ void Skeleton2::OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventNa
 		pos += m_heikou * 130.0f;
 		attackCol->CreateSphere(pos, CQuaternion::Identity(), m_attackr);
 		//寿命を設定
-		attackCol->SetTimer(3);//15フレーム後削除される
+		attackCol->SetTimer(3);
 		attackCol->SetCallback([&](SuicideObj::CCollisionObj::SCallbackParam& param) {
 			//衝突した判定の名前が"IEnemy"ならm_Attack分だけダメージ与える
 			if (param.EqualName(L"Player")) {

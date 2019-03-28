@@ -45,7 +45,7 @@ void Teleport::Update()
 				//3DÄ¶
 				se->SetPos(m_position);//‰¹‚ÌˆÊ’u
 				se->SetDistance(500.0f);//‰¹‚ª•·‚±‚¦‚é”ÍˆÍ
-				se->Play(true); //‘æˆêˆø”‚ğtru
+				se->Play(true); //‘æˆêˆø”‚ğtrue
 			}
 		}
 		else {
