@@ -300,7 +300,7 @@ private:
 	const float m_lvupvollume = 2.0f;							//レベルアップのSEの音量
 	const float m_cancelvolume = 5.0f;
 	bool m_targetdisplay = false;								//ターゲッティング状態かどうか
-	const float m_distancetarget = 1400.0f * 1400.0f;			//ターゲットが有効な距離
+	const float m_distancetarget = 1600.0f * 1600.0f;			//ターゲットが有効な距離
 	const float m_degreemultiply = 0.3f;						//ターゲットの距離補正
 	//ライフ表示の初期の横の長さ
 	const float m_side = 384.0f;

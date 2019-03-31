@@ -59,6 +59,6 @@ private:
 	const float m_attack3r = 90.0f;                             //攻撃したときに発生させるコリジョンの半径
 	int m_attack = 30;							                //ファイヤーの攻撃力、デフォルトで30
 	float m_timer = 0.0f;									    //タイマー
-	float m_time = 50.0f;									    //削除するタイミング
+	float m_time = 100.0f;									    //削除するタイミング
 	float m_speed = 1.0f;									    //速さ
 };

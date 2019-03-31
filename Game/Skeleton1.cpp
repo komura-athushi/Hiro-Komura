@@ -26,7 +26,9 @@ bool Skeleton1::Start()
 	m_animClip[enAnimationClip_attack].Load(L"Asset/animData/enemy/attack.tka");
 	m_animClip[enAnimationClip_damage].Load(L"Asset/animData/enemy/damage.tka");
 	m_animClip[enAnimationClip_death].Load(L"Asset/animData/enemy/death.tka");
+	m_animClip[enAnimationClip_walk].Load(L"Asset/animData/enemy/walk.tka");
 	m_animClip[enAnimationClip_idle].SetLoopFlag(true);
+	m_animClip[enAnimationClip_walk].SetLoopFlag(true);
 	m_animClip[enAnimationClip_attack].SetLoopFlag(false);
 	m_animClip[enAnimationClip_damage].SetLoopFlag(false);
 	m_animClip[enAnimationClip_death].SetLoopFlag(false);
@@ -87,13 +89,13 @@ void Skeleton1::Chase()
 
 void Skeleton1::AnimationController()
 {
-	m_skinModelRender->GetAnimCon().SetSpeed(1.0f);
+	m_skinModelRender->GetAnimCon().SetSpeed(1.0f * 60.0f * GetDeltaTimeSec());
 	//ステート分岐によってアニメーションを再生させる
 	switch (m_state) {
 	case enState_Idle_Run:
-		if (m_movespeed.LengthSq() > 300.0f * 300.0f) {
+		if (m_movespeed.LengthSq() > 2.0f * 2.0f) {
 			//走りモーション。
-			//m_skinModelRender->GetAnimCon().Play(enAnimationClip_run, 0.2f);
+			m_skinModelRender->GetAnimCon().Play(enAnimationClip_walk, 0.2f);
 		}
 		else {
 			//待機モーション

@@ -231,8 +231,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Ability.cpp" />
-    <ClCompile Include="Boss.cpp" />
     <ClCompile Include="Boss2.cpp" />
+    <ClCompile Include="Boss.cpp" />
+    <ClCompile Include="Dragon.cpp" />
     <ClCompile Include="Boss3.cpp" />
     <ClCompile Include="Enemy_Fire.cpp" />
     <ClCompile Include="Cagliostro_view.cpp" />
@@ -283,8 +284,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Ability.h" />
-    <ClInclude Include="Boss.h" />
     <ClInclude Include="Boss2.h" />
+    <ClInclude Include="Boss.h" />
+    <ClInclude Include="Dragon.h" />
     <ClInclude Include="Boss3.h" />
     <ClInclude Include="Enemy_Fire.h" />
     <ClInclude Include="Cagliostro_view.h" />
@@ -334,6 +336,7 @@
     <MeshContentTask Include="Asset\modelData\boss\boss.FBX" />
     <MeshContentTask Include="Asset\modelData\boss\bullet2.FBX" />
     <MeshContentTask Include="Asset\modelData\boss\bullet3.FBX" />
+    <MeshContentTask Include="Asset\modelData\boss_2\rockgolem.FBX" />
     <MeshContentTask Include="Asset\modelData\cagliostro\cagliostro.fbx" />
     <MeshContentTask Include="Asset\modelData\enemy2\enemy2.FBX" />
     <MeshContentTask Include="Asset\modelData\enemy\enemy.FBX" />
@@ -378,7 +381,9 @@
     <MeshContentTask Include="Asset\modelData\sword_drop\WindSword_drop.FBX" />
     <MeshContentTask Include="Asset\modelData\unityChan.fbx" />
     <MeshContentTask Include="Asset\modelData\wall\wall.FBX" />
-    <MeshContentTask Include="Asset\modelData\zunko\zunko.FBX" />
+    <MeshContentTask Include="Asset\modelData\zunko\zunko.FBX">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </MeshContentTask>
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Asset\sprite\Red.png" />
@@ -387,23 +392,39 @@
     <ImageContentTask Include="Asset\sprite\Title.png" />
   </ItemGroup>
   <ItemGroup>
-    <ImageContentTask Include="Asset\sprite\MokoTitle.png" />
+    <ImageContentTask Include="Asset\sprite\MokoTitle.png">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ImageContentTask>
   </ItemGroup>
   <ItemGroup>
-    <ImageContentTask Include="Asset\sprite\Weapon\ancientwarriorblade.png" />
-    <ImageContentTask Include="Asset\sprite\Weapon\battlereadyblade.png" />
-    <ImageContentTask Include="Asset\sprite\Weapon\bluelightsword.png" />
-    <ImageContentTask Include="Asset\sprite\Weapon\firesword.png" />
+    <ImageContentTask Include="Asset\sprite\Weapon\ancientwarriorblade.png">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ImageContentTask>
+    <ImageContentTask Include="Asset\sprite\Weapon\battlereadyblade.png">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ImageContentTask>
+    <ImageContentTask Include="Asset\sprite\Weapon\bluelightsword.png">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ImageContentTask>
+    <ImageContentTask Include="Asset\sprite\Weapon\firesword.png">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ImageContentTask>
     <ImageContentTask Include="Asset\sprite\Weapon\greatsword.png" />
-    <ImageContentTask Include="Asset\sprite\Weapon\icesword.png" />
+    <ImageContentTask Include="Asset\sprite\Weapon\icesword.png">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ImageContentTask>
     <ImageContentTask Include="Asset\sprite\Weapon\sword.png" />
     <ImageContentTask Include="Asset\sprite\Weapon\windsword.png" />
   </ItemGroup>
   <ItemGroup>
-    <ImageContentTask Include="Asset\sprite\Weapon\excaliburmorgan.png" />
+    <ImageContentTask Include="Asset\sprite\Weapon\excaliburmorgan.png">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ImageContentTask>
   </ItemGroup>
   <ItemGroup>
-    <ImageContentTask Include="Asset\sprite\Weapon\cursor.png" />
+    <ImageContentTask Include="Asset\sprite\Weapon\cursor.png">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ImageContentTask>
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Asset\sprite\loading.png" />
@@ -422,7 +443,9 @@
     <ImageContentTask Include="Asset\sprite\target2.png" />
   </ItemGroup>
   <ItemGroup>
-    <ImageContentTask Include="Asset\sprite\status.png" />
+    <ImageContentTask Include="Asset\sprite\status.png">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ImageContentTask>
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Asset\sprite\hud.png" />
@@ -437,14 +460,20 @@
     <ImageContentTask Include="Asset\sprite\hpgage.png" />
   </ItemGroup>
   <ItemGroup>
-    <ImageContentTask Include="Asset\sprite\ppframe.png" />
-    <ImageContentTask Include="Asset\sprite\ppgage.png" />
+    <ImageContentTask Include="Asset\sprite\ppframe.png">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ImageContentTask>
+    <ImageContentTask Include="Asset\sprite\ppgage.png">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ImageContentTask>
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Asset\sprite\weaponstatus.png" />
   </ItemGroup>
   <ItemGroup>
-    <ImageContentTask Include="Asset\sprite\inventorystatus.png" />
+    <ImageContentTask Include="Asset\sprite\inventorystatus.png">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ImageContentTask>
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Asset\sprite\gameclear.png" />
@@ -465,7 +494,9 @@
     <ImageContentTask Include="Asset\sprite\upgrade_back.png" />
   </ItemGroup>
   <ItemGroup>
-    <ImageContentTask Include="Asset\sprite\base.png" />
+    <ImageContentTask Include="Asset\sprite\base.png">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ImageContentTask>
     <ImageContentTask Include="Asset\sprite\equipment.png" />
   </ItemGroup>
   <ItemGroup>
@@ -488,7 +519,9 @@
     <ImageContentTask Include="Asset\sprite\weaponupgrade.png" />
   </ItemGroup>
   <ItemGroup>
-    <ImageContentTask Include="Asset\sprite\cursor2.png" />
+    <ImageContentTask Include="Asset\sprite\cursor2.png">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ImageContentTask>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

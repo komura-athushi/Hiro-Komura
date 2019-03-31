@@ -6,11 +6,11 @@
 class Stage1;
 class Player;
 class BossAttack;
-class Boss2 : public IEnemy
+class Dragon : public IEnemy
 {
 public:
-	Boss2();
-	~Boss2();
+	Dragon();
+	~Dragon();
 	bool Start() override;
 	void Update() override;
 	void Attack();       										//攻撃
@@ -110,7 +110,7 @@ private:
 	static const int m_meseta = 500;
 	bool m_gekiha = false;                                      //deleteするかどうか
 	//ファイヤー関連
-	bool m_fireend = false;										//ファイヤーが終わったかどうか
+	bool m_fireend=false;										//ファイヤーが終わったかどうか
 	bool m_ischase = true;										//プレイヤーを追尾しているかどうか
 	const int m_attackfire = 50;								//ファイヤーの攻撃力
 	int m_bone = 0;												//骨の番号

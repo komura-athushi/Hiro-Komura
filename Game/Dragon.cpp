@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "Boss2.h"
+#include "Dragon.h"
 #define _USE_MATH_DEFINES //M_PI 円周率呼び出し
 #include <math.h> 
 #include "Game.h"
@@ -8,15 +8,15 @@
 #include "Enemy_Fire.h"
 #include "Teleport.h"
 //cppでエネミーのレア度ごとのドロップ率を設定
-const int Boss2::m_dropChances[Weapon::m_HighestRarity] = { 0,0,0,100,0,0,0 };
-const int Boss2::m_dropmaterialChances[Material::m_HighestRarity] = { 0.0f,100.0f,0.0f };
+const int Dragon::m_dropChances[Weapon::m_HighestRarity] = { 0,0,0,100,0,0,0 };
+const int Dragon::m_dropmaterialChances[Material::m_HighestRarity] = { 0.0f,100.0f,0.0f };
 //ボス2(ドラゴン)です
-Boss2::Boss2() : IEnemy(m_MaxHP, m_Attack, m_EXP, m_dropChances, m_dropmaterialChances, m_meseta)
+Dragon::Dragon() : IEnemy(m_MaxHP, m_Attack, m_EXP, m_dropChances, m_dropmaterialChances, m_meseta)
 {
 
 }
 
-Boss2::~Boss2()
+Dragon::~Dragon()
 {
 	delete m_skinModelRender;
 	Teleport* tl = new Teleport;
@@ -24,7 +24,7 @@ Boss2::~Boss2()
 	tl->SetName(L"Teleport");
 }
 
-bool Boss2::Start()
+bool Dragon::Start()
 {
 	IEnemy::CCollision(m_position, m_collisionheight, m_r);
 	//アニメーション
@@ -63,16 +63,16 @@ bool Boss2::Start()
 	return true;
 }
 
-void Boss2::Attack()
+void Dragon::Attack()
 {
 	//プレイヤーの座標を取得
 	CVector3 m_playerposition = m_player->GetPosition();
 	m_playerposition.y += 100.0f;
 	//プレイヤーとドラゴンの距離
 	CVector3 pos = m_player->GetPosition() - m_position;
-
+	
 	//ひっかき
-	if (pos.LengthSq() < 300.0f*300.0f) {
+	if(pos.LengthSq() < 300.0f*300.0f){
 		if (m_timer >= m_cooltime) {
 			m_state = enState_Hikkaki;
 			//タイマーをリセット。
@@ -88,8 +88,8 @@ void Boss2::Attack()
 		}
 	}
 	//ファイヤーブレス
-	else if (pos.LengthSq() < 1000.0f*1000.0f) {
-		if (m_timer >= m_cooltime) {
+	else if (pos.LengthSq() < 1000.0f*1000.0f){
+		if (m_timer >= m_cooltime) { 
 			m_state = enState_Fire;
 			//タイマーをリセット。
 			m_timer = 0;
@@ -97,7 +97,7 @@ void Boss2::Attack()
 	}
 }
 
-void Boss2::AnimationController()
+void Dragon::AnimationController()
 {
 	m_skinModelRender->GetAnimCon().SetSpeed(1.0f * 40.0f * GetDeltaTimeSec());
 	//ステート分岐によってアニメーションを再生させる
@@ -153,7 +153,7 @@ void Boss2::AnimationController()
 }
 
 //try
-void Boss2::Chase()
+void Dragon::Chase()
 {
 	m_movespeed = { 0.0f,0.0f,0.0f };
 	//プレイヤーの座標を取得
@@ -199,7 +199,7 @@ void Boss2::Chase()
 }
 
 //IEnemyにいれる
-void Boss2::Turn()
+void Dragon::Turn()
 {
 	CVector3 rotation = { 0.0f,0.0f,0.0f };
 	//自機の角度の差分
@@ -228,10 +228,10 @@ void Boss2::Turn()
 	m_skinModelRender->SetRot(m_rotation);
 }
 
-void Boss2::Damage()
+void Dragon::Damage()
 {
 	if (IEnemy::m_damage) {
-		int ran = rand() % 10 + 1;
+		int ran = rand() % 10+1;
 		if (ran > 7) {
 			m_state = enState_Damage;
 		}
@@ -239,7 +239,7 @@ void Boss2::Damage()
 	}
 }
 
-void Boss2::Dead()
+void Dragon::Dead()
 {
 	if (IEnemy::m_death) {
 		m_state = enState_Dead;
@@ -247,7 +247,7 @@ void Boss2::Dead()
 }
 
 
-void Boss2::OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventName)
+void Dragon::OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventName)
 {
 	(void)clipName;
 	//ひっかき
@@ -257,7 +257,7 @@ void Boss2::OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventName)
 		//形状の作成
 		CVector3 atkpos = m_position;
 		atkpos.z += 50.0f;
-		CVector3 pos = atkpos + CVector3::AxisY() * (m_collisionheight - 30.0f);
+		CVector3 pos = atkpos + CVector3::AxisY() * (m_collisionheight-30.0f);
 		pos += m_parallel * 150.0f;
 		attackCol->CreateSphere(pos, CQuaternion::Identity(), m_attackr);
 		//寿命を設定
@@ -270,9 +270,8 @@ void Boss2::OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventName)
 			}
 		}
 		);
-		//プレス
-	}
-	else if (wcscmp(eventName, L"press") == 0) {
+	//プレス
+	}else if (wcscmp(eventName, L"press") == 0) {
 		//攻撃判定の発生
 		SuicideObj::CCollisionObj* attackCol = NewGO<SuicideObj::CCollisionObj>();
 		//形状の作成
@@ -310,7 +309,7 @@ void Boss2::OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventName)
 	}
 }
 
-void Boss2::Update()
+void Dragon::Update()
 {
 	m_timer++;
 	AnimationController();

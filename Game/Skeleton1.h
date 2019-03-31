@@ -55,6 +55,7 @@ private:
 		enAnimationClip_attack,
 		enAnimationClip_damage,
 		enAnimationClip_death,
+		enAnimationClip_walk,
 		enAnimationClip_num,
 	};
 	//アニメーション分岐

@@ -30,7 +30,7 @@ public:
 	* CVector3 pos    コリジョンの座標
 	* float l        コリジョンのy座標をlだけ加算      
 	*/
-	void SetCCollision(const CVector3& pos,const float& l);
+	void SetCCollision(const CVector3& pos,const float& l = 0.0f);
 	//プレイヤーがエネミーにダメージを与える時の処理
 	void Damage(const int& attack,int number = 0);
 	//ドロップするアイテムの処理

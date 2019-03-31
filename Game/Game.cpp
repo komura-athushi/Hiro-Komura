@@ -9,6 +9,7 @@
 #include "Skeleton2.h"
 #include "Boss.h"
 #include "Boss2.h"
+#include "Boss3.h"
 #include "DropItem.h"
 #include "DropMaterial.h"
 #include "IEnemy.h"
@@ -164,7 +165,7 @@ bool Game::Start()
 			//Unityちゃん。
 			//プレイヤーのインスタンスを生成する。
 			m_player = new Player;
-			m_player->SetPosition(objData.position);
+			//m_player->SetPosition(objData.position);
 			m_player->SetName(L"Player");
 			m_player->SetRotation(objData.rotation);
 			//フックした場合はtrueを返す。
@@ -272,13 +273,19 @@ bool Game::Start()
 		else if (objData.EqualObjectName(L"boss") == true) {
 			//ボス
 			//プレイヤーのインスタンスを生成する。
-			Boss* boss = new Boss;
+		/*	Boss* boss = new Boss;
 			boss->SetPosition(objData.position);
 			boss->SetOldPosition(objData.position);
 			boss->SetName(L"Enemy");
 			boss->SetPlayer(m_player);
 			boss->SetStage1(this);
-			boss->SetNumber(number);
+			boss->SetNumber(number);*/
+			Boss2* boss2 = new Boss2;
+			boss2->SetPosition(objData.position);
+			boss2->SetOldPosition(objData.position);
+			boss2->SetName(L"Enemy");
+			boss2->SetPlayer(m_player);
+			boss2->SetNumber(number);
 			number++;
 			//フックした場合はtrueを返す。
 			return true;
