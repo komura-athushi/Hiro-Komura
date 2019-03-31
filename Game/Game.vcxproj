@@ -383,6 +383,7 @@
     <MeshContentTask Include="Asset\modelData\sword_drop\WindSword_drop.FBX" />
     <MeshContentTask Include="Asset\modelData\unityChan.fbx">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Preview|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </MeshContentTask>
     <MeshContentTask Include="Asset\modelData\wall\wall.FBX" />
     <MeshContentTask Include="Asset\modelData\zunko\zunko.FBX">

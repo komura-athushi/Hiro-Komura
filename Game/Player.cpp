@@ -291,9 +291,9 @@ void Player::Animation()
 		}
 	}
 	if (m_town == nullptr) {
-		//if (m_HP <= 0) {
-		//	m_state = enState_GameOver;
-		//}
+		/*if (m_HP <= 0) {
+			m_state = enState_GameOver;
+		}*/
 		//LT押したらゲームオーバー
 		if (m_HP <= 0 || Pad(0).GetButton(enButtonLT)) {
 			m_state = enState_GameOver;

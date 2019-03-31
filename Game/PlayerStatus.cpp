@@ -43,7 +43,7 @@ bool PlayerStatus::Start()
 	return true;
 }
 
-void PlayerStatus::Update()
+void PlayerStatus::Update() 
 {
 	//LSBボタンを押すと全部武器所持状態に移行
 	if (Pad(0).GetDown(enButtonLSB)) {

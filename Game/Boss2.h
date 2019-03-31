@@ -13,11 +13,15 @@ public:
 	bool Start() override;
 	void Update() override;
 	//ボスの行動をチェンジ
-	void ChangeBehavior();										
-	void Chase();												//追跡
-	void Turn();												//キャラクターの向きを計算
-	void AnimationController();									//アニメーションの再生
-	void Dead();												//ドラゴンが死んだときの処理
+	void ChangeBehavior();									
+	//追跡
+	void Chase();											
+	//キャラクターの向きを計算
+	void Turn();											
+	//アニメーションの再生
+	void AnimationController();								
+	//ドラゴンが死んだときの処理
+	void Dead();											
 	//アニメーションイベント
 	void OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventName);
 
@@ -37,6 +41,11 @@ public:
 	{
 		m_oldpos = pos;
 	}
+	//行動を開始したかどうか
+	bool GetisStart() const
+	{
+		return m_start;
+	}
 private:
 	GameObj::CSkinModelRender* m_skinModelRender = nullptr;		//スキンモデルレンダラー。
 	PhysicsStaticObject m_staticobject;                         //静的オブジェクト
@@ -44,9 +53,9 @@ private:
 	enum EnAnimationClip {
 		enAnimationClip_idle,
 		enAnimationClip_run,
-		enAnimationClip_attack1,
 		enAnimationClip_aria,
 		enAnimationClip_aria2,
+		enAnimationClip_aria3,
 		enAnimationClip_death,
 		enAnimationClip_num,
 	};
@@ -54,9 +63,9 @@ private:
 	enum EnState {
 		enState_Idle,
 		enState_Run,
-		enState_Attack1,
-		enState_Aria,
-		enState_Aria2,
+		enState_Aria,											//ファイアアローばら撒き
+		enState_Aria2,											//かきう
+		enState_Aria3,											//エアルバースト
 		enState_Death,
 	};
 	EnState m_state = enState_Idle;								//アニメーション分岐
@@ -87,9 +96,28 @@ private:
 	static const int m_dropChances[];				            //ドラゴンのドロップするアイテム、[1]が10ならレア度1が10%でドロップするみたいな
 	static const int m_dropmaterialChances[];
 	static const int m_meseta = 500;
+	bool m_isanger = false;										//HP半分以下になると攻撃が激しくなる
 	bool m_gekiha = false;                                      //deleteするかどうか
 	const int m_attackfire = 50;								//ファイヤーの攻撃力
-	const float m_attackr = 80.0f;								//攻撃時に発生させるコリジョンの大きさ
-	const int m_attack1 = 500;
+	const float m_attackr = 170.0f;								//攻撃時に発生させるコリジョンの大きさ
+	const int m_AttackEB = 600;
+	const int m_AttackFIRE = 300;
+	const int m_AttackEF = 400;
+	const CVector3 m_ariascale = CVector3::One() * 40.0f;
+	const int m_firenumber = 15, m_firenumberanger = 20;
+	const float m_firespeed = 0.5f, m_firespeedanger = 0.7f;
+	const float m_fireheight = 130.0f;
+	const CVector3 m_firescale = CVector3::One() * 1.7f, m_firescaleanger = CVector3::One() * 2.3f;
+	const float m_playerheight = 40.0f;
+	const int m_enemyfirenumber = 4, m_enemyfirenumberanger = 6;
+	const float m_plusdegree = 22.5, m_plusdegreeanger = 17.5f;
+	const float m_enemyfirespeed = 0.8f;
+	const float m_enemyfireheight = 60.0f;
+	float m_timer = 0.0f;
+	const float m_idletime = 1.5f, m_idletimeanger = 1.0f;
+	const float m_movetime = 5.0f, m_movetimeanger = 4.0f;
+	bool m_start = false;
+	const float m_startdistance = 2300.0f * 2300.0f;
+	CVector3 m_bossdirection = CVector3::Zero();
 };
 
