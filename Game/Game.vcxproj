@@ -331,7 +331,9 @@
     <ClInclude Include="Weapon.h" />
   </ItemGroup>
   <ItemGroup>
-    <MeshContentTask Include="Asset\modelData\boss2\DarkDragon.FBX" />
+    <MeshContentTask Include="Asset\modelData\boss2\DarkDragon.FBX">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Preview|x64'">true</ExcludedFromBuild>
+    </MeshContentTask>
     <MeshContentTask Include="Asset\modelData\boss3\boss3.FBX" />
     <MeshContentTask Include="Asset\modelData\boss\boss.FBX" />
     <MeshContentTask Include="Asset\modelData\boss\bullet2.FBX" />
@@ -379,10 +381,13 @@
     <MeshContentTask Include="Asset\modelData\sword_drop\IceSword_drop.FBX" />
     <MeshContentTask Include="Asset\modelData\sword_drop\Sword_drop.FBX" />
     <MeshContentTask Include="Asset\modelData\sword_drop\WindSword_drop.FBX" />
-    <MeshContentTask Include="Asset\modelData\unityChan.fbx" />
+    <MeshContentTask Include="Asset\modelData\unityChan.fbx">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Preview|x64'">true</ExcludedFromBuild>
+    </MeshContentTask>
     <MeshContentTask Include="Asset\modelData\wall\wall.FBX" />
     <MeshContentTask Include="Asset\modelData\zunko\zunko.FBX">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Preview|x64'">true</ExcludedFromBuild>
     </MeshContentTask>
   </ItemGroup>
   <ItemGroup>
