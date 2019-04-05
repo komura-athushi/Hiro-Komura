@@ -149,7 +149,7 @@ void Boss2::Chase()
 			//‹ß‚Ã‚¢‚Ä‚­‚é
 			CVector3 EnemyPos = m_playerposition - m_position;
 			EnemyPos.Normalize();
-			m_movespeed = EnemyPos * 8.0f;
+			m_movespeed = EnemyPos * 14.0f;
 			m_movespeed.y = 0.0f;
 			m_position += m_movespeed * 40.0f* GetDeltaTimeSec();
 	}
@@ -375,7 +375,7 @@ void Boss2::ChangeBehavior()
 			else {
 				m_state = enState_Aria2;
 			}
-			if (35 <= ran && ran <= 65) {
+			if (28 <= ran && ran <= 72) {
 				m_state = enState_Run;
 			}
 		}
