@@ -153,53 +153,111 @@
     </ImageContentTask>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Boss.cpp" />
     <ClCompile Include="Cagliostro_view.cpp" />
-    <ClCompile Include="DropItem.cpp" />
-    <ClCompile Include="DropMaterial.cpp" />
     <ClCompile Include="Fade.cpp" />
-    <ClCompile Include="GameData.cpp" />
     <ClCompile Include="Human.cpp" />
-    <ClCompile Include="IEnemy.cpp" />
-    <ClCompile Include="Equipment.cpp" />
-    <ClCompile Include="Magic.cpp" />
     <ClCompile Include="MainSound.cpp" />
-    <ClCompile Include="Material.cpp" />
     <ClCompile Include="Merchant.cpp" />
-    <ClCompile Include="Morugan.cpp" />
-    <ClCompile Include="PlayerStatus.cpp" />
-    <ClCompile Include="ShotMagic.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Stage1_Teleport.cpp" />
     <ClCompile Include="Stage2_Teleport.cpp" />
     <ClCompile Include="Stage3_Teleport.cpp" />
-    <ClCompile Include="Sword.cpp" />
     <ClCompile Include="Teleport.cpp" />
     <ClCompile Include="Town.cpp" />
-    <ClCompile Include="GameCamera.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Player.cpp" />
     <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="Title.cpp" />
     <ClCompile Include="Ground.cpp" />
-    <ClCompile Include="Weapon.cpp" />
     <ClCompile Include="GameClear.cpp" />
-    <ClCompile Include="Skeleton2.cpp" />
-    <ClCompile Include="Ability.cpp" />
-    <ClCompile Include="Kurage.cpp" />
-    <ClCompile Include="Enemy_Fire.cpp" />
-    <ClCompile Include="Kurage2.cpp" />
-    <ClCompile Include="Kurage3.cpp" />
-    <ClCompile Include="Enemy_Wind.cpp" />
     <ClCompile Include="FontNumber.cpp" />
-    <ClCompile Include="Enemy_Ice.cpp" />
     <ClCompile Include="Wall.cpp" />
-    <ClCompile Include="Kurage4.cpp" />
-    <ClCompile Include="Kurage5.cpp" />
-    <ClCompile Include="Skeleton1.cpp" />
-    <ClCompile Include="Boss3.cpp" />
-    <ClCompile Include="Dragon.cpp" />
-    <ClCompile Include="Boss2.cpp" />
+    <ClCompile Include="Boss.cpp">
+      <Filter>Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Boss2.cpp">
+      <Filter>Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Boss3.cpp">
+      <Filter>Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Dragon.cpp">
+      <Filter>Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="IEnemy.cpp">
+      <Filter>Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Kurage.cpp">
+      <Filter>Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Kurage2.cpp">
+      <Filter>Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Kurage3.cpp">
+      <Filter>Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Kurage4.cpp">
+      <Filter>Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Kurage5.cpp">
+      <Filter>Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Skeleton1.cpp">
+      <Filter>Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Skeleton2.cpp">
+      <Filter>Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Ability.cpp">
+      <Filter>Item</Filter>
+    </ClCompile>
+    <ClCompile Include="DropItem.cpp">
+      <Filter>Item</Filter>
+    </ClCompile>
+    <ClCompile Include="DropMaterial.cpp">
+      <Filter>Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Equipment.cpp">
+      <Filter>Item</Filter>
+    </ClCompile>
+    <ClCompile Include="GameData.cpp">
+      <Filter>Data</Filter>
+    </ClCompile>
+    <ClCompile Include="Magic.cpp">
+      <Filter>Data</Filter>
+    </ClCompile>
+    <ClCompile Include="Weapon.cpp">
+      <Filter>Data</Filter>
+    </ClCompile>
+    <ClCompile Include="Material.cpp">
+      <Filter>Data</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Player</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerStatus.cpp">
+      <Filter>Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Sword.cpp">
+      <Filter>Player</Filter>
+    </ClCompile>
+    <ClCompile Include="GameCamera.cpp">
+      <Filter>Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy_Fire.cpp">
+      <Filter>Magic</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy_Ice.cpp">
+      <Filter>Magic</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy_Wind.cpp">
+      <Filter>Magic</Filter>
+    </ClCompile>
+    <ClCompile Include="Morugan.cpp">
+      <Filter>Magic</Filter>
+    </ClCompile>
+    <ClCompile Include="ShotMagic.cpp">
+      <Filter>Magic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Asset\modelData\Sword\AncientWarriorBlade.FBX">
@@ -357,52 +415,110 @@
     </MeshContentTask>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Boss.h" />
     <ClInclude Include="Cagliostro_view.h" />
-    <ClInclude Include="DropItem.h" />
-    <ClInclude Include="DropMaterial.h" />
     <ClInclude Include="Fade.h" />
-    <ClInclude Include="GameData.h" />
     <ClInclude Include="Human.h" />
-    <ClInclude Include="IEnemy.h" />
-    <ClInclude Include="Equipment.h" />
-    <ClInclude Include="Magic.h" />
     <ClInclude Include="MainSound.h" />
-    <ClInclude Include="Material.h" />
     <ClInclude Include="Merchant.h" />
-    <ClInclude Include="Morugan.h" />
-    <ClInclude Include="PlayerStatus.h" />
-    <ClInclude Include="ShotMagic.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Stage1_Teleport.h" />
     <ClInclude Include="Stage2_Teleport.h" />
     <ClInclude Include="Stage3_Teleport.h" />
-    <ClInclude Include="Sword.h" />
     <ClInclude Include="Teleport.h" />
     <ClInclude Include="Town.h" />
-    <ClInclude Include="GameCamera.h" />
-    <ClInclude Include="Player.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Title.h" />
     <ClInclude Include="Ground.h" />
-    <ClInclude Include="Weapon.h" />
     <ClInclude Include="GameClear.h" />
-    <ClInclude Include="Skeleton2.h" />
-    <ClInclude Include="Ability.h" />
-    <ClInclude Include="Kurage.h" />
-    <ClInclude Include="Enemy_Fire.h" />
-    <ClInclude Include="Kurage2.h" />
-    <ClInclude Include="Kurage3.h" />
-    <ClInclude Include="Enemy_Wind.h" />
     <ClInclude Include="FontNumber.h" />
-    <ClInclude Include="Enemy_Ice.h" />
     <ClInclude Include="Wall.h" />
-    <ClInclude Include="Kurage4.h" />
-    <ClInclude Include="Kurage5.h" />
-    <ClInclude Include="Skeleton1.h" />
-    <ClInclude Include="Boss3.h" />
-    <ClInclude Include="Dragon.h" />
-    <ClInclude Include="Boss2.h" />
+    <ClInclude Include="Boss2.h">
+      <Filter>Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Boss.h">
+      <Filter>Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Boss3.h">
+      <Filter>Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Dragon.h">
+      <Filter>Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="IEnemy.h">
+      <Filter>Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Kurage.h">
+      <Filter>Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Kurage2.h">
+      <Filter>Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Kurage3.h">
+      <Filter>Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Kurage4.h">
+      <Filter>Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Kurage5.h">
+      <Filter>Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Skeleton1.h">
+      <Filter>Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Skeleton2.h">
+      <Filter>Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Ability.h">
+      <Filter>Item</Filter>
+    </ClInclude>
+    <ClInclude Include="DropItem.h">
+      <Filter>Item</Filter>
+    </ClInclude>
+    <ClInclude Include="DropMaterial.h">
+      <Filter>Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Equipment.h">
+      <Filter>Item</Filter>
+    </ClInclude>
+    <ClInclude Include="GameData.h">
+      <Filter>Data</Filter>
+    </ClInclude>
+    <ClInclude Include="Magic.h">
+      <Filter>Data</Filter>
+    </ClInclude>
+    <ClInclude Include="Weapon.h">
+      <Filter>Data</Filter>
+    </ClInclude>
+    <ClInclude Include="Material.h">
+      <Filter>Data</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Player</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerStatus.h">
+      <Filter>Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Sword.h">
+      <Filter>Player</Filter>
+    </ClInclude>
+    <ClInclude Include="GameCamera.h">
+      <Filter>Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy_Fire.h">
+      <Filter>Magic</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy_Ice.h">
+      <Filter>Magic</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy_Wind.h">
+      <Filter>Magic</Filter>
+    </ClInclude>
+    <ClInclude Include="Morugan.h">
+      <Filter>Magic</Filter>
+    </ClInclude>
+    <ClInclude Include="ShotMagic.h">
+      <Filter>Magic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Assets">
@@ -416,6 +532,21 @@
     </Filter>
     <Filter Include="Assets\sprite\number">
       <UniqueIdentifier>{92542737-b049-4a29-b25a-158d8e212878}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Enemy">
+      <UniqueIdentifier>{68ef6e87-8439-46e6-83b2-0b13f154c93b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Item">
+      <UniqueIdentifier>{4bc8e9b1-4e84-4e46-987f-a159d0d2956f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Data">
+      <UniqueIdentifier>{1f1d3922-697b-41c1-b761-25d7c25d7ab7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Player">
+      <UniqueIdentifier>{6e521ec5-8044-461c-8d22-01035fe89771}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Magic">
+      <UniqueIdentifier>{c9f38799-2b2e-4193-893e-19caed9738b0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
