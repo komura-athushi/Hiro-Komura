@@ -54,8 +54,8 @@ private:
 	static const int m_dropmaterialChances[];					//エネミーのドロップする素材の確率
 	static const int m_meseta = 65;								//ドロップするメセタの大体の額
 	bool m_gekiha = false;                                      //deleteするかどうか
-	Player* m_player;											//プレイヤークラスのポインタ
-	Game* m_game;
+	Player* m_player = nullptr;									//プレイヤークラスのポインタ
+	Game* m_game = nullptr;
 	//行動パターン
 	enum State {
 		enState_Chase,											//移動

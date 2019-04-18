@@ -42,10 +42,10 @@ public:
 private:
 	GameObj::CSkinModelRender* m_skinModelRender = nullptr;		//スキンモデルレンダラー。
 	CVector3 m_position;                                        //座標
-	CVector3 m_scale = { 1.0f,1.0f,1.0f };                      //大きさ
+	CVector3 m_scale = CVector3::One();                         //大きさ
 	CQuaternion m_rotation=CQuaternion::Identity();             //クオンテーション
 	int m_state;                                                //ドロップ品の番号
-	Player* m_player;                                           //プレイヤークラスのポインタ
+	Player* m_player = nullptr;                                 //プレイヤークラスのポインタ
 	Equipment* m_equipment = nullptr;							//武器のデータ
 	int m_rarity;												//武器のレアリティ
 	int m_number;												//武器のレアリティの中の番号

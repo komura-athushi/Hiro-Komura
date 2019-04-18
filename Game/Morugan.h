@@ -32,7 +32,7 @@ private:
 	const float m_length = 1700.0f;								//モルガンの長さ
 	const float m_time = 240.0f;								//ビーム発生の時間
  	float m_timer = 0.0f;										//タイマー
-	Player* m_player;
+	Player* m_player = nullptr;
 	const float m_r = 10.0f;									//えんちうの半径
 };
 

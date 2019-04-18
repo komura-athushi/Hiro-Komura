@@ -199,22 +199,22 @@ private:
 	CSprite m_logo;
 	CSprite m_statussprite,m_weaponstatussprite,m_inventorystatussprite;
 	bool m_displaysprite = false;								//
-    SuicideObj::CCollisionObj* m_collision;                     //丸いコリジョン
+    SuicideObj::CCollisionObj* m_collision = nullptr;           //丸いコリジョン
 	CFont m_font;                                               //文字表示クラス
-	Bone* m_bone;                                               //骨
-	PlayerStatus* m_playerstatus;                               //プレイヤーステータスのポインタ
+	Bone* m_bone = nullptr;                                     //骨
+	PlayerStatus* m_playerstatus = nullptr;                     //プレイヤーステータスのポインタ
 	Human* m_human = nullptr;									//Humanクラスのポインタ
 	Merchant* m_merchant =  nullptr;							//Merchantクラスのポインタ
-	int m_bonehand;                                             //右手のboneの番号
-	int m_bonecenter;                                           //centerの番号
-	CVector3 m_savemovespeed;                                   //m_movespeedを記憶しておく
-	Sword* m_sword;                                             //Swordクラスのポインタ
+	int m_bonehand = 0;                                         //右手のboneの番号
+	int m_bonecenter = 0;                                       //centerの番号
+	CVector3 m_savemovespeed = CVector3::Zero();                //m_movespeedを記憶しておく
+	Sword* m_sword = nullptr;                                   //Swordクラスのポインタ
 	GameCamera* m_gamecamera = nullptr;                         //カメラのポインタ
 	Town* m_town = nullptr;
-	CVector3 m_movespeed;                                       //移動速度
+	CVector3 m_movespeed = CVector3::Zero();                    //移動速度
 	CVector3 m_position = {18633,0,7255};                       //ユニティちゃんの座標
 	CVector3 m_playerheikou = { 1.0f,0.0f,0.0f };               //プレイヤーと平行なベクトル
-	CVector3 m_scale = { 1.0f,1.0f,1.0f };                      //大きさ
+	CVector3 m_scale = CVector3::One();                         //大きさ
 	CVector3 m_swordposition = CVector3::Zero();				//剣の座標
 	CQuaternion m_swordrot = CQuaternion::Identity();			//剣の回転
 	float m_timer = 0.0f;                                       //攻撃のクールタイマー

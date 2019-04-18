@@ -212,7 +212,7 @@ private:
 	int m_magicnumber = 0;								//撃たれた魔法の数
 	int m_weaponlimitstage = 1;							//武器Lvの上限解放段階
 	int m_weaponlimit = 0;						//武器の上限解放段階の上限
-	const int m_limitweaponlv[4] = { 5, 10, 15, 20};            
+	const int m_limitweaponlv[4] = { 7, 12, 16, 20};            
 	std::vector<MaterialNumber*>  m_weaponreleaserequirednumber;		//各武器の上限解放に必要な素材とその数
 	std::vector<int> m_weaponlimitstagematerialtype;					//各武器の上限解放に必要な素材の種類
 

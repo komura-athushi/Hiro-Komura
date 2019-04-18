@@ -173,10 +173,10 @@ private:
 	const wchar_t* m_name;								//魔法の名前
 	float m_damageRate;									//魔法のダメージ倍率
 	int m_ppCost;										//魔法を放つのに必要なPP
-	CVector3 m_scale = CVector3::One();				//エフェクトの大きさ
-	CVector3 m_position{ CVector3::Zero() };            //エフェクトの座標
-	CVector3 m_movespeed{ CVector3::Zero() };			//エフェクトの移動速度
-	CVector3 m_directionplayer{ CVector3::Zero() };		//プレイヤーの向きに平行なベクトル
+	CVector3 m_scale = CVector3::One();				    //エフェクトの大きさ
+	CVector3 m_position = CVector3::Zero();             //エフェクトの座標
+	CVector3 m_movespeed = CVector3::Zero();			//エフェクトの移動速度
+	CVector3 m_directionplayer = CVector3::Zero();		//プレイヤーの向きに平行なベクトル
 	float m_speed = 1.0f;
 	int m_damage;										//当たった場合にエネミーに与えるダメージ
 	float m_deletetime = 0;								//魔法を消すまでの時間

@@ -3,7 +3,6 @@
 class Weapon
 {
 public:
-	Weapon() {}
 	/*!
 	@brief	Weaponのコンストラクタ
 	*int id;							武器の番号

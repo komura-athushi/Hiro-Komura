@@ -47,11 +47,11 @@ private:
 	CVector3 m_position = CVector3::Zero();						//弾の座標
 	CQuaternion m_rotation;										//回転
 	CVector3 m_scale = { 24.0f,24.0f,24.0f };				    //弾の大きさ
-	CVector3 m_moveSpeed = { 0.0f,0.0f,0.0f };					//移動速度。
+	CVector3 m_moveSpeed = CVector3::Zero();					//移動速度。
 	int m_damage = 0;											//接触した際に与えるダメージ
 	const float m_frame = 100.0f;
 	//コリジョン関係
-	SuicideObj::CCollisionObj* m_attackCol;						//コリジョン
+	SuicideObj::CCollisionObj* m_attackCol = nullptr;		    //コリジョン
 	float m_attack3r = 140.0f;									//攻撃したときに発生させるコリジョンの半径
 	const float m_collisionheight = 20.0f;						//コリジョンをエフェクトよりも高くする
 	int m_attack = 30;											//ファイヤーの攻撃力、デフォルトで30

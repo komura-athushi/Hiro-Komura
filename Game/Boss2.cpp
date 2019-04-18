@@ -61,7 +61,7 @@ void Boss2::AnimationController()
 		m_skinModelRender->GetAnimCon().SetSpeed(1.0f * 35.0f * GetDeltaTimeSec());
 	}
 	else {
-		m_skinModelRender->GetAnimCon().SetSpeed(1.0f * 40.0f * GetDeltaTimeSec());
+		m_skinModelRender->GetAnimCon().SetSpeed(1.0f * 45.0f * GetDeltaTimeSec());
 	}
 	//ステート分岐によってアニメーションを再生させる
 	switch (m_state) {
@@ -149,7 +149,7 @@ void Boss2::Chase()
 			//近づいてくる
 			CVector3 EnemyPos = m_playerposition - m_position;
 			EnemyPos.Normalize();
-			m_movespeed = EnemyPos * 14.0f;
+			m_movespeed = EnemyPos * 12.0f;
 			m_movespeed.y = 0.0f;
 			m_position += m_movespeed * 40.0f* GetDeltaTimeSec();
 	}
@@ -157,7 +157,7 @@ void Boss2::Chase()
 		//初期位置に帰る
 		CVector3 EnemyOldPos = m_oldpos - m_position;
 		EnemyOldPos.Normalize();
-		m_movespeed = EnemyOldPos * 7.0f;
+		m_movespeed = EnemyOldPos * 12.0f;
 		m_movespeed.y = 0.0f;
 		//敵の初期位置と現在位置の距離がほぼ0だったら止まる
 		if (oldpos.LengthSq() < 50.0f * 50.0f) {

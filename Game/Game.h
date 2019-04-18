@@ -21,18 +21,18 @@ public:
 		m_stagenumber = number;
 	}
 private:
-	Ground* m_ground;									//Groundクラスのポインタ
-	GameCamera* m_gamecamera;							//GameCameraクラスのポインタ
-	GameObj::CDirectionLight* m_lig;					//ディレクションライトクラスのポインタ
-	CVector3 m_color;									//ディレクションライトの色を決める
-	Player* m_player;									//プレイヤークラスのポインタ
+	Ground* m_ground = nullptr;							//Groundクラスのポインタ
+	GameCamera* m_gamecamera = nullptr;					//GameCameraクラスのポインタ
+	GameObj::CDirectionLight* m_lig = nullptr;			//ディレクションライトクラスのポインタ
+	CVector3 m_color = CVector3::Zero();				//ディレクションライトの色を決める
+	Player* m_player = nullptr;							//プレイヤークラスのポインタ
 	Level m_level;										//レベルデザインのためのクラス
-	PlayerStatus* m_playerstatus;						//プレイヤーステータスクラスのポインタ
+	PlayerStatus* m_playerstatus = nullptr;				//プレイヤーステータスクラスのポインタ
 	CSprite m_sprite;									//スプライトクラス
-	Wall* m_wall;										//ボス部屋前に設定する壁									
-	CascadeShadowHandler* m_CascadeShadowmap;			//カスケードシャドウ
-	Fade* m_fade;										//フェード
-	GameData* m_gamedata;								//ゲームデータ
+	Wall* m_wall = nullptr;								//ボス部屋前に設定する壁									
+	CascadeShadowHandler* m_CascadeShadowmap = nullptr;	//カスケードシャドウ
+	Fade* m_fade = nullptr;								//フェード
+	GameData* m_gamedata = nullptr;						//ゲームデータ
 	//trueなら画面切り替えする
 	bool m_isWaitFadeout = false;
 	int m_stagenumber;									//ステージの番号						

@@ -117,8 +117,8 @@ private:
 	AnimationClip m_animClip[enAnimationClip_num];
 	CVector2 m_spriteposition[GameData::enWeapon_num];
 	Player* m_player = nullptr;
-	GameData* m_gamedata;
-	PlayerStatus* m_playerstatus;
+	GameData* m_gamedata = nullptr;
+	PlayerStatus* m_playerstatus = nullptr;
 	int m_swordid1 = 0, m_swordid2 = 0, m_swordid3 = 0;              //それぞれプレイヤーが装備している武器の番号、ベースの番号、素材の番号である
 	bool m_button = false;
 	int m_equipmentnumber = 0;

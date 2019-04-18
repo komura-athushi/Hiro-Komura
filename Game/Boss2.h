@@ -73,19 +73,19 @@ private:
 	CVector3 m_oldpos = { 1000.0f,0.0f,-1000.0f };				//ドラゴンの初期位置
 	CVector3 m_position = { 1000.0f,0.0f,-1000.0f };			//ドラゴンの座標
 	//スケールは100.0f
-	CVector3 m_scale = { 80.0f,80.0f,80.0f };				//ドラゴンのスケール
+	CVector3 m_scale = { 80.0f,80.0f,80.0f };				    //ドラゴンのスケール
 	CVector3 m_movespeed = { 0.0f,  0.0f,  0.0f };				//移動速度
 	CVector3 m_heikou = { 0.0f,0.0f,0.0f };                     //ドラゴンの向いている方向に平行なベクトル
 	float m_enemyspeed = 2.5f;									//ドラゴンの移動の倍率
 	CVector3 m_parallel = { 0.0f,0.0f,0.0f };					//ユニティちゃんの向きと平行なベクトル
-	Player* m_player;											//プレイヤークラスのポインタ
+	Player* m_player = nullptr;									//プレイヤークラスのポインタ
 	CFont m_font;												//文字表示クラス
 	bool m_disp = false;										//ダメ表示するかどうか
 	//自機の角度　初期は180度
 	float m_degree = 180.0f;                                    //ユニティちゃんの向いてる角度
 	float m_radian = 0;                                         //上記をラジアン単位に直したもの
 	CQuaternion m_rotation;
-	Stage1* m_stage1;
+	Stage1* m_stage1 = nullptr;
 	float m_r = 180.0f;                                         //コリジョンの半径
 	const float m_collisionheight = 150.0f;						//コリジョンをm_positionからどれだけ上にあげるか
 	//Bossの色々なステータス
@@ -115,7 +115,7 @@ private:
 	const float m_enemyfireheight = 60.0f;
 	float m_timer = 0.0f;
 	const float m_idletime = 1.5f, m_idletimeanger = 1.0f;
-	const float m_movetime = 5.0f, m_movetimeanger = 4.0f;
+	const float m_movetime = 6.0f, m_movetimeanger = 7.0f;
 	bool m_start = false;
 	const float m_startdistance = 2300.0f * 2300.0f;
 	CVector3 m_bossdirection = CVector3::Zero();

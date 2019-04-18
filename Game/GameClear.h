@@ -18,7 +18,7 @@ private:
 	float m_timer = 0.0f;								//タイマー
 	const int m_time = 3.0f;							//タイマーの制限
 	bool m_isgo = false;								//trueでy座標を動かす
-	Fade* m_fade;										//フェード
+	Fade* m_fade = nullptr;								//フェード
 	//trueなら画面切り替えする
 	bool m_isWaitFadeout = false;
 };

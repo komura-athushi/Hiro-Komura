@@ -73,7 +73,7 @@ public:
 		return m_number;
 	}
 protected:
-	SuicideObj::CCollisionObj* m_collision;                     //丸いコリジョン
+	SuicideObj::CCollisionObj* m_collision = nullptr;           //丸いコリジョン
 	float m_r;												    //コリジョンの半径
 	CVector3 m_position;									    //座標
 	CVector3 m_collisionposition;								//コリジョンの座標
@@ -99,7 +99,7 @@ protected:
 	bool m_isdropWeapon = false;							    //武器がドロップしたかどうか
 	static const int m_mesetarand = 2;
 	static const float m_frame;								    //fps
-	GameCamera* m_gamecamera;
+	GameCamera* m_gamecamera = nullptr;
 	const float m_sevolume = 2.0f;
 	int m_number = 0;
 };

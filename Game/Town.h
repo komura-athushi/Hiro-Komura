@@ -27,21 +27,21 @@ public:
 	}
 private:
 	bool m_developtown = false;						    //街を発展させるかどうか
-	Ground* m_ground;                                   //Groundクラスのポインタ
-	GameCamera* m_gamecamera;                           //GameCameraクラスのポインタ
-	GameObj::CDirectionLight* m_lig;                    //ディレクションライトクラスのポインタ
-	CVector3 m_color;                                   //ディレクションライトのカラー
-	Player* m_player;                                   //プレイヤークラスのポインタ
-	Human* m_human;									    //ヒューマンクラスのポインタ
-	Merchant* m_merchant;							    //マーチャントクラスのポインタ
+	Ground* m_ground = nullptr;                         //Groundクラスのポインタ
+	GameCamera* m_gamecamera = nullptr;                 //GameCameraクラスのポインタ
+	GameObj::CDirectionLight* m_lig = nullptr;          //ディレクションライトクラスのポインタ
+	CVector3 m_color = CVector3::Zero();                //ディレクションライトのカラー
+	Player* m_player = nullptr;                         //プレイヤークラスのポインタ
+	Human* m_human = nullptr;						    //ヒューマンクラスのポインタ
+	Merchant* m_merchant = nullptr;					    //マーチャントクラスのポインタ
 	Stage1_Teleport* m_stage1_teleport = nullptr;       //ステージ1に遷移するためのクラスのポインタ
 	Stage2_Teleport* m_stage2_teleport = nullptr;	    //ステージ2に遷移するためのクラスのポインタ
 	Stage3_Teleport* m_stage3_teleport = nullptr;		//ステージ3に遷移するためのクラスのポインタ
 	Level m_level;                                      //レベルデザインのためのクラス
-	PlayerStatus* m_playerstatus;                       //プレイヤーステータスクラスのポインタ
-	GameData* m_gamedata;								//ゲームデータ																
-	CascadeShadowHandler* m_CascadeShadowmap;			//カスケードシャドウ
-	Fade* m_fade;										//フェード
+	PlayerStatus* m_playerstatus = nullptr;             //プレイヤーステータスクラスのポインタ
+	GameData* m_gamedata = nullptr;					    //ゲームデータ																
+	CascadeShadowHandler* m_CascadeShadowmap = nullptr;	//カスケードシャドウ
+	Fade* m_fade = nullptr;								//フェード
 	//trueなら画面切り替えする
 	bool m_isWaitFadeout = false;
 	//画面の切り替え先を分岐させる

@@ -13,15 +13,15 @@ public:
 	bool Start() override;
 	void Update() override;
 private:
-	Ground* m_ground;                                  //Groundクラスのポインタ
-	GameCamera* m_gamecamera;                          //GameCameraクラスのポインタ
-	GameObj::CDirectionLight* m_lig;                   //ディレクションライトクラスのポインタ
-	CVector3 m_color;                                  //ディレクションライトのカラー
-	Player* m_player;                                  //プレイヤークラスのポインタ
-	PlayerStatus* m_playerstatus;                      //プレイヤーステータスクラスのポインタ
-	CVector3 m_position = { 0.0f,0.0f,0.0f };
-	ShadowMapHandler* m_shadowMap;					   //シャドウマップ
-	Fade* m_fade;
+	Ground* m_ground = nullptr;                                  //Groundクラスのポインタ
+	GameCamera* m_gamecamera = nullptr;                          //GameCameraクラスのポインタ
+	GameObj::CDirectionLight* m_lig = nullptr;                   //ディレクションライトクラスのポインタ
+	CVector3 m_color = CVector3::Zero();                         //ディレクションライトのカラー
+	Player* m_player = nullptr;                                  //プレイヤークラスのポインタ
+	PlayerStatus* m_playerstatus = nullptr;                      //プレイヤーステータスクラスのポインタ
+	CVector3 m_position = CVector3::Zero();
+	ShadowMapHandler* m_shadowMap = nullptr; 					 //シャドウマップ
+	Fade* m_fade = nullptr;
 	//trueなら画面切り替えする
 	bool m_isWaitFadeout = false;
 };

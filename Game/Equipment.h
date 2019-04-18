@@ -158,10 +158,10 @@ private:
 	int m_PPCost;                                         //魔法を放つのに必要なPP
 	int m_weaponextend = 1;                               //武器エクステンドレベル
 	int m_meseta = 0;									  //売却時に獲得できるメセタの額
-	GameData* m_gamedata;                                 //GameDataクラスのポインタ
-	Weapon* m_weapon;									  //Weaponクラスのポインタ
-	Magic* m_magic;										  //Magicクラスのポインタ
-	Ability* m_ability;									  //持ってるアビリティの合計値
+	GameData* m_gamedata = nullptr;                       //GameDataクラスのポインタ
+	Weapon* m_weapon = nullptr;					          //Weaponクラスのポインタ
+	Magic* m_magic = nullptr;				              //Magicクラスのポインタ
+	Ability* m_ability = nullptr;		                  //持ってるアビリティの合計値
 	std::vector<Ability*> m_abilitylist;				  //アビリティクラスのポインタの可変長配列
 	static const float m_multiply;						  //強化時のステータスの上昇倍率
 	static const float m_costmultiply;					  //強化費用の上昇倍率

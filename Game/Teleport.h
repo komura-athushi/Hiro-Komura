@@ -20,17 +20,17 @@ public:
 		return m_position;
 	}
 private:
-	GameObj::Suicider::CEffekseer* m_effect;					//エフェクト
+	GameObj::Suicider::CEffekseer* m_effect = nullptr;			//エフェクト
 	bool m_isdisplay = false;									//ターゲット表示するかどうか
 	bool m_isaccess = false;									//アクセスしたかどうか
 	bool m_isbutton = false;									//ボタン
 	CSprite m_sprite,m_sprite2;									//スプライト
-	CVector3 m_scale;											//エフェクトの大きさ
-	CVector3 m_position;										//座標
-	CVector2 m_displayposition;									//スプライトの座標
+	CVector3 m_scale = CVector3::Zero();						//エフェクトの大きさ
+	CVector3 m_position = CVector3::Zero();						//座標
+	CVector2 m_displayposition = CVector2::Zero(); 				//スプライトの座標
 	CFont m_font;                                               //文字表示クラス
 	const float m_frame = 40.0f;
-	Player* m_player;											//プレイヤー
-	GameCamera* m_gamecamera;									//ゲーム中のカメラ
+	Player* m_player = nullptr;									//プレイヤー
+	GameCamera* m_gamecamera = nullptr;							//ゲーム中のカメラ
 };
 

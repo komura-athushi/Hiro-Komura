@@ -63,13 +63,13 @@ private:
 	CVector3 m_scale = { 1.5f,1.5f,1.5f };						//ボスのスケール
 	CVector3 m_movespeed = { 0.0f,  0.0f,  0.0f };				//移動速度
 	CVector3 m_parallel = { 0.0f,0.0f,0.0f };					//ユニティちゃんの向きと平行なベクトル
-	Player* m_player;											//プレイヤークラスのポインタ
+	Player* m_player = nullptr;									//プレイヤークラスのポインタ
 	CFont m_font;												//文字表示クラス
 	//自機の角度　初期は180度
 	float m_degree = 180.0f;                                    //ユニティちゃんの向いてる角度
 	float m_radian = 0;                                         //上記をラジアン単位に直したもの
 	CQuaternion m_rotation;
-	Game* m_stage1;
+	Game* m_stage1 = nullptr;
 	float m_r = 150.0f;                                         //コリジョンの半径
 	const float m_height = 220.0f;                              //コリジョンをm_positionからどれだけ上にあげるか
 	//Bossの色々なステータス

@@ -233,16 +233,16 @@ private:
 	CFont m_font;                                         //文字表示クラス
 	CSprite m_cursor;									  //武器のカーソル
 	CVector3 m_scale = { 0.1f,0.1f,0.1f };				  //画像の大きさ
-	CVector2 m_position = { 350.0f+64.0f*6,670.0f };      //画像の位置
+	CVector2 m_position = { 350.0f + 64.0f * 6,670.0f };  //画像の位置
 	std::vector<Equipment*> m_equipmentlist;              //Equipment構造体の配列
 	std::vector<CSprite*> m_spritelist;				      //画像の配列
 	std::vector<const wchar_t*> m_spritenamelist;		  //画像の名前
 	int m_havemateriallist[GameData::enMaterial_num] = { 0,0,0 };      //プレイヤーの各素材の所持状況
 	int m_havemeseta = 0;								  //所持しているメセタの額
-	GameData* m_gamedata;                                 //GameDataクラスのポインタ
-	Weapon* m_weapon;									  //Weaponクラスのポインタ
-	Magic* m_magic;										  //Magicクラスのポインタ
-	Ability* m_ability;
+	GameData* m_gamedata = nullptr;                       //GameDataクラスのポインタ
+	Weapon* m_weapon = nullptr;						      //Weaponクラスのポインタ
+	Magic* m_magic = nullptr;							  //Magicクラスのポインタ
+	Ability* m_ability = nullptr;
 	const int m_ProtHP = 65;
 	const int m_ProtPP = 100;
 	const int m_ProtPower = 20;

@@ -69,12 +69,12 @@ private:
 	enum EnState {
 		enState_Idle,
 	};
-	static const int m_necessarymaterial = 10;						   //街の発展に必要な素材の数
+	static const int m_necessarymaterial = 10;				    //街の発展に必要な素材の数
 	AnimationClip m_animClip[enAnimationClip_num];	
 	EnState m_state = enState_Idle;								//ステート
-	Player* m_player;											//プレイヤー
-	PlayerStatus* m_playerstatus;								//プレイヤーステータス
-	GameData* m_gamedata;										//ゲームデータ
+	Player* m_player = nullptr;									//プレイヤー
+	PlayerStatus* m_playerstatus = nullptr;						//プレイヤーステータス
+	GameData* m_gamedata = nullptr;								//ゲームデータ
 	bool m_istalk = true;										//話してる？
 };
 
