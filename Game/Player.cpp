@@ -298,10 +298,10 @@ void Player::Animation()
 		/*if (m_HP <= 0 || Pad(0).GetButton(enButtonLT)) {
 			m_state = enState_GameOver;
 		}*/
-		//LB1押したらゲームクリア
-		else if (Pad(0).GetButton(enButtonRT)) {
-			m_state = enState_GameClear;
-		}
+		////LB1押したらゲームクリア
+		//else if (Pad(0).GetButton(enButtonRT)) {
+		//	m_state = enState_GameClear;
+		//}
 		if (m_state == enState_Idle) {
 			if (!m_isbackchoice) {
 				if (Pad(0).GetDown(enButtonBack)) {
