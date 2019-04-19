@@ -91,7 +91,7 @@ void Human::AnimationController()
 
 void Human::SetLevelUpTown()
 {
-	if (m_gamedata->GetTownLevel() == 2) {
+	if (m_gamedata->GetTownLevel() == GameData::m_stagenumber - 1) {
 		return;
 	}
 	m_leveluptown = true;
@@ -106,7 +106,7 @@ void Human::PostRender()
 		return;
 	}
 	wchar_t output[100];
-	if (m_gamedata->GetTownLevel() == 2) {
+	if (m_gamedata->GetTownLevel() == GameData::m_stagenumber - 1) {
 		swprintf_s(output, L"‚±‚êˆÈãŠX‚ğ”­“W‚³‚¹‚é‚±‚Æ‚Ío—ˆ‚Ü‚¹‚ñ\n");
 	}
 	else {

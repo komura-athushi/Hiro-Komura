@@ -340,6 +340,7 @@ void Game::Update()
 	if (m_isWaitFadeout) {
 		if (!m_fade->IsFade()) {
 			if (m_gamedata->GetisGameClear() && !m_gamedata->GetisGameEnd()) {
+				m_gamedata->SetGameEnd();
 				GameClear* gameclear = new GameClear;
 				delete this;
 			}
@@ -355,7 +356,7 @@ void Game::Update()
 			//プレイヤーのクリアフラグがオンになれば、GameDataのステージごとのクリアフラグをオンにします
 			if (m_player->GetGameClear()) {
 				m_gamedata->SetClear(m_stagenumber - 1);
-				if (m_stagenumber == 3 && !m_gamedata->GetisGameClear()) {
+				if (m_stagenumber == GameData::m_stagenumber && !m_gamedata->GetisGameClear()) {
 					m_gamedata->SetGameClear();
 				}
 			}

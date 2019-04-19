@@ -194,7 +194,7 @@ public:
 		enMaterial_Brick,								//レンガ
 		enMaterial_num									//素材の種類
 	};
-	static const int m_stagenumber = 3;					//ステージ数
+	static const int m_stagenumber = 2;					//ステージ数
 private:
 	std::vector<Weapon> m_weaponlist;                   //Weaponクラスの可変長配列
 	std::vector<Magic> m_magiclist;						//Magicクラスの可変長配列
@@ -202,7 +202,7 @@ private:
 	std::vector<Ability*> m_abilitylist;				//アビリティクラスの可変長配列
 	std::vector<CSprite*> m_numberspritelist;           //数字の画像の可変長配列
 	std::vector<const wchar_t*> m_filepathlist;			//数字の画像のファイルパスの可変長配列
-	bool m_stage[3] = { false,false,false };			//各ステージをクリアしたかどうか
+	bool m_stage[2] = { false,false};			        //各ステージをクリアしたかどうか
 	int m_townlevel = 0;								//街の発展レベル
 	bool m_isgameclear = false;							//ゲームをクリアしたかどうか
 	bool m_isgameend = false;							//ゲームが一旦終わったかどうか
