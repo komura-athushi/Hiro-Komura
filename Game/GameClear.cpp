@@ -17,9 +17,9 @@ GameClear::~GameClear()
 bool GameClear::Start()
 {
 	m_sprite.Init(L"Resource/sprite/credit.dds");
-	m_fade = FindGO<Fade>();
+	m_fade = &Fade::GetInstance();
 	m_fade->StartFadeIn();
-	MainSound* ms = FindGO<MainSound>();
+	MainSound* ms = &MainSound::GetInstance();
 	ms->SetBGM(MainSound::enBGM_End);
 	return true;
 }

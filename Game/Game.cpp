@@ -101,7 +101,7 @@ Game::~Game()
 
 bool Game::Start()
 {
-	m_gamedata = FindGO<GameData>(L"GameData");
+	m_gamedata = &GameData::GetInstance();
 	//ディレクションライトを設定
 	m_lig = new GameObj::CDirectionLight;
 	m_color = { 1.0f,-1.0f,1.0f };
@@ -315,10 +315,10 @@ bool Game::Start()
 	m_gamecamera = new GameCamera;
 	m_gamecamera->SetPlayer(m_player);
 	m_player->SetCamera(m_gamecamera);
-	m_fade = FindGO<Fade>();
+	m_fade = &Fade::GetInstance();
 	m_fade->StartFadeIn();
 	//ステージに応じて流すBGMを変化させます
-	MainSound* ms = FindGO<MainSound>();
+	MainSound* ms = &MainSound::GetInstance();
 	if (m_stagenumber == 1) {
 		ms->SetBGM(MainSound::enBGM_Stage1);
 	}

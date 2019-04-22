@@ -51,7 +51,7 @@ bool ShotMagic::Start()
 	case enMagic_Haouzan:
 		Haou();
 	}
-	GameData* gamedata = FindGO<GameData>(L"GameData");
+	GameData* gamedata = &GameData::GetInstance();
 	gamedata->PlusMagicNumber();
 	m_movespeed *= m_speed;
 	if (m_ischangedeletetime) {

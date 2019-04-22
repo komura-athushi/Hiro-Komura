@@ -112,7 +112,7 @@ bool Player::Start()
 	//クラスのポインタを設定
 	m_collision->SetClass(this);
 	//プレイヤーステータスクラスのポインタを検索検索ぅ～
-	m_playerstatus = FindGO<PlayerStatus>(L"PlayerStatus");
+	m_playerstatus = &PlayerStatus::GetInstance();
 	m_town = FindGO<Town>();
 	//ステータス
 	Status();

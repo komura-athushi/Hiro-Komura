@@ -25,8 +25,8 @@ bool Human::Start()
 	m_skinModelRender->GetAnimCon().SetSpeed(m_animationspeed);
 	m_rotation.SetRotationDeg(CVector3::AxisY(),180.0f);
 	m_skinModelRender->SetRot(m_rotation);
-	m_gamedata = FindGO<GameData>(L"GameData");
-	m_playerstatus = FindGO<PlayerStatus>(L"PlayerStatus");
+	m_gamedata = &GameData::GetInstance();
+	m_playerstatus = &PlayerStatus::GetInstance();
 	m_townlevel = m_gamedata->GetTownLevel();
 	m_sprite.Init(L"Resource/sprite/window.dds");
 	//ŠX‚Ì”­“WƒŒƒxƒ‹‚ª2‚Å‚ ‚ê‚Î‚±‚êˆÈã‚Í”­“W‚µ‚È‚¢‚æ‚¤‚É‚·‚é

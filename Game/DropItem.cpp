@@ -94,7 +94,7 @@ void DropItem::Update()
 	//プレイヤーとの距離が一定以下になったらプレイヤーの所持武器に自身を追加する、あるいはメセタの額を加算する
 	CVector3 pos = m_player->GetPosition() - m_position;
 	if (pos.Length() <= 80.0f) {
-		PlayerStatus* playerstatus = FindGO<PlayerStatus>(L"PlayerStatus");
+		PlayerStatus* playerstatus = &PlayerStatus::GetInstance();
 		if (m_isweapon) {
 			//自身が武器の場合プレイヤーに追加
 			playerstatus->SetWeapon(m_equipment);

@@ -36,7 +36,7 @@ bool Cagliostro_view::Start()
 	m_gamecamera = new GameCamera;
 	m_gamecamera->SetPlayer(m_player);
 	m_player->SetCamera(m_gamecamera);
-	m_fade = FindGO<Fade>();
+	m_fade = &Fade::GetInstance();
 	m_fade->StartFadeIn();
 	return true;
 }

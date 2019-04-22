@@ -17,9 +17,9 @@ bool Title::Start()
 {
 	m_sprite.Init(L"Resource/sprite/Title.dds");
 	m_sprite2.Init(L"Resource/sprite/pressstart.dds");
-	MainSound* ms = FindGO<MainSound>();
+	MainSound* ms = &MainSound::GetInstance();
 	ms->SetBGM(MainSound::enBGM_Title);
-	m_fade = FindGO<Fade>();
+	m_fade = &Fade::GetInstance();
 	m_fade->StartFadeIn();
 	return true;
 }

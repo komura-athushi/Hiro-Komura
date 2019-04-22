@@ -6,7 +6,7 @@ const float Equipment::m_costmultiply = 1.2f;
 Equipment::Equipment(const int& number):m_SwordId(number)
 {
 	//GameDataクラスを経由して各ステータスを取得する
-	m_gamedata = FindGO<GameData>(L"GameData");
+	m_gamedata = &GameData::GetInstance();
 	//それぞれのステータスを設定
 	SetWeaponStatus();
 	SetMagicStatus();

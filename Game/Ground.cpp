@@ -17,7 +17,7 @@ Ground::~Ground()
 bool Ground::Start()
 {
 	m_skinModelRender = new GameObj::CSkinModelRender;
-	GameData* gamedata = FindGO<GameData>(L"GameData");
+	GameData* gamedata = &GameData::GetInstance();
 	//ステージによって読み込むfbxファイルを変えます
 	switch (m_stage) {
 	case 0:

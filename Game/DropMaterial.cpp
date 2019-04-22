@@ -67,7 +67,7 @@ void DropMaterial::Update()
 		se->SetPos(m_position);//音の位置
 		se->SetDistance(200.0f);//音が聞こえる範囲
 		se->Play(true); //第一引数をtrue
-		PlayerStatus* playerstatus = FindGO<PlayerStatus>(L"PlayerStatus");
+		PlayerStatus* playerstatus = &PlayerStatus::GetInstance();
 		//プレイヤーの所持素材に追加
 		playerstatus->SetMaterial(m_state);
 		delete this;

@@ -41,7 +41,7 @@ Town::~Town()
 
 bool Town::Start()
 {
-	m_gamedata = FindGO<GameData>(L"GameData");
+	m_gamedata = &GameData::GetInstance();
 	//ディレクションライトを設定
 	m_lig = new GameObj::CDirectionLight;
 	m_color = { 1.0f,-1.0f,1.0f };
@@ -67,9 +67,9 @@ bool Town::Start()
 	m_gamecamera = new GameCamera;
 	m_gamecamera->SetPlayer(m_player);
 	m_player->SetCamera(m_gamecamera);
-	m_fade = FindGO<Fade>();
+	m_fade = &Fade::GetInstance();
 	m_fade->StartFadeIn();
-	MainSound* ms = FindGO<MainSound>();
+	MainSound* ms = &MainSound::GetInstance();
 	ms->SetBGM(MainSound::enBGM_Town);
 	return true;
 }
@@ -133,12 +133,12 @@ void Town::Update()
 			m_isWaitFadeout = true;
 			m_fade->StartFadeOut();
 		}
-		//拠点に居る時にSTARTボタンを押すとカリオストロちゃん☆モードに遷移する
-		else if (Pad(0).GetDown(enButtonBack)) {
-			m_state = enCga;
-			m_isWaitFadeout = true;
-			m_fade->StartFadeOut();
-		}
+		////拠点に居る時にSTARTボタンを押すとカリオストロちゃん☆モードに遷移する
+		//else if (Pad(0).GetDown(enButtonBack)) {
+		//	m_state = enCga;
+		//	m_isWaitFadeout = true;
+		//	m_fade->StartFadeOut();
+		//}
 		//街を再構築
 		else if (m_developtown) {
 			m_state = enTown;

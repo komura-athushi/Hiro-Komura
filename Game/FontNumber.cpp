@@ -14,7 +14,7 @@ FontNumber::~FontNumber()
 
 bool FontNumber::Start()
 {
-	m_gamedata = FindGO<GameData>(L"GameData");
+	m_gamedata = &GameData::GetInstance();
 	m_gamecamera = FindGO<GameCamera>();
 	int nm = m_number;
 	//ó‚¯æ‚Á‚½”š‚ÌŒ…”‚ğ‹‚ß‚é

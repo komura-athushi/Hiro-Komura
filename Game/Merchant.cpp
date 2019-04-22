@@ -27,8 +27,8 @@ bool Merchant::Start()
 	//m_rotation.SetRotationDeg(CVector3::AxisY(), 180.0f);
 	m_protrotation = m_rotation;
 	m_skinModelRender->SetRot(m_rotation);
-	m_playerstatus = FindGO<PlayerStatus>(L"PlayerStatus");
-	m_gamedata = FindGO<GameData>(L"GameData");
+	m_playerstatus = &PlayerStatus::GetInstance();
+	m_gamedata = &GameData::GetInstance();
 	m_equipmentnumber = m_playerstatus->GetEquipmentNumber();
  	for (int i = 0; i < m_equipmentnumber; i++) {
 		CSprite* sprite = new CSprite;
